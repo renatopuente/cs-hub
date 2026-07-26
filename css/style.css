@@ -171,6 +171,11 @@ a { color: inherit; }
   font-size: 0.95rem;
 }
 
+.mode-card .btn {
+  align-self: flex-start;
+  margin-top: 24px;
+}
+
 .mode-card .tag {
   align-self: flex-start;
   margin-top: 18px;
