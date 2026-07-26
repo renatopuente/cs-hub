@@ -568,55 +568,26 @@ input[type="text"]:focus, select:focus {
   margin: 0;
 }
 
-.plan-card h2 {
+.fee-card h2 {
   margin: 4px 0 2px;
   font-size: 1.3rem;
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
 
-.plan-card ul {
-  list-style: none;
-  padding: 0;
-  margin: 18px 0 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.plan-card li {
-  font-size: 0.9rem;
+.fee-card p {
   color: var(--text-dim);
-  padding-left: 22px;
-  position: relative;
-}
-.plan-card li::before {
-  content: "✓";
-  position: absolute;
-  left: 0;
-  color: var(--win);
-  font-weight: 700;
-}
-.plan-card.upcoming li::before {
-  content: "◇";
-  color: var(--text-faint);
+  font-size: 0.9rem;
+  margin: 10px 0 0;
 }
 
-.plan-price {
+.fee-price {
   font-size: 1.7rem;
   font-weight: 800;
   margin: 6px 0 0;
 }
-.plan-price .unit {
+.fee-price .unit {
   font-size: 0.85rem;
   font-weight: 500;
   color: var(--text-dim);
-}
-
-.plan-card.upcoming {
-  border-style: dashed;
-  opacity: 0.92;
 }
 
 .readonly .match-slot { cursor: default; }
