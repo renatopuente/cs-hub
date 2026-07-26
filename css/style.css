@@ -619,19 +619,6 @@ input[type="text"]:focus, select:focus {
   opacity: 0.92;
 }
 
-.admin-links {
-  text-align: center;
-  margin-top: 40px;
-  font-size: 0.8rem;
-  color: var(--text-faint);
-}
-.admin-links a {
-  color: var(--text-faint);
-  text-decoration: underline;
-  text-decoration-color: var(--glass-border);
-}
-.admin-links a:hover { color: var(--text-dim); }
-
 .readonly .match-slot { cursor: default; }
 .readonly .match-slot:hover { background: none; }
 

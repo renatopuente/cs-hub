@@ -6,6 +6,8 @@ fbInitAdmin();
 const setupSection = document.getElementById("setup-section");
 const resultSection = document.getElementById("result-section");
 const teamCountSelect = document.getElementById("team-count");
+const formatChoiceField = document.getElementById("format-choice-field");
+const formatChoiceSelect = document.getElementById("format-choice");
 const assignModeSelect = document.getElementById("assign-mode");
 const playerInputsEl = document.getElementById("player-inputs");
 const setupForm = document.getElementById("setup-form");
@@ -64,22 +66,24 @@ function collectTeams(numTeams, assignMode) {
   return buildTeams(names, numTeams, TEAM_SIZE);
 }
 
-function createTournament(teams, numTeams) {
+function buildRoundRobinMatches(teams) {
+  const matches = [];
+  let counter = 1;
+  for (let i = 0; i < teams.length; i++) {
+    for (let j = i + 1; j < teams.length; j++) {
+      matches.push({ id: `m${counter}`, a: teams[i].id, b: teams[j].id, winner: "" });
+      counter++;
+    }
+  }
+  return matches;
+}
+
+function createTournament(teams, numTeams, formatChoice) {
   let tournament;
 
   if (numTeams === 2) {
     tournament = { format: "series", teams, bestOf: 3, winsNeeded: 2, games: [], winner: "" };
-  } else if (numTeams === 3) {
-    tournament = {
-      format: "roundrobin",
-      teams,
-      matches: [
-        { id: "m1", a: teams[0].id, b: teams[1].id, winner: "" },
-        { id: "m2", a: teams[0].id, b: teams[2].id, winner: "" },
-        { id: "m3", a: teams[1].id, b: teams[2].id, winner: "" },
-      ],
-    };
-  } else {
+  } else if (numTeams === 4 && formatChoice === "bracket") {
     tournament = {
       format: "bracket",
       teams,
@@ -93,6 +97,9 @@ function createTournament(teams, numTeams) {
         third: { a: "", b: "", winner: "" },
       },
     };
+  } else {
+    // numTeams === 3, or numTeams === 4 with "todos contra todos" chosen.
+    tournament = { format: "roundrobin", teams, matches: buildRoundRobinMatches(teams) };
   }
 
   saveTournament(MODE, tournament);
@@ -417,7 +424,9 @@ function render(tournament) {
 /* ---------- Setup wiring ---------- */
 
 function refreshPlayerInputs() {
-  buildPlayerInputs(parseInt(teamCountSelect.value, 10), assignModeSelect.value);
+  const numTeams = parseInt(teamCountSelect.value, 10);
+  formatChoiceField.hidden = numTeams !== 4;
+  buildPlayerInputs(numTeams, assignModeSelect.value);
 }
 
 teamCountSelect.addEventListener("change", refreshPlayerInputs);
@@ -427,7 +436,7 @@ setupForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const numTeams = parseInt(teamCountSelect.value, 10);
   const teams = collectTeams(numTeams, assignModeSelect.value);
-  const tournament = createTournament(teams, numTeams);
+  const tournament = createTournament(teams, numTeams, formatChoiceSelect.value);
   render(tournament);
 });
 
