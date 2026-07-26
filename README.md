@@ -1,10 +1,11 @@
-# Counter Arena
+# El Octágono
 
 Gestor de torneos de Counter-Strike 2 para armar llaves entre amigos. Sitio estático, sin build ni dependencias — hosteado en GitHub Pages.
 
 ## Páginas
 
 - `index.html` — landing pública: acceso a las vistas en vivo de ambos modos.
+- `admin.html` — mini landing privada (no enlazada públicamente) con acceso directo a ambos paneles de administración.
 - `companero.html` / `4v4.html` — paneles de administración (crear torneo, sortear/asignar equipos, avanzar ganadores).
 - `companero-view.html` / `equipos-view.html` — vistas públicas de solo lectura, se actualizan en vivo vía Firebase mientras el admin juega.
 

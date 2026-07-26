@@ -1,10 +1,10 @@
-/* CS HUB — dark / glassmorphism / neomorphism / bento design system */
+/* El Octágono — dark / glassmorphism / neomorphism / bento design system */
 
 :root {
-  --bg: #0a0b0f;
-  --bg-grid: #0d0f14;
-  --surface: #15171f;
-  --surface-2: #1b1e28;
+  --bg: #0b0910;
+  --bg-grid: #0e0c15;
+  --surface: #171420;
+  --surface-2: #1d1828;
   --glass-bg: rgba(255, 255, 255, 0.045);
   --glass-bg-hover: rgba(255, 255, 255, 0.075);
   --glass-border: rgba(255, 255, 255, 0.09);
@@ -15,9 +15,9 @@
   --text-dim: #9096a3;
   --text-faint: #5c6272;
 
-  --accent: #ff7a1a;
-  --accent-2: #ffb238;
-  --accent-glow: rgba(255, 122, 26, 0.35);
+  --accent: #9b4dff;
+  --accent-2: #ff6ec7;
+  --accent-glow: rgba(155, 77, 255, 0.35);
 
   --win: #35e0b0;
   --win-glow: rgba(53, 224, 176, 0.3);
@@ -37,8 +37,8 @@ html, body {
 
 body {
   background:
-    radial-gradient(circle at 15% 0%, rgba(255, 122, 26, 0.08), transparent 40%),
-    radial-gradient(circle at 85% 20%, rgba(53, 224, 176, 0.06), transparent 45%),
+    radial-gradient(circle at 15% 0%, rgba(155, 77, 255, 0.10), transparent 40%),
+    radial-gradient(circle at 85% 20%, rgba(255, 110, 199, 0.08), transparent 45%),
     var(--bg);
   color: var(--text);
   font-family: "Segoe UI", "Inter", system-ui, -apple-system, sans-serif;
@@ -177,8 +177,8 @@ a { color: inherit; }
   margin-top: 18px;
   font-size: 0.78rem;
   color: var(--accent-2);
-  border: 1px solid rgba(255, 178, 56, 0.35);
-  background: rgba(255, 122, 26, 0.08);
+  border: 1px solid rgba(255, 110, 199, 0.35);
+  background: rgba(155, 77, 255, 0.1);
   padding: 4px 10px;
   border-radius: 999px;
 }
@@ -422,8 +422,8 @@ input[type="text"]:focus, select:focus {
   text-align: center;
   padding: 32px;
   border-radius: var(--radius-lg);
-  background: linear-gradient(135deg, rgba(255, 122, 26, 0.15), rgba(53, 224, 176, 0.08));
-  border: 1px solid rgba(255, 178, 56, 0.3);
+  background: linear-gradient(135deg, rgba(155, 77, 255, 0.18), rgba(255, 110, 199, 0.1));
+  border: 1px solid rgba(255, 110, 199, 0.3);
   margin-bottom: 26px;
 }
 .champion-banner .label {
