@@ -21,16 +21,25 @@
     <section id="setup-section" class="glass-card">
       <h2 class="section-title">Arma el torneo</h2>
       <p class="section-sub" id="setup-hint">Elige cuántos equipos participan e ingresa a los jugadores. Los equipos se sortean automáticamente en parejas.</p>
-      <div class="field" style="max-width: 260px;">
-        <label>Número de equipos</label>
-        <select id="team-count">
-          <option value="2">2 equipos (serie mejor de 3)</option>
-          <option value="3">3 equipos (todos contra todos)</option>
-          <option value="4" selected>4 equipos (semifinales + 3er puesto)</option>
-        </select>
+      <div class="player-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-bottom: 4px;">
+        <div class="field">
+          <label>Número de equipos</label>
+          <select id="team-count">
+            <option value="2">2 equipos (serie mejor de 3)</option>
+            <option value="3">3 equipos (todos contra todos)</option>
+            <option value="4" selected>4 equipos (semifinales + 3er puesto)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Cómo asignar jugadores</label>
+          <select id="assign-mode">
+            <option value="auto" selected>Sortear equipos automáticamente</option>
+            <option value="manual">Asignar equipos manualmente</option>
+          </select>
+        </div>
       </div>
       <form id="setup-form">
-        <div class="player-grid" id="player-inputs"></div>
+        <div id="player-inputs"></div>
         <div class="actions-row">
           <button type="submit" class="btn btn-primary">Sortear equipos y crear torneo</button>
         </div>
@@ -54,6 +63,7 @@
       </div>
 
       <div class="actions-row">
+        <a href="companero-view.html" target="_blank" class="btn btn-ghost">🔗 Ver vista pública</a>
         <button id="reset-btn" class="btn btn-danger">Nuevo torneo</button>
       </div>
     </section>
@@ -61,6 +71,10 @@
     <footer class="credits">CS HUB · Modo Compañero</footer>
   </div>
 
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+  <script src="js/firebase-sync.js"></script>
   <script src="js/teams.js"></script>
   <script src="js/storage.js"></script>
   <script src="js/companero.js"></script>

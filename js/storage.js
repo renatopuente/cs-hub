@@ -17,8 +17,10 @@ function loadTournament(mode) {
 
 function saveTournament(mode, data) {
   localStorage.setItem(STORAGE_KEYS[mode], JSON.stringify(data));
+  if (typeof pushTournamentToFirebase === "function") pushTournamentToFirebase(mode, data);
 }
 
 function clearTournament(mode) {
   localStorage.removeItem(STORAGE_KEYS[mode]);
+  if (typeof clearTournamentFromFirebase === "function") clearTournamentFromFirebase(mode);
 }

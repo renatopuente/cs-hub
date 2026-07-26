@@ -1,9 +1,12 @@
 const MODE = "companero";
 const TEAM_SIZE = 2;
 
+fbInitAdmin();
+
 const setupSection = document.getElementById("setup-section");
 const resultSection = document.getElementById("result-section");
 const teamCountSelect = document.getElementById("team-count");
+const assignModeSelect = document.getElementById("assign-mode");
 const playerInputsEl = document.getElementById("player-inputs");
 const setupForm = document.getElementById("setup-form");
 const teamsListEl = document.getElementById("teams-list");
@@ -13,44 +16,81 @@ const matchesViewEl = document.getElementById("matches-view");
 const championBannerEl = document.getElementById("champion-banner");
 const resetBtn = document.getElementById("reset-btn");
 
-function buildPlayerInputs(numTeams) {
+function buildPlayerInputs(numTeams, assignMode) {
   playerInputsEl.innerHTML = "";
-  for (let i = 1; i <= numTeams * TEAM_SIZE; i++) {
-    const wrap = document.createElement("div");
-    wrap.className = "field";
-    wrap.innerHTML = `
-      <label>Jugador ${i}</label>
-      <input type="text" name="player-${i}" required />
-    `;
-    playerInputsEl.appendChild(wrap);
+
+  if (assignMode === "manual") {
+    playerInputsEl.className = "manual-groups";
+    for (let t = 0; t < numTeams; t++) {
+      const group = document.createElement("div");
+      group.className = "manual-team-group";
+      let fieldsHtml = `<h3>Equipo ${t + 1}</h3>`;
+      for (let p = 1; p <= TEAM_SIZE; p++) {
+        fieldsHtml += `
+          <div class="field">
+            <label>Jugador ${p}</label>
+            <input type="text" data-team="${t}" name="team-${t}-player-${p}" required />
+          </div>
+        `;
+      }
+      group.innerHTML = fieldsHtml;
+      playerInputsEl.appendChild(group);
+    }
+  } else {
+    playerInputsEl.className = "player-grid";
+    for (let i = 1; i <= numTeams * TEAM_SIZE; i++) {
+      const wrap = document.createElement("div");
+      wrap.className = "field";
+      wrap.innerHTML = `
+        <label>Jugador ${i}</label>
+        <input type="text" name="player-${i}" required />
+      `;
+      playerInputsEl.appendChild(wrap);
+    }
   }
 }
 
-function createTournament(playerNames, numTeams) {
-  const teams = buildTeams(playerNames, numTeams, TEAM_SIZE);
+function collectTeams(numTeams, assignMode) {
+  if (assignMode === "manual") {
+    const groups = [];
+    for (let t = 0; t < numTeams; t++) {
+      groups.push(
+        Array.from(playerInputsEl.querySelectorAll(`input[data-team="${t}"]`)).map((i) => i.value)
+      );
+    }
+    return buildTeamsManual(groups);
+  }
+  const names = Array.from(playerInputsEl.querySelectorAll("input")).map((i) => i.value);
+  return buildTeams(names, numTeams, TEAM_SIZE);
+}
+
+function createTournament(teams, numTeams) {
   let tournament;
 
   if (numTeams === 2) {
-    tournament = { format: "series", teams, bestOf: 3, winsNeeded: 2, games: [], winner: null };
+    tournament = { format: "series", teams, bestOf: 3, winsNeeded: 2, games: [], winner: "" };
   } else if (numTeams === 3) {
     tournament = {
       format: "roundrobin",
       teams,
       matches: [
-        { id: "m1", a: teams[0].id, b: teams[1].id, winner: null },
-        { id: "m2", a: teams[0].id, b: teams[2].id, winner: null },
-        { id: "m3", a: teams[1].id, b: teams[2].id, winner: null },
+        { id: "m1", a: teams[0].id, b: teams[1].id, winner: "" },
+        { id: "m2", a: teams[0].id, b: teams[2].id, winner: "" },
+        { id: "m3", a: teams[1].id, b: teams[2].id, winner: "" },
       ],
     };
   } else {
     tournament = {
       format: "bracket",
       teams,
+      // Empty strings (not null) for "not decided yet" — Firebase Realtime Database
+      // silently strips null/empty-array values, which would delete these whole
+      // nested match objects and crash the public view on a fresh tournament.
       matches: {
-        semi1: { a: teams[0].id, b: teams[1].id, winner: null },
-        semi2: { a: teams[2].id, b: teams[3].id, winner: null },
-        final: { a: null, b: null, winner: null },
-        third: { a: null, b: null, winner: null },
+        semi1: { a: teams[0].id, b: teams[1].id, winner: "" },
+        semi2: { a: teams[2].id, b: teams[3].id, winner: "" },
+        final: { a: "", b: "", winner: "" },
+        third: { a: "", b: "", winner: "" },
       },
     };
   }
@@ -78,7 +118,7 @@ function renderTeamChip(team) {
 /* ---------- Bracket format (4 teams) ---------- */
 
 function loserOf(match) {
-  if (!match.winner) return null;
+  if (!match.winner) return "";
   return match.a === match.winner ? match.b : match.a;
 }
 
@@ -376,15 +416,18 @@ function render(tournament) {
 
 /* ---------- Setup wiring ---------- */
 
-teamCountSelect.addEventListener("change", () => {
-  buildPlayerInputs(parseInt(teamCountSelect.value, 10));
-});
+function refreshPlayerInputs() {
+  buildPlayerInputs(parseInt(teamCountSelect.value, 10), assignModeSelect.value);
+}
+
+teamCountSelect.addEventListener("change", refreshPlayerInputs);
+assignModeSelect.addEventListener("change", refreshPlayerInputs);
 
 setupForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const numTeams = parseInt(teamCountSelect.value, 10);
-  const names = Array.from(playerInputsEl.querySelectorAll("input")).map((i) => i.value);
-  const tournament = createTournament(names, numTeams);
+  const teams = collectTeams(numTeams, assignModeSelect.value);
+  const tournament = createTournament(teams, numTeams);
   render(tournament);
 });
 
@@ -392,7 +435,7 @@ resetBtn.addEventListener("click", () => {
   clearTournament(MODE);
   resultSection.hidden = true;
   setupSection.hidden = false;
-  buildPlayerInputs(parseInt(teamCountSelect.value, 10));
+  refreshPlayerInputs();
 });
 
 (function init() {
@@ -400,6 +443,6 @@ resetBtn.addEventListener("click", () => {
   if (existing) {
     render(existing);
   } else {
-    buildPlayerInputs(parseInt(teamCountSelect.value, 10));
+    refreshPlayerInputs();
   }
 })();

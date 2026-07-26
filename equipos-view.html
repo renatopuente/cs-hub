@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Modo Equipos (en vivo) — CS HUB</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#9876;&#65039;</text></svg>" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="readonly">
+  <div class="page">
+    <div class="top-bar">
+      <div>
+        <a class="brand" href="index.html"><span class="dot"></span>CS HUB</a>
+        <div class="subtitle">Modo Equipos · vista pública</div>
+      </div>
+      <span class="live-badge"><span class="blip"></span>EN VIVO</span>
+    </div>
+
+    <div id="empty-state" class="glass-card empty-hint">Esperando a que se cree un torneo…</div>
+
+    <section id="series-section" hidden>
+      <div id="champion-banner"></div>
+
+      <div class="glass-card" style="margin-bottom: 20px;">
+        <h2 class="section-title">Equipos</h2>
+        <div class="bento-grid two-col" id="teams-list"></div>
+      </div>
+
+      <div class="glass-card">
+        <h2 class="section-title">Marcador de la serie</h2>
+        <p class="section-sub" id="series-format-label"></p>
+        <div class="neo-surface series-score" id="series-score"></div>
+        <div class="game-log" id="game-log"></div>
+      </div>
+    </section>
+
+    <footer class="credits">CS HUB · Modo Equipos (solo lectura)</footer>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+  <script src="js/firebase-sync.js"></script>
+  <script src="js/equipos-view.js"></script>
+</body>
+</html>

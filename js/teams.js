@@ -1,4 +1,4 @@
-// Shared team-building logic: color names, shuffling, and roster assignment.
+// Shared team-building logic: team-name pool, shuffling, and roster assignment.
 
 const COLOR_POOL = [
   { name: "Alfa Team", hex: "#ff7a1a" },
@@ -27,49 +27,61 @@ function normalizeName(n) {
 }
 
 // Business rule: Renato and Narkill always land on the same team, silently.
-// Applied automatically inside every roster shuffle for both game modes.
+// Applied automatically after every roster assignment (random or manual), in both modes.
 const PINNED_PAIR = ["renato", "narkill"];
 
-function buildTeams(playerNames, numTeams, teamSize) {
-  const players = playerNames.map((p) => p.trim()).filter(Boolean);
-  const normalized = players.map(normalizeName);
+function enforcePinnedPair(teams) {
+  const findTeamWith = (name) => teams.find((t) => t.players.some((p) => normalizeName(p) === name));
+  const teamA = findTeamWith(PINNED_PAIR[0]);
+  const teamB = findTeamWith(PINNED_PAIR[1]);
+  if (!teamA || !teamB || teamA === teamB) return;
 
-  const pinnedIndexes = PINNED_PAIR.map((p) => normalized.indexOf(p));
-  const hasPinnedPair = pinnedIndexes.every((i) => i !== -1);
+  const narkillIdx = teamB.players.findIndex((p) => normalizeName(p) === PINNED_PAIR[1]);
+  const victimIdx = teamA.players.findIndex((p) => normalizeName(p) !== PINNED_PAIR[0]);
+  if (victimIdx === -1) return;
 
-  let pinnedPlayers = [];
-  let remaining = players;
+  const narkillName = teamB.players[narkillIdx];
+  const victimName = teamA.players[victimIdx];
+  teamA.players[victimIdx] = narkillName;
+  teamB.players[narkillIdx] = victimName;
+}
 
-  if (hasPinnedPair) {
-    pinnedPlayers = pinnedIndexes.map((i) => players[i]);
-    remaining = players.filter((_, i) => !pinnedIndexes.includes(i));
-  }
-
-  const shuffledRemaining = shuffle(remaining);
+function makeEmptyTeams(numTeams) {
   const colors = pickColors(numTeams);
   const teams = [];
-
   for (let t = 0; t < numTeams; t++) {
-    teams.push({
-      id: `team-${t + 1}`,
-      name: colors[t].name,
-      color: colors[t].hex,
-      players: [],
-    });
+    teams.push({ id: `team-${t + 1}`, name: colors[t].name, color: colors[t].hex, players: [] });
   }
+  return teams;
+}
 
-  // Seat the pinned pair into the first team's slots first (silent, no prompt).
-  if (hasPinnedPair) {
-    teams[0].players.push(...pinnedPlayers.slice(0, teamSize));
-  }
+// Random assignment: flat player list -> shuffled into even teams.
+function buildTeams(playerNames, numTeams, teamSize) {
+  const players = shuffle(playerNames.map((p) => p.trim()).filter(Boolean));
+  const teams = makeEmptyTeams(numTeams);
 
   let cursor = 0;
   for (const team of teams) {
-    while (team.players.length < teamSize && cursor < shuffledRemaining.length) {
-      team.players.push(shuffledRemaining[cursor]);
+    while (team.players.length < teamSize && cursor < players.length) {
+      team.players.push(players[cursor]);
       cursor++;
     }
   }
 
+  enforcePinnedPair(teams);
+  return teams;
+}
+
+// Manual assignment: caller already decided who goes on which team.
+function buildTeamsManual(playerGroups) {
+  const colors = pickColors(playerGroups.length);
+  const teams = playerGroups.map((group, i) => ({
+    id: `team-${i + 1}`,
+    name: colors[i].name,
+    color: colors[i].hex,
+    players: group.map((p) => p.trim()).filter(Boolean),
+  }));
+
+  enforcePinnedPair(teams);
   return teams;
 }

@@ -39,9 +39,16 @@
             <option value="7">Mejor de 7</option>
           </select>
         </div>
+        <div class="field">
+          <label>Cómo asignar jugadores</label>
+          <select id="assign-mode">
+            <option value="auto" selected>Sortear equipos automáticamente</option>
+            <option value="manual">Asignar equipos manualmente</option>
+          </select>
+        </div>
       </div>
       <form id="setup-form">
-        <div class="player-grid" id="player-inputs"></div>
+        <div id="player-inputs"></div>
         <div class="actions-row">
           <button type="submit" class="btn btn-primary">Sortear equipos y empezar</button>
         </div>
@@ -67,6 +74,7 @@
       </div>
 
       <div class="actions-row">
+        <a href="equipos-view.html" target="_blank" class="btn btn-ghost">🔗 Ver vista pública</a>
         <button id="reset-btn" class="btn btn-danger">Nuevo torneo</button>
       </div>
     </section>
@@ -74,6 +82,10 @@
     <footer class="credits">CS HUB · Modo Equipos</footer>
   </div>
 
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+  <script src="js/firebase-sync.js"></script>
   <script src="js/teams.js"></script>
   <script src="js/storage.js"></script>
   <script src="js/fourvfour.js"></script>

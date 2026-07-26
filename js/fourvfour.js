@@ -1,11 +1,14 @@
 const MODE = "fourvfour";
 const NUM_TEAMS = 2;
 
+fbInitAdmin();
+
 const setupSection = document.getElementById("setup-section");
 const seriesSection = document.getElementById("series-section");
 const playerInputsEl = document.getElementById("player-inputs");
 const setupForm = document.getElementById("setup-form");
 const teamSizeSelect = document.getElementById("team-size");
+const assignModeSelect = document.getElementById("assign-mode");
 const bestOfSelect = document.getElementById("best-of");
 const teamsListEl = document.getElementById("teams-list");
 const seriesScoreEl = document.getElementById("series-score");
@@ -15,27 +18,61 @@ const gameLogEl = document.getElementById("game-log");
 const championBannerEl = document.getElementById("champion-banner");
 const resetBtn = document.getElementById("reset-btn");
 
-function buildPlayerInputs(teamSize) {
+function buildPlayerInputs(teamSize, assignMode) {
   playerInputsEl.innerHTML = "";
-  for (let i = 1; i <= NUM_TEAMS * teamSize; i++) {
-    const wrap = document.createElement("div");
-    wrap.className = "field";
-    wrap.innerHTML = `
-      <label>Jugador ${i}</label>
-      <input type="text" name="player-${i}" required />
-    `;
-    playerInputsEl.appendChild(wrap);
+
+  if (assignMode === "manual") {
+    playerInputsEl.className = "manual-groups";
+    for (let t = 0; t < NUM_TEAMS; t++) {
+      const group = document.createElement("div");
+      group.className = "manual-team-group";
+      let fieldsHtml = `<h3>Equipo ${t + 1}</h3>`;
+      for (let p = 1; p <= teamSize; p++) {
+        fieldsHtml += `
+          <div class="field">
+            <label>Jugador ${p}</label>
+            <input type="text" data-team="${t}" name="team-${t}-player-${p}" required />
+          </div>
+        `;
+      }
+      group.innerHTML = fieldsHtml;
+      playerInputsEl.appendChild(group);
+    }
+  } else {
+    playerInputsEl.className = "player-grid";
+    for (let i = 1; i <= NUM_TEAMS * teamSize; i++) {
+      const wrap = document.createElement("div");
+      wrap.className = "field";
+      wrap.innerHTML = `
+        <label>Jugador ${i}</label>
+        <input type="text" name="player-${i}" required />
+      `;
+      playerInputsEl.appendChild(wrap);
+    }
   }
 }
 
-function createTournament(playerNames, teamSize, bestOf) {
-  const teams = buildTeams(playerNames, NUM_TEAMS, teamSize);
+function collectTeams(teamSize, assignMode) {
+  if (assignMode === "manual") {
+    const groups = [];
+    for (let t = 0; t < NUM_TEAMS; t++) {
+      groups.push(
+        Array.from(playerInputsEl.querySelectorAll(`input[data-team="${t}"]`)).map((i) => i.value)
+      );
+    }
+    return buildTeamsManual(groups);
+  }
+  const names = Array.from(playerInputsEl.querySelectorAll("input")).map((i) => i.value);
+  return buildTeams(names, NUM_TEAMS, teamSize);
+}
+
+function createTournament(teams, bestOf) {
   const tournament = {
     teams,
     bestOf,
     winsNeeded: Math.floor(bestOf / 2) + 1,
     games: [],
-    winner: null,
+    winner: "", // "" not null: Firebase RTDB strips null values on write
   };
   saveTournament(MODE, tournament);
   return tournament;
@@ -139,16 +176,19 @@ function render(tournament) {
   });
 }
 
-teamSizeSelect.addEventListener("change", () => {
-  buildPlayerInputs(parseInt(teamSizeSelect.value, 10));
-});
+function refreshPlayerInputs() {
+  buildPlayerInputs(parseInt(teamSizeSelect.value, 10), assignModeSelect.value);
+}
+
+teamSizeSelect.addEventListener("change", refreshPlayerInputs);
+assignModeSelect.addEventListener("change", refreshPlayerInputs);
 
 setupForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  const names = Array.from(playerInputsEl.querySelectorAll("input")).map((i) => i.value);
   const teamSize = parseInt(teamSizeSelect.value, 10);
   const bestOf = parseInt(bestOfSelect.value, 10);
-  const tournament = createTournament(names, teamSize, bestOf);
+  const teams = collectTeams(teamSize, assignModeSelect.value);
+  const tournament = createTournament(teams, bestOf);
   render(tournament);
 });
 
@@ -156,7 +196,7 @@ resetBtn.addEventListener("click", () => {
   clearTournament(MODE);
   seriesSection.hidden = true;
   setupSection.hidden = false;
-  buildPlayerInputs(parseInt(teamSizeSelect.value, 10));
+  refreshPlayerInputs();
 });
 
 (function init() {
@@ -164,6 +204,6 @@ resetBtn.addEventListener("click", () => {
   if (existing) {
     render(existing);
   } else {
-    buildPlayerInputs(parseInt(teamSizeSelect.value, 10));
+    refreshPlayerInputs();
   }
 })();
