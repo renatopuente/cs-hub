@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Modo Compañero — CS HUB</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤝</text></svg>" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="page">
+    <div class="top-bar">
+      <div>
+        <a class="brand" href="index.html"><span class="dot"></span>CS HUB</a>
+        <div class="subtitle">Modo Compañero · equipos de 2 jugadores</div>
+      </div>
+      <a class="back-link" href="index.html">← Inicio</a>
+    </div>
+
+    <!-- Setup -->
+    <section id="setup-section" class="glass-card">
+      <h2 class="section-title">Arma el torneo</h2>
+      <p class="section-sub" id="setup-hint">Elige cuántos equipos participan e ingresa a los jugadores. Los equipos se sortean automáticamente en parejas.</p>
+      <div class="field" style="max-width: 260px;">
+        <label>Número de equipos</label>
+        <select id="team-count">
+          <option value="2">2 equipos (serie mejor de 3)</option>
+          <option value="3">3 equipos (todos contra todos)</option>
+          <option value="4" selected>4 equipos (semifinales + 3er puesto)</option>
+        </select>
+      </div>
+      <form id="setup-form">
+        <div class="player-grid" id="player-inputs"></div>
+        <div class="actions-row">
+          <button type="submit" class="btn btn-primary">Sortear equipos y crear torneo</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Result -->
+    <section id="result-section" hidden>
+      <div id="champion-banner"></div>
+
+      <div class="glass-card" style="margin-bottom: 20px;">
+        <h2 class="section-title">Equipos</h2>
+        <p class="section-sub">Los nombres son editables.</p>
+        <div class="bento-grid" id="teams-list"></div>
+      </div>
+
+      <div class="glass-card">
+        <h2 class="section-title" id="matches-title">Llaves</h2>
+        <p class="section-sub" id="matches-sub"></p>
+        <div id="matches-view"></div>
+      </div>
+
+      <div class="actions-row">
+        <button id="reset-btn" class="btn btn-danger">Nuevo torneo</button>
+      </div>
+    </section>
+
+    <footer class="credits">CS HUB · Modo Compañero</footer>
+  </div>
+
+  <script src="js/teams.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/companero.js"></script>
+</body>
+</html>
