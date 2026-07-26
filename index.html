@@ -3,40 +3,86 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>CS HUB — Torneos CS2</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎯</text></svg>" />
+<title>Counter Arena — Torneos CS2 en vivo</title>
+<meta name="description" content="Sigue torneos de Counter-Strike 2 en vivo: modo Compañero y modo Equipos, sin necesidad de administrar nada." />
+<link rel="icon" href="img/isotype.svg" type="image/svg+xml" />
 <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
   <div class="page">
     <div class="top-bar">
       <div>
-        <a class="brand" href="index.html"><span class="dot"></span>CS HUB</a>
+        <a class="brand" href="index.html"><img class="brand-icon" src="img/isotype.svg" alt="Counter Arena" />COUNTER <span class="brand-arena">ARENA</span></a>
         <div class="subtitle">Torneos de Counter-Strike 2 entre amigos</div>
       </div>
     </div>
 
+    <div class="hero">
+      <h1>Sigue el torneo en vivo</h1>
+      <p>Elige qué modalidad estás jugando y mira las llaves, marcadores y al campeón actualizarse en tiempo real — sin necesidad de administrar nada.</p>
+    </div>
+
     <div class="bento-grid two-col" style="margin-bottom: 20px;">
-      <a class="glass-card interactive mode-card" href="companero.html">
+      <a class="glass-card interactive mode-card" href="companero-view.html">
         <div>
           <div class="icon">🤝</div>
-          <h2>Modo Compañero</h2>
-          <p>4 equipos de 2 jugadores. Llaves de eliminación directa desde semifinales, con partido por el 3er puesto entre los perdedores.</p>
+          <h2>Torneo Compañeros</h2>
+          <p>Equipos de 2 jugadores. Llaves de eliminación, todos contra todos, o serie al mejor de 3, según el torneo activo.</p>
         </div>
-        <span class="tag">4 equipos · 2 jugadores c/u</span>
+        <span class="tag">Ver en vivo →</span>
       </a>
 
-      <a class="glass-card interactive mode-card" href="4v4.html">
+      <a class="glass-card interactive mode-card" href="equipos-view.html">
         <div>
           <div class="icon">⚔️</div>
-          <h2>Modo Equipos</h2>
-          <p>2 equipos, tamaño configurable de 3 a 5 jugadores. Serie al mejor de X partidas (configurable) para definir un único ganador.</p>
+          <h2>Torneo Equipos</h2>
+          <p>2 equipos de 3 a 5 jugadores. Serie al mejor de X partidas para definir un único ganador.</p>
         </div>
-        <span class="tag">2 equipos · 3 a 5 jugadores c/u</span>
+        <span class="tag">Ver en vivo →</span>
       </a>
     </div>
 
-    <footer class="credits">CS HUB · hecho para las juntas de CS2</footer>
+    <div class="section-heading">
+      <h2>Planes</h2>
+      <p>Hoy Counter Arena es gratis. Esto es lo que ya tienes y lo que se viene.</p>
+    </div>
+
+    <div class="bento-grid two-col">
+      <div class="glass-card plan-card">
+        <div class="icon">🆓</div>
+        <h2>Gratis</h2>
+        <div class="plan-price">$0</div>
+        <ul>
+          <li>Modo Compañero (2, 3 o 4 equipos)</li>
+          <li>Modo Equipos (3v3, 4v4, 5v5)</li>
+          <li>Sorteo automático o asignación manual</li>
+          <li>Vista pública en vivo, sin login</li>
+          <li>Nombres de equipo editables</li>
+        </ul>
+      </div>
+
+      <div class="glass-card plan-card upcoming">
+        <div class="icon">✨</div>
+        <h2>Premium <span class="tag">Próximamente</span></h2>
+        <div class="plan-price">Por definir</div>
+        <ul>
+          <li>Torneos con más de 4-5 equipos</li>
+          <li>Historial y estadísticas de jugadores</li>
+          <li>Logo y colores personalizados por torneo</li>
+          <li>Más formatos de llave</li>
+          <li>Soporte prioritario</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="admin-links">
+      ¿Eres organizador? Administra tu torneo:
+      <a href="companero.html">Modo Compañero</a> · <a href="4v4.html">Modo Equipos</a>
+    </div>
+
+    <footer class="credits">© <span id="copyright-year"></span> Counter Arena. Todos los derechos reservados.</footer>
   </div>
+
+  <script src="js/copyright.js"></script>
 </body>
 </html>

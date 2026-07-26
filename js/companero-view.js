@@ -31,7 +31,7 @@ function renderMatchSlot(team, isWinner, isDecided) {
   return `
     <div class="${classes.join(" ")}">
       <span class="name">${team.name}</span>
-      ${isWinner ? '<span class="crown">&#9819;</span>' : ""}
+      ${isWinner ? '<span class="win-star">&#9733;</span>' : ""}
     </div>
   `;
 }

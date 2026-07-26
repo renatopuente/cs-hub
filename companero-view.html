@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Modo Compañero (en vivo) — CS HUB</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤝</text></svg>" />
+<title>Modo Compañero (en vivo) — Counter Arena</title>
+<link rel="icon" href="img/isotype.svg" type="image/svg+xml" />
 <link rel="stylesheet" href="css/style.css" />
 </head>
 <body class="readonly">
   <div class="page">
     <div class="top-bar">
       <div>
-        <a class="brand" href="index.html"><span class="dot"></span>CS HUB</a>
+        <a class="brand" href="index.html"><img class="brand-icon" src="img/isotype.svg" alt="Counter Arena" />COUNTER <span class="brand-arena">ARENA</span></a>
         <div class="subtitle">Modo Compañero · vista pública</div>
       </div>
       <span class="live-badge"><span class="blip"></span>EN VIVO</span>
@@ -34,12 +34,13 @@
       </div>
     </section>
 
-    <footer class="credits">CS HUB · Modo Compañero (solo lectura)</footer>
+    <footer class="credits">© <span id="copyright-year"></span> Counter Arena · Modo Compañero (solo lectura)</footer>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
   <script src="js/firebase-sync.js"></script>
   <script src="js/companero-view.js"></script>
+  <script src="js/copyright.js"></script>
 </body>
 </html>
