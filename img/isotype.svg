@@ -5,23 +5,23 @@
       <stop offset="1" stop-color="#7c2fe0"/>
     </linearGradient>
   </defs>
-  <rect width="64" height="64" rx="16" fill="#0b0910"/>
-  <rect x="1" y="1" width="62" height="62" rx="15" fill="none" stroke="url(#oct-grad)" stroke-opacity="0.25" stroke-width="1.5"/>
 
-  <g stroke="url(#oct-grad)" stroke-width="4.2" stroke-linecap="round" fill="none">
-    <path d="M20 30 C14 36 10 42 12 50"/>
-    <path d="M24 33 C20 41 18 47 20 55"/>
-    <path d="M29 34 C28 43 27 49 28 56"/>
-    <path d="M35 34 C36 43 37 49 36 56"/>
-    <path d="M40 33 C44 41 46 47 44 55"/>
-    <path d="M44 30 C50 36 54 42 52 50"/>
+  <polygon points="18,2 46,2 62,18 62,46 46,62 18,62 2,46 2,18" fill="#0b0910" stroke="#ff6ec7" stroke-width="2.2"/>
+
+  <g stroke="url(#oct-grad)" stroke-width="3.4" stroke-linecap="round" fill="none">
+    <path d="M22 31 C18 36 15 40 17 46"/>
+    <path d="M25 33 C22 39 20 43 22 48"/>
+    <path d="M29 34 C28 40 27.5 44 28 48.5"/>
+    <path d="M35 34 C36 40 36.5 44 36 48.5"/>
+    <path d="M39 33 C42 39 44 43 42 48"/>
+    <path d="M42 31 C46 36 49 40 47 46"/>
   </g>
 
-  <circle cx="15.5" cy="43.5" r="2" fill="#ff6ec7"/>
-  <circle cx="48.5" cy="43.5" r="2" fill="#ff6ec7"/>
+  <circle cx="20" cy="40" r="1.6" fill="#ff6ec7"/>
+  <circle cx="44" cy="40" r="1.6" fill="#ff6ec7"/>
 
-  <ellipse cx="32" cy="26" rx="16" ry="13" fill="url(#oct-grad)"/>
+  <ellipse cx="32" cy="24" rx="11" ry="9" fill="url(#oct-grad)"/>
 
-  <circle cx="26" cy="24" r="2.3" fill="#ff6ec7"/>
-  <circle cx="38" cy="24" r="2.3" fill="#ff6ec7"/>
+  <circle cx="27.5" cy="22.5" r="1.8" fill="#ff6ec7"/>
+  <circle cx="36.5" cy="22.5" r="1.8" fill="#ff6ec7"/>
 </svg>

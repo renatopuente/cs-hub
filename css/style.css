@@ -78,7 +78,6 @@ a { color: inherit; }
 .brand-icon {
   width: 30px;
   height: 30px;
-  border-radius: 9px;
   flex-shrink: 0;
 }
 
