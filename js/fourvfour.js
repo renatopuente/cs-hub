@@ -84,14 +84,25 @@ function winsFor(tournament, teamId) {
   return tournament.games.filter((g) => g.winner === teamId).length;
 }
 
+function recomputeSeriesWinner(tournament) {
+  const [teamA, teamB] = tournament.teams;
+  if (winsFor(tournament, teamA.id) >= tournament.winsNeeded) tournament.winner = teamA.id;
+  else if (winsFor(tournament, teamB.id) >= tournament.winsNeeded) tournament.winner = teamB.id;
+  else tournament.winner = "";
+}
+
 function recordGame(tournament, teamId) {
   if (tournament.winner) return;
   tournament.games.push({ number: tournament.games.length + 1, winner: teamId });
+  recomputeSeriesWinner(tournament);
+  saveTournament(MODE, tournament);
+  render(tournament);
+}
 
-  const [teamA, teamB] = tournament.teams;
-  if (winsFor(tournament, teamA.id) >= tournament.winsNeeded) tournament.winner = teamA.id;
-  if (winsFor(tournament, teamB.id) >= tournament.winsNeeded) tournament.winner = teamB.id;
-
+function removeGame(tournament, gameNumber) {
+  tournament.games = tournament.games.filter((g) => g.number !== gameNumber);
+  tournament.games.forEach((g, i) => (g.number = i + 1));
+  recomputeSeriesWinner(tournament);
   saveTournament(MODE, tournament);
   render(tournament);
 }
@@ -147,9 +158,19 @@ function render(tournament) {
   gameLogEl.innerHTML = tournament.games
     .map((g) => {
       const t = teamById(tournament, g.winner);
-      return `<div class="game-row"><span class="game-label">Juego ${g.number}</span><span style="color:${t.color}">${t.name}</span></div>`;
+      return `
+        <div class="game-row">
+          <span class="game-label">Juego ${g.number}</span>
+          <span style="color:${t.color}">${t.name}</span>
+          <button class="game-delete-btn" data-remove-game="${g.number}" title="Eliminar / corregir">✕</button>
+        </div>
+      `;
     })
     .join("");
+
+  gameLogEl.querySelectorAll("[data-remove-game]").forEach((btn) => {
+    btn.addEventListener("click", () => removeGame(tournament, parseInt(btn.dataset.removeGame, 10)));
+  });
 
   const champion = tournament.winner ? teamById(tournament, tournament.winner) : null;
   championBannerEl.innerHTML = champion

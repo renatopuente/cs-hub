@@ -508,6 +508,21 @@ input[type="text"]:focus, select:focus {
 
 .game-row .game-label { color: var(--text-dim); }
 
+.game-delete-btn {
+  border: none;
+  background: transparent;
+  color: var(--text-faint);
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 4px 6px;
+  border-radius: var(--radius-sm);
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.game-delete-btn:hover {
+  color: #ff9c9c;
+  background: rgba(255, 90, 90, 0.12);
+}
+
 .pill-buttons {
   display: flex;
   gap: 8px;

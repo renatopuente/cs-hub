@@ -134,10 +134,18 @@ function setBracketWinner(tournament, matchKey, teamId) {
   if (matchKey === "semi1" || matchKey === "semi2") {
     const s1 = tournament.matches.semi1;
     const s2 = tournament.matches.semi2;
-    if (s1.winner) tournament.matches.final.a = s1.winner;
-    if (s2.winner) tournament.matches.final.b = s2.winner;
-    if (s1.winner) tournament.matches.third.a = loserOf(s1);
-    if (s2.winner) tournament.matches.third.b = loserOf(s2);
+    const final = tournament.matches.final;
+    const third = tournament.matches.third;
+
+    final.a = s1.winner || "";
+    final.b = s2.winner || "";
+    third.a = loserOf(s1);
+    third.b = loserOf(s2);
+
+    // A corrected semifinal result can invalidate an already-decided final/3rd
+    // place if that team is no longer in the matchup — clear it for a re-pick.
+    if (final.winner && final.winner !== final.a && final.winner !== final.b) final.winner = "";
+    if (third.winner && third.winner !== third.a && third.winner !== third.b) third.winner = "";
   }
 
   saveTournament(MODE, tournament);
@@ -164,7 +172,7 @@ function renderBracketMatch(tournament, matchKey, title) {
   const teamA = match.a ? teamById(tournament, match.a) : null;
   const teamB = match.b ? teamById(tournament, match.b) : null;
   const decided = !!match.winner;
-  const clickable = !decided && teamA && teamB;
+  const clickable = !!(teamA && teamB); // stays clickable after deciding, to allow corrections
 
   return `
     <div class="match-title">${title}</div>
@@ -178,7 +186,7 @@ function renderBracketMatch(tournament, matchKey, title) {
 
 function renderBracket(tournament) {
   matchesTitleEl.textContent = "Llaves";
-  matchesSubEl.textContent = "Haz clic en el equipo ganador de cada partido.";
+  matchesSubEl.textContent = "Haz clic en el equipo ganador de cada partido. Puedes volver a hacer clic para corregir.";
 
   matchesViewEl.innerHTML = `
     <div class="bracket">
@@ -225,14 +233,25 @@ function winsFor(tournament, teamId) {
   return tournament.games.filter((g) => g.winner === teamId).length;
 }
 
+function recomputeSeriesWinner(tournament) {
+  const [teamA, teamB] = tournament.teams;
+  if (winsFor(tournament, teamA.id) >= tournament.winsNeeded) tournament.winner = teamA.id;
+  else if (winsFor(tournament, teamB.id) >= tournament.winsNeeded) tournament.winner = teamB.id;
+  else tournament.winner = "";
+}
+
 function recordGame(tournament, teamId) {
   if (tournament.winner) return;
   tournament.games.push({ number: tournament.games.length + 1, winner: teamId });
+  recomputeSeriesWinner(tournament);
+  saveTournament(MODE, tournament);
+  render(tournament);
+}
 
-  const [teamA, teamB] = tournament.teams;
-  if (winsFor(tournament, teamA.id) >= tournament.winsNeeded) tournament.winner = teamA.id;
-  if (winsFor(tournament, teamB.id) >= tournament.winsNeeded) tournament.winner = teamB.id;
-
+function removeGame(tournament, gameNumber) {
+  tournament.games = tournament.games.filter((g) => g.number !== gameNumber);
+  tournament.games.forEach((g, i) => (g.number = i + 1));
+  recomputeSeriesWinner(tournament);
   saveTournament(MODE, tournament);
   render(tournament);
 }
@@ -257,7 +276,13 @@ function renderSeries(tournament) {
   const logHtml = tournament.games
     .map((g) => {
       const t = teamById(tournament, g.winner);
-      return `<div class="game-row"><span class="game-label">Juego ${g.number}</span><span style="color:${t.color}">${t.name}</span></div>`;
+      return `
+        <div class="game-row">
+          <span class="game-label">Juego ${g.number}</span>
+          <span style="color:${t.color}">${t.name}</span>
+          <button class="game-delete-btn" data-remove-game="${g.number}" title="Eliminar / corregir">✕</button>
+        </div>
+      `;
     })
     .join("");
 
@@ -279,6 +304,10 @@ function renderSeries(tournament) {
 
   matchesViewEl.querySelectorAll("[data-win]").forEach((btn) => {
     btn.addEventListener("click", () => recordGame(tournament, btn.dataset.win));
+  });
+
+  matchesViewEl.querySelectorAll("[data-remove-game]").forEach((btn) => {
+    btn.addEventListener("click", () => removeGame(tournament, parseInt(btn.dataset.removeGame, 10)));
   });
 
   const champion = tournament.winner ? teamById(tournament, tournament.winner) : null;
@@ -319,7 +348,7 @@ function computeStandings(tournament) {
 
 function renderRoundRobin(tournament) {
   matchesTitleEl.textContent = "Todos contra todos";
-  matchesSubEl.textContent = "Haz clic en el equipo ganador de cada enfrentamiento.";
+  matchesSubEl.textContent = "Haz clic en el equipo ganador de cada enfrentamiento. Puedes volver a hacer clic para corregir.";
 
   const matchesHtml = tournament.matches
     .map((m) => {
@@ -330,9 +359,9 @@ function renderRoundRobin(tournament) {
         <div>
           <div class="match-title">${teamA.name} vs ${teamB.name}</div>
           <div class="match">
-            ${renderMatchSlot(teamA, m.id, m.winner === m.a, decided, !decided)}
+            ${renderMatchSlot(teamA, m.id, m.winner === m.a, decided, true)}
             <div class="match-divider"></div>
-            ${renderMatchSlot(teamB, m.id, m.winner === m.b, decided, !decided)}
+            ${renderMatchSlot(teamB, m.id, m.winner === m.b, decided, true)}
           </div>
         </div>
       `;
