@@ -45,3 +45,19 @@ function fbLoadOnce(mode, onData) {
       onData(null);
     });
 }
+
+// "Finalizar torneo" archives a snapshot of results under historial/{mode},
+// admin-only viewing (historial.html sits behind the same login gate).
+function archiveTournament(mode, record) {
+  return fbDb.ref(`historial/${mode}`).push(record);
+}
+
+function fbSubscribeHistory(mode, onData) {
+  fbDb.ref(`historial/${mode}`).on("value", (snapshot) => {
+    const val = snapshot.val() || {};
+    const list = Object.keys(val)
+      .map((key) => ({ id: key, ...val[key] }))
+      .sort((a, b) => (b.finalizedAt || 0) - (a.finalizedAt || 0));
+    onData(list);
+  });
+}

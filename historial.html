@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Panel de administración — El Octágono</title>
+<title>Historial — El Octágono</title>
 <meta name="robots" content="noindex, nofollow" />
 <link rel="icon" href="img/isotype.svg" type="image/svg+xml" />
 <link rel="stylesheet" href="css/style.css" />
@@ -13,11 +13,11 @@
     <div class="top-bar">
       <div>
         <a class="brand" href="admin.html"><img class="brand-icon" src="img/isotype.svg" alt="El Octágono" />EL <span class="brand-arena">OCTÁGONO</span></a>
-        <div class="subtitle">Panel de administración · privado</div>
+        <div class="subtitle">Historial de torneos · privado</div>
       </div>
       <div style="display:flex; align-items:center; gap: 10px;">
         <button id="logout-btn" class="btn btn-ghost btn-sm" hidden>Cerrar sesión</button>
-        <a class="back-link" href="index.html">← Ver landing pública</a>
+        <a class="back-link" href="admin.html">← Panel admin</a>
       </div>
     </div>
 
@@ -30,39 +30,17 @@
     </section>
 
     <div id="protected-content" hidden>
-      <div class="hero">
-        <h1>Administra tu torneo</h1>
-        <p>Elige qué modalidad vas a armar. Esta página no está enlazada desde el sitio público — solo tú tienes este link.</p>
+      <div class="section-heading" style="margin-top:0;">
+        <h2>Modo Compañero</h2>
+        <p>Torneos finalizados, del más reciente al más antiguo.</p>
       </div>
+      <div id="companero-history"></div>
 
-      <div class="bento-grid two-col">
-        <a class="glass-card interactive mode-card" href="companero.html">
-          <div>
-            <div class="icon">🤝</div>
-            <h2>Modo Compañero</h2>
-            <p>Equipos de 2 jugadores. 2, 3 o 4 equipos: serie, todos contra todos, o llaves con 3er puesto.</p>
-          </div>
-          <span class="btn btn-primary">Administrar →</span>
-        </a>
-
-        <a class="glass-card interactive mode-card" href="4v4.html">
-          <div>
-            <div class="icon">⚔️</div>
-            <h2>Modo Equipos</h2>
-            <p>2 equipos, tamaño configurable de 3 a 5 jugadores. Serie al mejor de X partidas.</p>
-          </div>
-          <span class="btn btn-primary">Administrar →</span>
-        </a>
-
-        <a class="glass-card interactive mode-card" href="historial.html">
-          <div>
-            <div class="icon">📜</div>
-            <h2>Historial</h2>
-            <p>Revisa los torneos ya finalizados: equipos, integrantes y resultados de cada modo.</p>
-          </div>
-          <span class="btn btn-primary">Ver historial →</span>
-        </a>
+      <div class="section-heading">
+        <h2>Modo Equipos</h2>
+        <p>Series finalizadas, de la más reciente a la más antigua.</p>
       </div>
+      <div id="fourvfour-history"></div>
     </div>
 
     <footer class="credits">© <span id="copyright-year"></span> El Octágono · Panel privado</footer>
@@ -73,6 +51,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
   <script src="js/firebase-sync.js"></script>
   <script src="js/auth-gate.js"></script>
+  <script src="js/historial.js"></script>
   <script src="js/copyright.js"></script>
 </body>
 </html>

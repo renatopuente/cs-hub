@@ -15,6 +15,7 @@ const matchesSubEl = document.getElementById("matches-sub");
 const matchesViewEl = document.getElementById("matches-view");
 const championBannerEl = document.getElementById("champion-banner");
 const resetBtn = document.getElementById("reset-btn");
+const finalizeBtn = document.getElementById("finalize-btn");
 
 function buildPlayerInputs(numTeams, assignMode) {
   playerInputsEl.innerHTML = "";
@@ -424,9 +425,63 @@ function renderRoundRobin(tournament) {
   }
 }
 
+/* ---------- Finalize / archive to historial ---------- */
+
+function bracketResultFor(tournament, teamId) {
+  const m = tournament.matches;
+  if (m.final.winner === teamId) return "🏆 Campeón";
+  if (m.third.winner === teamId) return "3er puesto";
+  if (m.final.winner && (m.final.a === teamId || m.final.b === teamId)) return "2do puesto";
+  if (m.third.winner && (m.third.a === teamId || m.third.b === teamId)) return "4to puesto";
+  const inLostSemi = [m.semi1, m.semi2].some(
+    (s) => s.winner && (s.a === teamId || s.b === teamId) && s.winner !== teamId
+  );
+  if (inLostSemi) return "Eliminado en semifinales";
+  return "Sin definir";
+}
+
+function computeFinalResults(tournament) {
+  if (tournament.format === "series") {
+    const [teamA, teamB] = tournament.teams;
+    const scoreA = tournament.games.filter((g) => g.winner === teamA.id).length;
+    const scoreB = tournament.games.filter((g) => g.winner === teamB.id).length;
+    return tournament.teams.map((t) => {
+      const own = t.id === teamA.id ? scoreA : scoreB;
+      const other = t.id === teamA.id ? scoreB : scoreA;
+      let result = `En curso (${own}-${other})`;
+      if (tournament.winner) result = t.id === tournament.winner ? `🏆 Ganó la serie (${own}-${other})` : `Perdió la serie (${own}-${other})`;
+      return { name: t.name, players: t.players, result };
+    });
+  }
+
+  if (tournament.format === "roundrobin") {
+    const { ranked } = computeStandings(tournament);
+    return ranked.map((r, i) => ({ name: r.team.name, players: r.team.players, result: `#${i + 1} (${r.wins} victorias)` }));
+  }
+
+  return tournament.teams.map((t) => ({ name: t.name, players: t.players, result: bracketResultFor(tournament, t.id) }));
+}
+
+function finalizeTournament(tournament) {
+  const record = {
+    finalizedAt: Date.now(),
+    format: tournament.format,
+    teams: computeFinalResults(tournament),
+  };
+  archiveTournament(MODE, record);
+  clearTournament(MODE);
+  currentTournament = null;
+  resultSection.hidden = true;
+  setupSection.hidden = false;
+  refreshPlayerInputs();
+}
+
 /* ---------- Shared render dispatch ---------- */
 
+let currentTournament = null;
+
 function render(tournament) {
+  currentTournament = tournament;
   setupSection.hidden = true;
   resultSection.hidden = false;
 
@@ -472,6 +527,12 @@ resetBtn.addEventListener("click", () => {
   resultSection.hidden = true;
   setupSection.hidden = false;
   refreshPlayerInputs();
+});
+
+finalizeBtn.addEventListener("click", () => {
+  if (currentTournament && confirm("¿Finalizar este torneo y guardarlo en el historial?")) {
+    finalizeTournament(currentTournament);
+  }
 });
 
 (function init() {

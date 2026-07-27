@@ -15,6 +15,7 @@ const gameActionsEl = document.getElementById("game-actions");
 const gameLogEl = document.getElementById("game-log");
 const championBannerEl = document.getElementById("champion-banner");
 const resetBtn = document.getElementById("reset-btn");
+const finalizeBtn = document.getElementById("finalize-btn");
 
 function buildPlayerInputs(teamSize, assignMode) {
   playerInputsEl.innerHTML = "";
@@ -119,7 +120,33 @@ function renderTeamChip(team) {
   `;
 }
 
+function computeFinalResults(tournament) {
+  const [teamA, teamB] = tournament.teams;
+  const scoreA = winsFor(tournament, teamA.id);
+  const scoreB = winsFor(tournament, teamB.id);
+  return tournament.teams.map((t) => {
+    const own = t.id === teamA.id ? scoreA : scoreB;
+    const other = t.id === teamA.id ? scoreB : scoreA;
+    let result = `En curso (${own}-${other})`;
+    if (tournament.winner) result = t.id === tournament.winner ? `🏆 Ganó la serie (${own}-${other})` : `Perdió la serie (${own}-${other})`;
+    return { name: t.name, players: t.players, result };
+  });
+}
+
+function finalizeTournament(tournament) {
+  const record = { finalizedAt: Date.now(), format: "series", teams: computeFinalResults(tournament) };
+  archiveTournament(MODE, record);
+  clearTournament(MODE);
+  currentTournament = null;
+  seriesSection.hidden = true;
+  setupSection.hidden = false;
+  refreshPlayerInputs();
+}
+
+let currentTournament = null;
+
 function render(tournament) {
+  currentTournament = tournament;
   setupSection.hidden = true;
   seriesSection.hidden = false;
 
@@ -216,6 +243,12 @@ resetBtn.addEventListener("click", () => {
   seriesSection.hidden = true;
   setupSection.hidden = false;
   refreshPlayerInputs();
+});
+
+finalizeBtn.addEventListener("click", () => {
+  if (currentTournament && confirm("¿Finalizar este torneo y guardarlo en el historial?")) {
+    finalizeTournament(currentTournament);
+  }
 });
 
 (function init() {
