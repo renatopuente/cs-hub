@@ -27,18 +27,20 @@ function renderHistoryList(container, list) {
   container.innerHTML = list
     .map((entry) => {
       const entryFee = entry.entryFee || "Gratuito";
-      const rows = (entry.teams || [])
-        .map(
-          (t) => `
-            <tr>
-              <td data-label="Equipo">${t.name}</td>
-              <td data-label="Integrantes">${(t.players || []).join(", ")}</td>
-              <td data-label="Resultado">${t.result}</td>
-              <td data-label="Torneo">${entryFee}</td>
-            </tr>
-          `
-        )
-        .join("");
+      const rowParts = [];
+      (entry.teams || []).forEach((t, i) => {
+        if (i > 0) {
+          rowParts.push(`<tr class="vs-row"><td colspan="3"><span class="vs-badge">VS</span></td></tr>`);
+        }
+        rowParts.push(`
+          <tr>
+            <td data-label="Equipo">${t.name}</td>
+            <td data-label="Integrantes">${(t.players || []).join(", ")}</td>
+            <td data-label="Resultado">${t.result}</td>
+          </tr>
+        `);
+      });
+      const rows = rowParts.join("");
 
       return `
         <div class="glass-card history-card" data-history-id="${entry.id}" style="margin-bottom: 20px; position:relative;">
@@ -46,15 +48,17 @@ function renderHistoryList(container, list) {
             <i class="fa-solid fa-share-nodes"></i>
           </button>
           <h2 class="section-title"><i class="${FORMAT_ICONS[entry.format] || "fa-solid fa-gamepad"}"></i> ${FORMAT_LABELS[entry.format] || entry.format}</h2>
-          <p class="section-sub"><i class="fa-regular fa-calendar"></i> ${formatDate(entry.finalizedAt)}</p>
+          <p class="section-sub">
+            <i class="fa-regular fa-calendar"></i> ${formatDate(entry.finalizedAt)}
+            <span class="fee-chip"><i class="fa-solid fa-ticket"></i> ${entryFee}</span>
+          </p>
           <div class="neo-surface table-scroll">
-            <table class="standings-table">
+            <table class="standings-table history-table">
               <thead>
                 <tr>
                   <th><i class="fa-solid fa-shield-halved"></i> Equipo</th>
                   <th><i class="fa-solid fa-user-group"></i> Integrantes</th>
                   <th><i class="fa-solid fa-medal"></i> Resultado</th>
-                  <th><i class="fa-solid fa-ticket"></i> Torneo</th>
                 </tr>
               </thead>
               <tbody>${rows}</tbody>
