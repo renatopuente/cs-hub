@@ -31,3 +31,17 @@ function clearTournamentFromFirebase(mode) {
 function fbSubscribe(mode, onData) {
   fbDb.ref(`tournaments/${mode}`).on("value", (snapshot) => onData(snapshot.val()));
 }
+
+// Admin pages call this once on load, to check Firebase (the real source of
+// truth) for an already-in-progress tournament — localStorage is only a
+// per-browser cache and won't know about tournaments started elsewhere.
+function fbLoadOnce(mode, onData) {
+  fbDb
+    .ref(`tournaments/${mode}`)
+    .once("value")
+    .then((snapshot) => onData(snapshot.val()))
+    .catch((err) => {
+      console.error("Firebase load failed", err);
+      onData(null);
+    });
+}

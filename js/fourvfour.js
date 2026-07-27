@@ -198,10 +198,11 @@ resetBtn.addEventListener("click", () => {
 });
 
 (function init() {
-  const existing = loadTournament(MODE);
-  if (existing) {
-    render(existing);
-  } else {
-    refreshPlayerInputs();
-  }
+  fbLoadOnce(MODE, (existing) => {
+    if (existing) {
+      render(existing);
+    } else {
+      refreshPlayerInputs();
+    }
+  });
 })();
