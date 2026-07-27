@@ -264,7 +264,8 @@ a { color: inherit; }
 }
 
 .mode-card .btn {
-  align-self: flex-start;
+  align-self: stretch;
+  width: 100%;
   margin-top: 24px;
   animation: live-blink 1s ease-in-out infinite; /* half speed of the original 120 BPM cycle */
 }
