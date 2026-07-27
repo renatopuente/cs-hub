@@ -7,6 +7,7 @@ const playerInputsEl = document.getElementById("player-inputs");
 const setupForm = document.getElementById("setup-form");
 const teamSizeSelect = document.getElementById("team-size");
 const assignModeSelect = document.getElementById("assign-mode");
+const entryFeeSelect = document.getElementById("entry-fee");
 const bestOfSelect = document.getElementById("best-of");
 const teamsListEl = document.getElementById("teams-list");
 const seriesScoreEl = document.getElementById("series-score");
@@ -65,13 +66,14 @@ function collectTeams(teamSize, assignMode) {
   return buildTeams(names, NUM_TEAMS, teamSize);
 }
 
-function createTournament(teams, bestOf) {
+function createTournament(teams, bestOf, entryFee) {
   const tournament = {
     teams,
     bestOf,
     winsNeeded: Math.floor(bestOf / 2) + 1,
     games: [],
     winner: "", // "" not null: Firebase RTDB strips null values on write
+    entryFee,
   };
   saveTournament(MODE, tournament);
   return tournament;
@@ -134,7 +136,12 @@ function computeFinalResults(tournament) {
 }
 
 function finalizeTournament(tournament) {
-  const record = { finalizedAt: Date.now(), format: "series", teams: computeFinalResults(tournament) };
+  const record = {
+    finalizedAt: Date.now(),
+    format: "series",
+    entryFee: tournament.entryFee || "Gratuito",
+    teams: computeFinalResults(tournament),
+  };
   archiveTournament(MODE, record);
   clearTournament(MODE);
   currentTournament = null;
@@ -234,7 +241,7 @@ setupForm.addEventListener("submit", (e) => {
   const teamSize = parseInt(teamSizeSelect.value, 10);
   const bestOf = parseInt(bestOfSelect.value, 10);
   const teams = collectTeams(teamSize, assignModeSelect.value);
-  const tournament = createTournament(teams, bestOf);
+  const tournament = createTournament(teams, bestOf, entryFeeSelect.value);
   render(tournament);
 });
 

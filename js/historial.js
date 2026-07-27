@@ -20,6 +20,7 @@ function renderHistoryList(container, list) {
 
   container.innerHTML = list
     .map((entry) => {
+      const entryFee = entry.entryFee || "Gratuito";
       const rows = (entry.teams || [])
         .map(
           (t) => `
@@ -27,6 +28,7 @@ function renderHistoryList(container, list) {
               <td>${t.name}</td>
               <td>${(t.players || []).join(", ")}</td>
               <td>${t.result}</td>
+              <td>${entryFee}</td>
             </tr>
           `
         )
@@ -38,7 +40,7 @@ function renderHistoryList(container, list) {
           <p class="section-sub">${formatDate(entry.finalizedAt)}</p>
           <div class="neo-surface">
             <table class="standings-table">
-              <thead><tr><th>Equipo</th><th>Integrantes</th><th>Resultado</th></tr></thead>
+              <thead><tr><th>Equipo</th><th>Integrantes</th><th>Resultado</th><th>Torneo</th></tr></thead>
               <tbody>${rows}</tbody>
             </table>
           </div>

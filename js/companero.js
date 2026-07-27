@@ -7,6 +7,7 @@ const teamCountSelect = document.getElementById("team-count");
 const formatChoiceField = document.getElementById("format-choice-field");
 const formatChoiceSelect = document.getElementById("format-choice");
 const assignModeSelect = document.getElementById("assign-mode");
+const entryFeeSelect = document.getElementById("entry-fee");
 const playerInputsEl = document.getElementById("player-inputs");
 const setupForm = document.getElementById("setup-form");
 const teamsListEl = document.getElementById("teams-list");
@@ -77,7 +78,7 @@ function buildRoundRobinMatches(teams) {
   return matches;
 }
 
-function createTournament(teams, numTeams, formatChoice) {
+function createTournament(teams, numTeams, formatChoice, entryFee) {
   let tournament;
 
   if (numTeams === 2) {
@@ -101,6 +102,7 @@ function createTournament(teams, numTeams, formatChoice) {
     tournament = { format: "roundrobin", teams, matches: buildRoundRobinMatches(teams) };
   }
 
+  tournament.entryFee = entryFee;
   saveTournament(MODE, tournament);
   return tournament;
 }
@@ -466,6 +468,7 @@ function finalizeTournament(tournament) {
   const record = {
     finalizedAt: Date.now(),
     format: tournament.format,
+    entryFee: tournament.entryFee || "Gratuito",
     teams: computeFinalResults(tournament),
   };
   archiveTournament(MODE, record);
@@ -518,7 +521,7 @@ setupForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const numTeams = parseInt(teamCountSelect.value, 10);
   const teams = collectTeams(numTeams, assignModeSelect.value);
-  const tournament = createTournament(teams, numTeams, formatChoiceSelect.value);
+  const tournament = createTournament(teams, numTeams, formatChoiceSelect.value, entryFeeSelect.value);
   render(tournament);
 });
 
