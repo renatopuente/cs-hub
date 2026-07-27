@@ -7,6 +7,11 @@ const COLOR_POOL = [
   { name: "Delta Team", hex: "#35e0b0" },
   { name: "Echo Team", hex: "#b07bff" },
   { name: "Fox Team", hex: "#4de3e0" },
+  { name: "Omega Team", hex: "#8e44ec" },
+  { name: "Lambda Team", hex: "#ff4fa3" },
+  { name: "Gamma Team", hex: "#ffd23f" },
+  { name: "Zeta Team", hex: "#f5a623" },
+  { name: "Sigma Team", hex: "#5b7cfa" },
 ];
 
 function shuffle(arr) {

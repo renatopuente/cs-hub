@@ -7,6 +7,12 @@ const FORMAT_LABELS = {
   series: "Serie",
 };
 
+const FORMAT_ICONS = {
+  bracket: "fa-solid fa-sitemap",
+  roundrobin: "fa-solid fa-people-group",
+  series: "fa-solid fa-trophy",
+};
+
 function formatDate(ts) {
   if (!ts) return "";
   return new Date(ts).toLocaleString("es-EC", { dateStyle: "medium", timeStyle: "short" });
@@ -39,11 +45,18 @@ function renderHistoryList(container, list) {
           <button class="share-btn" data-share-id="${entry.id}" title="Compartir">
             <i class="fa-solid fa-share-nodes"></i>
           </button>
-          <h2 class="section-title">${FORMAT_LABELS[entry.format] || entry.format}</h2>
-          <p class="section-sub">${formatDate(entry.finalizedAt)}</p>
+          <h2 class="section-title"><i class="${FORMAT_ICONS[entry.format] || "fa-solid fa-gamepad"}"></i> ${FORMAT_LABELS[entry.format] || entry.format}</h2>
+          <p class="section-sub"><i class="fa-regular fa-calendar"></i> ${formatDate(entry.finalizedAt)}</p>
           <div class="neo-surface table-scroll">
             <table class="standings-table">
-              <thead><tr><th>Equipo</th><th>Integrantes</th><th>Resultado</th><th>Torneo</th></tr></thead>
+              <thead>
+                <tr>
+                  <th><i class="fa-solid fa-shield-halved"></i> Equipo</th>
+                  <th><i class="fa-solid fa-user-group"></i> Integrantes</th>
+                  <th><i class="fa-solid fa-medal"></i> Resultado</th>
+                  <th><i class="fa-solid fa-ticket"></i> Torneo</th>
+                </tr>
+              </thead>
               <tbody>${rows}</tbody>
             </table>
           </div>
