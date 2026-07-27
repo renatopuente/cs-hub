@@ -309,6 +309,15 @@ input[type="text"]:focus, select:focus {
   color: #ff9c9c;
 }
 
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent-2);
+}
+.btn-outline:hover {
+  background: rgba(155, 77, 255, 0.08);
+}
+
 .btn-sm { padding: 8px 14px; font-size: 0.85rem; }
 .btn-block { width: 100%; }
 
