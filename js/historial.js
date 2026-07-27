@@ -38,7 +38,7 @@ function renderHistoryList(container, list) {
         <div class="glass-card" style="margin-bottom: 20px;">
           <h2 class="section-title">${FORMAT_LABELS[entry.format] || entry.format}</h2>
           <p class="section-sub">${formatDate(entry.finalizedAt)}</p>
-          <div class="neo-surface">
+          <div class="neo-surface table-scroll">
             <table class="standings-table">
               <thead><tr><th>Equipo</th><th>Integrantes</th><th>Resultado</th><th>Torneo</th></tr></thead>
               <tbody>${rows}</tbody>
