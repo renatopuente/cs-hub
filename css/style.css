@@ -812,7 +812,7 @@ input[type="text"]:focus, select:focus {
     width: 100vw;
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
-    margin-top: 128px;
+    margin-top: -32px; /* flush at the very top, same treatment as desktop */
   }
   .hero-banner img {
     border-radius: 0;
