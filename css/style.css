@@ -183,7 +183,7 @@ a { color: inherit; }
 .subtitle {
   color: var(--text-dim);
   font-size: 0.95rem;
-  margin-top: 4px;
+  margin-top: 3px;
 }
 
 .back-link {
