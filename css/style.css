@@ -70,14 +70,88 @@ a { color: inherit; }
   left: 0;
   right: 0;
   z-index: 100;
-  min-height: 64px;
   margin-bottom: 0;
-  padding: 16px 24px;
   background: rgba(11, 9, 16, 0.55);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--glass-border);
 }
+
+/* Same max-width/centering as .page, so the logo lines up with the
+   banner/content below it instead of hugging the raw viewport edge. */
+.navbar-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  min-height: 64px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.navbar-brand-center { text-align: center; }
+.navbar-brand-center .brand { display: inline-flex; }
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+.main-nav a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 0.92rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: color 0.15s ease;
+}
+.main-nav a:hover { color: var(--text); }
+.main-nav a.btn {
+  color: #1a1000;
+  padding: 9px 18px;
+}
+
+.hamburger-btn {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text);
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+  padding: 6px 20px 22px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.mobile-menu a.btn { justify-content: center; color: #1a1000; }
+
+@media (max-width: 768px) {
+  .main-nav { display: none; }
+  .hamburger-btn { display: inline-flex; align-items: center; justify-content: center; }
+}
+
+/* Pages without a hero banner need clearance so the fixed navbar
+   doesn't sit on top of their content. */
+.page-offset-navbar { padding-top: 100px; }
 
 .brand {
   display: flex;
@@ -284,6 +358,7 @@ input[type="text"]:focus, select:focus {
   padding: 12px 22px;
   font-size: 0.95rem;
   font-weight: 600;
+  text-decoration: none;
   cursor: pointer;
   transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
 }

@@ -5,18 +5,46 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Modo Compañero (en vivo) — El Octágono</title>
 <link rel="icon" href="img/isotype.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 <link rel="stylesheet" href="css/style.css" />
 </head>
 <body class="readonly">
-  <div class="page">
+  <div class="navbar-fixed">
+    <div class="navbar-inner">
+      <div class="navbar-brand-center">
+        <a class="brand" href="index.html"><img class="brand-icon" src="img/isotype.svg" alt="El Octágono" />EL <span class="brand-arena">OCTÁGONO</span></a>
+        <div class="subtitle">Torneos Online</div>
+      </div>
+
+      <nav class="main-nav">
+        <a href="companero-view.html"><i class="fa-solid fa-people-group"></i> Torneos Compañero</a>
+        <a href="equipos-view.html"><i class="fa-solid fa-users-rectangle"></i> Torneos por Equipos</a>
+        <a href="historial.html"><i class="fa-solid fa-clock-rotate-left"></i> Historial</a>
+        <a href="inscripcion.html" class="btn btn-primary"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
+      </nav>
+
+      <button class="hamburger-btn" id="hamburger-btn" aria-label="Abrir menú" aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="companero-view.html"><i class="fa-solid fa-people-group"></i> Torneos Compañero</a>
+      <a href="equipos-view.html"><i class="fa-solid fa-users-rectangle"></i> Torneos por Equipos</a>
+      <a href="historial.html"><i class="fa-solid fa-clock-rotate-left"></i> Historial</a>
+      <a href="inscripcion.html" class="btn btn-primary btn-block"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
+    </div>
+  </div>
+
+  <div class="page page-offset-navbar">
     <div class="top-bar">
       <div>
-        <a class="brand" href="index.html"><img class="brand-icon" src="img/isotype.svg" alt="El Octágono" />EL <span class="brand-arena">OCTÁGONO</span></a>
-        <div class="subtitle">Modo Compañero · vista pública</div>
+        <h1 class="section-title" style="margin:0;">Modo Compañero</h1>
+        <div class="subtitle">vista pública</div>
       </div>
       <div style="display:flex; flex-direction:column; align-items:flex-end; gap: 10px;">
         <span class="live-badge"><span class="blip"></span>EN VIVO</span>
-        <a class="btn btn-ghost" href="index.html">← Volver</a>
+        <a class="btn btn-ghost" href="index.html"><i class="fa-solid fa-arrow-left"></i> Volver</a>
       </div>
     </div>
 
@@ -38,7 +66,7 @@
     </section>
 
     <div style="text-align: center; margin: 40px 0 0;">
-      <a href="historial.html" class="btn btn-outline">Ver historial de torneos</a>
+      <a href="historial.html" class="btn btn-outline"><i class="fa-solid fa-clock-rotate-left"></i> Ver historial de torneos</a>
     </div>
 
     <footer class="credits">© <span id="copyright-year"></span> El Octágono · Modo Compañero (solo lectura)</footer>
@@ -48,6 +76,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
   <script src="js/firebase-sync.js"></script>
   <script src="js/companero-view.js"></script>
+  <script src="js/nav.js"></script>
   <script src="js/copyright.js"></script>
 </body>
 </html>

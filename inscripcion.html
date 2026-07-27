@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Inscribirme — El Octágono</title>
+<link rel="icon" href="img/isotype.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="navbar-fixed">
+    <div class="navbar-inner">
+      <div class="navbar-brand-center">
+        <a class="brand" href="index.html"><img class="brand-icon" src="img/isotype.svg" alt="El Octágono" />EL <span class="brand-arena">OCTÁGONO</span></a>
+        <div class="subtitle">Torneos Online</div>
+      </div>
+
+      <nav class="main-nav">
+        <a href="companero-view.html"><i class="fa-solid fa-people-group"></i> Torneos Compañero</a>
+        <a href="equipos-view.html"><i class="fa-solid fa-users-rectangle"></i> Torneos por Equipos</a>
+        <a href="historial.html"><i class="fa-solid fa-clock-rotate-left"></i> Historial</a>
+        <a href="inscripcion.html" class="btn btn-primary"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
+      </nav>
+
+      <button class="hamburger-btn" id="hamburger-btn" aria-label="Abrir menú" aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="companero-view.html"><i class="fa-solid fa-people-group"></i> Torneos Compañero</a>
+      <a href="equipos-view.html"><i class="fa-solid fa-users-rectangle"></i> Torneos por Equipos</a>
+      <a href="historial.html"><i class="fa-solid fa-clock-rotate-left"></i> Historial</a>
+      <a href="inscripcion.html" class="btn btn-primary btn-block"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
+    </div>
+  </div>
+
+  <div class="page page-offset-navbar">
+    <div class="hero">
+      <h1>Inscríbete a tu torneo</h1>
+      <p>Elige el valor de inscripción de tu torneo, transfiere por QR a Deuna o coordina el pago directo conmigo por WhatsApp.</p>
+    </div>
+
+    <div class="bento-grid" style="margin-bottom: 28px;">
+      <div class="glass-card fee-card">
+        <div class="icon">🆓</div>
+        <h2>Amistoso</h2>
+        <div class="fee-price">$0</div>
+        <p>Sin costo de inscripción.</p>
+      </div>
+      <div class="glass-card fee-card">
+        <div class="icon">🥉</div>
+        <h2>Torneo $1</h2>
+        <div class="fee-price">$1 <span class="unit">USD</span></div>
+        <p>Por dúo o equipo.</p>
+      </div>
+      <div class="glass-card fee-card">
+        <div class="icon">🥈</div>
+        <h2>Torneo $2</h2>
+        <div class="fee-price">$2 <span class="unit">USD</span></div>
+        <p>Por dúo o equipo.</p>
+      </div>
+      <div class="glass-card fee-card">
+        <div class="icon">🥇</div>
+        <h2>Torneo $5</h2>
+        <div class="fee-price">$5 <span class="unit">USD</span></div>
+        <p>Por dúo o equipo.</p>
+      </div>
+    </div>
+
+    <div class="glass-card" style="max-width: 560px; margin: 0 auto; text-align: center;">
+      <h2 class="section-title"><i class="fa-brands fa-whatsapp" style="color:#25D366;"></i> Cómo pagar</h2>
+      <p class="section-sub">
+        Transfiere el valor de tu torneo por <strong>Deuna</strong> (la app de pagos online) escaneando el código QR,
+        o haciendo una transferencia directa. Escríbeme por WhatsApp y te paso el QR y confirmamos tu inscripción.
+      </p>
+      <div class="actions-row" style="justify-content:center; margin-top: 22px;">
+        <a
+          id="whatsapp-pay-btn"
+          class="btn btn-primary"
+          href="#"
+          target="_blank"
+          rel="noopener"
+        >
+          <i class="fa-brands fa-whatsapp"></i> Pagar por WhatsApp
+        </a>
+        <a href="index.html" class="btn btn-ghost"><i class="fa-solid fa-arrow-left"></i> Volver</a>
+      </div>
+    </div>
+
+    <footer class="credits">© <span id="copyright-year"></span> El Octágono. Todos los derechos reservados.</footer>
+  </div>
+
+  <script src="js/nav.js"></script>
+  <script src="js/copyright.js"></script>
+</body>
+</html>
