@@ -610,6 +610,28 @@ input[type="text"]:focus, select:focus {
   background: rgba(255, 90, 90, 0.12);
 }
 
+.share-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 0.9rem;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.share-btn:hover {
+  color: var(--accent-2);
+  background: var(--glass-bg-hover);
+}
+
 .pill-buttons {
   display: flex;
   gap: 8px;
