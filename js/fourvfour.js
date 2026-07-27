@@ -1,8 +1,6 @@
 const MODE = "fourvfour";
 const NUM_TEAMS = 2;
 
-fbInitAdmin();
-
 const setupSection = document.getElementById("setup-section");
 const seriesSection = document.getElementById("series-section");
 const playerInputsEl = document.getElementById("player-inputs");

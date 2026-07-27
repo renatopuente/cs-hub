@@ -1,8 +1,6 @@
 const MODE = "companero";
 const TEAM_SIZE = 2;
 
-fbInitAdmin();
-
 const setupSection = document.getElementById("setup-section");
 const resultSection = document.getElementById("result-section");
 const teamCountSelect = document.getElementById("team-count");

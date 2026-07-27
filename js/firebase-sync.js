@@ -1,5 +1,6 @@
-// Firebase Realtime Database sync: admin pages write here (after anonymous sign-in),
-// public view pages just read. Loaded via the firebase-*-compat.js CDN scripts.
+// Firebase Realtime Database sync: admin pages write here (once signed in via
+// the GitHub login gate, see auth-gate.js), public view pages just read.
+// Loaded via the firebase-*-compat.js CDN scripts.
 
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyDl_usWJ17M7hL9myfgyQe9PBLHN1JXXzQ",
@@ -14,24 +15,16 @@ const FIREBASE_CONFIG = {
 firebase.initializeApp(FIREBASE_CONFIG);
 const fbDb = firebase.database();
 
-// Admin pages call this once on load; it signs in anonymously so writes are allowed
-// by the ".write": "auth != null" database rule. View pages never call this.
-let fbAuthReady = null;
-function fbInitAdmin() {
-  fbAuthReady = firebase.auth().signInAnonymously();
-  fbAuthReady.catch((err) => console.error("Firebase anonymous sign-in failed", err));
-}
-
 // storage.js calls these (if defined) on every save/clear, so every existing
-// save/clear call site gets synced to Firebase automatically.
+// save/clear call site gets synced to Firebase automatically. By the time a
+// user can trigger these (the admin UI is hidden behind the login gate until
+// authenticated), a signed-in GitHub session already exists.
 function pushTournamentToFirebase(mode, data) {
-  if (!fbAuthReady) return;
-  fbAuthReady.then(() => fbDb.ref(`tournaments/${mode}`).set(data)).catch((err) => console.error("Firebase write failed", err));
+  fbDb.ref(`tournaments/${mode}`).set(data).catch((err) => console.error("Firebase write failed", err));
 }
 
 function clearTournamentFromFirebase(mode) {
-  if (!fbAuthReady) return;
-  fbAuthReady.then(() => fbDb.ref(`tournaments/${mode}`).remove()).catch((err) => console.error("Firebase clear failed", err));
+  fbDb.ref(`tournaments/${mode}`).remove().catch((err) => console.error("Firebase clear failed", err));
 }
 
 // Public view pages call this: no sign-in, read-only, live updates.
