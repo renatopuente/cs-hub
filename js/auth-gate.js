@@ -1,7 +1,8 @@
 // Gates admin pages behind a real Firebase-verified GitHub login.
-// While ADMIN_UID is empty, any authenticated GitHub account is let through
-// (bootstrap phase) — its UID is shown on screen so it can be locked down.
-const ADMIN_UID = "";
+// Locked to Renato's account — the DB write rule mirrors this UID too
+// (see the Firebase Realtime Database rules), so even someone who
+// signs in with a different GitHub account can't write tournament data.
+const ADMIN_UID = "NlLYYKa6lQXRIk2m2PlpXYkGk1e2";
 
 const loginGateEl = document.getElementById("login-gate");
 const protectedContentEl = document.getElementById("protected-content");
