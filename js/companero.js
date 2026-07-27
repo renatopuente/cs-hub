@@ -442,12 +442,25 @@ function bracketResultFor(tournament, teamId) {
   return "Sin definir";
 }
 
+function bracketPlacementRank(tournament, teamId) {
+  const m = tournament.matches;
+  if (m.final.winner === teamId) return 1;
+  if (m.third.winner === teamId) return 3;
+  if (m.final.winner && (m.final.a === teamId || m.final.b === teamId)) return 2;
+  if (m.third.winner && (m.third.a === teamId || m.third.b === teamId)) return 4;
+  return 5;
+}
+
 function computeFinalResults(tournament) {
   if (tournament.format === "series") {
     const [teamA, teamB] = tournament.teams;
     const scoreA = tournament.games.filter((g) => g.winner === teamA.id).length;
     const scoreB = tournament.games.filter((g) => g.winner === teamB.id).length;
-    return tournament.teams.map((t) => {
+    // Winner listed first (if decided), loser after — undecided series keep creation order.
+    const ordered = tournament.winner
+      ? [...tournament.teams].sort((a, b) => (a.id === tournament.winner ? -1 : b.id === tournament.winner ? 1 : 0))
+      : tournament.teams;
+    return ordered.map((t) => {
       const own = t.id === teamA.id ? scoreA : scoreB;
       const other = t.id === teamA.id ? scoreB : scoreA;
       let result = `En curso (${own}-${other})`;
@@ -457,11 +470,15 @@ function computeFinalResults(tournament) {
   }
 
   if (tournament.format === "roundrobin") {
+    // computeStandings already ranks by wins descending — winner first.
     const { ranked } = computeStandings(tournament);
     return ranked.map((r, i) => ({ name: r.team.name, players: r.team.players, result: `#${i + 1} (${r.wins} victorias)` }));
   }
 
-  return tournament.teams.map((t) => ({ name: t.name, players: t.players, result: bracketResultFor(tournament, t.id) }));
+  const ordered = [...tournament.teams].sort(
+    (a, b) => bracketPlacementRank(tournament, a.id) - bracketPlacementRank(tournament, b.id)
+  );
+  return ordered.map((t) => ({ name: t.name, players: t.players, result: bracketResultFor(tournament, t.id) }));
 }
 
 function finalizeTournament(tournament) {

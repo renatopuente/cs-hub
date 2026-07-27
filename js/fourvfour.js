@@ -126,7 +126,11 @@ function computeFinalResults(tournament) {
   const [teamA, teamB] = tournament.teams;
   const scoreA = winsFor(tournament, teamA.id);
   const scoreB = winsFor(tournament, teamB.id);
-  return tournament.teams.map((t) => {
+  // Winner listed first (if decided), loser after — undecided series keep creation order.
+  const ordered = tournament.winner
+    ? [...tournament.teams].sort((a, b) => (a.id === tournament.winner ? -1 : b.id === tournament.winner ? 1 : 0))
+    : tournament.teams;
+  return ordered.map((t) => {
     const own = t.id === teamA.id ? scoreA : scoreB;
     const other = t.id === teamA.id ? scoreB : scoreA;
     let result = `En curso (${own}-${other})`;

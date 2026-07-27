@@ -128,7 +128,7 @@ a { color: inherit; }
 .mobile-menu {
   display: none;
   flex-direction: column;
-  gap: 16px;
+  gap: 0;
   padding: 6px 20px 22px;
   max-width: 1100px;
   margin: 0 auto;
@@ -144,8 +144,11 @@ a { color: inherit; }
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(155, 77, 255, 0.25);
 }
-.mobile-menu a.btn { justify-content: center; color: #1a1000; }
+.mobile-menu a:last-child { border-bottom: none; }
+.mobile-menu a.btn { justify-content: center; color: #1a1000; margin-top: 10px; }
 
 @media (max-width: 768px) {
   .main-nav { display: none; }
@@ -619,7 +622,7 @@ input[type="text"]:focus, select:focus {
 
 .share-btn {
   position: absolute;
-  top: 20px;
+  top: 58px; /* clears the history-card-banner strip */
   right: 20px;
   border: 1px solid var(--glass-border);
   background: var(--glass-bg);
@@ -702,6 +705,18 @@ input[type="text"]:focus, select:focus {
   padding: 4px 0;
   border-bottom: none;
 }
+.history-card { overflow: hidden; }
+.history-card-banner {
+  height: 44px;
+  margin: -28px -28px 18px -28px;
+  background:
+    linear-gradient(120deg, rgba(155, 77, 255, 0.92), rgba(255, 110, 199, 0.85)),
+    url("img/isotype.svg");
+  background-repeat: no-repeat, repeat;
+  background-size: cover, 34px 34px;
+  background-blend-mode: overlay;
+}
+
 .vs-badge {
   display: inline-block;
   color: var(--accent-2);

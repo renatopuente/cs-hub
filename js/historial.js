@@ -44,6 +44,7 @@ function renderHistoryList(container, list) {
 
       return `
         <div class="glass-card history-card" data-history-id="${entry.id}" style="margin-bottom: 20px; position:relative;">
+          <div class="history-card-banner"></div>
           <button class="share-btn" data-share-id="${entry.id}" title="Compartir">
             <i class="fa-solid fa-share-nodes"></i>
           </button>
