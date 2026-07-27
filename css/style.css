@@ -64,6 +64,21 @@ a { color: inherit; }
   margin-bottom: 36px;
 }
 
+.navbar-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  min-height: 64px;
+  margin-bottom: 0;
+  padding: 0 24px;
+  background: rgba(11, 9, 16, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--glass-border);
+}
+
 .brand {
   display: flex;
   align-items: center;
