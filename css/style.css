@@ -824,3 +824,23 @@ footer.credits {
   font-size: 0.78rem;
   margin-top: 60px;
 }
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 16px;
+}
+.social-icons a {
+  color: var(--text-dim);
+  font-size: 1.3rem;
+  transition: color 0.15s ease;
+}
+.social-icons a:hover { color: var(--accent-2); }
+
+.made-with-love {
+  text-align: center;
+  color: var(--text-faint);
+  font-size: 0.85rem;
+  margin: 0 0 16px;
+}

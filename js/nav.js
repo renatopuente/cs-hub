@@ -16,3 +16,22 @@ if (hamburgerBtn && mobileMenu) {
     });
   });
 }
+
+// Home: clicking the hero banner scrolls down to the mode cards.
+const heroBannerScroll = document.getElementById("hero-banner-scroll");
+const tournamentModesEl = document.getElementById("tournament-modes");
+if (heroBannerScroll && tournamentModesEl) {
+  heroBannerScroll.addEventListener("click", () => {
+    tournamentModesEl.scrollIntoView({ behavior: "smooth" });
+  });
+}
+
+// Inscripción: clicking any fee card scrolls down to the payment info.
+const paymentInfoEl = document.getElementById("payment-info");
+if (paymentInfoEl) {
+  document.querySelectorAll(".fee-card-link").forEach((card) => {
+    card.addEventListener("click", () => {
+      paymentInfoEl.scrollIntoView({ behavior: "smooth" });
+    });
+  });
+}
