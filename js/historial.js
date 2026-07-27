@@ -25,10 +25,10 @@ function renderHistoryList(container, list) {
         .map(
           (t) => `
             <tr>
-              <td>${t.name}</td>
-              <td>${(t.players || []).join(", ")}</td>
-              <td>${t.result}</td>
-              <td>${entryFee}</td>
+              <td data-label="Equipo">${t.name}</td>
+              <td data-label="Integrantes">${(t.players || []).join(", ")}</td>
+              <td data-label="Resultado">${t.result}</td>
+              <td data-label="Torneo">${entryFee}</td>
             </tr>
           `
         )

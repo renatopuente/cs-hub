@@ -160,7 +160,7 @@ function renderRoundRobin(tournament) {
   const allDecided = tournament.matches.every((m) => m.winner);
 
   const standingsRows = ranked
-    .map((r, i) => `<tr><td class="rank">#${i + 1}</td><td style="color:${r.team.color}">${r.team.name}</td><td>${r.wins}</td></tr>`)
+    .map((r, i) => `<tr><td class="rank" data-label="Posición">#${i + 1}</td><td data-label="Equipo" style="color:${r.team.color}">${r.team.name}</td><td data-label="Victorias">${r.wins}</td></tr>`)
     .join("");
 
   matchesViewEl.innerHTML = `

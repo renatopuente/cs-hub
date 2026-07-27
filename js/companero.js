@@ -376,9 +376,9 @@ function renderRoundRobin(tournament) {
     .map(
       (r, i) => `
       <tr>
-        <td class="rank">#${i + 1}</td>
-        <td style="color:${r.team.color}">${r.team.name}</td>
-        <td>${r.wins}</td>
+        <td class="rank" data-label="Posición">#${i + 1}</td>
+        <td data-label="Equipo" style="color:${r.team.color}">${r.team.name}</td>
+        <td data-label="Victorias">${r.wins}</td>
       </tr>
     `
     )

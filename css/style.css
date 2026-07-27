@@ -674,6 +674,46 @@ input[type="text"]:focus, select:focus {
 .standings-table tbody tr { border-bottom: 1px solid rgba(255, 255, 255, 0.04); }
 .standings-table .rank { font-weight: 700; color: var(--accent-2); }
 
+/* Below this width, tables stack as labeled cards instead of scrolling
+   sideways — each cell becomes its own row with its column header
+   as a prefix label (via data-label). */
+@media (max-width: 640px) {
+  .table-scroll { overflow-x: visible; }
+
+  .standings-table { min-width: 0; }
+  .standings-table thead { display: none; }
+  .standings-table, .standings-table tbody, .standings-table tr, .standings-table td {
+    display: block;
+    width: 100%;
+  }
+  .standings-table tr {
+    margin-bottom: 12px;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    padding: 4px 12px;
+  }
+  .standings-table tr:last-child { margin-bottom: 0; }
+  .standings-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: right;
+  }
+  .standings-table td:last-child { border-bottom: none; }
+  .standings-table td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    font-size: 0.68rem;
+    letter-spacing: 0.5px;
+    text-align: left;
+  }
+}
+
 .empty-hint {
   color: var(--text-faint);
   font-size: 0.85rem;
