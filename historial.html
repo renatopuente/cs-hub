@@ -3,54 +3,38 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Historial — El Octágono</title>
-<meta name="robots" content="noindex, nofollow" />
+<title>Historial de torneos — El Octágono</title>
 <link rel="icon" href="img/isotype.svg" type="image/svg+xml" />
 <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
+<body class="readonly">
   <div class="page">
     <div class="top-bar">
       <div>
-        <a class="brand" href="admin.html"><img class="brand-icon" src="img/isotype.svg" alt="El Octágono" />EL <span class="brand-arena">OCTÁGONO</span></a>
-        <div class="subtitle">Historial de torneos · privado</div>
+        <a class="brand" href="index.html"><img class="brand-icon" src="img/isotype.svg" alt="El Octágono" />EL <span class="brand-arena">OCTÁGONO</span></a>
+        <div class="subtitle">Historial de torneos · vista pública</div>
       </div>
-      <div style="display:flex; align-items:center; gap: 10px;">
-        <button id="logout-btn" class="btn btn-ghost btn-sm" hidden>Cerrar sesión</button>
-        <a class="back-link" href="admin.html">← Panel admin</a>
-      </div>
+      <a class="back-link" href="index.html">← Volver</a>
     </div>
 
-    <section id="login-gate" class="glass-card" style="max-width: 420px; margin: 80px auto; text-align: center;">
-      <div class="icon" style="font-size: 2rem; margin-bottom: 10px;">🔒</div>
-      <h2 class="section-title">Acceso restringido</h2>
-      <p class="section-sub">Inicia sesión con tu cuenta de GitHub para continuar.</p>
-      <button id="login-btn" class="btn btn-primary btn-block">Iniciar sesión con GitHub</button>
-      <p id="uid-hint" class="section-sub" hidden style="margin-top: 16px; font-size: 0.78rem; word-break: break-all;"></p>
-    </section>
-
-    <div id="protected-content" hidden>
-      <div class="section-heading" style="margin-top:0;">
-        <h2>Modo Compañero</h2>
-        <p>Torneos finalizados, del más reciente al más antiguo.</p>
-      </div>
-      <div id="companero-history"></div>
-
-      <div class="section-heading">
-        <h2>Modo Equipos</h2>
-        <p>Series finalizadas, de la más reciente a la más antigua.</p>
-      </div>
-      <div id="fourvfour-history"></div>
+    <div class="section-heading" style="margin-top:0;">
+      <h2>Modo Compañero</h2>
+      <p>Torneos finalizados, del más reciente al más antiguo.</p>
     </div>
+    <div id="companero-history"></div>
 
-    <footer class="credits">© <span id="copyright-year"></span> El Octágono · Panel privado</footer>
+    <div class="section-heading">
+      <h2>Modo Equipos</h2>
+      <p>Series finalizadas, de la más reciente a la más antigua.</p>
+    </div>
+    <div id="fourvfour-history"></div>
+
+    <footer class="credits">© <span id="copyright-year"></span> El Octágono</footer>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
   <script src="js/firebase-sync.js"></script>
-  <script src="js/auth-gate.js"></script>
   <script src="js/historial.js"></script>
   <script src="js/copyright.js"></script>
 </body>
