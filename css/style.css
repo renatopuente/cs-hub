@@ -179,7 +179,7 @@ a { color: inherit; }
 }
 
 .brand-logo {
-  height: 52px;
+  height: 64px;
   width: auto;
   display: block;
 }
@@ -859,6 +859,22 @@ input[type="text"]:focus, select:focus {
   padding: 30px 10px;
 }
 
+.history-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin: 8px 0 32px;
+}
+.history-pagination-label {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+.history-pagination .btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
 /* ---------- Landing: hero + plans ---------- */
 
 .hero {
@@ -880,7 +896,7 @@ input[type="text"]:focus, select:focus {
 }
 
 .hero-banner {
-  margin: -32px 0 32px; /* cancels body's 32px top padding: banner sits flush at the very top */
+  margin: 0 0 32px; /* the season marquee now owns the flush-top treatment */
 }
 
 .hero-banner img {
@@ -891,19 +907,55 @@ input[type="text"]:focus, select:focus {
   box-shadow: 10px 10px 24px var(--shadow-dark), -6px -6px 18px var(--shadow-light);
 }
 
-/* Mobile only: banner goes full-bleed edge-to-edge, cleared below the
-   fixed navbar (navbar height ~96px + 32px extra breathing room). */
+/* Mobile only: banner goes full-bleed edge-to-edge. */
 @media (max-width: 768px) {
   .hero-banner {
     width: 100vw;
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
-    margin-top: -32px; /* flush at the very top, same treatment as desktop */
   }
   .hero-banner img {
     border-radius: 0;
     box-shadow: none;
   }
+}
+
+/* Season marquee: full-bleed lilac ticker, flush against the fixed navbar
+   (cancels body's 32px top padding), announcing the current/next season. */
+.season-marquee {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  margin-top: -32px;
+  margin-bottom: 24px;
+  overflow: hidden;
+  background: var(--accent);
+  padding: 9px 0;
+  white-space: nowrap;
+}
+
+.season-marquee-track {
+  display: inline-flex;
+  animation: season-marquee-scroll 26s linear infinite;
+}
+
+.season-marquee-content {
+  display: inline-block;
+  padding-right: 60px;
+  color: #150a26;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+@keyframes season-marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .season-marquee-track { animation: none; }
 }
 
 .section-heading {

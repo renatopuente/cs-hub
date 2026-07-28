@@ -32,6 +32,9 @@ let lastDuelosList = [];
 let lastDuosList = [];
 let lastPugList = [];
 
+const PAGE_SIZE = 2;
+const currentPage = { duelos: 0, duos: 0, pug: 0 };
+
 firebase.auth().onAuthStateChanged((user) => {
   isAdmin = !!user && user.uid === ADMIN_UID;
   renderHistoryList(duelosHistoryEl, lastDuelosList, "duelos");
@@ -39,13 +42,29 @@ firebase.auth().onAuthStateChanged((user) => {
   renderHistoryList(pugHistoryEl, lastPugList, "pug");
 });
 
-function renderHistoryList(container, list, mode) {
+// Only the current season's results show up here — every 3 months the
+// season rolls over and older tournaments (still safely in Firebase)
+// stop appearing, which is how "el historial se borra" actually works
+// without a backend job to delete anything.
+function currentSeasonList(list) {
+  const idx = currentSeasonIndex();
+  return list.filter((entry) => entry.finalizedAt && seasonIndexForDate(new Date(entry.finalizedAt)) === idx);
+}
+
+function renderHistoryList(container, fullList, mode) {
+  const list = currentSeasonList(fullList);
+
   if (!list.length) {
-    container.innerHTML = `<div class="glass-card empty-hint">Todavía no hay torneos finalizados.</div>`;
+    container.innerHTML = `<div class="glass-card empty-hint">Todavía no hay torneos finalizados esta temporada.</div>`;
     return;
   }
 
-  container.innerHTML = list
+  const totalPages = Math.max(1, Math.ceil(list.length / PAGE_SIZE));
+  if (currentPage[mode] >= totalPages) currentPage[mode] = totalPages - 1;
+  const page = currentPage[mode];
+  const pageItems = list.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE);
+
+  const cardsHtml = pageItems
     .map((entry) => {
       const entryFee = entry.entryFee || "Gratuito";
       const rowParts = [];
@@ -96,6 +115,30 @@ function renderHistoryList(container, list, mode) {
       `;
     })
     .join("");
+
+  const paginationHtml =
+    totalPages > 1
+      ? `
+        <div class="history-pagination">
+          <button class="btn btn-ghost btn-sm" data-page-prev ${page === 0 ? "disabled" : ""}><i class="fa-solid fa-chevron-left"></i> Anterior</button>
+          <span class="history-pagination-label">Página ${page + 1} de ${totalPages}</span>
+          <button class="btn btn-ghost btn-sm" data-page-next ${page >= totalPages - 1 ? "disabled" : ""}>Siguiente <i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      `
+      : "";
+
+  container.innerHTML = cardsHtml + paginationHtml;
+
+  container.querySelector("[data-page-prev]")?.addEventListener("click", () => {
+    currentPage[mode] = Math.max(0, currentPage[mode] - 1);
+    renderHistoryList(container, fullList, mode);
+    container.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  container.querySelector("[data-page-next]")?.addEventListener("click", () => {
+    currentPage[mode] = currentPage[mode] + 1;
+    renderHistoryList(container, fullList, mode);
+    container.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 
   container.querySelectorAll("[data-share-id]").forEach((btn) => {
     btn.addEventListener("click", () => {

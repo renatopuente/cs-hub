@@ -15,8 +15,10 @@ let pugHistory = [];
 
 function buildRanking() {
   const stats = {};
+  const seasonIdx = currentSeasonIndex();
+  const inSeason = (entry) => entry.finalizedAt && seasonIndexForDate(new Date(entry.finalizedAt)) === seasonIdx;
 
-  [...duelosHistory, ...duosHistory, ...pugHistory].forEach((entry) => {
+  [...duelosHistory, ...duosHistory, ...pugHistory].filter(inSeason).forEach((entry) => {
     (entry.teams || []).forEach((t) => {
       const won = isWinningResult(t.result);
       (t.players || []).forEach((rawName) => {
