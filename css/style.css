@@ -177,6 +177,20 @@ a { color: inherit; }
   flex-shrink: 0;
 }
 
+.brand-logo {
+  height: 52px;
+  width: auto;
+  display: block;
+}
+
+.footer-logo {
+  height: 30px;
+  width: auto;
+  display: block;
+  margin: 0 auto 14px;
+  filter: brightness(0) invert(1);
+}
+
 .brand-arena {
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
   -webkit-background-clip: text;
