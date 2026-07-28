@@ -383,6 +383,11 @@ a { color: inherit; }
   padding: 20px;
 }
 
+/* Historial cards: flat, no inner neomorphic shadow on the results table. */
+.history-card .neo-surface {
+  box-shadow: none;
+}
+
 /* ---------- Forms ---------- */
 
 label {
