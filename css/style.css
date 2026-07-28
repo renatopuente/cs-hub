@@ -711,12 +711,11 @@ input[type="text"]:focus, select:focus {
   height: 44px;
   margin: -28px -28px 18px -28px;
   background:
-    linear-gradient(120deg, rgba(155, 77, 255, 0.45), rgba(255, 110, 199, 0.35)),
-    url("img/octoframe.webp");
+    linear-gradient(120deg, rgba(155, 77, 255, 0.15), rgba(255, 110, 199, 0.15)),
+    url("../img/octoframe.webp");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  background-blend-mode: overlay;
 }
 
 .vs-badge {
