@@ -1066,13 +1066,6 @@ footer.credits {
   margin-top: 60px;
 }
 
-.footer-location {
-  text-align: center;
-  color: var(--text-faint);
-  font-size: 0.65rem;
-  margin: 4px 0 0;
-}
-
 .social-icons {
   display: flex;
   justify-content: center;
@@ -1115,4 +1108,4 @@ footer.credits {
 .site-footer-fixed footer.credits { margin-top: 0; }
 
 /* Reserve room above the fixed footer so page content never sits behind it. */
-.page-offset-footer { padding-bottom: 170px; }
+.page-offset-footer { padding-bottom: 150px; }
