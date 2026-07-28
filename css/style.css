@@ -934,6 +934,30 @@ input[type="text"]:focus, select:focus {
   margin-bottom: 8px;
 }
 
+.season-banner-wrap {
+  margin: 0 0 12px;
+}
+
+.season-banner-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  box-shadow: 10px 10px 24px var(--shadow-dark), -6px -6px 18px var(--shadow-light);
+}
+
+@media (max-width: 768px) {
+  .season-banner-wrap {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+  .season-banner-img {
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
 .season-heading-block {
   text-align: center;
   margin: 0 0 28px;

@@ -7,7 +7,7 @@
 // Season 0 starts Feb 1, 2026. Names cycle through curated city + gem
 // combos (all English) so they never need to be picked by hand again.
 
-const SEASON_ANCHOR = new Date(2026, 1, 1); // Feb 1, 2026 = season index 0
+const SEASON_ANCHOR = new Date(2026, 2, 1); // Mar 1, 2026 = season index 0
 
 const SEASON_CITIES = [
   "Kyoto", "Monaco", "Manhattan", "Ibiza",
