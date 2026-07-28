@@ -259,6 +259,15 @@ a { color: inherit; }
   background: var(--glass-bg-hover);
 }
 
+.mode-card, .fee-card {
+  border: 1px solid rgba(155, 77, 255, 0.4);
+  box-shadow:
+    10px 10px 24px var(--shadow-dark),
+    -6px -6px 18px var(--shadow-light),
+    0 0 0 1px rgba(155, 77, 255, 0.12),
+    0 0 24px rgba(155, 77, 255, 0.15);
+}
+
 .mode-card {
   min-height: 220px;
   display: flex;
@@ -969,15 +978,22 @@ footer.credits {
   margin-top: 60px;
 }
 
+.footer-location {
+  text-align: center;
+  color: var(--text-faint);
+  font-size: 0.72rem;
+  margin: 4px 0 0;
+}
+
 .social-icons {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 21px;
   margin-bottom: 16px;
 }
 .social-icons a {
   color: var(--text-dim);
-  font-size: 1.625rem;
+  font-size: 1.38rem;
   transition: color 0.15s ease;
 }
 .social-icons a:hover { color: var(--accent-2); }
