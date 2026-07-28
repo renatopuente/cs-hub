@@ -144,10 +144,11 @@ a { color: inherit; }
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 0;
+  padding: 16px 0;
   border-bottom: 1px solid rgba(155, 77, 255, 0.25);
 }
 .mobile-menu a:last-child { border-bottom: none; }
+.mobile-menu a:not(.btn) i { color: var(--accent); }
 .mobile-menu a.btn { justify-content: center; color: #1a1000; margin-top: 10px; }
 
 @media (max-width: 768px) {
@@ -729,6 +730,23 @@ input[type="text"]:focus, select:focus {
   background: var(--surface);
 }
 
+/* Winning team's row: pink stroke around the whole row. */
+.history-table .winner-row td {
+  background: rgba(255, 110, 199, 0.07);
+  border-top: 1px solid var(--accent-2);
+  border-bottom: 1px solid var(--accent-2);
+}
+.history-table .winner-row td:first-child {
+  border-left: 2px solid var(--accent-2);
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+.history-table .winner-row td:last-child {
+  border-right: 2px solid var(--accent-2);
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
 /* Below this width, tables stack as labeled cards instead of scrolling
    sideways — each cell becomes its own row with its column header
    as a prefix label (via data-label). */
@@ -780,6 +798,13 @@ input[type="text"]:focus, select:focus {
     padding: 0;
   }
   .history-table .vs-row td::before { content: none; }
+
+  .history-table tr.winner-row { border-color: var(--accent-2); border-width: 2px; }
+  .history-table tr.winner-row td {
+    background: rgba(255, 110, 199, 0.07);
+    border-bottom: 1px solid rgba(255, 110, 199, 0.3);
+  }
+  .history-table tr.winner-row td:last-child { border-bottom: none; }
 }
 
 .empty-hint {

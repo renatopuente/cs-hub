@@ -18,6 +18,10 @@ function formatDate(ts) {
   return new Date(ts).toLocaleString("es-EC", { dateStyle: "medium", timeStyle: "short" });
 }
 
+function isWinningResult(result) {
+  return typeof result === "string" && (result.includes("🏆") || /^#1\b/.test(result));
+}
+
 function renderHistoryList(container, list) {
   if (!list.length) {
     container.innerHTML = `<div class="glass-card empty-hint">Todavía no hay torneos finalizados.</div>`;
@@ -32,8 +36,9 @@ function renderHistoryList(container, list) {
         if (i > 0) {
           rowParts.push(`<tr class="vs-row"><td colspan="3"><span class="vs-badge">VS</span></td></tr>`);
         }
+        const winnerClass = isWinningResult(t.result) ? " winner-row" : "";
         rowParts.push(`
-          <tr>
+          <tr class="${winnerClass.trim()}">
             <td data-label="Equipo">${t.name}</td>
             <td data-label="Integrantes">${(t.players || []).join(", ")}</td>
             <td data-label="Resultado">${t.result}</td>
