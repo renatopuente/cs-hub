@@ -711,10 +711,11 @@ input[type="text"]:focus, select:focus {
   height: 44px;
   margin: -28px -28px 18px -28px;
   background:
-    linear-gradient(120deg, rgba(155, 77, 255, 0.92), rgba(255, 110, 199, 0.85)),
-    url("img/isotype.svg");
-  background-repeat: no-repeat, repeat;
-  background-size: cover, 34px 34px;
+    linear-gradient(120deg, rgba(155, 77, 255, 0.45), rgba(255, 110, 199, 0.35)),
+    url("img/octoframe.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   background-blend-mode: overlay;
 }
 
@@ -730,21 +731,15 @@ input[type="text"]:focus, select:focus {
   background: var(--surface);
 }
 
-/* Winning team's row: pink stroke around the whole row. */
+/* Winning team's row: one pink outline around the whole row (not per cell —
+   outline draws as a single rectangle regardless of table border-collapse). */
+.history-table tr.winner-row {
+  outline: 2px solid var(--accent-2);
+  outline-offset: -1px;
+}
 .history-table .winner-row td {
   background: rgba(255, 110, 199, 0.07);
-  border-top: 1px solid var(--accent-2);
-  border-bottom: 1px solid var(--accent-2);
-}
-.history-table .winner-row td:first-child {
-  border-left: 2px solid var(--accent-2);
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px;
-}
-.history-table .winner-row td:last-child {
-  border-right: 2px solid var(--accent-2);
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-bottom: none;
 }
 
 /* Below this width, tables stack as labeled cards instead of scrolling
@@ -799,12 +794,15 @@ input[type="text"]:focus, select:focus {
   }
   .history-table .vs-row td::before { content: none; }
 
-  .history-table tr.winner-row { border-color: var(--accent-2); border-width: 2px; }
+  .history-table tr.winner-row {
+    border-color: transparent;
+    outline: 2px solid var(--accent-2);
+    outline-offset: -1px;
+  }
   .history-table tr.winner-row td {
     background: rgba(255, 110, 199, 0.07);
-    border-bottom: 1px solid rgba(255, 110, 199, 0.3);
+    border-bottom: none;
   }
-  .history-table tr.winner-row td:last-child { border-bottom: none; }
 }
 
 .empty-hint {
