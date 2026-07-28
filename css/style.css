@@ -154,6 +154,7 @@ a { color: inherit; }
 @media (max-width: 768px) {
   .main-nav { display: none; }
   .hamburger-btn { display: inline-flex; align-items: center; justify-content: center; }
+  .brand-logo { height: 34px; }
 }
 
 /* Pages without a hero banner need clearance so the fixed navbar
