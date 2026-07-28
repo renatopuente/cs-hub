@@ -981,7 +981,7 @@ footer.credits {
 .footer-location {
   text-align: center;
   color: var(--text-faint);
-  font-size: 0.72rem;
+  font-size: 0.65rem;
   margin: 4px 0 0;
 }
 
@@ -993,7 +993,7 @@ footer.credits {
 }
 .social-icons a {
   color: var(--text-dim);
-  font-size: 1.38rem;
+  font-size: 1.12rem;
   transition: color 0.15s ease;
 }
 .social-icons a:hover { color: var(--accent-2); }
