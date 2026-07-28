@@ -383,11 +383,6 @@ a { color: inherit; }
   padding: 20px;
 }
 
-/* Historial cards: flat, no inner neomorphic shadow on the results table. */
-.history-card .neo-surface {
-  box-shadow: none;
-}
-
 /* ---------- Forms ---------- */
 
 label {
@@ -834,14 +829,15 @@ input[type="text"]:focus, select:focus {
   background: var(--surface);
 }
 
-/* Winning team's row: one pink outline around the whole row (not per cell —
-   outline draws as a single rectangle regardless of table border-collapse). */
+/* Winning team's row: one pink outline around the whole row, no fill (not
+   per cell — outline draws as a single rectangle regardless of table
+   border-collapse; a background tint here read as a muddy inset shadow
+   along the row's edges, so it's just a stroke now). */
 .history-table tr.winner-row {
   outline: 2px solid var(--accent-2);
   outline-offset: -1px;
 }
 .history-table .winner-row td {
-  background: rgba(255, 110, 199, 0.07);
   border-bottom: none;
 }
 
@@ -901,10 +897,8 @@ input[type="text"]:focus, select:focus {
     border-color: transparent;
     outline: 2px solid var(--accent-2);
     outline-offset: -1px;
-    background: rgba(255, 110, 199, 0.07);
   }
   .history-table tr.winner-row td {
-    background: rgba(255, 110, 199, 0.07);
     border-bottom: none;
   }
 }
@@ -938,6 +932,26 @@ input[type="text"]:focus, select:focus {
   text-align: center;
   padding: 20px 10px 8px;
   margin-bottom: 8px;
+}
+
+.season-heading-block {
+  text-align: center;
+  margin: 0 0 28px;
+}
+
+.season-heading-name {
+  font-size: 2.1rem;
+  margin: 0;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.season-heading-dates {
+  color: var(--text-faint);
+  font-size: 0.75rem;
+  margin: 4px 0 0;
 }
 
 .hero h1 {
@@ -1041,6 +1055,33 @@ input[type="text"]:focus, select:focus {
   font-size: 0.9rem;
   margin: 0;
 }
+
+.history-accordion-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  color: var(--text);
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 16px 20px;
+  margin: 20px 0 0;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.history-accordion-toggle:hover { background: var(--glass-bg-hover); }
+.history-accordion-toggle span { display: flex; align-items: center; gap: 10px; }
+.history-accordion-toggle .toggle-icon {
+  transition: transform 0.2s ease;
+  color: var(--text-dim);
+}
+.history-accordion-toggle[aria-expanded="true"] .toggle-icon { transform: rotate(180deg); }
+
+.history-accordion-panel { margin-top: 16px; }
 
 .fee-card h2 {
   margin: 4px 0 2px;

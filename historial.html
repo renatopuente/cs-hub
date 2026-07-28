@@ -48,23 +48,25 @@
       <a class="back-link" href="index.html"><i class="fa-solid fa-arrow-left"></i> Volver</a>
     </div>
 
-    <div class="section-heading" style="margin-top:0;">
-      <h2>Duelos</h2>
-      <p>Torneos finalizados, del más reciente al más antiguo.</p>
-    </div>
-    <div id="duelos-history"></div>
+    <div class="history-accordion">
+      <button class="history-accordion-toggle" data-target="duelos-history" aria-expanded="true">
+        <span><i class="fa-solid fa-hand-fist"></i> Duelos</span>
+        <i class="fa-solid fa-chevron-down toggle-icon"></i>
+      </button>
+      <div id="duelos-history" class="history-accordion-panel"></div>
 
-    <div class="section-heading">
-      <h2>Duos</h2>
-      <p>Torneos finalizados, del más reciente al más antiguo.</p>
-    </div>
-    <div id="duos-history"></div>
+      <button class="history-accordion-toggle" data-target="duos-history" aria-expanded="false">
+        <span><i class="fa-solid fa-people-group"></i> Duos</span>
+        <i class="fa-solid fa-chevron-down toggle-icon"></i>
+      </button>
+      <div id="duos-history" class="history-accordion-panel" hidden></div>
 
-    <div class="section-heading">
-      <h2>Pug</h2>
-      <p>Series finalizadas, de la más reciente a la más antigua.</p>
+      <button class="history-accordion-toggle" data-target="pug-history" aria-expanded="false">
+        <span><i class="fa-solid fa-users-rectangle"></i> Pug</span>
+        <i class="fa-solid fa-chevron-down toggle-icon"></i>
+      </button>
+      <div id="pug-history" class="history-accordion-panel" hidden></div>
     </div>
-    <div id="pug-history"></div>
   </div>
 
   <footer class="site-footer-fixed">

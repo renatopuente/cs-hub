@@ -228,3 +228,20 @@ fbSubscribeHistory("pug", (list) => {
   lastPugList = list;
   renderHistoryList(pugHistoryEl, list, "pug");
 });
+
+// Accordion: only one mode's history stays expanded at a time.
+document.querySelectorAll(".history-accordion-toggle").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const alreadyOpen = btn.getAttribute("aria-expanded") === "true";
+
+    document.querySelectorAll(".history-accordion-toggle").forEach((otherBtn) => {
+      otherBtn.setAttribute("aria-expanded", "false");
+      document.getElementById(otherBtn.dataset.target).hidden = true;
+    });
+
+    if (!alreadyOpen) {
+      btn.setAttribute("aria-expanded", "true");
+      document.getElementById(btn.dataset.target).hidden = false;
+    }
+  });
+});
