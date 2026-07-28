@@ -298,6 +298,29 @@ a { color: inherit; }
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.mode-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Subtle lilac dot texture in the corner — only mode cards get it, so
+   this section reads visually distinct from the plain fee cards below. */
+.mode-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  background-image: radial-gradient(rgba(155, 77, 255, 0.5) 1.4px, transparent 1.4px);
+  background-size: 13px 13px;
+  -webkit-mask-image: radial-gradient(circle at top right, black, transparent 72%);
+  mask-image: radial-gradient(circle at top right, black, transparent 72%);
+  pointer-events: none;
 }
 
 .mode-card .icon {
