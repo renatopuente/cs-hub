@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Modo Equipos (en vivo) — El Octágono</title>
+<title>Duelos (en vivo) — El Octágono</title>
 <link rel="icon" href="img/isotype.svg" type="image/svg+xml" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 <link rel="stylesheet" href="css/style.css" />
@@ -17,8 +17,9 @@
       </div>
 
       <nav class="main-nav">
-        <a href="companero-view.html"><i class="fa-solid fa-people-group"></i> Torneos Compañero</a>
-        <a href="equipos-view.html"><i class="fa-solid fa-users-rectangle"></i> Torneos por Equipos</a>
+        <a href="duelos-view.html"><i class="fa-solid fa-hand-fist"></i> Duelos</a>
+        <a href="duos-view.html"><i class="fa-solid fa-people-group"></i> Duos</a>
+        <a href="pug-view.html"><i class="fa-solid fa-users-rectangle"></i> Pug</a>
         <a href="historial.html"><i class="fa-solid fa-clock-rotate-left"></i> Historial</a>
         <a href="inscripcion.html" class="btn btn-primary"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
       </nav>
@@ -29,8 +30,9 @@
     </div>
 
     <div class="mobile-menu" id="mobile-menu">
-      <a href="companero-view.html"><i class="fa-solid fa-people-group"></i> Torneos Compañero</a>
-      <a href="equipos-view.html"><i class="fa-solid fa-users-rectangle"></i> Torneos por Equipos</a>
+      <a href="duelos-view.html"><i class="fa-solid fa-hand-fist"></i> Duelos</a>
+      <a href="duos-view.html"><i class="fa-solid fa-people-group"></i> Duos</a>
+      <a href="pug-view.html"><i class="fa-solid fa-users-rectangle"></i> Pug</a>
       <a href="historial.html"><i class="fa-solid fa-clock-rotate-left"></i> Historial</a>
       <a href="inscripcion.html" class="btn btn-primary btn-block"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
     </div>
@@ -39,7 +41,7 @@
   <div class="page page-offset-navbar page-offset-footer">
     <div class="top-bar">
       <div>
-        <h1 class="section-title" style="margin:0;">Modo Equipos</h1>
+        <h1 class="section-title" style="margin:0;">Duelos</h1>
         <div class="subtitle">vista pública</div>
       </div>
       <div style="display:flex; flex-direction:column; align-items:flex-end; gap: 10px;">
@@ -50,19 +52,18 @@
 
     <div id="empty-state" class="glass-card empty-hint">Esperando a que se cree un torneo…</div>
 
-    <section id="series-section" hidden>
+    <section id="result-section" hidden>
       <div id="champion-banner"></div>
 
       <div class="glass-card" style="margin-bottom: 20px;">
-        <h2 class="section-title">Equipos</h2>
-        <div class="bento-grid two-col" id="teams-list"></div>
+        <h2 class="section-title">Jugadores</h2>
+        <div class="bento-grid" id="teams-list"></div>
       </div>
 
       <div class="glass-card">
-        <h2 class="section-title">Marcador de la serie</h2>
-        <p class="section-sub" id="series-format-label"></p>
-        <div class="neo-surface series-score" id="series-score"></div>
-        <div class="game-log" id="game-log"></div>
+        <h2 class="section-title" id="matches-title">Llaves</h2>
+        <p class="section-sub" id="matches-sub"></p>
+        <div id="matches-view"></div>
       </div>
     </section>
 
@@ -81,14 +82,15 @@
         <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
       </div>
       <p class="made-with-love">Diseñado por un equipo de <span style="color: var(--accent);">Pulpos</span> en 🇪🇨 con 💜</p>
-      <footer class="credits">© <span id="copyright-year"></span> El Octágono · Modo Equipos (solo lectura)</footer>
+      <footer class="credits">© <span id="copyright-year"></span> El Octágono · Duelos (solo lectura)</footer>
     </div>
   </footer>
 
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
   <script src="js/firebase-sync.js"></script>
-  <script src="js/equipos-view.js"></script>
+  <script>const MODE = "duelos";</script>
+  <script src="js/squads-view.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/copyright.js"></script>
 </body>

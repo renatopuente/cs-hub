@@ -1,5 +1,6 @@
-const companeroHistoryEl = document.getElementById("companero-history");
-const fourvfourHistoryEl = document.getElementById("fourvfour-history");
+const duelosHistoryEl = document.getElementById("duelos-history");
+const duosHistoryEl = document.getElementById("duos-history");
+const pugHistoryEl = document.getElementById("pug-history");
 
 const FORMAT_LABELS = {
   bracket: "Llaves (semifinales + 3er puesto)",
@@ -27,13 +28,15 @@ function isWinningResult(result) {
 // page itself requires no login. The DB rule enforces this UID regardless.
 const ADMIN_UID = "NlLYYKa6lQXRIk2m2PlpXYkGk1e2";
 let isAdmin = false;
-let lastCompaneroList = [];
-let lastFourvfourList = [];
+let lastDuelosList = [];
+let lastDuosList = [];
+let lastPugList = [];
 
 firebase.auth().onAuthStateChanged((user) => {
   isAdmin = !!user && user.uid === ADMIN_UID;
-  renderHistoryList(companeroHistoryEl, lastCompaneroList, "companero");
-  renderHistoryList(fourvfourHistoryEl, lastFourvfourList, "fourvfour");
+  renderHistoryList(duelosHistoryEl, lastDuelosList, "duelos");
+  renderHistoryList(duosHistoryEl, lastDuosList, "duos");
+  renderHistoryList(pugHistoryEl, lastPugList, "pug");
 });
 
 function renderHistoryList(container, list, mode) {
@@ -162,11 +165,15 @@ async function shareHistoryCard(cardEl) {
   }, "image/png");
 }
 
-fbSubscribeHistory("companero", (list) => {
-  lastCompaneroList = list;
-  renderHistoryList(companeroHistoryEl, list, "companero");
+fbSubscribeHistory("duelos", (list) => {
+  lastDuelosList = list;
+  renderHistoryList(duelosHistoryEl, list, "duelos");
 });
-fbSubscribeHistory("fourvfour", (list) => {
-  lastFourvfourList = list;
-  renderHistoryList(fourvfourHistoryEl, list, "fourvfour");
+fbSubscribeHistory("duos", (list) => {
+  lastDuosList = list;
+  renderHistoryList(duosHistoryEl, list, "duos");
+});
+fbSubscribeHistory("pug", (list) => {
+  lastPugList = list;
+  renderHistoryList(pugHistoryEl, list, "pug");
 });

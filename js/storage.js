@@ -1,8 +1,9 @@
 // Thin localStorage wrapper for tournament state, one slot per mode.
 
 const STORAGE_KEYS = {
-  companero: "cshub_companero_v1",
-  fourvfour: "cshub_fourvfour_v1",
+  duelos: "cshub_duelos_v1",
+  duos: "cshub_duos_v1",
+  pug: "cshub_pug_v1",
 };
 
 function loadTournament(mode) {

@@ -9,13 +9,14 @@ function isWinningResult(result) {
   return typeof result === "string" && (result.includes("🏆") || /^#1\b/.test(result));
 }
 
-let companeroHistory = [];
-let fourvfourHistory = [];
+let duelosHistory = [];
+let duosHistory = [];
+let pugHistory = [];
 
 function buildRanking() {
   const stats = {};
 
-  [...companeroHistory, ...fourvfourHistory].forEach((entry) => {
+  [...duelosHistory, ...duosHistory, ...pugHistory].forEach((entry) => {
     (entry.teams || []).forEach((t) => {
       const won = isWinningResult(t.result);
       (t.players || []).forEach((rawName) => {
@@ -78,11 +79,15 @@ function renderRanking() {
     .join("");
 }
 
-fbSubscribeHistory("companero", (list) => {
-  companeroHistory = list;
+fbSubscribeHistory("duelos", (list) => {
+  duelosHistory = list;
   renderRanking();
 });
-fbSubscribeHistory("fourvfour", (list) => {
-  fourvfourHistory = list;
+fbSubscribeHistory("duos", (list) => {
+  duosHistory = list;
+  renderRanking();
+});
+fbSubscribeHistory("pug", (list) => {
+  pugHistory = list;
   renderRanking();
 });

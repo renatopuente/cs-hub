@@ -4,20 +4,21 @@ Gestor de torneos de Counter-Strike 2 para armar llaves entre amigos. Sitio est�
 
 ## Páginas
 
-- `index.html` — landing pública: acceso a las vistas en vivo de ambos modos.
-- `admin.html` — mini landing privada (no enlazada públicamente) con acceso directo a ambos paneles de administración.
-- `companero.html` / `4v4.html` — paneles de administración (crear torneo, sortear/asignar equipos, avanzar ganadores).
-- `companero-view.html` / `equipos-view.html` — vistas públicas de solo lectura, se actualizan en vivo vía Firebase mientras el admin juega.
+- `index.html` — landing pública: acceso a las vistas en vivo de los tres modos.
+- `admin.html` — mini landing privada (no enlazada públicamente) con acceso directo a los tres paneles de administración.
+- `duelos.html` / `duos.html` / `pug.html` — paneles de administración (crear torneo, sortear/asignar equipos, avanzar ganadores).
+- `duelos-view.html` / `duos-view.html` / `pug-view.html` — vistas públicas de solo lectura, se actualizan en vivo vía Firebase mientras el admin juega.
 
 ## Modos
 
-- **Modo Compañero**: equipos de 2 jugadores. Soporta 2, 3 o 4 equipos:
-  - 2 equipos → serie al mejor de 3.
-  - 3 equipos → todos contra todos, posiciones por victorias.
-  - 4 equipos → semifinales + final, con partido por el 3er puesto entre los perdedores.
-- **Modo Equipos**: 2 equipos con tamaño configurable (3v3, 4v4 o 5v5). Serie al mejor de X partidas (1/3/5/7).
+- **Duelos**: 1 vs 1. Soporta 2, 3 o 4 jugadores:
+  - 2 jugadores → serie al mejor de 3.
+  - 3 jugadores → todos contra todos, posiciones por victorias.
+  - 4 jugadores → semifinales + final, con partido por el 3er puesto entre los perdedores.
+- **Duos**: equipos de 2 jugadores. Mismo soporte de 2/3/4 equipos y formatos que Duelos.
+- **Pug**: 2 equipos de hasta 5 jugadores cada uno, siempre asignados a mano (permite equipos disparejos, ej. 5v3). Serie al mejor de X partidas (1/3/5/7).
 
-Los nombres de equipo se sortean del pool Alfa / Bravo / Charlie / Delta / Echo / Fox y son editables después de crear el torneo. En ambos modos se puede sortear automáticamente o asignar jugadores manualmente.
+Los nombres de equipo se sortean del pool Alfa / Bravo / Charlie / Delta / Echo / Fox / Omega / Lambda / Gamma / Zeta / Sigma y son editables después de crear el torneo. Duelos y Duos pueden sortear automáticamente o asignar manualmente; Pug siempre es manual.
 
 ## Vista pública en vivo
 

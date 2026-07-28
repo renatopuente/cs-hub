@@ -1,12 +1,11 @@
-const MODE = "fourvfour";
-const NUM_TEAMS = 2;
+const MODE = "pug";
 
 const setupSection = document.getElementById("setup-section");
 const seriesSection = document.getElementById("series-section");
 const playerInputsEl = document.getElementById("player-inputs");
 const setupForm = document.getElementById("setup-form");
-const teamSizeSelect = document.getElementById("team-size");
-const assignModeSelect = document.getElementById("assign-mode");
+const teamASizeSelect = document.getElementById("team-a-size");
+const teamBSizeSelect = document.getElementById("team-b-size");
 const entryFeeSelect = document.getElementById("entry-fee");
 const bestOfSelect = document.getElementById("best-of");
 const teamsListEl = document.getElementById("teams-list");
@@ -18,52 +17,34 @@ const championBannerEl = document.getElementById("champion-banner");
 const resetBtn = document.getElementById("reset-btn");
 const finalizeBtn = document.getElementById("finalize-btn");
 
-function buildPlayerInputs(teamSize, assignMode) {
+// Pug is always manual (uneven squads like 5v3 can't be auto-shuffled evenly)
+// and always exactly 2 teams, each independently sized 1-5.
+function buildPlayerInputs(sizeA, sizeB) {
   playerInputsEl.innerHTML = "";
+  playerInputsEl.className = "manual-groups";
 
-  if (assignMode === "manual") {
-    playerInputsEl.className = "manual-groups";
-    for (let t = 0; t < NUM_TEAMS; t++) {
-      const group = document.createElement("div");
-      group.className = "manual-team-group";
-      let fieldsHtml = `<h3>Equipo ${t + 1}</h3>`;
-      for (let p = 1; p <= teamSize; p++) {
-        fieldsHtml += `
-          <div class="field">
-            <label>Jugador ${p}</label>
-            <input type="text" data-team="${t}" name="team-${t}-player-${p}" required />
-          </div>
-        `;
-      }
-      group.innerHTML = fieldsHtml;
-      playerInputsEl.appendChild(group);
-    }
-  } else {
-    playerInputsEl.className = "player-grid";
-    for (let i = 1; i <= NUM_TEAMS * teamSize; i++) {
-      const wrap = document.createElement("div");
-      wrap.className = "field";
-      wrap.innerHTML = `
-        <label>Jugador ${i}</label>
-        <input type="text" name="player-${i}" required />
+  [sizeA, sizeB].forEach((size, t) => {
+    const group = document.createElement("div");
+    group.className = "manual-team-group";
+    let fieldsHtml = `<h3>Equipo ${t + 1} (${size} jugador${size > 1 ? "es" : ""})</h3>`;
+    for (let p = 1; p <= size; p++) {
+      fieldsHtml += `
+        <div class="field">
+          <label>Jugador ${p}</label>
+          <input type="text" data-team="${t}" name="team-${t}-player-${p}" required />
+        </div>
       `;
-      playerInputsEl.appendChild(wrap);
     }
-  }
+    group.innerHTML = fieldsHtml;
+    playerInputsEl.appendChild(group);
+  });
 }
 
-function collectTeams(teamSize, assignMode) {
-  if (assignMode === "manual") {
-    const groups = [];
-    for (let t = 0; t < NUM_TEAMS; t++) {
-      groups.push(
-        Array.from(playerInputsEl.querySelectorAll(`input[data-team="${t}"]`)).map((i) => i.value)
-      );
-    }
-    return buildTeamsManual(groups);
-  }
-  const names = Array.from(playerInputsEl.querySelectorAll("input")).map((i) => i.value);
-  return buildTeams(names, NUM_TEAMS, teamSize);
+function collectTeams() {
+  const groups = [0, 1].map((t) =>
+    Array.from(playerInputsEl.querySelectorAll(`input[data-team="${t}"]`)).map((i) => i.value)
+  );
+  return buildTeamsManual(groups);
 }
 
 function createTournament(teams, bestOf, entryFee) {
@@ -234,17 +215,16 @@ function render(tournament) {
 }
 
 function refreshPlayerInputs() {
-  buildPlayerInputs(parseInt(teamSizeSelect.value, 10), assignModeSelect.value);
+  buildPlayerInputs(parseInt(teamASizeSelect.value, 10), parseInt(teamBSizeSelect.value, 10));
 }
 
-teamSizeSelect.addEventListener("change", refreshPlayerInputs);
-assignModeSelect.addEventListener("change", refreshPlayerInputs);
+teamASizeSelect.addEventListener("change", refreshPlayerInputs);
+teamBSizeSelect.addEventListener("change", refreshPlayerInputs);
 
 setupForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  const teamSize = parseInt(teamSizeSelect.value, 10);
   const bestOf = parseInt(bestOfSelect.value, 10);
-  const teams = collectTeams(teamSize, assignModeSelect.value);
+  const teams = collectTeams();
   const tournament = createTournament(teams, bestOf, entryFeeSelect.value);
   render(tournament);
 });

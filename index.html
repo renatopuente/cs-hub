@@ -32,8 +32,9 @@
       </div>
 
       <nav class="main-nav">
-        <a href="companero-view.html"><i class="fa-solid fa-people-group"></i> Torneos Compañero</a>
-        <a href="equipos-view.html"><i class="fa-solid fa-users-rectangle"></i> Torneos por Equipos</a>
+        <a href="duelos-view.html"><i class="fa-solid fa-hand-fist"></i> Duelos</a>
+        <a href="duos-view.html"><i class="fa-solid fa-people-group"></i> Duos</a>
+        <a href="pug-view.html"><i class="fa-solid fa-users-rectangle"></i> Pug</a>
         <a href="historial.html"><i class="fa-solid fa-clock-rotate-left"></i> Historial</a>
         <a href="inscripcion.html" class="btn btn-primary"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
       </nav>
@@ -44,8 +45,9 @@
     </div>
 
     <div class="mobile-menu" id="mobile-menu">
-      <a href="companero-view.html"><i class="fa-solid fa-people-group"></i> Torneos Compañero</a>
-      <a href="equipos-view.html"><i class="fa-solid fa-users-rectangle"></i> Torneos por Equipos</a>
+      <a href="duelos-view.html"><i class="fa-solid fa-hand-fist"></i> Duelos</a>
+      <a href="duos-view.html"><i class="fa-solid fa-people-group"></i> Duos</a>
+      <a href="pug-view.html"><i class="fa-solid fa-users-rectangle"></i> Pug</a>
       <a href="historial.html"><i class="fa-solid fa-clock-rotate-left"></i> Historial</a>
       <a href="inscripcion.html" class="btn btn-primary btn-block"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
     </div>
@@ -59,21 +61,30 @@
       </picture>
     </div>
 
-    <div class="bento-grid two-col" id="tournament-modes" style="margin-bottom: 20px;">
-      <a class="glass-card interactive mode-card" href="companero-view.html">
+    <div class="bento-grid" id="tournament-modes" style="margin-bottom: 20px;">
+      <a class="glass-card interactive mode-card" href="duelos-view.html">
+        <div>
+          <div class="icon">🥊</div>
+          <h2>Duelos</h2>
+          <p>1 vs 1. Llaves de eliminación, todos contra todos, o serie al mejor de 3, según el torneo activo.</p>
+        </div>
+        <span class="btn btn-primary"><i class="fa-solid fa-tower-broadcast"></i> Ver en vivo →</span>
+      </a>
+
+      <a class="glass-card interactive mode-card" href="duos-view.html">
         <div>
           <div class="icon">🤝</div>
-          <h2>Torneo Compañeros</h2>
+          <h2>Duos</h2>
           <p>Equipos de 2 jugadores. Llaves de eliminación, todos contra todos, o serie al mejor de 3, según el torneo activo.</p>
         </div>
         <span class="btn btn-primary"><i class="fa-solid fa-tower-broadcast"></i> Ver en vivo →</span>
       </a>
 
-      <a class="glass-card interactive mode-card" href="equipos-view.html">
+      <a class="glass-card interactive mode-card" href="pug-view.html">
         <div>
           <div class="icon">⚔️</div>
-          <h2>Torneo Equipos</h2>
-          <p>2 equipos de 3 a 5 jugadores. Serie al mejor de X partidas para definir un único ganador.</p>
+          <h2>Pug</h2>
+          <p>2 equipos de hasta 5 jugadores, parejos o disparejos (5v3, 4v3...). Serie al mejor de X partidas.</p>
         </div>
         <span class="btn btn-primary"><i class="fa-solid fa-tower-broadcast"></i> Ver en vivo →</span>
       </a>

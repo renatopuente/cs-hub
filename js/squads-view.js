@@ -1,4 +1,5 @@
-const MODE = "companero";
+// Shared public (read-only) view for Duelos and Duos. Each page sets MODE
+// in a small inline <script> before this file loads.
 
 const emptyStateEl = document.getElementById("empty-state");
 const resultSection = document.getElementById("result-section");

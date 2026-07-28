@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Duelos — El Octágono</title>
+<link rel="icon" href="img/isotype.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="page">
+    <div class="top-bar">
+      <div>
+        <a class="brand" href="admin.html"><img class="brand-icon" src="img/isotype.svg" alt="El Octágono" />EL <span class="brand-arena">OCTÁGONO</span></a>
+        <div class="subtitle">Duelos · 1 vs 1</div>
+      </div>
+      <div style="display:flex; align-items:center; gap: 10px;">
+        <button id="logout-btn" class="btn btn-ghost btn-sm" hidden>Cerrar sesión</button>
+        <a class="back-link" href="admin.html">← Inicio</a>
+      </div>
+    </div>
+
+    <section id="login-gate" class="glass-card" style="max-width: 420px; margin: 80px auto; text-align: center;">
+      <div class="icon" style="font-size: 2rem; margin-bottom: 10px;">🔒</div>
+      <h2 class="section-title">Acceso restringido</h2>
+      <p class="section-sub">Inicia sesión con tu cuenta de GitHub para continuar.</p>
+      <button id="login-btn" class="btn btn-primary btn-block">Iniciar sesión con GitHub</button>
+      <p id="uid-hint" class="section-sub" hidden style="margin-top: 16px; font-size: 0.78rem; word-break: break-all;"></p>
+    </section>
+
+    <div id="protected-content" hidden>
+    <!-- Setup -->
+    <section id="setup-section" class="glass-card">
+      <h2 class="section-title">Arma el torneo</h2>
+      <p class="section-sub" id="setup-hint">Elige cuántos jugadores participan e ingresa sus nombres. Los duelos se sortean automáticamente.</p>
+      <div class="player-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-bottom: 4px;">
+        <div class="field">
+          <label>Número de jugadores</label>
+          <select id="team-count">
+            <option value="2">2 jugadores (serie mejor de 3)</option>
+            <option value="3">3 jugadores (todos contra todos)</option>
+            <option value="4" selected>4 jugadores</option>
+          </select>
+        </div>
+        <div class="field" id="format-choice-field">
+          <label>Formato (4 jugadores)</label>
+          <select id="format-choice">
+            <option value="bracket" selected>Semifinales + 3er puesto</option>
+            <option value="roundrobin">Todos contra todos</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Cómo asignar jugadores</label>
+          <select id="assign-mode">
+            <option value="auto" selected>Sortear automáticamente</option>
+            <option value="manual">Asignar manualmente</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Costo de inscripción</label>
+          <select id="entry-fee">
+            <option value="Gratuito" selected>Gratuito</option>
+            <option value="$1 USD">$1 USD</option>
+            <option value="$2 USD">$2 USD</option>
+            <option value="$5 USD">$5 USD</option>
+          </select>
+        </div>
+      </div>
+      <form id="setup-form">
+        <div id="player-inputs"></div>
+        <div class="actions-row">
+          <button type="submit" class="btn btn-primary">Sortear y crear torneo</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Result -->
+    <section id="result-section" hidden>
+      <div id="champion-banner"></div>
+
+      <div class="glass-card" style="margin-bottom: 20px;">
+        <h2 class="section-title">Jugadores</h2>
+        <p class="section-sub">Los nombres son editables.</p>
+        <div class="bento-grid" id="teams-list"></div>
+      </div>
+
+      <div class="glass-card">
+        <h2 class="section-title" id="matches-title">Llaves</h2>
+        <p class="section-sub" id="matches-sub"></p>
+        <div id="matches-view"></div>
+      </div>
+
+      <div class="actions-row">
+        <a href="duelos-view.html" target="_blank" class="btn btn-ghost">🔗 Ver vista pública</a>
+        <button id="finalize-btn" class="btn btn-primary">✅ Finalizar torneo</button>
+        <button id="reset-btn" class="btn btn-danger">Nuevo torneo</button>
+      </div>
+    </section>
+    </div>
+
+    <footer class="credits">© <span id="copyright-year"></span> El Octágono · Duelos</footer>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+  <script src="js/firebase-sync.js"></script>
+  <script src="js/auth-gate.js"></script>
+  <script src="js/teams.js"></script>
+  <script src="js/storage.js"></script>
+  <script>const MODE = "duelos"; const TEAM_SIZE = 1;</script>
+  <script src="js/squads.js"></script>
+  <script src="js/copyright.js"></script>
+</body>
+</html>

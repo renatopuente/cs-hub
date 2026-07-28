@@ -1,5 +1,7 @@
-const MODE = "companero";
-const TEAM_SIZE = 2;
+// Shared admin logic for Duelos (1 vs 1) and Duos (2 vs 2): 2, 3, or 4
+// teams, format is series / bracket / round-robin depending on team count.
+// Each page sets MODE and TEAM_SIZE in a small inline <script> before this
+// file loads (see duelos.html / duos.html).
 
 const setupSection = document.getElementById("setup-section");
 const resultSection = document.getElementById("result-section");
@@ -230,7 +232,7 @@ function renderBracket(tournament) {
     : "";
 }
 
-/* ---------- Series format (2 teams, mejor de 3) ---------- */
+/* ---------- Series format (2 teams) ---------- */
 
 function winsFor(tournament, teamId) {
   return tournament.games.filter((g) => g.winner === teamId).length;

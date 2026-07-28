@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Inscribirme — El Octágono</title>
+<title>Pug (en vivo) — El Octágono</title>
 <link rel="icon" href="img/isotype.svg" type="image/svg+xml" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
+<body class="readonly">
   <div class="navbar-fixed">
     <div class="navbar-inner">
       <div class="navbar-brand-center">
@@ -39,56 +39,38 @@
   </div>
 
   <div class="page page-offset-navbar page-offset-footer">
-    <div class="hero">
-      <h1>Inscríbete a tu torneo</h1>
-      <p>Elige el valor de inscripción de tu torneo, transfiere por QR a Deuna o coordina el pago directo conmigo por WhatsApp.</p>
-    </div>
-
-    <div class="bento-grid" style="margin-bottom: 28px;">
-      <div class="glass-card fee-card fee-card-link" style="cursor:pointer;">
-        <div class="icon">🆓</div>
-        <h2>Amistoso</h2>
-        <div class="fee-price">$0</div>
-        <p>Sin costo de inscripción.</p>
+    <div class="top-bar">
+      <div>
+        <h1 class="section-title" style="margin:0;">Pug</h1>
+        <div class="subtitle">vista pública</div>
       </div>
-      <div class="glass-card fee-card fee-card-link" style="cursor:pointer;">
-        <div class="icon">🥉</div>
-        <h2>Torneo $1</h2>
-        <div class="fee-price">$1 <span class="unit">USD</span></div>
-        <p>Por dúo o equipo.</p>
-      </div>
-      <div class="glass-card fee-card fee-card-link" style="cursor:pointer;">
-        <div class="icon">🥈</div>
-        <h2>Torneo $2</h2>
-        <div class="fee-price">$2 <span class="unit">USD</span></div>
-        <p>Por dúo o equipo.</p>
-      </div>
-      <div class="glass-card fee-card fee-card-link" style="cursor:pointer;">
-        <div class="icon">🥇</div>
-        <h2>Torneo $5</h2>
-        <div class="fee-price">$5 <span class="unit">USD</span></div>
-        <p>Por dúo o equipo.</p>
+      <div style="display:flex; flex-direction:column; align-items:flex-end; gap: 10px;">
+        <span class="live-badge"><span class="blip"></span>EN VIVO</span>
+        <a class="btn btn-ghost" href="index.html"><i class="fa-solid fa-arrow-left"></i> Volver</a>
       </div>
     </div>
 
-    <div class="glass-card" id="payment-info" style="max-width: 560px; margin: 0 auto; text-align: center;">
-      <h2 class="section-title"><i class="fa-brands fa-whatsapp" style="color:#25D366;"></i> Cómo pagar</h2>
-      <p class="section-sub">
-        Transfiere el valor de tu torneo por <strong>Deuna</strong> (la app de pagos online) escaneando el código QR,
-        o haciendo una transferencia directa. Escríbeme por WhatsApp y te paso el QR y confirmamos tu inscripción.
-      </p>
-      <div class="actions-row" style="flex-direction:column; margin-top: 22px;">
-        <a
-          id="whatsapp-pay-btn"
-          class="btn btn-primary"
-          href="#"
-          target="_blank"
-          rel="noopener"
-        >
-          <i class="fa-brands fa-whatsapp"></i> Pagar por WhatsApp
-        </a>
-        <a href="index.html" class="btn btn-ghost"><i class="fa-solid fa-arrow-left"></i> Volver</a>
+    <div id="empty-state" class="glass-card empty-hint">Esperando a que se cree un torneo…</div>
+
+    <section id="series-section" hidden>
+      <div id="champion-banner"></div>
+
+      <div class="glass-card" style="margin-bottom: 20px;">
+        <h2 class="section-title">Equipos</h2>
+        <div class="bento-grid two-col" id="teams-list"></div>
       </div>
+
+      <div class="glass-card">
+        <h2 class="section-title">Marcador de la serie</h2>
+        <p class="section-sub" id="series-format-label"></p>
+        <div class="neo-surface series-score" id="series-score"></div>
+        <div class="game-log" id="game-log"></div>
+      </div>
+    </section>
+
+    <div style="display:flex; flex-direction:column; align-items:center; gap: 16px; margin: 40px 0 0;">
+      <a href="inscripcion.html" class="btn btn-primary btn-block"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
+      <a href="historial.html" class="btn btn-outline btn-block"><i class="fa-solid fa-clock-rotate-left"></i> Ver historial de torneos</a>
     </div>
   </div>
 
@@ -101,10 +83,14 @@
         <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
       </div>
       <p class="made-with-love">Diseñado por un equipo de <span style="color: var(--accent);">Pulpos</span> en 🇪🇨 con 💜</p>
-      <footer class="credits">© <span id="copyright-year"></span> El Octágono. Todos los derechos reservados.</footer>
+      <footer class="credits">© <span id="copyright-year"></span> El Octágono · Pug (solo lectura)</footer>
     </div>
   </footer>
 
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+  <script src="js/firebase-sync.js"></script>
+  <script src="js/pug-view.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/copyright.js"></script>
 </body>

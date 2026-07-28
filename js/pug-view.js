@@ -1,4 +1,4 @@
-const MODE = "fourvfour";
+const MODE = "pug";
 
 const emptyStateEl = document.getElementById("empty-state");
 const seriesSection = document.getElementById("series-section");
