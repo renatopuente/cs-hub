@@ -52,6 +52,13 @@ function archiveTournament(mode, record) {
   return fbDb.ref(`historial/${mode}`).push(record);
 }
 
+// Admin-only cleanup: the DB write rule restricts this to Renato's UID,
+// so this silently fails for anyone else even if the button is somehow
+// visible to them.
+function deleteHistoryEntry(mode, id) {
+  return fbDb.ref(`historial/${mode}/${id}`).remove();
+}
+
 function fbSubscribeHistory(mode, onData) {
   fbDb.ref(`historial/${mode}`).on("value", (snapshot) => {
     const val = snapshot.val() || {};

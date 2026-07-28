@@ -22,7 +22,21 @@ function isWinningResult(result) {
   return typeof result === "string" && (result.includes("🏆") || /^#1\b/.test(result));
 }
 
-function renderHistoryList(container, list) {
+// Delete button only ever renders for Renato's own signed-in session (e.g.
+// left over from visiting admin.html earlier in the same browser) — this
+// page itself requires no login. The DB rule enforces this UID regardless.
+const ADMIN_UID = "NlLYYKa6lQXRIk2m2PlpXYkGk1e2";
+let isAdmin = false;
+let lastCompaneroList = [];
+let lastFourvfourList = [];
+
+firebase.auth().onAuthStateChanged((user) => {
+  isAdmin = !!user && user.uid === ADMIN_UID;
+  renderHistoryList(companeroHistoryEl, lastCompaneroList, "companero");
+  renderHistoryList(fourvfourHistoryEl, lastFourvfourList, "fourvfour");
+});
+
+function renderHistoryList(container, list, mode) {
   if (!list.length) {
     container.innerHTML = `<div class="glass-card empty-hint">Todavía no hay torneos finalizados.</div>`;
     return;
@@ -47,9 +61,14 @@ function renderHistoryList(container, list) {
       });
       const rows = rowParts.join("");
 
+      const deleteBtnHtml = isAdmin
+        ? `<button class="share-btn delete-btn" data-delete-id="${entry.id}" title="Eliminar del historial"><i class="fa-solid fa-trash"></i></button>`
+        : "";
+
       return `
         <div class="glass-card history-card" data-history-id="${entry.id}" style="margin-bottom: 20px; position:relative;">
           <div class="history-card-banner"></div>
+          ${deleteBtnHtml}
           <button class="share-btn" data-share-id="${entry.id}" title="Compartir">
             <i class="fa-solid fa-share-nodes"></i>
           </button>
@@ -79,6 +98,14 @@ function renderHistoryList(container, list) {
     btn.addEventListener("click", () => {
       const card = btn.closest(".history-card");
       shareHistoryCard(card);
+    });
+  });
+
+  container.querySelectorAll("[data-delete-id]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (confirm("¿Eliminar este torneo del historial? Esta acción no se puede deshacer.")) {
+        deleteHistoryEntry(mode, btn.dataset.deleteId);
+      }
     });
   });
 }
@@ -135,5 +162,11 @@ async function shareHistoryCard(cardEl) {
   }, "image/png");
 }
 
-fbSubscribeHistory("companero", (list) => renderHistoryList(companeroHistoryEl, list));
-fbSubscribeHistory("fourvfour", (list) => renderHistoryList(fourvfourHistoryEl, list));
+fbSubscribeHistory("companero", (list) => {
+  lastCompaneroList = list;
+  renderHistoryList(companeroHistoryEl, list, "companero");
+});
+fbSubscribeHistory("fourvfour", (list) => {
+  lastFourvfourList = list;
+  renderHistoryList(fourvfourHistoryEl, list, "fourvfour");
+});

@@ -638,6 +638,13 @@ input[type="text"]:focus, select:focus {
   justify-content: center;
   transition: color 0.15s ease, background 0.15s ease;
 }
+.share-btn.delete-btn {
+  right: 62px;
+}
+.share-btn.delete-btn:hover {
+  color: #ff5a5a;
+  border-color: rgba(255, 90, 90, 0.4);
+}
 .share-btn:hover {
   color: var(--accent-2);
   background: var(--glass-bg-hover);
@@ -797,6 +804,7 @@ input[type="text"]:focus, select:focus {
     border-color: transparent;
     outline: 2px solid var(--accent-2);
     outline-offset: -1px;
+    background: rgba(255, 110, 199, 0.07);
   }
   .history-table tr.winner-row td {
     background: rgba(255, 110, 199, 0.07);
