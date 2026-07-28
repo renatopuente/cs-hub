@@ -86,7 +86,7 @@ a { color: inherit; }
   background: rgba(11, 9, 16, 0.55);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--glass-border);
+  border-bottom: 0.5px solid var(--accent);
 }
 
 /* Same max-width/centering as .page, so the logo lines up with the
