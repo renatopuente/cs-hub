@@ -70,7 +70,7 @@ function render(tournament) {
     ? `
       <div class="champion-banner">
         <div class="label">Campeón de la serie</div>
-        <div class="name">🏆 ${champion.name}</div>
+        <div class="name"><i class="fa-solid fa-trophy"></i> ${champion.name}</div>
         <div class="sub">${champion.players.join(", ")}</div>
       </div>
     `

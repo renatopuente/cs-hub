@@ -4,24 +4,24 @@
 // this app has no backend cron job, so seasons are computed purely from
 // today's date, deterministically, instead of being stored anywhere).
 //
-// Season 0 starts Feb 1, 2026. Names cycle through curated city + noun
-// combos so they never need to be picked by hand again.
+// Season 0 starts Feb 1, 2026. Names cycle through curated city + gem
+// combos (all English) so they never need to be picked by hand again.
 
 const SEASON_ANCHOR = new Date(2026, 1, 1); // Feb 1, 2026 = season index 0
 
 const SEASON_CITIES = [
   "Kyoto", "Monaco", "Manhattan", "Ibiza",
   "Osaka", "Vienna", "Miami", "Marrakech",
-  "Tokyo", "Milano", "Aspen", "Dubai",
-  "Nara", "Praga", "Toronto", "Singapur",
-  "Sapporo", "Florencia", "Vancouver", "Santorini",
+  "Tokyo", "Milan", "Aspen", "Dubai",
+  "Nara", "Prague", "Toronto", "Singapore",
+  "Sapporo", "Florence", "Vancouver", "Santorini",
 ];
 
-const SEASON_NOUNS = [
-  "Dinastía", "Aurora", "Cénit", "Prestigio",
-  "Elegancia", "Eclipse", "Vanguardia", "Corona",
-  "Legado", "Imperio", "Nobleza", "Esplendor",
-  "Majestad", "Gloria", "Leyenda", "Fulgor",
+const SEASON_GEMS = [
+  "Sapphire", "Emerald", "Amethyst", "Topaz",
+  "Ruby", "Opal", "Garnet", "Jade",
+  "Onyx", "Diamond", "Pearl", "Aquamarine",
+  "Citrine", "Peridot", "Moonstone", "Turquoise",
 ];
 
 function seasonIndexForDate(date) {
@@ -36,8 +36,8 @@ function seasonStartDate(index) {
 function seasonName(index) {
   const wrap = (n, len) => ((n % len) + len) % len;
   const city = SEASON_CITIES[wrap(index, SEASON_CITIES.length)];
-  const noun = SEASON_NOUNS[wrap(index, SEASON_NOUNS.length)];
-  return `${city} ${noun}`;
+  const gem = SEASON_GEMS[wrap(index, SEASON_GEMS.length)];
+  return `${city} ${gem}`;
 }
 
 function currentSeasonIndex() {

@@ -323,10 +323,14 @@ a { color: inherit; }
   pointer-events: none;
 }
 
-.mode-card .icon {
+.icon {
   font-size: 2.4rem;
   margin-bottom: 12px;
 }
+
+.icon-gold { color: #ffd54a; }
+.icon-silver { color: #c8ccd4; }
+.icon-bronze { color: #cd7f32; }
 
 .mode-card .icon-img {
   height: 48px;

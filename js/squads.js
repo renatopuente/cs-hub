@@ -225,7 +225,7 @@ function renderBracket(tournament) {
     ? `
       <div class="champion-banner">
         <div class="label">Campeón</div>
-        <div class="name">🏆 ${champion.name}</div>
+        <div class="name"><i class="fa-solid fa-trophy"></i> ${champion.name}</div>
         <div class="sub">${champion.players.join(" & ")}${third ? ` · 3er puesto: ${third.name}` : ""}</div>
       </div>
     `
@@ -285,7 +285,7 @@ function renderSeries(tournament) {
         <div class="game-row">
           <span class="game-label">Juego ${g.number}</span>
           <span style="color:${t.color}">${t.name}</span>
-          <button class="game-delete-btn" data-remove-game="${g.number}" title="Eliminar / corregir">✕</button>
+          <button class="game-delete-btn" data-remove-game="${g.number}" title="Eliminar / corregir"><i class="fa-solid fa-xmark"></i></button>
         </div>
       `;
     })
@@ -320,7 +320,7 @@ function renderSeries(tournament) {
     ? `
       <div class="champion-banner">
         <div class="label">Campeón de la serie</div>
-        <div class="name">🏆 ${champion.name}</div>
+        <div class="name"><i class="fa-solid fa-trophy"></i> ${champion.name}</div>
         <div class="sub">${champion.players.join(" & ")}</div>
       </div>
     `
@@ -414,7 +414,7 @@ function renderRoundRobin(tournament) {
     championBannerEl.innerHTML = `
       <div class="champion-banner">
         <div class="label">Campeón</div>
-        <div class="name">🏆 ${champion.name}</div>
+        <div class="name"><i class="fa-solid fa-trophy"></i> ${champion.name}</div>
         <div class="sub">${champion.players.join(" & ")}</div>
       </div>
     `;
@@ -433,7 +433,7 @@ function renderRoundRobin(tournament) {
 
 function bracketResultFor(tournament, teamId) {
   const m = tournament.matches;
-  if (m.final.winner === teamId) return "🏆 Campeón";
+  if (m.final.winner === teamId) return "Campeón";
   if (m.third.winner === teamId) return "3er puesto";
   if (m.final.winner && (m.final.a === teamId || m.final.b === teamId)) return "2do puesto";
   if (m.third.winner && (m.third.a === teamId || m.third.b === teamId)) return "4to puesto";
@@ -466,7 +466,7 @@ function computeFinalResults(tournament) {
       const own = t.id === teamA.id ? scoreA : scoreB;
       const other = t.id === teamA.id ? scoreB : scoreA;
       let result = `En curso (${own}-${other})`;
-      if (tournament.winner) result = t.id === tournament.winner ? `🏆 Ganó la serie (${own}-${other})` : `Perdió la serie (${own}-${other})`;
+      if (tournament.winner) result = t.id === tournament.winner ? `Ganó la serie (${own}-${other})` : `Perdió la serie (${own}-${other})`;
       return { name: t.name, players: t.players, result };
     });
   }

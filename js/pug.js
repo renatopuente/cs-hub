@@ -115,7 +115,7 @@ function computeFinalResults(tournament) {
     const own = t.id === teamA.id ? scoreA : scoreB;
     const other = t.id === teamA.id ? scoreB : scoreA;
     let result = `En curso (${own}-${other})`;
-    if (tournament.winner) result = t.id === tournament.winner ? `🏆 Ganó la serie (${own}-${other})` : `Perdió la serie (${own}-${other})`;
+    if (tournament.winner) result = t.id === tournament.winner ? `Ganó la serie (${own}-${other})` : `Perdió la serie (${own}-${other})`;
     return { name: t.name, players: t.players, result };
   });
 }
@@ -181,7 +181,7 @@ function render(tournament) {
         <div class="game-row">
           <span class="game-label">Juego ${g.number}</span>
           <span style="color:${t.color}">${t.name}</span>
-          <button class="game-delete-btn" data-remove-game="${g.number}" title="Eliminar / corregir">✕</button>
+          <button class="game-delete-btn" data-remove-game="${g.number}" title="Eliminar / corregir"><i class="fa-solid fa-xmark"></i></button>
         </div>
       `;
     })
@@ -196,7 +196,7 @@ function render(tournament) {
     ? `
       <div class="champion-banner">
         <div class="label">Campeón de la serie</div>
-        <div class="name">🏆 ${champion.name}</div>
+        <div class="name"><i class="fa-solid fa-trophy"></i> ${champion.name}</div>
         <div class="sub">${champion.players.join(", ")}</div>
       </div>
     `

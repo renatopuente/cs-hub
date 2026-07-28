@@ -81,7 +81,7 @@ function renderBracket(tournament) {
     ? `
       <div class="champion-banner">
         <div class="label">Campeón</div>
-        <div class="name">🏆 ${champion.name}</div>
+        <div class="name"><i class="fa-solid fa-trophy"></i> ${champion.name}</div>
         <div class="sub">${champion.players.join(" & ")}${third ? ` · 3er puesto: ${third.name}` : ""}</div>
       </div>
     `
@@ -123,7 +123,7 @@ function renderSeries(tournament) {
     ? `
       <div class="champion-banner">
         <div class="label">Campeón de la serie</div>
-        <div class="name">🏆 ${champion.name}</div>
+        <div class="name"><i class="fa-solid fa-trophy"></i> ${champion.name}</div>
         <div class="sub">${champion.players.join(" & ")}</div>
       </div>
     `
@@ -186,7 +186,7 @@ function renderRoundRobin(tournament) {
     championBannerEl.innerHTML = `
       <div class="champion-banner">
         <div class="label">Campeón</div>
-        <div class="name">🏆 ${champion.name}</div>
+        <div class="name"><i class="fa-solid fa-trophy"></i> ${champion.name}</div>
         <div class="sub">${champion.players.join(" & ")}</div>
       </div>
     `;

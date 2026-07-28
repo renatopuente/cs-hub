@@ -19,8 +19,15 @@ function formatDate(ts) {
   return new Date(ts).toLocaleString("es-EC", { dateStyle: "medium", timeStyle: "short" });
 }
 
+// Matches both the current plain-text results and any legacy record still
+// carrying the old 🏆 prefix (from before results dropped emoji in favor
+// of Font Awesome icons at render time) — no Firebase migration needed.
 function isWinningResult(result) {
-  return typeof result === "string" && (result.includes("🏆") || /^#1\b/.test(result));
+  return typeof result === "string" && (result.includes("Ganó") || result.includes("Campeón") || /^#1\b/.test(result));
+}
+
+function displayResult(result) {
+  return typeof result === "string" ? result.replace(/^🏆\s*/, "") : result;
 }
 
 // Delete button only ever renders for Renato's own signed-in session (e.g.
@@ -72,12 +79,13 @@ function renderHistoryList(container, fullList, mode) {
         if (i > 0) {
           rowParts.push(`<tr class="vs-row"><td colspan="3"><span class="vs-badge">VS</span></td></tr>`);
         }
-        const winnerClass = isWinningResult(t.result) ? " winner-row" : "";
+        const won = isWinningResult(t.result);
+        const winnerClass = won ? " winner-row" : "";
         rowParts.push(`
           <tr class="${winnerClass.trim()}">
             <td data-label="Equipo">${t.name}</td>
             <td data-label="Integrantes">${(t.players || []).join(", ")}</td>
-            <td data-label="Resultado">${t.result}</td>
+            <td data-label="Resultado">${won ? '<i class="fa-solid fa-trophy"></i> ' : ""}${displayResult(t.result)}</td>
           </tr>
         `);
       });
@@ -179,7 +187,7 @@ async function shareHistoryCard(cardEl) {
     if (!blob) return;
     const file = new File([blob], "torneo-el-octagono.png", { type: "image/png" });
     const shareUrl = `${location.origin}/historial.html`;
-    const shareText = "Resultado de mi torneo en El Octágono 🐙";
+    const shareText = "Resultado de mi torneo en El Octágono";
 
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
       try {

@@ -3,10 +3,16 @@ const rankingBodyEl = document.getElementById("ranking-body");
 const rankingEmptyEl = document.getElementById("ranking-empty");
 const rankingTableEl = document.getElementById("ranking-table");
 
-const PODIUM_ICONS = ["🥇", "🥈", "🥉"];
+const PODIUM_ICONS = [
+  '<i class="fa-solid fa-trophy icon-gold"></i>',
+  '<i class="fa-solid fa-medal icon-silver"></i>',
+  '<i class="fa-solid fa-medal icon-bronze"></i>',
+];
 
+// Matches both current plain-text results and any legacy record still
+// carrying the old 🏆 prefix — no Firebase migration needed.
 function isWinningResult(result) {
-  return typeof result === "string" && (result.includes("🏆") || /^#1\b/.test(result));
+  return typeof result === "string" && (result.includes("Ganó") || result.includes("Campeón") || /^#1\b/.test(result));
 }
 
 let duelosHistory = [];
