@@ -17,12 +17,12 @@ if (hamburgerBtn && mobileMenu) {
   });
 }
 
-// Home: clicking the hero banner scrolls down to the mode cards.
+// Home: clicking the hero banner scrolls down to the season marquee.
 const heroBannerScroll = document.getElementById("hero-banner-scroll");
-const tournamentModesEl = document.getElementById("tournament-modes");
-if (heroBannerScroll && tournamentModesEl) {
+const seasonMarqueeEl = document.getElementById("season-marquee");
+if (heroBannerScroll && seasonMarqueeEl) {
   heroBannerScroll.addEventListener("click", () => {
-    tournamentModesEl.scrollIntoView({ behavior: "smooth" });
+    seasonMarqueeEl.scrollIntoView({ behavior: "smooth" });
   });
 }
 
