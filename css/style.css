@@ -896,7 +896,7 @@ input[type="text"]:focus, select:focus {
 }
 
 .hero-banner {
-  margin: 0 0 32px; /* the season marquee now owns the flush-top treatment */
+  margin: -32px 0 24px; /* cancels body's 32px top padding: banner sits flush at the very top */
 }
 
 .hero-banner img {
@@ -907,12 +907,13 @@ input[type="text"]:focus, select:focus {
   box-shadow: 10px 10px 24px var(--shadow-dark), -6px -6px 18px var(--shadow-light);
 }
 
-/* Mobile only: banner goes full-bleed edge-to-edge. */
+/* Mobile only: banner goes full-bleed edge-to-edge, flush at the very top. */
 @media (max-width: 768px) {
   .hero-banner {
     width: 100vw;
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
+    margin-top: -32px;
   }
   .hero-banner img {
     border-radius: 0;
@@ -920,13 +921,13 @@ input[type="text"]:focus, select:focus {
   }
 }
 
-/* Season marquee: full-bleed lilac ticker, flush against the fixed navbar
-   (cancels body's 32px top padding), announcing the current/next season. */
+/* Season marquee: full-bleed lilac ticker right below the hero banner,
+   announcing the current/next season. */
 .season-marquee {
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
-  margin-top: -32px;
+  margin-top: 0;
   margin-bottom: 24px;
   overflow: hidden;
   background: var(--accent);
