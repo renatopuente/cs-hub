@@ -1,4 +1,5 @@
-const MODE = "pug";
+// Shared public (read-only) view for any 2-team series (Duelos, Pug). Each
+// page sets MODE in a small inline <script> before this file loads.
 
 const emptyStateEl = document.getElementById("empty-state");
 const seriesSection = document.getElementById("series-section");

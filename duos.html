@@ -36,7 +36,7 @@
     <!-- Setup -->
     <section id="setup-section" class="glass-card">
       <h2 class="section-title">Arma el torneo</h2>
-      <p class="section-sub" id="setup-hint">Elige cuántos equipos participan e ingresa a los jugadores. Los equipos se sortean automáticamente en parejas.</p>
+      <p class="section-sub" id="setup-hint">Elige cuántos equipos participan (de 2 a 8) e ingresa a los jugadores. Los equipos se sortean automáticamente en parejas.</p>
       <div class="player-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-bottom: 4px;">
         <div class="field">
           <label>Número de equipos</label>
@@ -44,12 +44,16 @@
             <option value="2">2 equipos (serie mejor de 3)</option>
             <option value="3">3 equipos (todos contra todos)</option>
             <option value="4" selected>4 equipos</option>
+            <option value="5">5 equipos (todos contra todos)</option>
+            <option value="6">6 equipos (todos contra todos)</option>
+            <option value="7">7 equipos (todos contra todos)</option>
+            <option value="8">8 equipos</option>
           </select>
         </div>
         <div class="field" id="format-choice-field">
-          <label>Formato (4 equipos)</label>
+          <label>Formato</label>
           <select id="format-choice">
-            <option value="bracket" selected>Semifinales + 3er puesto</option>
+            <option value="bracket" selected>Llaves clásicas</option>
             <option value="roundrobin">Todos contra todos</option>
           </select>
         </div>

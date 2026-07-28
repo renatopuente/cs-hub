@@ -1,5 +1,6 @@
-// Shared public (read-only) view for Duelos and Duos. Each page sets MODE
-// in a small inline <script> before this file loads.
+// Public (read-only) view for Duos: series, bracket (any power-of-2 team
+// count), or round-robin. MODE is set in a small inline <script> in
+// duos-view.html before this file loads.
 
 const emptyStateEl = document.getElementById("empty-state");
 const resultSection = document.getElementById("result-section");
@@ -37,8 +38,18 @@ function renderMatchSlot(team, isWinner, isDecided) {
   `;
 }
 
-function renderBracketMatch(tournament, matchKey, title) {
-  const match = tournament.matches[matchKey];
+// How many rounds "from the end" a round is decides its label — the final
+// is always the last round regardless of how many rounds came before it.
+function roundLabel(totalRounds, roundIdx) {
+  const fromEnd = totalRounds - roundIdx;
+  if (fromEnd === 1) return "Final";
+  if (fromEnd === 2) return "Semifinales";
+  if (fromEnd === 3) return "Cuartos de final";
+  return `Ronda ${roundIdx + 1}`;
+}
+
+function renderBracketMatch(tournament, roundIdx, matchIdx, title) {
+  const match = tournament.matches[roundIdx][matchIdx];
   const teamA = match.a ? teamById(tournament, match.a) : null;
   const teamB = match.b ? teamById(tournament, match.b) : null;
   const decided = !!match.winner;
@@ -56,33 +67,33 @@ function renderBracket(tournament) {
   matchesTitleEl.textContent = "Llaves";
   matchesSubEl.textContent = "";
 
-  matchesViewEl.innerHTML = `
-    <div class="bracket">
-      <div class="bracket-col">
-        <div class="bracket-col-label">Semifinales</div>
-        ${renderBracketMatch(tournament, "semi1", "Semifinal 1")}
-        ${renderBracketMatch(tournament, "semi2", "Semifinal 2")}
-      </div>
-      <div class="bracket-col">
-        <div class="bracket-col-label">Gran Final</div>
-        ${renderBracketMatch(tournament, "final", "Final")}
-      </div>
-      <div class="bracket-col">
-        <div class="bracket-col-label">3er Puesto</div>
-        ${renderBracketMatch(tournament, "third", "Definición")}
-      </div>
-    </div>
-  `;
+  const totalRounds = tournament.matches.length;
+  const columnsHtml = tournament.matches
+    .map((round, r) => {
+      const label = roundLabel(totalRounds, r);
+      const matchesHtml = round
+        .map((_, i) => renderBracketMatch(tournament, r, i, round.length > 1 ? `${label} ${i + 1}` : label))
+        .join("");
+      return `
+        <div class="bracket-col">
+          <div class="bracket-col-label">${label}</div>
+          ${matchesHtml}
+        </div>
+      `;
+    })
+    .join("");
 
-  const champion = tournament.matches.final.winner ? teamById(tournament, tournament.matches.final.winner) : null;
-  const third = tournament.matches.third.winner ? teamById(tournament, tournament.matches.third.winner) : null;
+  matchesViewEl.innerHTML = `<div class="bracket">${columnsHtml}</div>`;
+
+  const finalMatch = tournament.matches[totalRounds - 1][0];
+  const champion = finalMatch.winner ? teamById(tournament, finalMatch.winner) : null;
 
   championBannerEl.innerHTML = champion
     ? `
       <div class="champion-banner">
         <div class="label">Campeón</div>
         <div class="name"><i class="fa-solid fa-trophy"></i> ${champion.name}</div>
-        <div class="sub">${champion.players.join(" & ")}${third ? ` · 3er puesto: ${third.name}` : ""}</div>
+        <div class="sub">${champion.players.join(" & ")}</div>
       </div>
     `
     : "";

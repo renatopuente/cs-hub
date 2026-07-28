@@ -35,29 +35,14 @@
     <div id="protected-content" hidden>
     <!-- Setup -->
     <section id="setup-section" class="glass-card">
-      <h2 class="section-title">Arma el torneo</h2>
-      <p class="section-sub" id="setup-hint">Elige cuántos jugadores participan e ingresa sus nombres. Los duelos se sortean automáticamente.</p>
+      <h2 class="section-title">Arma el duelo</h2>
+      <p class="section-sub">1 vs 1. Ingresa a los 2 jugadores, elige el formato de la serie y listo.</p>
       <div class="player-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-bottom: 4px;">
         <div class="field">
-          <label>Número de jugadores</label>
-          <select id="team-count">
-            <option value="2">2 jugadores (serie mejor de 3)</option>
-            <option value="3">3 jugadores (todos contra todos)</option>
-            <option value="4" selected>4 jugadores</option>
-          </select>
-        </div>
-        <div class="field" id="format-choice-field">
-          <label>Formato (4 jugadores)</label>
-          <select id="format-choice">
-            <option value="bracket" selected>Semifinales + 3er puesto</option>
-            <option value="roundrobin">Todos contra todos</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Cómo asignar jugadores</label>
-          <select id="assign-mode">
-            <option value="auto" selected>Sortear automáticamente</option>
-            <option value="manual">Asignar manualmente</option>
+          <label>Formato de la serie</label>
+          <select id="best-of">
+            <option value="3" selected>Mejor de 3</option>
+            <option value="5">Mejor de 5</option>
           </select>
         </div>
         <div class="field">
@@ -73,25 +58,27 @@
       <form id="setup-form">
         <div id="player-inputs"></div>
         <div class="actions-row">
-          <button type="submit" class="btn btn-primary">Sortear y crear torneo</button>
+          <button type="submit" class="btn btn-primary">Crear duelo</button>
         </div>
       </form>
     </section>
 
-    <!-- Result -->
-    <section id="result-section" hidden>
+    <!-- Series -->
+    <section id="series-section" hidden>
       <div id="champion-banner"></div>
 
       <div class="glass-card" style="margin-bottom: 20px;">
         <h2 class="section-title">Jugadores</h2>
         <p class="section-sub">Los nombres son editables.</p>
-        <div class="bento-grid" id="teams-list"></div>
+        <div class="bento-grid two-col" id="teams-list"></div>
       </div>
 
       <div class="glass-card">
-        <h2 class="section-title" id="matches-title">Llaves</h2>
-        <p class="section-sub" id="matches-sub"></p>
-        <div id="matches-view"></div>
+        <h2 class="section-title">Marcador de la serie</h2>
+        <p class="section-sub" id="series-format-label"></p>
+        <div class="neo-surface series-score" id="series-score"></div>
+        <div id="game-actions" class="actions-row" style="justify-content:center;"></div>
+        <div class="game-log" id="game-log"></div>
       </div>
 
       <div class="actions-row">
@@ -112,8 +99,7 @@
   <script src="js/auth-gate.js"></script>
   <script src="js/teams.js"></script>
   <script src="js/storage.js"></script>
-  <script>const MODE = "duelos"; const TEAM_SIZE = 1;</script>
-  <script src="js/squads.js"></script>
+  <script src="js/duelos.js"></script>
   <script src="js/copyright.js"></script>
 </body>
 </html>

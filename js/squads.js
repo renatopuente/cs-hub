@@ -1,7 +1,9 @@
-// Shared admin logic for Duelos (1 vs 1) and Duos (2 vs 2): 2, 3, or 4
-// teams, format is series / bracket / round-robin depending on team count.
-// Each page sets MODE and TEAM_SIZE in a small inline <script> before this
-// file loads (see duelos.html / duos.html).
+// Admin logic for Duos (equipos de 2 jugadores): 2 to 8 teams. 2 teams is
+// always a straight series; odd counts are always round-robin; even counts
+// (4/6/8) let the admin choose round-robin or a classic bracket — bracket
+// is only offered for 4 and 8 since those are clean powers of 2 (no byes).
+// The page sets MODE and TEAM_SIZE in a small inline <script> before this
+// file loads (see duos.html).
 
 const setupSection = document.getElementById("setup-section");
 const resultSection = document.getElementById("result-section");
@@ -80,27 +82,41 @@ function buildRoundRobinMatches(teams) {
   return matches;
 }
 
+function isPowerOfTwo(n) {
+  return n >= 2 && (n & (n - 1)) === 0;
+}
+
+// Rounds is an array of arrays of matches: rounds[0] is the first round,
+// rounds[rounds.length - 1] is the final (always exactly 1 match). Empty
+// strings (not null) for "not decided yet" — Firebase Realtime Database
+// silently strips null/empty-array values, which would delete these whole
+// nested match objects and crash the public view on a fresh tournament.
+function buildBracketRounds(teams) {
+  const rounds = [];
+  const firstRound = [];
+  for (let i = 0; i < teams.length; i += 2) {
+    firstRound.push({ a: teams[i].id, b: teams[i + 1].id, winner: "" });
+  }
+  rounds.push(firstRound);
+
+  while (rounds[rounds.length - 1].length > 1) {
+    const prevCount = rounds[rounds.length - 1].length;
+    const next = [];
+    for (let i = 0; i < prevCount / 2; i++) next.push({ a: "", b: "", winner: "" });
+    rounds.push(next);
+  }
+  return rounds;
+}
+
 function createTournament(teams, numTeams, formatChoice, entryFee) {
   let tournament;
 
   if (numTeams === 2) {
     tournament = { format: "series", teams, bestOf: 3, winsNeeded: 2, games: [], winner: "" };
-  } else if (numTeams === 4 && formatChoice === "bracket") {
-    tournament = {
-      format: "bracket",
-      teams,
-      // Empty strings (not null) for "not decided yet" — Firebase Realtime Database
-      // silently strips null/empty-array values, which would delete these whole
-      // nested match objects and crash the public view on a fresh tournament.
-      matches: {
-        semi1: { a: teams[0].id, b: teams[1].id, winner: "" },
-        semi2: { a: teams[2].id, b: teams[3].id, winner: "" },
-        final: { a: "", b: "", winner: "" },
-        third: { a: "", b: "", winner: "" },
-      },
-    };
+  } else if (isPowerOfTwo(numTeams) && formatChoice === "bracket") {
+    tournament = { format: "bracket", teams, matches: buildBracketRounds(teams) };
   } else {
-    // numTeams === 3, or numTeams === 4 with "todos contra todos" chosen.
+    // Odd counts (3/5/7), or even counts (4/6/8) with "todos contra todos" chosen.
     tournament = { format: "roundrobin", teams, matches: buildRoundRobinMatches(teams) };
   }
 
@@ -125,39 +141,45 @@ function renderTeamChip(team) {
   `;
 }
 
-/* ---------- Bracket format (4 teams) ---------- */
+/* ---------- Bracket format (any power-of-2 team count: 2, 4, 8) ---------- */
 
-function loserOf(match) {
-  if (!match.winner) return "";
-  return match.a === match.winner ? match.b : match.a;
+// How many rounds "from the end" a round is decides its label — the final
+// is always the last round regardless of how many rounds came before it.
+function roundLabel(totalRounds, roundIdx) {
+  const fromEnd = totalRounds - roundIdx;
+  if (fromEnd === 1) return "Final";
+  if (fromEnd === 2) return "Semifinales";
+  if (fromEnd === 3) return "Cuartos de final";
+  return `Ronda ${roundIdx + 1}`;
 }
 
-function setBracketWinner(tournament, matchKey, teamId) {
-  const match = tournament.matches[matchKey];
-  match.winner = teamId;
+function setBracketWinner(tournament, roundIdx, matchIdx, teamId) {
+  tournament.matches[roundIdx][matchIdx].winner = teamId;
 
-  if (matchKey === "semi1" || matchKey === "semi2") {
-    const s1 = tournament.matches.semi1;
-    const s2 = tournament.matches.semi2;
-    const final = tournament.matches.final;
-    const third = tournament.matches.third;
-
-    final.a = s1.winner || "";
-    final.b = s2.winner || "";
-    third.a = loserOf(s1);
-    third.b = loserOf(s2);
-
-    // A corrected semifinal result can invalidate an already-decided final/3rd
-    // place if that team is no longer in the matchup — clear it for a re-pick.
-    if (final.winner && final.winner !== final.a && final.winner !== final.b) final.winner = "";
-    if (third.winner && third.winner !== third.a && third.winner !== third.b) third.winner = "";
+  // Propagate winners forward through every later round. A corrected result
+  // can invalidate an already-decided later match if a team no longer
+  // belongs in that matchup — clear it for a re-pick, cascading forward.
+  for (let r = roundIdx; r < tournament.matches.length - 1; r++) {
+    const round = tournament.matches[r];
+    const nextRound = tournament.matches[r + 1];
+    for (let i = 0; i < round.length; i++) {
+      const nextMatch = nextRound[Math.floor(i / 2)];
+      const slot = i % 2 === 0 ? "a" : "b";
+      const newVal = round[i].winner || "";
+      if (nextMatch[slot] !== newVal) {
+        nextMatch[slot] = newVal;
+        if (nextMatch.winner && nextMatch.winner !== nextMatch.a && nextMatch.winner !== nextMatch.b) {
+          nextMatch.winner = "";
+        }
+      }
+    }
   }
 
   saveTournament(MODE, tournament);
   render(tournament);
 }
 
-function renderMatchSlot(team, matchKey, isWinner, isDecided, clickable) {
+function renderMatchSlot(team, dataAttrs, isWinner, isDecided, clickable) {
   if (!team) {
     return `<div class="match-slot disabled"><span class="name">Por definir</span></div>`;
   }
@@ -165,26 +187,27 @@ function renderMatchSlot(team, matchKey, isWinner, isDecided, clickable) {
   if (isDecided) classes.push(isWinner ? "winner" : "loser");
   if (!clickable) classes.push("disabled");
   return `
-    <div class="${classes.join(" ")}" data-match="${matchKey}" data-team="${team.id}">
+    <div class="${classes.join(" ")}" ${dataAttrs} data-team="${team.id}">
       <span class="name">${team.name}</span>
       ${isWinner ? '<span class="win-star">&#9733;</span>' : ""}
     </div>
   `;
 }
 
-function renderBracketMatch(tournament, matchKey, title) {
-  const match = tournament.matches[matchKey];
+function renderBracketMatch(tournament, roundIdx, matchIdx, title) {
+  const match = tournament.matches[roundIdx][matchIdx];
   const teamA = match.a ? teamById(tournament, match.a) : null;
   const teamB = match.b ? teamById(tournament, match.b) : null;
   const decided = !!match.winner;
   const clickable = !!(teamA && teamB); // stays clickable after deciding, to allow corrections
+  const dataAttrs = `data-round="${roundIdx}" data-match="${matchIdx}"`;
 
   return `
     <div class="match-title">${title}</div>
     <div class="match">
-      ${renderMatchSlot(teamA, matchKey, match.winner === match.a, decided, clickable)}
+      ${renderMatchSlot(teamA, dataAttrs, match.winner === match.a, decided, clickable)}
       <div class="match-divider"></div>
-      ${renderMatchSlot(teamB, matchKey, match.winner === match.b, decided, clickable)}
+      ${renderMatchSlot(teamB, dataAttrs, match.winner === match.b, decided, clickable)}
     </div>
   `;
 }
@@ -193,40 +216,40 @@ function renderBracket(tournament) {
   matchesTitleEl.textContent = "Llaves";
   matchesSubEl.textContent = "Haz clic en el equipo ganador de cada partido. Puedes volver a hacer clic para corregir.";
 
-  matchesViewEl.innerHTML = `
-    <div class="bracket">
-      <div class="bracket-col">
-        <div class="bracket-col-label">Semifinales</div>
-        ${renderBracketMatch(tournament, "semi1", "Semifinal 1")}
-        ${renderBracketMatch(tournament, "semi2", "Semifinal 2")}
-      </div>
-      <div class="bracket-col">
-        <div class="bracket-col-label">Gran Final</div>
-        ${renderBracketMatch(tournament, "final", "Final")}
-      </div>
-      <div class="bracket-col">
-        <div class="bracket-col-label">3er Puesto</div>
-        ${renderBracketMatch(tournament, "third", "Definición")}
-      </div>
-    </div>
-  `;
+  const totalRounds = tournament.matches.length;
+  const columnsHtml = tournament.matches
+    .map((round, r) => {
+      const label = roundLabel(totalRounds, r);
+      const matchesHtml = round
+        .map((_, i) => renderBracketMatch(tournament, r, i, round.length > 1 ? `${label} ${i + 1}` : label))
+        .join("");
+      return `
+        <div class="bracket-col">
+          <div class="bracket-col-label">${label}</div>
+          ${matchesHtml}
+        </div>
+      `;
+    })
+    .join("");
 
-  matchesViewEl.querySelectorAll(".match-slot[data-match]").forEach((slot) => {
+  matchesViewEl.innerHTML = `<div class="bracket">${columnsHtml}</div>`;
+
+  matchesViewEl.querySelectorAll(".match-slot[data-round]").forEach((slot) => {
     slot.addEventListener("click", () => {
       if (slot.classList.contains("disabled")) return;
-      setBracketWinner(tournament, slot.dataset.match, slot.dataset.team);
+      setBracketWinner(tournament, parseInt(slot.dataset.round, 10), parseInt(slot.dataset.match, 10), slot.dataset.team);
     });
   });
 
-  const champion = tournament.matches.final.winner ? teamById(tournament, tournament.matches.final.winner) : null;
-  const third = tournament.matches.third.winner ? teamById(tournament, tournament.matches.third.winner) : null;
+  const finalMatch = tournament.matches[totalRounds - 1][0];
+  const champion = finalMatch.winner ? teamById(tournament, finalMatch.winner) : null;
 
   championBannerEl.innerHTML = champion
     ? `
       <div class="champion-banner">
         <div class="label">Campeón</div>
         <div class="name"><i class="fa-solid fa-trophy"></i> ${champion.name}</div>
-        <div class="sub">${champion.players.join(" & ")}${third ? ` · 3er puesto: ${third.name}` : ""}</div>
+        <div class="sub">${champion.players.join(" & ")}</div>
       </div>
     `
     : "";
@@ -360,13 +383,14 @@ function renderRoundRobin(tournament) {
       const teamA = teamById(tournament, m.a);
       const teamB = teamById(tournament, m.b);
       const decided = !!m.winner;
+      const dataAttrs = `data-match-id="${m.id}"`;
       return `
         <div>
           <div class="match-title">${teamA.name} vs ${teamB.name}</div>
           <div class="match">
-            ${renderMatchSlot(teamA, m.id, m.winner === m.a, decided, true)}
+            ${renderMatchSlot(teamA, dataAttrs, m.winner === m.a, decided, true)}
             <div class="match-divider"></div>
-            ${renderMatchSlot(teamB, m.id, m.winner === m.b, decided, true)}
+            ${renderMatchSlot(teamB, dataAttrs, m.winner === m.b, decided, true)}
           </div>
         </div>
       `;
@@ -396,10 +420,10 @@ function renderRoundRobin(tournament) {
     </div>
   `;
 
-  matchesViewEl.querySelectorAll(".match-slot[data-match]").forEach((slot) => {
+  matchesViewEl.querySelectorAll(".match-slot[data-match-id]").forEach((slot) => {
     slot.addEventListener("click", () => {
       if (slot.classList.contains("disabled")) return;
-      setRoundRobinWinner(tournament, slot.dataset.match, slot.dataset.team);
+      setRoundRobinWinner(tournament, slot.dataset.matchId, slot.dataset.team);
     });
   });
 
@@ -431,26 +455,37 @@ function renderRoundRobin(tournament) {
 
 /* ---------- Finalize / archive to historial ---------- */
 
+// No 3rd-place decider at any bracket size — semifinal (or earlier) losers
+// just share "eliminado en <ronda>", same as everyone else who didn't reach
+// the final.
 function bracketResultFor(tournament, teamId) {
-  const m = tournament.matches;
-  if (m.final.winner === teamId) return "Campeón";
-  if (m.third.winner === teamId) return "3er puesto";
-  if (m.final.winner && (m.final.a === teamId || m.final.b === teamId)) return "2do puesto";
-  if (m.third.winner && (m.third.a === teamId || m.third.b === teamId)) return "4to puesto";
-  const inLostSemi = [m.semi1, m.semi2].some(
-    (s) => s.winner && (s.a === teamId || s.b === teamId) && s.winner !== teamId
-  );
-  if (inLostSemi) return "Eliminado en semifinales";
+  const rounds = tournament.matches;
+  const totalRounds = rounds.length;
+  const finalMatch = rounds[totalRounds - 1][0];
+  if (finalMatch.winner === teamId) return "Campeón";
+  if (finalMatch.winner && (finalMatch.a === teamId || finalMatch.b === teamId)) return "2do puesto";
+  for (let r = totalRounds - 2; r >= 0; r--) {
+    const match = rounds[r].find((mtch) => mtch.a === teamId || mtch.b === teamId);
+    if (match && match.winner && match.winner !== teamId) {
+      return `Eliminado en ${roundLabel(totalRounds, r).toLowerCase()}`;
+    }
+  }
   return "Sin definir";
 }
 
 function bracketPlacementRank(tournament, teamId) {
-  const m = tournament.matches;
-  if (m.final.winner === teamId) return 1;
-  if (m.third.winner === teamId) return 3;
-  if (m.final.winner && (m.final.a === teamId || m.final.b === teamId)) return 2;
-  if (m.third.winner && (m.third.a === teamId || m.third.b === teamId)) return 4;
-  return 5;
+  const rounds = tournament.matches;
+  const totalRounds = rounds.length;
+  const finalMatch = rounds[totalRounds - 1][0];
+  if (finalMatch.winner === teamId) return 1;
+  if (finalMatch.winner && (finalMatch.a === teamId || finalMatch.b === teamId)) return 2;
+  for (let r = totalRounds - 2; r >= 0; r--) {
+    const match = rounds[r].find((mtch) => mtch.a === teamId || mtch.b === teamId);
+    if (match && match.winner && match.winner !== teamId) {
+      return 100 - r; // eliminated in a later round ranks better (lower number)
+    }
+  }
+  return 999;
 }
 
 function computeFinalResults(tournament) {
@@ -529,7 +564,15 @@ function render(tournament) {
 
 function refreshPlayerInputs() {
   const numTeams = parseInt(teamCountSelect.value, 10);
-  formatChoiceField.hidden = numTeams !== 4;
+  const showFormatChoice = numTeams > 2 && numTeams % 2 === 0;
+  formatChoiceField.hidden = !showFormatChoice;
+
+  if (showFormatChoice) {
+    formatChoiceSelect.innerHTML = isPowerOfTwo(numTeams)
+      ? `<option value="bracket" selected>Llaves clásicas</option><option value="roundrobin">Todos contra todos</option>`
+      : `<option value="roundrobin" selected>Todos contra todos</option>`;
+  }
+
   buildPlayerInputs(numTeams, assignModeSelect.value);
 }
 

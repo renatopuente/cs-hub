@@ -3,7 +3,7 @@ const duosHistoryEl = document.getElementById("duos-history");
 const pugHistoryEl = document.getElementById("pug-history");
 
 const FORMAT_LABELS = {
-  bracket: "Llaves (semifinales + 3er puesto)",
+  bracket: "Llaves clásicas",
   roundrobin: "Todos contra todos",
   series: "Serie",
 };
@@ -187,7 +187,7 @@ async function shareHistoryCard(cardEl) {
     if (!blob) return;
     const file = new File([blob], "torneo-el-octagono.png", { type: "image/png" });
     const shareUrl = `${location.origin}/historial.html`;
-    const shareText = "Resultado de mi torneo en El Octágono";
+    const shareText = "Resultado de mi torneo en El Octágono 🐙";
 
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
       try {
