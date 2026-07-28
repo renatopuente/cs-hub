@@ -270,6 +270,13 @@ a { color: inherit; }
   margin-bottom: 12px;
 }
 
+.mode-card .icon-img {
+  height: 48px;
+  width: auto;
+  margin-bottom: 12px;
+  display: block;
+}
+
 .mode-card h2 {
   margin: 0 0 8px;
   font-size: 1.5rem;
@@ -423,6 +430,15 @@ input[type="text"]:focus, select:focus {
 
 .btn-sm { padding: 8px 14px; font-size: 0.85rem; }
 .btn-block { width: 100%; }
+
+/* Full-width CTAs are a mobile pattern — on desktop, cap and center them. */
+@media (min-width: 641px) {
+  .btn-block {
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
 
 .actions-row {
   display: flex;
