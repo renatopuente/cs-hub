@@ -200,8 +200,21 @@ a { color: inherit; }
   height: 30px;
   width: auto;
   display: block;
-  margin: 0 auto 14px;
   filter: brightness(0) invert(1);
+}
+
+.footer-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.footer-divider {
+  width: 1px;
+  height: 26px;
+  background: var(--accent);
+  flex-shrink: 0;
 }
 
 .brand-arena {
@@ -1049,7 +1062,7 @@ input[type="text"]:focus, select:focus {
 footer.credits {
   text-align: center;
   color: var(--text-faint);
-  font-size: 0.78rem;
+  font-size: 0.59rem;
   margin-top: 60px;
 }
 
@@ -1064,7 +1077,6 @@ footer.credits {
   display: flex;
   justify-content: center;
   gap: 21px;
-  margin-bottom: 16px;
 }
 .social-icons a {
   color: var(--text-dim);
@@ -1076,8 +1088,8 @@ footer.credits {
 .made-with-love {
   text-align: center;
   color: var(--text-faint);
-  font-size: 0.85rem;
-  margin: 0 0 16px;
+  font-size: 0.725rem;
+  margin: 8px 0 4px;
 }
 
 /* Fixed footer bar (mirrors the fixed navbar, pinned to the bottom
@@ -1098,9 +1110,9 @@ footer.credits {
   margin: 0 auto;
   padding: 14px 20px;
 }
-.site-footer-fixed .social-icons { margin-bottom: 10px; }
-.site-footer-fixed .made-with-love { margin-bottom: 6px; }
+.site-footer-fixed .footer-top { margin-bottom: 6px; }
+.site-footer-fixed .made-with-love { margin: 6px 0 2px; }
 .site-footer-fixed footer.credits { margin-top: 0; }
 
 /* Reserve room above the fixed footer so page content never sits behind it. */
-.page-offset-footer { padding-bottom: 220px; }
+.page-offset-footer { padding-bottom: 170px; }
