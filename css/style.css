@@ -413,6 +413,15 @@ a { color: inherit; }
   overflow: hidden;
 }
 
+/* .glass-card.interactive sets display:block (2 classes), which otherwise
+   beats .mode-card's display:flex (1 class) on specificity alone and
+   silently kills the flex layout — leaving the "Ver en vivo" button
+   flowing right after the paragraph instead of pinned to the card's
+   bottom edge whenever a sibling card's longer text stretches the row. */
+.glass-card.interactive.mode-card {
+  display: flex;
+}
+
 .mode-card > * {
   position: relative;
   z-index: 1;
