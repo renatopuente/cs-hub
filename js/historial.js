@@ -30,6 +30,21 @@ function displayResult(result) {
   return typeof result === "string" ? result.replace(/^🏆\s*/, "") : result;
 }
 
+// Same weighting as the ranking page: points per win, by tournament tier.
+const TIER_WEIGHTS = {
+  "Gratuito": 0.5, // Amistoso
+  "$1 USD": 1, // Casual
+  "$2 USD": 2, // Competitivo
+  "$5 USD": 3, // Premier
+  "$10 USD": 5, // Élite
+};
+function tierWeight(entryFee) {
+  return TIER_WEIGHTS[entryFee] ?? 1;
+}
+function formatPoints(points) {
+  return Number.isInteger(points) ? String(points) : points.toFixed(1);
+}
+
 // Delete button only ever renders for Renato's own signed-in session (e.g.
 // left over from visiting admin.html earlier in the same browser) — this
 // page itself requires no login. The DB rule enforces this UID regardless.
@@ -77,15 +92,17 @@ function renderHistoryList(container, fullList, mode) {
       const rowParts = [];
       (entry.teams || []).forEach((t, i) => {
         if (i > 0) {
-          rowParts.push(`<tr class="vs-row"><td colspan="3"><span class="vs-badge">VS</span></td></tr>`);
+          rowParts.push(`<tr class="vs-row"><td colspan="4"><span class="vs-badge">VS</span></td></tr>`);
         }
         const won = isWinningResult(t.result);
         const winnerClass = won ? " winner-row" : "";
+        const points = won ? formatPoints(tierWeight(entryFee)) : "—";
         rowParts.push(`
           <tr class="${winnerClass.trim()}">
             <td data-label="Equipo">${t.name}</td>
             <td data-label="Integrantes">${(t.players || []).join(", ")}</td>
             <td data-label="Resultado">${won ? '<i class="fa-solid fa-trophy"></i> ' : ""}${displayResult(t.result)}</td>
+            <td data-label="Puntos">${points}</td>
           </tr>
         `);
       });
@@ -114,6 +131,7 @@ function renderHistoryList(container, fullList, mode) {
                   <th><i class="fa-solid fa-shield-halved"></i> Equipo</th>
                   <th><i class="fa-solid fa-user-group"></i> Integrantes</th>
                   <th><i class="fa-solid fa-medal"></i> Resultado</th>
+                  <th><i class="fa-solid fa-star"></i> Puntos</th>
                 </tr>
               </thead>
               <tbody>${rows}</tbody>
