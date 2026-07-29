@@ -1525,6 +1525,12 @@ input[type="text"]:focus, select:focus {
   margin-top: 8px;
 }
 
+@media (max-width: 768px) {
+  .fee-card-cta {
+    font-size: 1.005rem;
+  }
+}
+
 /* Desktop bento rows can pair cards of very different widths (and thus
    different wrap heights), so pin the CTA to the bottom for a level row.
    Mobile keeps the fixed 8px gap right under the description. */
