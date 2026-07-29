@@ -379,7 +379,7 @@ a { color: inherit; }
   background: var(--glass-bg-hover);
 }
 
-.mode-card, .fee-card, .podium-card {
+.mode-card, .fee-card, .podium-card, .about-card {
   border: 1px solid rgba(155, 77, 255, 0.4);
   box-shadow:
     10px 10px 24px var(--shadow-dark),
@@ -1158,10 +1158,15 @@ input[type="text"]:focus, select:focus {
   display: inline-block;
   padding-right: 60px;
   color: #150a26;
-  font-weight: 700;
-  font-size: 0.85rem;
+  font-weight: 600;
+  font-size: 0.9125rem;
   letter-spacing: 0.3px;
   text-transform: uppercase;
+}
+
+.season-marquee-content strong {
+  font-weight: 800;
+  color: #fff0fb;
 }
 
 @keyframes season-marquee-scroll {
@@ -1318,6 +1323,16 @@ input[type="text"]:focus, select:focus {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+}
+
+/* Quiénes somos: lilac-and-pink theming shared with the other card
+   families on the site (mode-card, fee-card, podium-card). */
+.about-card .icon {
+  color: var(--accent-2);
+}
+
+.about-card h2 {
+  color: var(--accent);
 }
 
 .fee-price {

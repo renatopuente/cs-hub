@@ -8,9 +8,9 @@
   const next = getSeasonInfo(current.index + 1);
 
   const text =
-    `<i class="fa-solid fa-trophy"></i> TEMPORADA ACTUAL: ${current.name.toUpperCase()} — FINALIZA EL ${fmt(current.end).toUpperCase()} ` +
-    `&nbsp;·&nbsp; SIGUIENTE TEMPORADA: ${next.name.toUpperCase()} — INICIA EL ${fmt(next.start).toUpperCase()} ` +
-    `&nbsp;·&nbsp; COMPITE. GANA. ASCIENDE. <i class="fa-solid fa-crosshairs"></i>`;
+    `<i class="fa-solid fa-trophy"></i> TEMPORADA ACTUAL: <strong>${current.name.toUpperCase()}</strong> — FINALIZA EL <strong>${fmt(current.end).toUpperCase()}</strong> ` +
+    `&nbsp;·&nbsp; SIGUIENTE TEMPORADA: <strong>${next.name.toUpperCase()}</strong> — INICIA EL <strong>${fmt(next.start).toUpperCase()}</strong> ` +
+    `&nbsp;·&nbsp; <strong>COMPITE. GANA. ASCIENDE.</strong> <i class="fa-solid fa-crosshairs"></i>`;
 
   contentEls.forEach((el) => {
     el.innerHTML = text;
