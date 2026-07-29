@@ -12,7 +12,28 @@ if (location.hash && window.matchMedia("(max-width: 768px)").matches) {
   }
 }
 
-document.querySelectorAll(".fee-signup-card").forEach((card) => {
+const signupCards = document.querySelectorAll(".fee-signup-card");
+
+// Only one card can be "active" (a modality picked, Confirmar enabled) at a
+// time across the whole bento — picking a radio in any card resets and dims
+// every other card, instead of letting several cards be armed at once.
+function activateCard(activeCard) {
+  signupCards.forEach((card) => {
+    const confirmBtn = card.querySelector(".fee-confirm-btn");
+    if (card === activeCard) {
+      card.classList.remove("fee-card-inactive");
+      if (confirmBtn) confirmBtn.disabled = false;
+    } else {
+      card.classList.add("fee-card-inactive");
+      card.querySelectorAll(".fee-modalidad input[type=radio]").forEach((r) => {
+        r.checked = false;
+      });
+      if (confirmBtn) confirmBtn.disabled = true;
+    }
+  });
+}
+
+signupCards.forEach((card) => {
   const tier = card.dataset.tier;
   const radios = card.querySelectorAll(".fee-modalidad input[type=radio]");
   const confirmBtn = card.querySelector(".fee-confirm-btn");
@@ -20,7 +41,7 @@ document.querySelectorAll(".fee-signup-card").forEach((card) => {
 
   radios.forEach((radio) => {
     radio.addEventListener("change", () => {
-      confirmBtn.disabled = false;
+      activateCard(card);
     });
   });
 

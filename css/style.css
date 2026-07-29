@@ -1573,6 +1573,14 @@ input[type="text"]:focus, select:focus {
   box-shadow: none;
 }
 
+/* Only one fee-signup-card can be "armed" at a time — picking a modality
+   in one dims the rest, so it's clear where the WhatsApp confirmation
+   will actually go. */
+.fee-card-inactive {
+  opacity: 0.45;
+  transition: opacity 0.15s ease;
+}
+
 .readonly .match-slot { cursor: default; }
 .readonly .match-slot:hover { background: none; }
 
