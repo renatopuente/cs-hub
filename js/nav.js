@@ -17,6 +17,36 @@ if (hamburgerBtn && mobileMenu) {
   });
 }
 
+// Desktop nav dropdowns (Torneos / Historial): click to toggle, click
+// outside or select a link to close, only one open at a time.
+const navDropdowns = document.querySelectorAll(".nav-dropdown");
+navDropdowns.forEach((dropdown) => {
+  const toggle = dropdown.querySelector(".nav-dropdown-toggle");
+  if (!toggle) return;
+
+  toggle.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const willOpen = !dropdown.classList.contains("open");
+
+    navDropdowns.forEach((other) => {
+      other.classList.remove("open");
+      other.querySelector(".nav-dropdown-toggle")?.setAttribute("aria-expanded", "false");
+    });
+
+    if (willOpen) {
+      dropdown.classList.add("open");
+      toggle.setAttribute("aria-expanded", "true");
+    }
+  });
+});
+
+document.addEventListener("click", () => {
+  navDropdowns.forEach((dropdown) => {
+    dropdown.classList.remove("open");
+    dropdown.querySelector(".nav-dropdown-toggle")?.setAttribute("aria-expanded", "false");
+  });
+});
+
 // Home: clicking the hero banner scrolls down to the season marquee.
 const heroBannerScroll = document.getElementById("hero-banner-scroll");
 const seasonMarqueeEl = document.getElementById("season-marquee");

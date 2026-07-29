@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Duos (en vivo) — El Octágono</title>
+<title>Quiénes somos — El Octágono</title>
 <link rel="icon" href="img/isotype.svg" type="image/svg+xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -71,52 +71,99 @@
   </div>
 
   <div class="page page-offset-navbar page-offset-footer">
-    <div class="top-bar">
-      <div>
-        <h1 class="section-title" style="margin:0;">Duos</h1>
-      </div>
-      <div style="display:flex; flex-direction:column; align-items:flex-end; gap: 10px;">
-        <span class="live-badge"><span class="blip"></span>EN VIVO</span>
-        <a class="btn btn-ghost" href="index.html"><i class="fa-solid fa-arrow-left"></i> Volver</a>
-      </div>
+    <div class="hero">
+      <h1>Quiénes somos</h1>
+      <p>Dos amigos, un octágono y muchas partidas de Counter-Strike desde el 1.6.</p>
     </div>
 
-    <div class="season-banner-wrap">
-      <img class="season-banner-img" id="season-banner-img" alt="" hidden />
+    <div class="glass-card" style="max-width: 760px; margin: 0 auto 40px; text-align: center;">
+      <p class="section-sub" style="font-size: 1rem; margin: 0;">
+        Jugamos Counter-Strike juntos desde el 1.6, allá por 2002. Han pasado más de dos décadas,
+        muchos mapas y muchas rondas de eco, y ese mismo grupo de amigos sigue organizando partidas
+        cada semana. <strong style="color: var(--text);">El Octágono</strong> nació de una pregunta simple:
+        ¿por qué seguir coordinando torneos entre amigos por chat, con hojas de cálculo y capturas de
+        pantalla, cuando podíamos construir un sitio que lo haga por nosotros?
+      </p>
     </div>
 
-    <div class="season-marquee" id="season-marquee">
-      <div class="season-marquee-track" id="season-marquee-track">
-        <span class="season-marquee-content"></span>
-        <span class="season-marquee-content" aria-hidden="true"></span>
-      </div>
+    <div class="section-heading">
+      <h2>El equipo</h2>
+      <p>Los que armamos El Octágono, un torneo (y varios bugs) a la vez.</p>
     </div>
 
-    <div class="season-heading-block">
-      <h2 class="season-heading-name" id="season-heading-name" hidden></h2>
-      <p class="season-heading-dates" id="season-heading-dates"></p>
-    </div>
-
-    <div id="empty-state" class="glass-card empty-hint">Esperando a que se cree un torneo…</div>
-
-    <section id="result-section" hidden>
-      <div id="champion-banner"></div>
-
-      <div class="glass-card" style="margin-bottom: 20px;">
-        <h2 class="section-title">Equipos</h2>
-        <div class="bento-grid" id="teams-list"></div>
+    <div class="bento-grid two-col" style="margin-bottom: 40px;">
+      <div class="glass-card">
+        <div class="icon"><i class="fa-solid fa-crown"></i></div>
+        <h2>Renato Puente</h2>
+        <p class="section-sub" style="margin-bottom: 14px;">Founder &amp; CEO</p>
+        <p style="color: var(--text-dim); font-size: 0.92rem;">
+          Product Designer y desarrollador web ecuatoriano — diseño UX/UI, sistemas de diseño y código,
+          todo en uno. Ha trabajado diseñando productos digitales para marcas en Ecuador y Reino Unido,
+          y hoy le mete ese mismo enfoque de diseño y producto a El Octágono: la idea, la marca, el
+          diseño y buena parte del código de esta plataforma son suyos.
+        </p>
+        <a href="https://renatopuente.com" target="_blank" rel="noopener" class="btn btn-ghost btn-sm" style="margin-top: 12px;">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> renatopuente.com
+        </a>
       </div>
 
       <div class="glass-card">
-        <h2 class="section-title" id="matches-title">Llaves</h2>
-        <p class="section-sub" id="matches-sub"></p>
-        <div id="matches-view"></div>
+        <div class="icon"><i class="fa-solid fa-user-astronaut"></i></div>
+        <h2>Juan Francisco</h2>
+        <p class="section-sub" style="margin-bottom: 14px;">Co-Founder</p>
+        <p style="color: var(--text-dim); font-size: 0.92rem;">
+          El otro fundador de El Octágono, compañero de partidas desde el 1.6 y parte de este proyecto
+          desde el día uno. Pronto contamos más sobre él por aquí.
+        </p>
       </div>
-    </section>
+    </div>
+
+    <div class="section-heading">
+      <h2>Por qué existe El Octágono</h2>
+      <p>Lo que buscamos con esta plataforma.</p>
+    </div>
+
+    <div class="bento-grid" style="margin-bottom: 40px;">
+      <div class="glass-card">
+        <div class="icon"><i class="fa-solid fa-bolt"></i></div>
+        <h2>Torneos sin fricción</h2>
+        <p style="color: var(--text-dim); font-size: 0.92rem;">
+          Armar un torneo entre amigos no debería tomar más tiempo que jugarlo. Sorteo de equipos,
+          llaves, marcador y resultados, todo en un solo lugar y en vivo.
+        </p>
+      </div>
+
+      <div class="glass-card">
+        <div class="icon"><i class="fa-solid fa-people-group"></i></div>
+        <h2>Para cualquier grupo</h2>
+        <p style="color: var(--text-dim); font-size: 0.92rem;">
+          No todos los grupos son iguales: por eso Duelos, Duos y Pug — 1 vs 1, en pareja, o en
+          escuadra clásica de 5, cada uno con su propio formato.
+        </p>
+      </div>
+
+      <div class="glass-card">
+        <div class="icon"><i class="fa-solid fa-ranking-star"></i></div>
+        <h2>Competencia que se siente en serio</h2>
+        <p style="color: var(--text-dim); font-size: 0.92rem;">
+          Temporadas, rankings y un historial real de resultados — para que ganarle a tus amigos
+          quede registrado, no solo en la memoria.
+        </p>
+      </div>
+
+      <div class="glass-card">
+        <div class="icon"><i class="fa-solid fa-code"></i></div>
+        <h2>Hecho por jugadores</h2>
+        <p style="color: var(--text-dim); font-size: 0.92rem;">
+          No es un producto de una agencia que nunca jugó CS. Cada función de El Octágono sale de
+          algo que nos hizo falta a nosotros mismos organizando torneos entre amigos.
+        </p>
+      </div>
+    </div>
 
     <div style="display:flex; flex-direction:column; align-items:center; gap: 16px; margin: 40px 0 0;">
       <a href="inscripcion.html" class="btn btn-primary btn-block"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
-      <a href="historial.html" class="btn btn-outline btn-block"><i class="fa-solid fa-clock-rotate-left"></i> Ver historial de torneos</a>
+      <a href="index.html" class="btn btn-outline btn-block"><i class="fa-solid fa-house"></i> Ir al inicio</a>
     </div>
   </div>
 
@@ -132,18 +179,10 @@
         </div>
       </div>
       <p class="made-with-love">Diseñado por un equipo de <span style="color: var(--accent);">Pulpos</span> de 🇪🇨 con 💜</p>
-      <footer class="credits">© <span id="copyright-year"></span> El Octágono · Duos</footer>
+      <footer class="credits">© <span id="copyright-year"></span> El Octágono. Todos los derechos reservados.</footer>
     </div>
   </footer>
 
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-  <script src="js/firebase-sync.js"></script>
-  <script src="js/seasons.js"></script>
-  <script src="js/season-heading.js"></script>
-  <script src="js/season-marquee.js"></script>
-  <script>const MODE = "duos";</script>
-  <script src="js/squads-view.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/copyright.js"></script>
 </body>

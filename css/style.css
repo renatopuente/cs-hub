@@ -125,6 +125,58 @@ a { color: inherit; }
   padding: 9px 18px;
 }
 
+.nav-dropdown { position: relative; }
+.nav-dropdown-toggle {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-family: inherit;
+  font-size: 0.92rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.15s ease;
+}
+.nav-dropdown-toggle:hover { color: var(--text); }
+.nav-dropdown-caret {
+  font-size: 0.68rem;
+  transition: transform 0.15s ease;
+}
+.nav-dropdown-toggle[aria-expanded="true"] .nav-dropdown-caret { transform: rotate(180deg); }
+
+.nav-dropdown-menu {
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 210px;
+  background: var(--surface);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+  padding: 8px;
+  z-index: 110;
+}
+.nav-dropdown.open .nav-dropdown-menu { display: flex; }
+.nav-dropdown-menu a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 0.88rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.nav-dropdown-menu a:hover { background: var(--glass-bg-hover); color: var(--text); }
+
 .hamburger-btn {
   display: none;
   background: transparent;
@@ -162,6 +214,15 @@ a { color: inherit; }
 .mobile-menu a:last-child { border-bottom: none; }
 .mobile-menu a:not(.btn) i { color: var(--accent); }
 .mobile-menu a.btn { justify-content: center; color: #1a1000; margin-top: 10px; }
+.mobile-menu-group-label {
+  color: var(--text-faint);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  font-weight: 700;
+  padding: 14px 0 2px;
+}
+.mobile-menu a.mobile-menu-sub { padding-left: 16px; font-size: 0.92rem; }
 
 @media (max-width: 768px) {
   .main-nav { display: none; }
