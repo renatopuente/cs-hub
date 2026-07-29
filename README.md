@@ -26,6 +26,18 @@ Los nombres de equipo se sortean del pool Alfa / Bravo / Charlie / Delta / Echo 
 
 El estado de cada torneo se guarda en Firebase Realtime Database; las páginas `*-view.html` lo leen en vivo sin necesidad de login. Las reglas de la base de datos permiten lectura pública; la escritura está restringida a una cuenta autorizada.
 
+## Versionado
+
+El sitio sigue versionado semántico (`vMAJOR.MINOR.PATCH`), mostrado al final de cada página pública. Versión actual: **v1.0.0**.
+
+- **MAJOR**: un sistema o capacidad completamente nueva para la plataforma. La v2.0.0 está reservada para el sistema de gestión de usuarios (cuentas de jugador dentro de la app).
+- **MINOR**: features o secciones nuevas dentro de la versión actual (una página nueva, un flujo nuevo, etc.).
+- **PATCH**: ajustes, correcciones de copy, estilos o comportamiento sobre lo ya existente.
+
+Al desplegar un cambio que amerite subir de versión, actualiza el número en el marcador de "vX.Y.Z" al final de cada página pública (`index.html`, `duelos-view.html`, `duos-view.html`, `pug-view.html`, `historial.html`, `ranking.html`, `inscripcion.html`, `quienes-somos.html`, `terminos.html`) y anota el cambio aquí:
+
+- **v1.0.0**: primera versión pública. Torneos (Duelos/Duos/Pug), inscripción con niveles de precio, ranking por puntos ponderados por torneo, historial, y páginas informativas.
+
 ## Desarrollo local
 
 No requiere instalación. Sirve la carpeta con cualquier servidor estático, por ejemplo:
