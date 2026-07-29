@@ -991,6 +991,10 @@ input[type="text"]:focus, select:focus {
     text-align: right;
   }
   .standings-table td:last-child { border-bottom: none; }
+  .standings-table td[data-label="Efectividad"] {
+    justify-content: flex-end;
+    text-align: right;
+  }
   .standings-table td::before {
     content: attr(data-label);
     font-weight: 700;
@@ -1369,6 +1373,15 @@ input[type="text"]:focus, select:focus {
   top: 78px;
 }
 
+/* The ranking table card has no banner strip to clear, so its share button
+   sits closer to the top edge, with extra top padding reserved for it. */
+#ranking-table-card {
+  padding-top: 64px;
+}
+#ranking-table-card .share-btn {
+  top: 16px;
+}
+
 /* Quiénes somos: lilac-and-pink theming shared with the other card
    families on the site (mode-card, fee-card, podium-card). */
 .about-card .icon {
@@ -1391,6 +1404,42 @@ input[type="text"]:focus, select:focus {
   border-radius: 999px;
   padding: 2px 10px;
   margin-bottom: 8px;
+}
+
+.podium-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.podium-name-row h2 {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.season-status-chip {
+  flex-shrink: 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.season-status-chip.season-status-active {
+  color: var(--win);
+  background: rgba(53, 224, 176, 0.12);
+  border: 1px solid var(--win-glow);
+}
+
+.season-status-chip.season-status-ended {
+  color: var(--text-faint);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border);
 }
 
 .podium-stats-row {

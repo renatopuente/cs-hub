@@ -1,7 +1,7 @@
 const podiumGridEl = document.getElementById("podium-grid");
 const rankingBodyEl = document.getElementById("ranking-body");
 const rankingEmptyEl = document.getElementById("ranking-empty");
-const rankingTableEl = document.getElementById("ranking-table");
+const rankingTableCard = document.getElementById("ranking-table-card");
 
 const PODIUM_ICONS = [
   '<i class="fa-solid fa-trophy icon-gold"></i>',
@@ -15,13 +15,33 @@ function isWinningResult(result) {
   return typeof result === "string" && (result.includes("Ganó") || result.includes("Campeón") || /^#1\b/.test(result));
 }
 
+// The last day of a season closes (Finalizado) at 8am and stays closed
+// the rest of that day. The following day the season resets at midnight,
+// but any tournaments played that first day are Amistoso-only and don't
+// count — so the board keeps showing the previous season's results for
+// one extra day before actually flipping over.
+function getDisplaySeason() {
+  const now = new Date();
+  let index = currentSeasonIndex();
+  let info = getSeasonInfo(index);
+
+  if (info.start.toDateString() === now.toDateString()) {
+    index -= 1;
+    info = getSeasonInfo(index);
+  }
+
+  const isLastDay = info.end.toDateString() === now.toDateString();
+  const closed = (isLastDay && now.getHours() >= 8) || (!isLastDay && now > info.end);
+
+  return { index, info, closed };
+}
+
 let duelosHistory = [];
 let duosHistory = [];
 let pugHistory = [];
 
-function buildRanking() {
+function buildRanking(seasonIdx) {
   const stats = {};
-  const seasonIdx = currentSeasonIndex();
   const inSeason = (entry) => entry.finalizedAt && seasonIndexForDate(new Date(entry.finalizedAt)) === seasonIdx;
 
   [...duelosHistory, ...duosHistory, ...pugHistory].filter(inSeason).forEach((entry) => {
@@ -43,19 +63,19 @@ function buildRanking() {
 }
 
 function renderRanking() {
-  const ranked = buildRanking();
+  const displaySeason = getDisplaySeason();
+  const ranked = buildRanking(displaySeason.index);
 
   if (!ranked.length) {
     podiumGridEl.innerHTML = "";
     rankingBodyEl.innerHTML = "";
-    rankingTableEl.hidden = true;
+    rankingTableCard.hidden = true;
     rankingEmptyEl.hidden = false;
     return;
   }
-  rankingTableEl.hidden = false;
-  rankingEmptyEl.hidden = true;
 
-  const currentSeasonName = getSeasonInfo(currentSeasonIndex()).name;
+  const statusClass = displaySeason.closed ? "season-status-ended" : "season-status-active";
+  const statusLabel = displaySeason.closed ? "Finalizado" : "En curso";
 
   podiumGridEl.innerHTML = ranked
     .slice(0, 3)
@@ -69,9 +89,12 @@ function renderRanking() {
           </button>
           <div class="icon">${PODIUM_ICONS[i]}</div>
           <span class="podium-rank">#${i + 1}</span>
-          <h2>${r.name}</h2>
+          <div class="podium-name-row">
+            <h2>${r.name}</h2>
+            <span class="season-status-chip ${statusClass}">${statusLabel}</span>
+          </div>
           <div class="podium-stats-row">
-            <p class="section-sub podium-season"><i class="fa-solid fa-calendar"></i> ${currentSeasonName}</p>
+            <p class="section-sub podium-season"><i class="fa-solid fa-calendar"></i> ${displaySeason.info.name}</p>
             <div class="fee-price">${r.wins} <span class="unit">victorias</span></div>
           </div>
           <p><span class="podium-stat-num">${r.played}</span> torneos jugados · <span class="podium-stat-num">${rate}%</span> efectividad</p>
@@ -83,17 +106,28 @@ function renderRanking() {
   podiumGridEl.querySelectorAll("[data-share-id]").forEach((btn) => {
     btn.addEventListener("click", () => {
       const card = btn.closest(".podium-card");
-      sharePodiumCard(card);
+      shareAsImage(card, "podio-el-octagono.png", "Mi puesto en la tabla de posiciones de El Octágono 🐙");
     });
   });
 
-  rankingBodyEl.innerHTML = ranked
-    .map((r, i) => {
+  const restOfTable = ranked.slice(3, 10);
+
+  if (!restOfTable.length) {
+    rankingTableCard.hidden = true;
+    rankingEmptyEl.hidden = false;
+    return;
+  }
+
+  rankingTableCard.hidden = false;
+  rankingEmptyEl.hidden = true;
+
+  rankingBodyEl.innerHTML = restOfTable
+    .map((r, idx) => {
+      const i = idx + 3;
       const rate = r.played ? Math.round((r.wins / r.played) * 100) : 0;
-      const medal = PODIUM_ICONS[i] || "";
       return `
         <tr>
-          <td class="rank" data-label="Posición">${medal ? medal + " " : ""}#${i + 1}</td>
+          <td class="rank" data-label="Posición">#${i + 1}</td>
           <td data-label="Jugador">${r.name}</td>
           <td data-label="Torneos jugados">${r.played}</td>
           <td data-label="Victorias">${r.wins}</td>
@@ -104,7 +138,7 @@ function renderRanking() {
     .join("");
 }
 
-async function sharePodiumCard(cardEl) {
+async function shareAsImage(el, filename, shareText) {
   if (typeof html2canvas === "undefined") {
     alert("No se pudo cargar el generador de capturas. Intenta de nuevo en un momento.");
     return;
@@ -112,22 +146,21 @@ async function sharePodiumCard(cardEl) {
 
   let canvas;
   try {
-    canvas = await html2canvas(cardEl, {
+    canvas = await html2canvas(el, {
       backgroundColor: "#0b0910",
       scale: 2,
-      ignoreElements: (el) => el.classList && el.classList.contains("share-btn"),
+      ignoreElements: (node) => node.classList && node.classList.contains("share-btn"),
     });
   } catch (err) {
     console.error("No se pudo generar la captura", err);
-    alert("No se pudo generar la captura de este puesto.");
+    alert("No se pudo generar la captura.");
     return;
   }
 
   canvas.toBlob(async (blob) => {
     if (!blob) return;
-    const file = new File([blob], "ranking-el-octagono.png", { type: "image/png" });
+    const file = new File([blob], filename, { type: "image/png" });
     const shareUrl = `${location.origin}/ranking.html`;
-    const shareText = "Mi puesto en la tabla de posiciones de El Octágono 🐙";
 
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
       try {
@@ -150,11 +183,15 @@ async function sharePodiumCard(cardEl) {
     // Desktop / unsupported browsers: download the image so it can be shared manually.
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = "ranking-el-octagono.png";
+    link.download = filename;
     link.click();
     URL.revokeObjectURL(link.href);
   }, "image/png");
 }
+
+document.getElementById("ranking-share-btn")?.addEventListener("click", () => {
+  shareAsImage(rankingTableCard, "ranking-el-octagono.png", "Tabla de posiciones de El Octágono 🐙");
+});
 
 fbSubscribeHistory("duelos", (list) => {
   duelosHistory = list;

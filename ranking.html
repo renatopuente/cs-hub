@@ -113,7 +113,19 @@
 
     <div class="bento-grid" id="podium-grid" style="margin-bottom: 28px;"></div>
 
-    <div class="neo-surface">
+    <div class="season-banner-wrap">
+      <img class="season-banner-img" src="img/banners/bannerlite.webp" alt="Temporada actual: Monaco Emerald" />
+    </div>
+
+    <div class="section-heading" style="margin-top:0;">
+      <h2>Del 4to al 10mo lugar</h2>
+      <p>Los 3 primeros ya tienen su propia card arriba.</p>
+    </div>
+
+    <div class="neo-surface" id="ranking-table-card" style="position:relative;">
+      <button class="share-btn" id="ranking-share-btn" title="Compartir">
+        <i class="fa-solid fa-share-nodes"></i>
+      </button>
       <table class="standings-table" id="ranking-table">
         <thead>
           <tr>
@@ -126,8 +138,8 @@
         </thead>
         <tbody id="ranking-body"></tbody>
       </table>
-      <div class="empty-hint" id="ranking-empty" hidden>Todavía no hay torneos finalizados esta temporada para generar el ranking.</div>
     </div>
+    <div class="empty-hint" id="ranking-empty" hidden>Todavía no hay más jugadores en el ranking esta temporada.</div>
   </div>
 
   <footer class="site-footer-fixed">
