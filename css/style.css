@@ -402,7 +402,7 @@ a { color: inherit; }
   z-index: 1;
 }
 
-/* Subtle lilac dot texture in the corner — only mode cards get it, so
+/* Subtle lilac grid texture in the corner — only mode cards get it, so
    this section reads visually distinct from the plain fee cards below. */
 .mode-card::before {
   content: "";
@@ -411,7 +411,9 @@ a { color: inherit; }
   right: 0;
   width: 100px;
   height: 100px;
-  background-image: radial-gradient(rgba(155, 77, 255, 0.5) 1.4px, transparent 1.4px);
+  background-image:
+    linear-gradient(rgba(155, 77, 255, 0.5) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(155, 77, 255, 0.5) 1px, transparent 1px);
   background-size: 13px 13px;
   -webkit-mask-image: radial-gradient(circle at top right, black, transparent 72%);
   mask-image: radial-gradient(circle at top right, black, transparent 72%);
