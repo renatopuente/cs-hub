@@ -1387,9 +1387,6 @@ input[type="text"]:focus, select:focus {
   #podium-grid .podium-card[data-podium-id="2"] {
     order: 3;
   }
-  .podium-rank {
-    font-size: 1.05rem;
-  }
 }
 
 .podium-card h2 {
@@ -1456,6 +1453,15 @@ input[type="text"]:focus, select:focus {
   margin-bottom: 8px;
 }
 
+/* #podium-grid .podium-rank (2 selectors) reliably beats the plain
+   .podium-rank rule above regardless of source order — same class of
+   cascade issue as the mode-card display:flex fix. */
+@media (min-width: 769px) {
+  #podium-grid .podium-rank {
+    font-size: 1.05rem;
+  }
+}
+
 .podium-name-row {
   display: flex;
   align-items: center;
@@ -1509,6 +1515,7 @@ input[type="text"]:focus, select:focus {
 .podium-stats-row .fee-price {
   margin: 0;
   color: var(--accent);
+  font-size: 1.35rem;
 }
 
 .podium-stat-num {
