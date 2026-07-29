@@ -139,6 +139,10 @@ if (exitAppBtn) {
   if (isStandaloneApp) {
     exitAppBtn.hidden = false;
     exitAppBtn.addEventListener("click", () => {
+      // Recorre todo el historial hacia atrás: al llegar al final del
+      // stack, Android suele minimizar la app instalada (mismo
+      // comportamiento que el botón físico de "atrás" en la raíz).
+      window.history.go(-window.history.length);
       window.close();
     });
   }
