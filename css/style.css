@@ -129,6 +129,7 @@ a { color: inherit; }
   transition: color 0.15s ease;
 }
 .main-nav a:hover { color: var(--text); }
+.main-nav a[href="index.html"] { display: none; }
 .main-nav a.btn {
   color: #1a1000;
   padding: 9px 18px;
