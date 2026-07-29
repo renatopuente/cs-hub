@@ -10,11 +10,11 @@ const SEASON_BANNERS = {
   const nameEl = document.getElementById("season-heading-name");
   const datesEl = document.getElementById("season-heading-dates");
   const bannerEl = document.getElementById("season-banner-img");
-  if (!datesEl) return;
+  if (!nameEl && !datesEl && !bannerEl) return;
 
   const current = getSeasonInfo(currentSeasonIndex());
   const fmt = (d) => d.toLocaleDateString("es-EC", { day: "numeric", month: "short" });
-  datesEl.textContent = `${fmt(current.start)} – ${fmt(current.end)}`;
+  if (datesEl) datesEl.textContent = `${fmt(current.start)} – ${fmt(current.end)}`;
 
   const bannerFile = SEASON_BANNERS[current.name];
   if (bannerFile && bannerEl) {
