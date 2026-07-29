@@ -275,8 +275,6 @@ a { color: inherit; }
 .mobile-menu a:last-child { border-bottom: none; }
 .mobile-menu a:not(.btn) i { color: var(--accent); }
 .mobile-menu a.btn { justify-content: center; color: #1a1000; margin-top: 10px; }
-.mobile-menu #exit-app-btn { justify-content: center; margin-top: 10px; }
-#exit-app-btn[hidden] { display: none; }
 .mobile-menu-group { border-bottom: 1px solid rgba(155, 77, 255, 0.25); }
 .mobile-menu-group-toggle {
   display: flex;

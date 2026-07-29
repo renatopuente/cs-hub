@@ -126,28 +126,6 @@ if (installChip) {
   }
 }
 
-// "Salir" en el menú hamburguesa: solo visible cuando la app corre instalada
-// como PWA standalone. window.close() solo funciona en ventanas abiertas por
-// script, así que en una PWA lanzada desde el ícono del sistema esto puede
-// no cerrar la app (limitación de la plataforma, no hay API estándar para
-// forzar el cierre de una PWA instalada).
-const exitAppBtn = document.getElementById("exit-app-btn");
-if (exitAppBtn) {
-  const isStandaloneApp =
-    window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
-
-  if (isStandaloneApp) {
-    exitAppBtn.hidden = false;
-    exitAppBtn.addEventListener("click", () => {
-      // Recorre todo el historial hacia atrás: al llegar al final del
-      // stack, Android suele minimizar la app instalada (mismo
-      // comportamiento que el botón físico de "atrás" en la raíz).
-      window.history.go(-window.history.length);
-      window.close();
-    });
-  }
-}
-
 // Home: clicking the hero banner scrolls down to the season marquee.
 const heroBannerScroll = document.getElementById("hero-banner-scroll");
 const seasonMarqueeEl = document.getElementById("season-marquee");
