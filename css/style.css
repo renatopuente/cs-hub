@@ -1204,6 +1204,10 @@ input[type="text"]:focus, select:focus {
   text-transform: uppercase;
 }
 
+.season-marquee-content i {
+  color: #fff;
+}
+
 .season-marquee-content strong {
   font-weight: 800;
   color: #fff0fb;
