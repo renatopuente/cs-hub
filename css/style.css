@@ -1445,7 +1445,7 @@ input[type="text"]:focus, select:focus {
    many lines the description or modality radios wrap to (matters once the
    desktop bento layout gives cards different widths in the same row). */
 .fee-card .fee-card-cta {
-  margin-top: auto;
+  margin-top: 8px;
 }
 
 .fee-modalidad {
