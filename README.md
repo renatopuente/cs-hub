@@ -1,13 +1,13 @@
 # El Octágono
 
-Gestor de torneos de Counter-Strike 2 para armar llaves entre amigos. Sitio estático, sin build ni dependencias — hosteado en GitHub Pages.
+Gestor de torneos de Counter-Strike 2 para armar llaves entre amigos. Sitio estático, sin build ni dependencias, hosteado en GitHub Pages.
 
 ## Páginas públicas
 
-- `index.html` — landing principal.
-- `duelos-view.html` / `duos-view.html` / `pug-view.html` — vistas de solo lectura, se actualizan en vivo vía Firebase.
-- `historial.html` / `ranking.html` — resultados y tabla de posiciones.
-- `inscripcion.html` / `quienes-somos.html` / `terminos.html` — páginas informativas.
+- `index.html`: landing principal.
+- `duelos-view.html` / `duos-view.html` / `pug-view.html`: vistas de solo lectura, se actualizan en vivo vía Firebase.
+- `historial.html` / `ranking.html`: resultados y tabla de posiciones.
+- `inscripcion.html` / `quienes-somos.html` / `terminos.html`: páginas informativas.
 
 La administración de torneos (creación, sorteo de equipos, avance de resultados) vive en páginas separadas, sin enlazar desde la navegación pública y marcadas `noindex`. El acceso de escritura a Firebase está restringido por reglas de la base de datos a una única cuenta autorizada; los detalles de esas páginas y su autenticación no se documentan aquí.
 

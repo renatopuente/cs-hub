@@ -2,7 +2,7 @@
 
 > Plataforma para organizar torneos de Counter-Strike 2 entre jugadores de la comunidad, en Ecuador, con llaves y resultados en vivo.
 
-El Octágono es un proyecto independiente creado por un grupo de amigos que juega Counter-Strike desde la versión 1.6. No tiene afiliación oficial con Valve ni con Counter-Strike 2. La plataforma organiza torneos en tres modalidades — Duelos (1 contra 1), Duos (equipos de 2 jugadores) y Pug (el clásico 5 contra 5) — cobrando una inscripción por jugador que va desde gratis (Amistoso) hasta $10 USD (Élite). Las temporadas son trimestrales; el ranking se reinicia cada temporada, y el historial de torneos queda disponible de forma permanente.
+El Octágono es un proyecto independiente creado por un grupo de amigos que juega Counter-Strike desde la versión 1.6. No tiene afiliación oficial con Valve ni con Counter-Strike 2. La plataforma organiza torneos en tres modalidades (Duelos: 1 contra 1, Duos: equipos de 2 jugadores, y Pug: el clásico 5 contra 5), cobrando una inscripción por jugador que va desde gratis (Amistoso) hasta $10 USD (Élite). Las temporadas son trimestrales; el ranking se reinicia cada temporada, y el historial de torneos queda disponible de forma permanente.
 
 ## Páginas principales
 

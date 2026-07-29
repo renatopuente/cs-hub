@@ -25,7 +25,7 @@ firebase.auth().onAuthStateChanged((user) => {
 
   if (user && ADMIN_UID === "" && uidHintEl) {
     uidHintEl.hidden = false;
-    uidHintEl.textContent = `Bootstrap: tu UID es ${user.uid} — pásaselo a Claude para bloquear el acceso solo a tu cuenta.`;
+    uidHintEl.textContent = `Bootstrap: tu UID es ${user.uid}. Pásaselo a Claude para bloquear el acceso solo a tu cuenta.`;
   }
 });
 

@@ -96,7 +96,7 @@ function renderHistoryList(container, fullList, mode) {
         }
         const won = isWinningResult(t.result);
         const winnerClass = won ? " winner-row" : "";
-        const points = won ? formatPoints(tierWeight(entryFee)) : "—";
+        const points = won ? formatPoints(tierWeight(entryFee)) : "-";
         rowParts.push(`
           <tr class="${winnerClass.trim()}">
             <td data-label="Equipo">${t.name}</td>
