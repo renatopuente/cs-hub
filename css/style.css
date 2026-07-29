@@ -1365,6 +1365,9 @@ input[type="text"]:focus, select:focus {
   #podium-grid .podium-card[data-podium-id="2"] {
     order: 3;
   }
+  .podium-rank {
+    font-size: 1.05rem;
+  }
 }
 
 .podium-card h2 {
