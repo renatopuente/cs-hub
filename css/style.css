@@ -367,16 +367,6 @@ a { color: inherit; }
   .fee-grid .fee-card:nth-child(3) { grid-column: span 5; } /* Competitivo $2 */
   .fee-grid .fee-card:nth-child(4) { grid-column: span 5; } /* Premier $5 */
   .fee-grid .fee-card:nth-child(5) { grid-column: span 7; } /* Élite $10 */
-
-  /* Inscripción cards read right-justified on desktop; mobile keeps the
-     default left alignment untouched. */
-  .fee-signup-card {
-    align-items: flex-end;
-    text-align: right;
-  }
-  .fee-signup-card .fee-modalidad {
-    justify-content: flex-end;
-  }
 }
 
 /* ---------- Glass + neomorphic cards ---------- */
