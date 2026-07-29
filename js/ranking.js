@@ -57,10 +57,14 @@ function getDisplaySeason() {
 let duelosHistory = [];
 let duosHistory = [];
 let pugHistory = [];
+let rankingResetAt = 0;
 
 function buildRanking(seasonIdx) {
   const stats = {};
-  const inSeason = (entry) => entry.finalizedAt && seasonIndexForDate(new Date(entry.finalizedAt)) === seasonIdx;
+  const inSeason = (entry) =>
+    entry.finalizedAt &&
+    seasonIndexForDate(new Date(entry.finalizedAt)) === seasonIdx &&
+    entry.finalizedAt > rankingResetAt;
 
   [...duelosHistory, ...duosHistory, ...pugHistory].filter(inSeason).forEach((entry) => {
     const weight = tierWeight(entry.entryFee);
@@ -228,5 +232,9 @@ fbSubscribeHistory("duos", (list) => {
 });
 fbSubscribeHistory("pug", (list) => {
   pugHistory = list;
+  renderRanking();
+});
+fbSubscribeRankingReset((ts) => {
+  rankingResetAt = ts;
   renderRanking();
 });
