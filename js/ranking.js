@@ -55,6 +55,8 @@ function renderRanking() {
   rankingTableEl.hidden = false;
   rankingEmptyEl.hidden = true;
 
+  const currentSeasonName = getSeasonInfo(currentSeasonIndex()).name;
+
   podiumGridEl.innerHTML = ranked
     .slice(0, 3)
     .map((r, i) => {
@@ -66,7 +68,9 @@ function renderRanking() {
             <i class="fa-solid fa-share-nodes"></i>
           </button>
           <div class="icon">${PODIUM_ICONS[i]}</div>
+          <span class="podium-rank">#${i + 1}</span>
           <h2>${r.name}</h2>
+          <p class="section-sub podium-season"><i class="fa-solid fa-calendar"></i> ${currentSeasonName}</p>
           <div class="fee-price">${r.wins} <span class="unit">victorias</span></div>
           <p>${r.played} torneos jugados · ${rate}% efectividad</p>
         </div>

@@ -1335,6 +1335,26 @@ input[type="text"]:focus, select:focus {
   color: var(--accent);
 }
 
+.podium-rank {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  color: var(--accent-2);
+  background: rgba(255, 110, 199, 0.12);
+  border: 1px solid rgba(255, 110, 199, 0.35);
+  border-radius: 999px;
+  padding: 2px 10px;
+  margin-bottom: 8px;
+}
+
+.podium-season {
+  margin: 0 0 12px;
+  font-size: 0.8rem;
+}
+.podium-season i { margin-right: 4px; }
+
 .fee-price {
   font-size: 1.7rem;
   font-weight: 800;
