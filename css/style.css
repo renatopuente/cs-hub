@@ -1391,6 +1391,19 @@ input[type="text"]:focus, select:focus {
   color: var(--text-dim);
 }
 
+.fee-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.88rem;
+  text-decoration: none;
+  transition: gap 0.15s ease;
+}
+.fee-card-cta:hover { gap: 10px; }
+
 .fee-modalidad {
   display: flex;
   flex-wrap: wrap;
