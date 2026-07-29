@@ -81,6 +81,14 @@ document.querySelectorAll(".faq-toggle").forEach((toggle) => {
   });
 });
 
+// Home: fee-card flip — the rotate icon and the Leer más / Volver links
+// all just toggle the flip state of their own card.
+document.querySelectorAll(".fee-card-flip-trigger").forEach((trigger) => {
+  trigger.addEventListener("click", () => {
+    trigger.closest(".flip-card")?.classList.toggle("is-flipped");
+  });
+});
+
 // Home: clicking the hero banner scrolls down to the season marquee.
 const heroBannerScroll = document.getElementById("hero-banner-scroll");
 const seasonMarqueeEl = document.getElementById("season-marquee");

@@ -1330,6 +1330,69 @@ input[type="text"]:focus, select:focus {
   z-index: 1;
 }
 
+/* Flip cards (home fee-cards): 3D flip triggered by the rotate icon or the
+   "Leer más" / "Volver" links. Selectors below use 2+ classes so they
+   reliably beat the single-class rules above regardless of source order
+   (the same cascade trap that broke .mode-card's display earlier). */
+.fee-card.flip-card {
+  min-height: 400px;
+}
+
+.fee-card.flip-card .flip-card-inner {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.6s ease;
+  transform-style: preserve-3d;
+}
+
+.fee-card.flip-card.is-flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.fee-card.flip-card .flip-card-front,
+.fee-card.flip-card .flip-card-back {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.fee-card.flip-card .flip-card-back {
+  transform: rotateY(180deg);
+}
+
+.fee-card.flip-card .flip-card-back p {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  overflow-y: auto;
+}
+
+.fee-card-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.fee-card-top-row .icon {
+  margin-bottom: 0;
+}
+
+.fee-card-flip-icon-btn {
+  background: none;
+  border: none;
+  color: var(--text-faint);
+  font-size: 1.1rem;
+  padding: 4px;
+  cursor: pointer;
+  transition: color 0.15s ease, transform 0.3s ease;
+}
+.fee-card-flip-icon-btn:hover {
+  color: var(--accent-2);
+  transform: rotate(180deg);
+}
+
 /* Subtle lilac grid texture in the corner — mirrors the mode-card dot
    texture above so this section reads as a distinct family of cards. */
 .fee-card::before {
@@ -1547,6 +1610,18 @@ input[type="text"]:focus, select:focus {
 }
 .fee-card-cta:hover { gap: 10px; }
 
+/* Some fee-card-cta triggers are <button> elements (Leer más / Volver on
+   flip cards) rather than links — strip the native button chrome so they
+   read identically to the anchor version. */
+button.fee-card-cta {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
 /* Pin the CTA/confirm button to the bottom of the card regardless of how
    many lines the description or modality radios wrap to (matters once the
    desktop bento layout gives cards different widths in the same row). */
@@ -1564,7 +1639,7 @@ input[type="text"]:focus, select:focus {
    different wrap heights), so pin the CTA to the bottom for a level row.
    Mobile keeps the fixed 8px gap right under the description. */
 @media (min-width: 769px) {
-  .fee-grid .fee-card-cta {
+  .fee-grid a.fee-card-cta {
     margin-top: auto;
   }
 }
