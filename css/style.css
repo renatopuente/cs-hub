@@ -1195,7 +1195,7 @@ input[type="text"]:focus, select:focus {
 }
 
 .season-marquee-next-name {
-  animation: season-next-blink 1.3s ease-in-out infinite;
+  animation: season-next-blink 1.08s ease-in-out infinite;
 }
 
 @keyframes season-next-blink {
