@@ -1324,7 +1324,7 @@ input[type="text"]:focus, select:focus {
 footer.credits {
   text-align: center;
   color: var(--text-faint);
-  font-size: 0.59rem;
+  font-size: 0.6525rem;
   margin-top: 60px;
 }
 
@@ -1343,7 +1343,7 @@ footer.credits {
 .made-with-love {
   text-align: center;
   color: var(--text-faint);
-  font-size: 0.725rem;
+  font-size: 0.7875rem;
   margin: 8px 0 4px;
 }
 
