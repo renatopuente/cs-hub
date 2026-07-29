@@ -1530,6 +1530,7 @@ input[type="text"]:focus, select:focus {
 .fee-confirm-btn {
   margin-top: auto;
   width: 100%;
+  max-width: none;
 }
 
 .fee-confirm-btn:disabled {
