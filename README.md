@@ -2,12 +2,14 @@
 
 Gestor de torneos de Counter-Strike 2 para armar llaves entre amigos. Sitio estático, sin build ni dependencias — hosteado en GitHub Pages.
 
-## Páginas
+## Páginas públicas
 
-- `index.html` — landing pública: acceso a las vistas en vivo de los tres modos.
-- `admin.html` — mini landing privada (no enlazada públicamente) con acceso directo a los tres paneles de administración.
-- `duelos.html` / `duos.html` / `pug.html` — paneles de administración (crear torneo, sortear/asignar equipos, avanzar ganadores).
-- `duelos-view.html` / `duos-view.html` / `pug-view.html` — vistas públicas de solo lectura, se actualizan en vivo vía Firebase mientras el admin juega.
+- `index.html` — landing principal.
+- `duelos-view.html` / `duos-view.html` / `pug-view.html` — vistas de solo lectura, se actualizan en vivo vía Firebase.
+- `historial.html` / `ranking.html` — resultados y tabla de posiciones.
+- `inscripcion.html` / `quienes-somos.html` / `terminos.html` — páginas informativas.
+
+La administración de torneos (creación, sorteo de equipos, avance de resultados) vive en páginas separadas, sin enlazar desde la navegación pública y marcadas `noindex`. El acceso de escritura a Firebase está restringido por reglas de la base de datos a una única cuenta autorizada; los detalles de esas páginas y su autenticación no se documentan aquí.
 
 ## Modos
 
@@ -22,7 +24,7 @@ Los nombres de equipo se sortean del pool Alfa / Bravo / Charlie / Delta / Echo 
 
 ## Vista pública en vivo
 
-Los paneles admin escriben el estado del torneo a Firebase Realtime Database (proyecto `cs-hub-6e388`); las páginas `*-view.html` lo leen en vivo sin necesidad de login. Reglas de la base de datos: lectura pública, escritura solo autenticada (anónimo, desde el panel admin).
+El estado de cada torneo se guarda en Firebase Realtime Database; las páginas `*-view.html` lo leen en vivo sin necesidad de login. Las reglas de la base de datos permiten lectura pública; la escritura está restringida a una cuenta autorizada.
 
 ## Desarrollo local
 
