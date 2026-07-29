@@ -76,6 +76,15 @@ a { color: inherit; }
   margin-bottom: 36px;
 }
 
+.live-badge-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 4px;
+}
+@media (max-width: 768px) {
+  .live-badge-row { margin-bottom: 2px; }
+}
+
 .navbar-fixed {
   position: fixed;
   top: 0;
