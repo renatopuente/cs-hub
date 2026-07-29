@@ -426,6 +426,7 @@ a { color: inherit; }
 .icon-gold { color: #ffd54a; }
 .icon-silver { color: #c8ccd4; }
 .icon-bronze { color: #cd7f32; }
+.icon-platinum { color: #b9f2ff; }
 
 .mode-card .icon-img {
   height: 48px;
@@ -1215,6 +1216,42 @@ input[type="text"]:focus, select:focus {
 
 .history-accordion-panel { margin-top: 16px; }
 
+.faq-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  color: var(--text);
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: left;
+  padding: 16px 20px;
+  margin: 12px 0 0;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.faq-toggle:hover { background: var(--glass-bg-hover); }
+.faq-toggle .toggle-icon {
+  transition: transform 0.2s ease;
+  color: var(--text-dim);
+  flex-shrink: 0;
+  margin-left: 12px;
+}
+.faq-toggle[aria-expanded="true"] .toggle-icon { transform: rotate(180deg); }
+
+.faq-answer {
+  color: var(--text-dim);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  padding: 14px 20px 4px;
+}
+
+.faq-item:first-child .faq-toggle { margin-top: 0; }
+
 .fee-card {
   position: relative;
   overflow: hidden;
@@ -1292,6 +1329,38 @@ input[type="text"]:focus, select:focus {
   font-size: 0.85rem;
   font-weight: 500;
   color: var(--text-dim);
+}
+
+.fee-modalidad {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin: 16px 0 4px;
+}
+
+.fee-radio {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  cursor: pointer;
+}
+
+.fee-radio input {
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.fee-confirm-btn {
+  margin-top: 18px;
+  width: 100%;
+}
+
+.fee-confirm-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
 }
 
 .readonly .match-slot { cursor: default; }

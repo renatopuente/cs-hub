@@ -69,21 +69,23 @@ mobileGroupToggles.forEach((toggle) => {
   });
 });
 
+// Home: FAQ accordion — each question toggles independently.
+document.querySelectorAll(".faq-toggle").forEach((toggle) => {
+  const panel = document.getElementById(toggle.dataset.target);
+  if (!panel) return;
+
+  toggle.addEventListener("click", () => {
+    const willOpen = toggle.getAttribute("aria-expanded") !== "true";
+    toggle.setAttribute("aria-expanded", String(willOpen));
+    panel.hidden = !willOpen;
+  });
+});
+
 // Home: clicking the hero banner scrolls down to the season marquee.
 const heroBannerScroll = document.getElementById("hero-banner-scroll");
 const seasonMarqueeEl = document.getElementById("season-marquee");
 if (heroBannerScroll && seasonMarqueeEl) {
   heroBannerScroll.addEventListener("click", () => {
     seasonMarqueeEl.scrollIntoView({ behavior: "smooth" });
-  });
-}
-
-// Inscripción: clicking any fee card scrolls down to the payment info.
-const paymentInfoEl = document.getElementById("payment-info");
-if (paymentInfoEl) {
-  document.querySelectorAll(".fee-card-link").forEach((card) => {
-    card.addEventListener("click", () => {
-      paymentInfoEl.scrollIntoView({ behavior: "smooth" });
-    });
   });
 }

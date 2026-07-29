@@ -91,48 +91,99 @@
     </div>
 
     <div class="bento-grid" style="margin-bottom: 28px;">
-      <div class="glass-card fee-card fee-card-link" style="cursor:pointer;">
+      <div class="glass-card fee-card fee-signup-card" data-tier="Amistoso">
         <div class="icon"><i class="fa-solid fa-gift"></i></div>
         <h2>Amistoso</h2>
-        <div class="fee-price">$0</div>
+        <div class="fee-price">$0 <span class="unit">USD</span></div>
         <p>Sin costo de inscripción.</p>
+
+        <div class="fee-modalidad" role="radiogroup" aria-label="Modalidad — Amistoso">
+          <label class="fee-radio"><input type="radio" name="modalidad-amistoso" value="Duelos" /><span>Duelos</span></label>
+          <label class="fee-radio"><input type="radio" name="modalidad-amistoso" value="Duos" /><span>Duos</span></label>
+          <label class="fee-radio"><input type="radio" name="modalidad-amistoso" value="Pug" /><span>Pug</span></label>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-block fee-confirm-btn" disabled>
+          <i class="fa-brands fa-whatsapp"></i> Confirmar
+        </button>
       </div>
-      <div class="glass-card fee-card fee-card-link" style="cursor:pointer;">
+
+      <div class="glass-card fee-card fee-signup-card" data-tier="Casual">
         <div class="icon icon-bronze"><i class="fa-solid fa-medal"></i></div>
         <h2>Casual</h2>
         <div class="fee-price">$1 <span class="unit">USD</span></div>
         <p>Por dúo o equipo.</p>
+
+        <div class="fee-modalidad" role="radiogroup" aria-label="Modalidad — Casual">
+          <label class="fee-radio"><input type="radio" name="modalidad-casual" value="Duelos" /><span>Duelos</span></label>
+          <label class="fee-radio"><input type="radio" name="modalidad-casual" value="Duos" /><span>Duos</span></label>
+          <label class="fee-radio"><input type="radio" name="modalidad-casual" value="Pug" /><span>Pug</span></label>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-block fee-confirm-btn" disabled>
+          <i class="fa-brands fa-whatsapp"></i> Confirmar
+        </button>
       </div>
-      <div class="glass-card fee-card fee-card-link" style="cursor:pointer;">
+
+      <div class="glass-card fee-card fee-signup-card" data-tier="Competitivo">
         <div class="icon icon-silver"><i class="fa-solid fa-medal"></i></div>
         <h2>Competitivo</h2>
         <div class="fee-price">$2 <span class="unit">USD</span></div>
         <p>Por dúo o equipo.</p>
+
+        <div class="fee-modalidad" role="radiogroup" aria-label="Modalidad — Competitivo">
+          <label class="fee-radio"><input type="radio" name="modalidad-competitivo" value="Duelos" /><span>Duelos</span></label>
+          <label class="fee-radio"><input type="radio" name="modalidad-competitivo" value="Duos" /><span>Duos</span></label>
+          <label class="fee-radio"><input type="radio" name="modalidad-competitivo" value="Pug" /><span>Pug</span></label>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-block fee-confirm-btn" disabled>
+          <i class="fa-brands fa-whatsapp"></i> Confirmar
+        </button>
       </div>
-      <div class="glass-card fee-card fee-card-link" style="cursor:pointer;">
+
+      <div class="glass-card fee-card fee-signup-card" data-tier="Premier">
         <div class="icon icon-gold"><i class="fa-solid fa-trophy"></i></div>
         <h2>Premier</h2>
         <div class="fee-price">$5 <span class="unit">USD</span></div>
         <p>Por dúo o equipo.</p>
+
+        <div class="fee-modalidad" role="radiogroup" aria-label="Modalidad — Premier">
+          <label class="fee-radio"><input type="radio" name="modalidad-premier" value="Duelos" /><span>Duelos</span></label>
+          <label class="fee-radio"><input type="radio" name="modalidad-premier" value="Duos" /><span>Duos</span></label>
+          <label class="fee-radio"><input type="radio" name="modalidad-premier" value="Pug" /><span>Pug</span></label>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-block fee-confirm-btn" disabled>
+          <i class="fa-brands fa-whatsapp"></i> Confirmar
+        </button>
+      </div>
+
+      <div class="glass-card fee-card fee-signup-card" data-tier="Élite">
+        <div class="icon icon-platinum"><i class="fa-solid fa-crown"></i></div>
+        <h2>Élite</h2>
+        <div class="fee-price">$10 <span class="unit">USD</span></div>
+        <p>Por dúo o equipo.</p>
+
+        <div class="fee-modalidad" role="radiogroup" aria-label="Modalidad — Élite">
+          <label class="fee-radio"><input type="radio" name="modalidad-elite" value="Duelos" /><span>Duelos</span></label>
+          <label class="fee-radio"><input type="radio" name="modalidad-elite" value="Duos" /><span>Duos</span></label>
+          <label class="fee-radio"><input type="radio" name="modalidad-elite" value="Pug" /><span>Pug</span></label>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-block fee-confirm-btn" disabled>
+          <i class="fa-brands fa-whatsapp"></i> Confirmar
+        </button>
       </div>
     </div>
 
     <div class="glass-card" id="payment-info" style="max-width: 560px; margin: 0 auto; text-align: center;">
       <h2 class="section-title"><i class="fa-brands fa-whatsapp" style="color:#25D366;"></i> Cómo pagar</h2>
       <p class="section-sub">
-        Transfiere el valor de tu torneo por <strong>Deuna</strong> (la app de pagos online) escaneando el código QR,
-        o haciendo una transferencia directa. Escríbeme por WhatsApp y te paso el QR y confirmamos tu inscripción.
+        Elige tu torneo y modalidad arriba y presiona <strong>Confirmar</strong>: te escribimos por WhatsApp
+        para coordinar todo. Ahí te pasamos el QR de <strong>Deuna</strong> (la app de pagos online) y confirmamos tu inscripción.
       </p>
       <div class="actions-row" style="flex-direction:column; margin-top: 22px;">
-        <a
-          id="whatsapp-pay-btn"
-          class="btn btn-primary"
-          href="#"
-          target="_blank"
-          rel="noopener"
-        >
-          <i class="fa-brands fa-whatsapp"></i> Pagar por WhatsApp
-        </a>
         <a href="index.html" class="btn btn-ghost"><i class="fa-solid fa-arrow-left"></i> Volver</a>
       </div>
     </div>
@@ -155,6 +206,7 @@
   </footer>
 
   <script src="js/nav.js"></script>
+  <script src="js/inscripcion.js"></script>
   <script src="js/copyright.js"></script>
 </body>
 </html>
