@@ -2,8 +2,8 @@
 // any spelling quirks in the filename itself, e.g. "manhatan.webp").
 // Seasons without art here fall back to a plain large text heading.
 const SEASON_BANNERS = {
-  "Monaco Emerald": "monaco.webp",
-  "Manhattan Amethyst": "manhatan.webp",
+  "Monaco Emerald": "seasons/monaco.webp",
+  "Manhattan Amethyst": "seasons/manhatan.webp",
 };
 
 (function () {
