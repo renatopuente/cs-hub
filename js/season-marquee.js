@@ -9,7 +9,7 @@
 
   const text =
     `<i class="fa-solid fa-trophy"></i> TEMPORADA ACTUAL: <strong>${current.name.toUpperCase()}</strong> — FINALIZA EL <strong>${fmt(current.end).toUpperCase()}</strong> ` +
-    `&nbsp;·&nbsp; SIGUIENTE TEMPORADA: <strong>${next.name.toUpperCase()}</strong> — INICIA EL <strong>${fmt(next.start).toUpperCase()}</strong> ` +
+    `&nbsp;·&nbsp; SIGUIENTE TEMPORADA: <strong class="season-marquee-next-name">${next.name.toUpperCase()}</strong> — INICIA EL <strong>${fmt(next.start).toUpperCase()}</strong> ` +
     `&nbsp;·&nbsp; <strong>COMPITE. GANA. ASCIENDE.</strong> <i class="fa-solid fa-crosshairs"></i>`;
 
   contentEls.forEach((el) => {

@@ -1194,6 +1194,15 @@ input[type="text"]:focus, select:focus {
   color: #fff0fb;
 }
 
+.season-marquee-next-name {
+  animation: season-next-blink 1.3s ease-in-out infinite;
+}
+
+@keyframes season-next-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
 @keyframes season-marquee-scroll {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
@@ -1201,6 +1210,7 @@ input[type="text"]:focus, select:focus {
 
 @media (prefers-reduced-motion: reduce) {
   .season-marquee-track { animation: none; }
+  .season-marquee-next-name { animation: none; }
 }
 
 .section-heading {
