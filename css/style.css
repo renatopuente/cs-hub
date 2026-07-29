@@ -1657,21 +1657,14 @@ footer.credits {
   .site-footer-fixed footer.credits {
     font-size: 0.7775rem;
   }
-  .site-footer-fixed .footer-legal-row {
-    flex-direction: row;
-    gap: 10px;
-  }
-  .site-footer-fixed .footer-legal-divider {
-    display: block;
-  }
 }
 
 .footer-legal-row {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 2px;
+  gap: 10px;
   margin: 0 0 4px;
 }
 
@@ -1683,10 +1676,9 @@ footer.credits {
 }
 .footer-legal-link:hover { color: var(--text-dim); }
 
-/* Mobile: stacked, no divider. Desktop: same row, split by a vertical
-   divider — see the min-width:769px override below. */
+/* Same row, different columns, on every screen size. */
 .footer-legal-divider {
-  display: none;
+  display: block;
   width: 1px;
   height: 10px;
   background: var(--glass-border);
