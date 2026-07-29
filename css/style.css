@@ -1702,9 +1702,23 @@ button.fee-card-cta {
 
 .fee-modalidad {
   display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 16px;
+}
+
+.fee-modalidad-icon {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.fee-modalidad-options {
+  display: flex;
+  align-items: center;
   flex-wrap: wrap;
   gap: 6px 14px;
-  margin: 16px 0 16px;
 }
 
 .fee-radio {
