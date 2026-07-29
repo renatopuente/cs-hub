@@ -78,8 +78,19 @@
       <a class="back-link" href="index.html"><i class="fa-solid fa-arrow-left"></i> Volver</a>
     </div>
 
+    <div class="season-banner-wrap">
+      <img class="season-banner-img" id="season-banner-img" alt="" hidden />
+    </div>
+
+    <div class="season-marquee" id="season-marquee">
+      <div class="season-marquee-track" id="season-marquee-track">
+        <span class="season-marquee-content"></span>
+        <span class="season-marquee-content" aria-hidden="true"></span>
+      </div>
+    </div>
+
     <div class="season-heading-block">
-      <h2 class="season-heading-name" id="season-heading-name"></h2>
+      <h2 class="season-heading-name" id="season-heading-name" hidden></h2>
       <p class="season-heading-dates" id="season-heading-dates"></p>
     </div>
 
@@ -127,6 +138,7 @@
   <script src="js/firebase-sync.js"></script>
   <script src="js/seasons.js"></script>
   <script src="js/season-heading.js"></script>
+  <script src="js/season-marquee.js"></script>
   <script src="js/ranking.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/copyright.js"></script>
