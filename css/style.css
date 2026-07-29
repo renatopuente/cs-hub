@@ -1035,11 +1035,11 @@ input[type="text"]:focus, select:focus {
   padding: 30px 10px;
 }
 
-#empty-state.empty-hint { font-size: 1.035rem; }
+#empty-state.empty-hint { font-size: 0.91rem; }
 
 .empty-hint-icon {
   display: inline-block;
-  margin-left: 8px;
+  margin-left: 16px;
   animation: empty-hint-icon-spin 2s ease-in-out infinite;
 }
 
