@@ -34,7 +34,7 @@
 
         <div class="nav-dropdown">
           <button class="nav-dropdown-toggle" aria-expanded="false">
-            <i class="fa-solid fa-clock-rotate-left"></i> Historial <i class="fa-solid fa-chevron-down nav-dropdown-caret"></i>
+            <i class="fa-solid fa-chart-simple"></i> Resultados <i class="fa-solid fa-chevron-down nav-dropdown-caret"></i>
           </button>
           <div class="nav-dropdown-menu">
             <a href="historial.html"><i class="fa-solid fa-clock-rotate-left"></i> Historial de torneos</a>
@@ -55,14 +55,28 @@
     <div class="mobile-menu" id="mobile-menu">
       <a href="index.html"><i class="fa-solid fa-house"></i> Inicio</a>
 
-      <div class="mobile-menu-group-label">Torneos</div>
-      <a href="duelos-view.html" class="mobile-menu-sub"><i class="fa-solid fa-hand-fist"></i> Duelos</a>
-      <a href="duos-view.html" class="mobile-menu-sub"><i class="fa-solid fa-people-group"></i> Duos</a>
-      <a href="pug-view.html" class="mobile-menu-sub"><i class="fa-solid fa-users-rectangle"></i> Pug</a>
+      <div class="mobile-menu-group">
+        <button class="mobile-menu-group-toggle" aria-expanded="false">
+          <span><i class="fa-solid fa-gamepad"></i> Torneos</span>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </button>
+        <div class="mobile-menu-submenu" hidden>
+          <a href="duelos-view.html" class="mobile-menu-sub"><i class="fa-solid fa-hand-fist"></i> Duelos</a>
+          <a href="duos-view.html" class="mobile-menu-sub"><i class="fa-solid fa-people-group"></i> Duos</a>
+          <a href="pug-view.html" class="mobile-menu-sub"><i class="fa-solid fa-users-rectangle"></i> Pug</a>
+        </div>
+      </div>
 
-      <div class="mobile-menu-group-label">Historial</div>
-      <a href="historial.html" class="mobile-menu-sub"><i class="fa-solid fa-clock-rotate-left"></i> Historial de torneos</a>
-      <a href="ranking.html" class="mobile-menu-sub"><i class="fa-solid fa-ranking-star"></i> Tabla de posiciones</a>
+      <div class="mobile-menu-group">
+        <button class="mobile-menu-group-toggle" aria-expanded="false">
+          <span><i class="fa-solid fa-chart-simple"></i> Resultados</span>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </button>
+        <div class="mobile-menu-submenu" hidden>
+          <a href="historial.html" class="mobile-menu-sub"><i class="fa-solid fa-clock-rotate-left"></i> Historial de torneos</a>
+          <a href="ranking.html" class="mobile-menu-sub"><i class="fa-solid fa-ranking-star"></i> Tabla de posiciones</a>
+        </div>
+      </div>
 
       <a href="quienes-somos.html"><i class="fa-solid fa-circle-info"></i> Quiénes somos</a>
 

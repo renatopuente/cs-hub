@@ -47,6 +47,28 @@ document.addEventListener("click", () => {
   });
 });
 
+// Mobile menu groups (Torneos / Resultados): tap to expand, only one open
+// at a time, so the menu doesn't stay fully unfolded and too long.
+const mobileGroupToggles = document.querySelectorAll(".mobile-menu-group-toggle");
+mobileGroupToggles.forEach((toggle) => {
+  const submenu = toggle.nextElementSibling;
+  if (!submenu) return;
+
+  toggle.addEventListener("click", () => {
+    const willOpen = toggle.getAttribute("aria-expanded") !== "true";
+
+    mobileGroupToggles.forEach((otherToggle) => {
+      otherToggle.setAttribute("aria-expanded", "false");
+      if (otherToggle.nextElementSibling) otherToggle.nextElementSibling.hidden = true;
+    });
+
+    if (willOpen) {
+      toggle.setAttribute("aria-expanded", "true");
+      submenu.hidden = false;
+    }
+  });
+});
+
 // Home: clicking the hero banner scrolls down to the season marquee.
 const heroBannerScroll = document.getElementById("hero-banner-scroll");
 const seasonMarqueeEl = document.getElementById("season-marquee");
