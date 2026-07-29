@@ -1452,7 +1452,7 @@ input[type="text"]:focus, select:focus {
   display: flex;
   flex-wrap: wrap;
   gap: 6px 14px;
-  margin: 16px 0 4px;
+  margin: 16px 0 16px;
 }
 
 .fee-radio {
