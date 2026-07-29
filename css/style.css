@@ -1293,6 +1293,8 @@ input[type="text"]:focus, select:focus {
 .faq-item:first-child .faq-toggle { margin-top: 0; }
 
 .fee-card {
+  display: flex;
+  flex-direction: column;
   position: relative;
   overflow: hidden;
 }
@@ -1439,6 +1441,13 @@ input[type="text"]:focus, select:focus {
 }
 .fee-card-cta:hover { gap: 10px; }
 
+/* Pin the CTA/confirm button to the bottom of the card regardless of how
+   many lines the description or modality radios wrap to (matters once the
+   desktop bento layout gives cards different widths in the same row). */
+.fee-card .fee-card-cta {
+  margin-top: auto;
+}
+
 .fee-modalidad {
   display: flex;
   flex-wrap: wrap;
@@ -1461,7 +1470,7 @@ input[type="text"]:focus, select:focus {
 }
 
 .fee-confirm-btn {
-  margin-top: 18px;
+  margin-top: auto;
   width: 100%;
 }
 
