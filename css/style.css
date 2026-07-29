@@ -1315,7 +1315,7 @@ input[type="text"]:focus, select:focus {
 /* Same octoframe banner strip used on history cards, so the podium
    reads as part of the same visual family as the results pages. */
 .podium-card-banner {
-  height: 52px;
+  height: 64px;
   margin: -28px -28px 18px -28px;
   background:
     linear-gradient(120deg, rgba(155, 77, 255, 0.15), rgba(255, 110, 199, 0.15)),
@@ -1329,7 +1329,7 @@ input[type="text"]:focus, select:focus {
    down than the default .share-btn position (tuned for history-card's
    44px banner). */
 .podium-card .share-btn {
-  top: 66px;
+  top: 78px;
 }
 
 /* Quiénes somos: lilac-and-pink theming shared with the other card
