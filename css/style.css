@@ -354,6 +354,21 @@ a { color: inherit; }
   .bento-grid.two-col { grid-template-columns: 1fr; }
 }
 
+/* Fee cards, desktop only: a bento layout where each card's width scales
+   with its price tier (Amistoso $0 smallest → Élite $10 largest). Below
+   this breakpoint .fee-grid falls back to the plain .bento-grid auto-fit
+   behavior, unchanged. */
+@media (min-width: 769px) {
+  .fee-grid {
+    grid-template-columns: repeat(12, 1fr);
+  }
+  .fee-grid .fee-card:nth-child(1) { grid-column: span 3; } /* Amistoso $0 */
+  .fee-grid .fee-card:nth-child(2) { grid-column: span 4; } /* Casual $1 */
+  .fee-grid .fee-card:nth-child(3) { grid-column: span 5; } /* Competitivo $2 */
+  .fee-grid .fee-card:nth-child(4) { grid-column: span 5; } /* Premier $5 */
+  .fee-grid .fee-card:nth-child(5) { grid-column: span 7; } /* Élite $10 */
+}
+
 /* ---------- Glass + neomorphic cards ---------- */
 
 .glass-card {
