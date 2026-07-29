@@ -1,0 +1,19 @@
+{
+  "name": "El Octágono",
+  "short_name": "El Octágono",
+  "description": "Torneos de Counter-Strike 2 en Ecuador: llaves, resultados y ranking en vivo.",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0b0910",
+  "theme_color": "#9b4dff",
+  "lang": "es-EC",
+  "icons": [
+    {
+      "src": "img/logos/isotype.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

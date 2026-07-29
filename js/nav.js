@@ -99,6 +99,33 @@ document.querySelectorAll(".fee-card-flip-trigger").forEach((trigger) => {
   });
 });
 
+// PWA install chip (mobile only, styling handles that): stays hidden
+// until the browser confirms installability via beforeinstallprompt,
+// and never appears at all once already running as the installed app.
+const installChip = document.getElementById("install-chip");
+if (installChip) {
+  const isStandalone =
+    window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+
+  if (!isStandalone) {
+    let deferredInstallPrompt = null;
+
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      deferredInstallPrompt = e;
+      installChip.hidden = false;
+    });
+
+    installChip.addEventListener("click", async () => {
+      if (!deferredInstallPrompt) return;
+      deferredInstallPrompt.prompt();
+      await deferredInstallPrompt.userChoice;
+      deferredInstallPrompt = null;
+      installChip.hidden = true;
+    });
+  }
+}
+
 // Home: clicking the hero banner scrolls down to the season marquee.
 const heroBannerScroll = document.getElementById("hero-banner-scroll");
 const seasonMarqueeEl = document.getElementById("season-marquee");

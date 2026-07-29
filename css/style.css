@@ -226,6 +226,30 @@ a { color: inherit; }
   cursor: pointer;
 }
 
+/* PWA install chip: mobile only, and only ever shown by JS once the
+   browser confirms the site is installable (beforeinstallprompt) and
+   we're not already running as the installed app. */
+.install-chip {
+  display: none;
+}
+@media (max-width: 768px) {
+  .install-chip:not([hidden]) {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(155, 77, 255, 0.12);
+    border: 1px solid rgba(155, 77, 255, 0.35);
+    color: var(--accent-2);
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 8px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+}
+
 .mobile-menu {
   display: none;
   flex-direction: column;
