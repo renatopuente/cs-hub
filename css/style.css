@@ -1342,6 +1342,7 @@ input[type="text"]:focus, select:focus {
 .fee-card.flip-card .flip-card-back {
   position: absolute;
   inset: 0;
+  padding: 28px;
   display: flex;
   flex-direction: column;
   backface-visibility: hidden;
@@ -1368,17 +1369,26 @@ input[type="text"]:focus, select:focus {
   margin-bottom: 0;
 }
 
-.fee-card-flip-icon-btn {
+.fee-card-readmore-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
   background: none;
   border: none;
-  color: var(--text-faint);
-  font-size: 1.1rem;
-  padding: 4px;
+  color: var(--accent);
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 0;
   cursor: pointer;
-  transition: color 0.15s ease, transform 0.3s ease;
+  transition: gap 0.15s ease;
 }
-.fee-card-flip-icon-btn:hover {
-  color: var(--accent-2);
+.fee-card-readmore-btn:hover { gap: 10px; }
+.fee-card-readmore-btn i {
+  transition: transform 0.3s ease;
+}
+.fee-card-readmore-btn:hover i {
   transform: rotate(180deg);
 }
 
