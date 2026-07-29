@@ -1039,7 +1039,7 @@ input[type="text"]:focus, select:focus {
 
 .empty-hint-icon {
   display: inline-block;
-  margin-right: 8px;
+  margin-left: 8px;
   animation: empty-hint-icon-spin 2s ease-in-out infinite;
 }
 
@@ -1057,17 +1057,6 @@ input[type="text"]:focus, select:focus {
 @keyframes empty-hint-text-pulse {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.05); }
-}
-
-.loading-dots span {
-  opacity: 0.2;
-  animation: loading-dot-pulse 1.4s ease-in-out infinite;
-}
-.loading-dots span:nth-child(2) { animation-delay: 0.2s; }
-.loading-dots span:nth-child(3) { animation-delay: 0.4s; }
-@keyframes loading-dot-pulse {
-  0%, 80%, 100% { opacity: 0.2; }
-  40% { opacity: 1; }
 }
 
 .history-pagination {
@@ -1221,7 +1210,7 @@ input[type="text"]:focus, select:focus {
 }
 
 .season-marquee-next-name {
-  animation: season-next-blink 1.08s ease-in-out infinite;
+  animation: season-next-blink 0.864s ease-in-out infinite;
 }
 
 @keyframes season-next-blink {
