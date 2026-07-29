@@ -60,7 +60,8 @@ function renderRanking() {
     .map((r, i) => {
       const rate = r.played ? Math.round((r.wins / r.played) * 100) : 0;
       return `
-        <div class="glass-card fee-card">
+        <div class="glass-card podium-card">
+          <div class="podium-card-banner"></div>
           <div class="icon">${PODIUM_ICONS[i]}</div>
           <h2>${r.name}</h2>
           <div class="fee-price">${r.wins} <span class="unit">victorias</span></div>
