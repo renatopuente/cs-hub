@@ -1035,7 +1035,29 @@ input[type="text"]:focus, select:focus {
   padding: 30px 10px;
 }
 
-#empty-state.empty-hint { font-size: 0.91rem; }
+#empty-state.empty-hint { font-size: 1.035rem; }
+
+.empty-hint-icon {
+  display: inline-block;
+  margin-right: 8px;
+  animation: empty-hint-icon-spin 2s ease-in-out infinite;
+}
+
+@keyframes empty-hint-icon-spin {
+  0% { transform: rotate(0deg); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: rotate(360deg); opacity: 0; }
+}
+
+.empty-hint-text {
+  display: inline-block;
+  animation: empty-hint-text-pulse 2s ease-in-out infinite;
+}
+
+@keyframes empty-hint-text-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
 
 .loading-dots span {
   opacity: 0.2;
