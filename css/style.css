@@ -1244,6 +1244,17 @@ input[type="text"]:focus, select:focus {
   margin: 0;
 }
 
+.section-heading .ranking-intro-text {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+@media (min-width: 769px) {
+  .section-heading .ranking-intro-text {
+    margin-top: 32px;
+    margin-bottom: 32px;
+  }
+}
+
 .history-accordion-toggle {
   display: flex;
   align-items: center;
