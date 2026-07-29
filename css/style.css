@@ -1322,9 +1322,26 @@ input[type="text"]:focus, select:focus {
 /* Flip cards (home fee-cards): 3D flip triggered by the rotate icon or the
    "Leer más" / "Volver" links. Selectors below use 2+ classes so they
    reliably beat the single-class rules above regardless of source order
-   (the same cascade trap that broke .mode-card's display earlier). */
+   (the same cascade trap that broke .mode-card's display earlier).
+
+   The outer .fee-card.flip-card is just a transparent, perspective-bearing
+   scene — all the visible "card" chrome (background, border, shadow,
+   texture) lives on .flip-card-front/.flip-card-back themselves, so the
+   whole card appears to flip, not just the text inside a static frame. */
 .fee-card.flip-card {
-  min-height: 400px;
+  min-height: 300px;
+  background: none;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  padding: 0;
+  overflow: visible;
+  perspective: 1200px;
+}
+
+.fee-card.flip-card::before {
+  content: none;
 }
 
 .fee-card.flip-card .flip-card-inner {
@@ -1345,11 +1362,51 @@ input[type="text"]:focus, select:focus {
   padding: 28px;
   display: flex;
   flex-direction: column;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(155, 77, 255, 0.4);
+  overflow: hidden;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
 
+.fee-card.flip-card .flip-card-front > *,
+.fee-card.flip-card .flip-card-back > * {
+  position: relative;
+  z-index: 1;
+}
+
+.fee-card.flip-card .flip-card-front {
+  background: var(--glass-bg);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow:
+    10px 10px 24px var(--shadow-dark),
+    -6px -6px 18px var(--shadow-light),
+    0 0 0 1px rgba(155, 77, 255, 0.12),
+    0 0 24px rgba(155, 77, 255, 0.15);
+}
+
+/* Front-only corner texture — the back face is a plain dark surface with
+   no texture, per how it should read once flipped. */
+.fee-card.flip-card .flip-card-front::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  background-image:
+    linear-gradient(rgba(155, 77, 255, 0.5) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(155, 77, 255, 0.5) 1px, transparent 1px);
+  background-size: 13px 13px;
+  -webkit-mask-image: radial-gradient(circle at top right, black, transparent 72%);
+  mask-image: radial-gradient(circle at top right, black, transparent 72%);
+  pointer-events: none;
+}
+
 .fee-card.flip-card .flip-card-back {
+  background: var(--surface);
+  box-shadow: 10px 10px 24px var(--shadow-dark), -6px -6px 18px var(--shadow-light);
   transform: rotateY(180deg);
 }
 
