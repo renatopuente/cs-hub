@@ -70,14 +70,24 @@ mobileGroupToggles.forEach((toggle) => {
 });
 
 // Home: FAQ accordion — each question toggles independently.
-document.querySelectorAll(".faq-toggle").forEach((toggle) => {
+const faqToggles = document.querySelectorAll(".faq-toggle");
+faqToggles.forEach((toggle) => {
   const panel = document.getElementById(toggle.dataset.target);
   if (!panel) return;
 
   toggle.addEventListener("click", () => {
-    const willOpen = toggle.getAttribute("aria-expanded") !== "true";
-    toggle.setAttribute("aria-expanded", String(willOpen));
-    panel.hidden = !willOpen;
+    const alreadyOpen = toggle.getAttribute("aria-expanded") === "true";
+
+    faqToggles.forEach((otherToggle) => {
+      otherToggle.setAttribute("aria-expanded", "false");
+      const otherPanel = document.getElementById(otherToggle.dataset.target);
+      if (otherPanel) otherPanel.hidden = true;
+    });
+
+    if (!alreadyOpen) {
+      toggle.setAttribute("aria-expanded", "true");
+      panel.hidden = false;
+    }
   });
 });
 

@@ -1339,6 +1339,7 @@ input[type="text"]:focus, select:focus {
   margin-left: 12px;
 }
 .faq-toggle[aria-expanded="true"] .toggle-icon { transform: rotate(180deg); }
+.faq-toggle[aria-expanded="true"] span { color: var(--accent); }
 
 .faq-answer {
   color: var(--text-dim);
