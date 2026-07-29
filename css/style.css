@@ -1473,5 +1473,16 @@ footer.credits {
 .site-footer-fixed .made-with-love { margin: 6px 0 2px; }
 .site-footer-fixed footer.credits { margin-top: 0; }
 
+.footer-legal-link {
+  display: block;
+  text-align: center;
+  color: var(--text-faint);
+  font-size: 0.6525rem;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  margin: 0 0 4px;
+}
+.footer-legal-link:hover { color: var(--text-dim); }
+
 /* Reserve room above the fixed footer so page content never sits behind it. */
 .page-offset-footer { padding-bottom: 150px; }
