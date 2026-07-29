@@ -15,7 +15,7 @@ document.querySelectorAll(".fee-signup-card").forEach((card) => {
   confirmBtn.addEventListener("click", () => {
     const selected = card.querySelector(".fee-modalidad input[type=radio]:checked");
     if (!selected) return;
-    const message = `Hola Pulpos, quiero inscribirme al torneo ${tier} en la modalidad ${selected.value}.`;
+    const message = `Hola Pulpos 👋, quiero inscribirme al torneo *${tier}* 🏆 en la modalidad *${selected.value}* 🎮.`;
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank", "noopener");
   });
