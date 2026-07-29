@@ -97,7 +97,10 @@ function renderRanking() {
             <p class="section-sub podium-season"><i class="fa-solid fa-calendar"></i> ${displaySeason.info.name}</p>
             <div class="fee-price">${r.wins} <span class="unit">victorias</span></div>
           </div>
-          <p><span class="podium-stat-num">${r.played}</span> torneos jugados · <span class="podium-stat-num">${rate}%</span> efectividad</p>
+          <div class="podium-stats-row">
+            <p><span class="podium-stat-num">${r.played}</span> torneos jugados</p>
+            <p><span class="podium-stat-num">${rate}%</span> efectividad</p>
+          </div>
         </div>
       `;
     })

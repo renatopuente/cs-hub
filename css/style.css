@@ -1613,16 +1613,48 @@ footer.credits {
 .site-footer-fixed .made-with-love { margin: 6px 0 2px; }
 .site-footer-fixed footer.credits { margin-top: 0; }
 
+/* Desktop: taller footer, slightly larger footer type (+2px across the
+   board). Mobile keeps the original compact sizing. */
+@media (min-width: 769px) {
+  .site-footer-fixed .footer-inner {
+    padding: 16px 20px;
+  }
+  .site-footer-fixed .social-icons a {
+    font-size: 1.245rem;
+  }
+  .site-footer-fixed .made-with-love {
+    font-size: 0.9125rem;
+  }
+  .site-footer-fixed .footer-legal-link {
+    font-size: 0.7775rem;
+  }
+  .site-footer-fixed footer.credits {
+    font-size: 0.7775rem;
+  }
+}
+
+.footer-legal-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 0 4px;
+}
+
 .footer-legal-link {
-  display: block;
-  text-align: center;
   color: var(--text-faint);
   font-size: 0.6525rem;
   text-decoration: underline;
   text-underline-offset: 2px;
-  margin: 0 0 4px;
 }
 .footer-legal-link:hover { color: var(--text-dim); }
+
+.footer-legal-divider {
+  width: 1px;
+  height: 10px;
+  background: var(--glass-border);
+  flex-shrink: 0;
+}
 
 /* Reserve room above the fixed footer so page content never sits behind it. */
 .page-offset-footer { padding-bottom: 150px; }
