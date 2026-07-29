@@ -70,9 +70,11 @@ function renderRanking() {
           <div class="icon">${PODIUM_ICONS[i]}</div>
           <span class="podium-rank">#${i + 1}</span>
           <h2>${r.name}</h2>
-          <p class="section-sub podium-season"><i class="fa-solid fa-calendar"></i> ${currentSeasonName}</p>
-          <div class="fee-price">${r.wins} <span class="unit">victorias</span></div>
-          <p>${r.played} torneos jugados · ${rate}% efectividad</p>
+          <div class="podium-stats-row">
+            <p class="section-sub podium-season"><i class="fa-solid fa-calendar"></i> ${currentSeasonName}</p>
+            <div class="fee-price">${r.wins} <span class="unit">victorias</span></div>
+          </div>
+          <p><span class="podium-stat-num">${r.played}</span> torneos jugados · <span class="podium-stat-num">${rate}%</span> efectividad</p>
         </div>
       `;
     })

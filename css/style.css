@@ -1315,7 +1315,7 @@ input[type="text"]:focus, select:focus {
 /* Same octoframe banner strip used on history cards, so the podium
    reads as part of the same visual family as the results pages. */
 .podium-card-banner {
-  height: 44px;
+  height: 52px;
   margin: -28px -28px 18px -28px;
   background:
     linear-gradient(120deg, rgba(155, 77, 255, 0.15), rgba(255, 110, 199, 0.15)),
@@ -1323,6 +1323,13 @@ input[type="text"]:focus, select:focus {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+}
+
+/* Taller banner means the share button needs to clear it a bit further
+   down than the default .share-btn position (tuned for history-card's
+   44px banner). */
+.podium-card .share-btn {
+  top: 66px;
 }
 
 /* Quiénes somos: lilac-and-pink theming shared with the other card
@@ -1349,11 +1356,29 @@ input[type="text"]:focus, select:focus {
   margin-bottom: 8px;
 }
 
-.podium-season {
-  margin: 0 0 12px;
+.podium-stats-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.podium-stats-row .podium-season {
+  margin: 0;
   font-size: 0.8rem;
 }
 .podium-season i { margin-right: 4px; }
+
+.podium-stats-row .fee-price {
+  margin: 0;
+  color: var(--accent);
+}
+
+.podium-stat-num {
+  color: var(--accent);
+  font-weight: 700;
+}
 
 .fee-price {
   font-size: 1.7rem;
