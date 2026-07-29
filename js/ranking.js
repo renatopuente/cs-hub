@@ -60,8 +60,11 @@ function renderRanking() {
     .map((r, i) => {
       const rate = r.played ? Math.round((r.wins / r.played) * 100) : 0;
       return `
-        <div class="glass-card podium-card">
+        <div class="glass-card podium-card" data-podium-id="${i}">
           <div class="podium-card-banner"></div>
+          <button class="share-btn" data-share-id="${i}" title="Compartir">
+            <i class="fa-solid fa-share-nodes"></i>
+          </button>
           <div class="icon">${PODIUM_ICONS[i]}</div>
           <h2>${r.name}</h2>
           <div class="fee-price">${r.wins} <span class="unit">victorias</span></div>
@@ -70,6 +73,13 @@ function renderRanking() {
       `;
     })
     .join("");
+
+  podiumGridEl.querySelectorAll("[data-share-id]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const card = btn.closest(".podium-card");
+      sharePodiumCard(card);
+    });
+  });
 
   rankingBodyEl.innerHTML = ranked
     .map((r, i) => {
@@ -86,6 +96,58 @@ function renderRanking() {
       `;
     })
     .join("");
+}
+
+async function sharePodiumCard(cardEl) {
+  if (typeof html2canvas === "undefined") {
+    alert("No se pudo cargar el generador de capturas. Intenta de nuevo en un momento.");
+    return;
+  }
+
+  let canvas;
+  try {
+    canvas = await html2canvas(cardEl, {
+      backgroundColor: "#0b0910",
+      scale: 2,
+      ignoreElements: (el) => el.classList && el.classList.contains("share-btn"),
+    });
+  } catch (err) {
+    console.error("No se pudo generar la captura", err);
+    alert("No se pudo generar la captura de este puesto.");
+    return;
+  }
+
+  canvas.toBlob(async (blob) => {
+    if (!blob) return;
+    const file = new File([blob], "ranking-el-octagono.png", { type: "image/png" });
+    const shareUrl = `${location.origin}/ranking.html`;
+    const shareText = "Mi puesto en la tabla de posiciones de El Octágono 🐙";
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], title: "El Octágono", text: shareText, url: shareUrl });
+        return;
+      } catch (err) {
+        if (err && err.name === "AbortError") return; // user cancelled, don't fall through
+      }
+    }
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: "El Octágono", text: shareText, url: shareUrl });
+        return;
+      } catch (err) {
+        if (err && err.name === "AbortError") return;
+      }
+    }
+
+    // Desktop / unsupported browsers: download the image so it can be shared manually.
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "ranking-el-octagono.png";
+    link.click();
+    URL.revokeObjectURL(link.href);
+  }, "image/png");
 }
 
 fbSubscribeHistory("duelos", (list) => {
