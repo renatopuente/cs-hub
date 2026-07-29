@@ -15,6 +15,24 @@ function isWinningResult(result) {
   return typeof result === "string" && (result.includes("Ganó") || result.includes("Campeón") || /^#1\b/.test(result));
 }
 
+// Ranking points per win, weighted by tournament tier (matches the fee
+// stored on each history entry). Falls back to 1 for anything unexpected
+// or missing so older records don't break the tally.
+const TIER_WEIGHTS = {
+  "Gratuito": 0.5, // Amistoso
+  "$1 USD": 1, // Casual
+  "$2 USD": 2, // Competitivo
+  "$5 USD": 3, // Premier
+  "$10 USD": 5, // Élite
+};
+function tierWeight(entryFee) {
+  return TIER_WEIGHTS[entryFee] ?? 1;
+}
+
+function formatPoints(points) {
+  return Number.isInteger(points) ? String(points) : points.toFixed(1);
+}
+
 // The last day of a season closes (Finalizado) at 8am and stays closed
 // the rest of that day. The following day the season resets at midnight,
 // but any tournaments played that first day are Amistoso-only and don't
@@ -45,20 +63,24 @@ function buildRanking(seasonIdx) {
   const inSeason = (entry) => entry.finalizedAt && seasonIndexForDate(new Date(entry.finalizedAt)) === seasonIdx;
 
   [...duelosHistory, ...duosHistory, ...pugHistory].filter(inSeason).forEach((entry) => {
+    const weight = tierWeight(entry.entryFee);
     (entry.teams || []).forEach((t) => {
       const won = isWinningResult(t.result);
       (t.players || []).forEach((rawName) => {
         const name = (rawName || "").trim();
         if (!name) return;
-        if (!stats[name]) stats[name] = { name, wins: 0, played: 0 };
+        if (!stats[name]) stats[name] = { name, wins: 0, played: 0, points: 0 };
         stats[name].played += 1;
-        if (won) stats[name].wins += 1;
+        if (won) {
+          stats[name].wins += 1;
+          stats[name].points += weight;
+        }
       });
     });
   });
 
   return Object.values(stats).sort(
-    (a, b) => b.wins - a.wins || b.played - a.played || a.name.localeCompare(b.name)
+    (a, b) => b.points - a.points || b.wins - a.wins || b.played - a.played || a.name.localeCompare(b.name)
   );
 }
 
@@ -95,7 +117,7 @@ function renderRanking() {
           </div>
           <div class="podium-stats-row">
             <p class="section-sub podium-season"><i class="fa-solid fa-calendar"></i> ${displaySeason.info.name}</p>
-            <div class="fee-price">${r.wins} <span class="unit">victorias</span></div>
+            <div class="fee-price">${formatPoints(r.points)} <span class="unit">puntos</span></div>
           </div>
           <div class="podium-stats-row">
             <p><span class="podium-stat-num">${r.played}</span> torneos jugados</p>
@@ -133,7 +155,7 @@ function renderRanking() {
           <td class="rank" data-label="Posición">#${i + 1}</td>
           <td data-label="Jugador">${r.name}</td>
           <td data-label="Torneos jugados">${r.played}</td>
-          <td data-label="Victorias">${r.wins}</td>
+          <td data-label="Puntos">${formatPoints(r.points)}</td>
           <td data-label="Efectividad">${rate}%</td>
         </tr>
       `;
