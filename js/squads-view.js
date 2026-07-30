@@ -3,12 +3,19 @@
 // duos-view.html before this file loads.
 
 const emptyStateEl = document.getElementById("empty-state");
+const countdownScreenEl = document.getElementById("countdown-screen");
+const countdownClockEl = document.getElementById("countdown-clock");
 const resultSection = document.getElementById("result-section");
+const tournamentFinishedBannerEl = document.getElementById("tournament-finished-banner");
+const neoBracketScreenEl = document.getElementById("neo-bracket-screen");
 const teamsListEl = document.getElementById("teams-list");
 const matchesTitleEl = document.getElementById("matches-title");
 const matchesSubEl = document.getElementById("matches-sub");
 const matchesViewEl = document.getElementById("matches-view");
 const championBannerEl = document.getElementById("champion-banner");
+
+const THIRTY_MIN_MS = 30 * 60 * 1000;
+const GREEK_LETTERS = ["Α", "Β", "Γ", "Δ", "Ε", "Ζ", "Η", "Θ"];
 
 function teamById(tournament, id) {
   return tournament.teams.find((t) => t.id === id) || null;
@@ -212,20 +219,188 @@ function renderRoundRobin(tournament) {
   }
 }
 
+/* ---------- Neon screen (llaves/conexiones con letra griega + color neón) ---------- */
+
+function neoNodeHtml(team, idx, dim, blink) {
+  if (!team) {
+    return `<div class="neo-node-wrap"><div class="neo-node neo-dim" style="--node-color:#666">?</div></div>`;
+  }
+  const classes = ["neo-node"];
+  if (dim) classes.push("neo-dim");
+  if (blink) classes.push("neo-blink");
+  return `
+    <div class="neo-node-wrap">
+      <div class="${classes.join(" ")}" style="--node-color:${team.color}">${GREEK_LETTERS[idx]}</div>
+      <div class="neo-node-label">${team.name}</div>
+    </div>
+  `;
+}
+
+function neoIsEliminated(tournament, teamId) {
+  return tournament.matches.some((round) => round.some((m) => (m.a === teamId || m.b === teamId) && m.winner && m.winner !== teamId));
+}
+
+function renderNeoDuel(tournament) {
+  const [teamA, teamB] = tournament.teams;
+  const winnerId = tournament.winner;
+  neoBracketScreenEl.innerHTML = `
+    <div class="neo-bracket-title">Llave</div>
+    <div class="neo-duel">
+      ${neoNodeHtml(teamA, 0, winnerId && winnerId !== teamA.id, !winnerId)}
+      <div class="neo-connector"></div>
+      ${neoNodeHtml(teamB, 1, winnerId && winnerId !== teamB.id, !winnerId)}
+    </div>
+  `;
+}
+
+function renderNeoBracket(tournament) {
+  const totalRounds = tournament.matches.length;
+  const finalMatch = tournament.matches[totalRounds - 1][0];
+  const finalPending = !!(finalMatch.a && finalMatch.b && !finalMatch.winner);
+
+  const roundsHtml = tournament.matches
+    .map((round, r) => {
+      const label = roundLabel(totalRounds, r);
+      const matchesHtml = round
+        .map((m) => {
+          const teamA = m.a ? teamById(tournament, m.a) : null;
+          const teamB = m.b ? teamById(tournament, m.b) : null;
+          const idxA = teamA ? tournament.teams.findIndex((t) => t.id === teamA.id) : -1;
+          const idxB = teamB ? tournament.teams.findIndex((t) => t.id === teamB.id) : -1;
+          const dimA = teamA && neoIsEliminated(tournament, teamA.id);
+          const dimB = teamB && neoIsEliminated(tournament, teamB.id);
+          const blinkA = finalPending && teamA && (finalMatch.a === teamA.id || finalMatch.b === teamA.id);
+          const blinkB = finalPending && teamB && (finalMatch.a === teamB.id || finalMatch.b === teamB.id);
+          return `
+            <div class="neo-duel">
+              ${neoNodeHtml(teamA, idxA, dimA, blinkA)}
+              <div class="neo-connector"></div>
+              ${neoNodeHtml(teamB, idxB, dimB, blinkB)}
+            </div>
+          `;
+        })
+        .join("");
+      return `
+        <div class="neo-bracket-round">
+          <div class="neo-bracket-round-label">${label}</div>
+          ${matchesHtml}
+        </div>
+      `;
+    })
+    .join("");
+
+  neoBracketScreenEl.innerHTML = `
+    <div class="neo-bracket-title">Llave del torneo</div>
+    <div class="neo-bracket-tree">${roundsHtml}</div>
+  `;
+}
+
+function renderNeoRoundRobin(tournament) {
+  const wins = {};
+  tournament.teams.forEach((t) => (wins[t.id] = 0));
+  tournament.matches.forEach((m) => {
+    if (m.winner) wins[m.winner] += 1;
+  });
+  const allDecided = tournament.matches.every((m) => m.winner);
+  const maxWins = Math.max(...tournament.teams.map((t) => wins[t.id]));
+
+  const nodesHtml = tournament.teams
+    .map((team, idx) => {
+      const isLeader = allDecided && wins[team.id] === maxWins;
+      const dim = allDecided && !isLeader;
+      return neoNodeHtml(team, idx, dim, false);
+    })
+    .join("");
+
+  neoBracketScreenEl.innerHTML = `
+    <div class="neo-bracket-title">Todos contra todos</div>
+    <div class="neo-roundrobin-row">${nodesHtml}</div>
+  `;
+}
+
+function renderNeoScreen(tournament) {
+  if (tournament.format === "series") renderNeoDuel(tournament);
+  else if (tournament.format === "bracket") renderNeoBracket(tournament);
+  else if (tournament.format === "roundrobin") renderNeoRoundRobin(tournament);
+}
+
+/* ---------- Countdown ---------- */
+
+let countdownIntervalId = null;
+
+function stopCountdown() {
+  if (countdownIntervalId) {
+    clearInterval(countdownIntervalId);
+    countdownIntervalId = null;
+  }
+}
+
+function formatCountdown(ms) {
+  if (ms <= 0) return "¡Arrancamos!";
+  const totalSeconds = Math.floor(ms / 1000);
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+  const pad = (n) => String(n).padStart(2, "0");
+  return days > 0 ? `${days}d ${pad(hours)}:${pad(minutes)}:${pad(seconds)}` : `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+}
+
+function startCountdown(targetTs) {
+  stopCountdown();
+  const tick = () => {
+    countdownClockEl.textContent = formatCountdown(targetTs - Date.now());
+  };
+  tick();
+  countdownIntervalId = setInterval(tick, 1000);
+}
+
+/* ---------- Main dispatch ---------- */
+
 function render(tournament) {
-  if (!tournament) {
+  stopCountdown();
+
+  const now = Date.now();
+  const isStaleFinalized = tournament && tournament.finalizedAt && now - tournament.finalizedAt > THIRTY_MIN_MS;
+  const active = !tournament || isStaleFinalized ? null : tournament;
+
+  if (!active) {
     emptyStateEl.hidden = false;
+    countdownScreenEl.hidden = true;
     resultSection.hidden = true;
     return;
   }
+
+  // Un torneo agendado puede existir antes de que el admin arme los
+  // equipos (solo scheduledAt, sin teams todavía) — el countdown se
+  // muestra igual, sin requerir que el torneo ya tenga datos completos.
+  const showCountdown = active.scheduledAt && !active.started && !active.finalizedAt;
+  if (showCountdown) {
+    emptyStateEl.hidden = true;
+    resultSection.hidden = true;
+    countdownScreenEl.hidden = false;
+    startCountdown(active.scheduledAt);
+    return;
+  }
+
+  if (!active.teams) {
+    emptyStateEl.hidden = false;
+    countdownScreenEl.hidden = true;
+    resultSection.hidden = true;
+    return;
+  }
+
   emptyStateEl.hidden = true;
+  countdownScreenEl.hidden = true;
   resultSection.hidden = false;
+  tournamentFinishedBannerEl.hidden = !active.finalizedAt;
 
-  teamsListEl.innerHTML = tournament.teams.map(renderTeamChip).join("");
+  teamsListEl.innerHTML = active.teams.map(renderTeamChip).join("");
+  renderNeoScreen(active);
 
-  if (tournament.format === "bracket") renderBracket(tournament);
-  else if (tournament.format === "series") renderSeries(tournament);
-  else if (tournament.format === "roundrobin") renderRoundRobin(tournament);
+  if (active.format === "bracket") renderBracket(active);
+  else if (active.format === "series") renderSeries(active);
+  else if (active.format === "roundrobin") renderRoundRobin(active);
 }
 
 fbSubscribe(MODE, render);

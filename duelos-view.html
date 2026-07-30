@@ -125,7 +125,18 @@
 
     <div id="empty-state" class="glass-card empty-hint"><span class="empty-hint-text">Esperando a que se cree un torneo</span><i class="fa-solid fa-hourglass-half empty-hint-icon"></i></div>
 
+    <div id="countdown-screen" class="glass-card countdown-screen" hidden>
+      <div class="countdown-label"><i class="fa-solid fa-hourglass-half"></i> Próximo torneo</div>
+      <div class="countdown-clock" id="countdown-clock"></div>
+    </div>
+
     <section id="series-section" hidden>
+      <div id="tournament-finished-banner" class="tournament-finished-banner" hidden>
+        <i class="fa-solid fa-flag-checkered"></i> Torneo finalizado
+      </div>
+
+      <div id="neo-bracket-screen" class="neo-bracket-screen"></div>
+
       <div id="champion-banner"></div>
 
       <div class="glass-card" style="margin-bottom: 20px;">

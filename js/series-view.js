@@ -2,12 +2,19 @@
 // page sets MODE in a small inline <script> before this file loads.
 
 const emptyStateEl = document.getElementById("empty-state");
+const countdownScreenEl = document.getElementById("countdown-screen");
+const countdownClockEl = document.getElementById("countdown-clock");
 const seriesSection = document.getElementById("series-section");
+const tournamentFinishedBannerEl = document.getElementById("tournament-finished-banner");
+const neoBracketScreenEl = document.getElementById("neo-bracket-screen");
 const teamsListEl = document.getElementById("teams-list");
 const seriesScoreEl = document.getElementById("series-score");
 const seriesFormatLabelEl = document.getElementById("series-format-label");
 const gameLogEl = document.getElementById("game-log");
 const championBannerEl = document.getElementById("champion-banner");
+
+const THIRTY_MIN_MS = 30 * 60 * 1000;
+const GREEK_LETTERS = ["Α", "Β", "Γ", "Δ", "Ε", "Ζ", "Η", "Θ"];
 
 function teamById(tournament, id) {
   return tournament.teams.find((t) => t.id === id) || null;
@@ -30,22 +37,117 @@ function renderTeamChip(team) {
   `;
 }
 
+/* ---------- Neon duel screen (Duelos/Pug are always a single 2-team series,
+   which is inherently "the final" — both nodes blink until there's a
+   winner, since there's no earlier round to have already eliminated anyone). */
+
+function renderNeoDuel(tournament) {
+  const [teamA, teamB] = tournament.teams;
+  const winnerId = tournament.winner;
+
+  const nodeHtml = (team, idx) => {
+    const dim = winnerId && winnerId !== team.id;
+    const blink = !winnerId;
+    const classes = ["neo-node"];
+    if (dim) classes.push("neo-dim");
+    if (blink) classes.push("neo-blink");
+    return `
+      <div class="neo-node-wrap">
+        <div class="${classes.join(" ")}" style="--node-color:${team.color}">${GREEK_LETTERS[idx]}</div>
+        <div class="neo-node-label">${team.name}</div>
+      </div>
+    `;
+  };
+
+  neoBracketScreenEl.innerHTML = `
+    <div class="neo-bracket-title">Llave</div>
+    <div class="neo-duel">
+      ${nodeHtml(teamA, 0)}
+      <div class="neo-connector"></div>
+      ${nodeHtml(teamB, 1)}
+    </div>
+  `;
+}
+
+/* ---------- Countdown ---------- */
+
+let countdownIntervalId = null;
+
+function stopCountdown() {
+  if (countdownIntervalId) {
+    clearInterval(countdownIntervalId);
+    countdownIntervalId = null;
+  }
+}
+
+function formatCountdown(ms) {
+  if (ms <= 0) return "¡Arrancamos!";
+  const totalSeconds = Math.floor(ms / 1000);
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+  const pad = (n) => String(n).padStart(2, "0");
+  return days > 0 ? `${days}d ${pad(hours)}:${pad(minutes)}:${pad(seconds)}` : `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+}
+
+function startCountdown(targetTs) {
+  stopCountdown();
+  const tick = () => {
+    countdownClockEl.textContent = formatCountdown(targetTs - Date.now());
+  };
+  tick();
+  countdownIntervalId = setInterval(tick, 1000);
+}
+
+/* ---------- Main dispatch ---------- */
+
 function render(tournament) {
-  if (!tournament) {
+  stopCountdown();
+
+  const now = Date.now();
+  const isStaleFinalized = tournament && tournament.finalizedAt && now - tournament.finalizedAt > THIRTY_MIN_MS;
+  const active = !tournament || isStaleFinalized ? null : tournament;
+
+  if (!active) {
     emptyStateEl.hidden = false;
+    countdownScreenEl.hidden = true;
     seriesSection.hidden = true;
     return;
   }
+
+  // Un torneo agendado puede existir antes de que el admin arme los
+  // equipos (solo scheduledAt, sin teams todavía) — el countdown se
+  // muestra igual, sin requerir que el torneo ya tenga datos completos.
+  const showCountdown = active.scheduledAt && !active.started && !active.finalizedAt;
+  if (showCountdown) {
+    emptyStateEl.hidden = true;
+    seriesSection.hidden = true;
+    countdownScreenEl.hidden = false;
+    startCountdown(active.scheduledAt);
+    return;
+  }
+
+  if (!active.teams) {
+    emptyStateEl.hidden = false;
+    countdownScreenEl.hidden = true;
+    seriesSection.hidden = true;
+    return;
+  }
+
   emptyStateEl.hidden = true;
+  countdownScreenEl.hidden = true;
   seriesSection.hidden = false;
+  tournamentFinishedBannerEl.hidden = !active.finalizedAt;
 
-  const [teamA, teamB] = tournament.teams;
-  const scoreA = winsFor(tournament, teamA.id);
-  const scoreB = winsFor(tournament, teamB.id);
+  const [teamA, teamB] = active.teams;
+  const scoreA = winsFor(active, teamA.id);
+  const scoreB = winsFor(active, teamB.id);
 
-  teamsListEl.innerHTML = tournament.teams.map(renderTeamChip).join("");
+  teamsListEl.innerHTML = active.teams.map(renderTeamChip).join("");
+  renderNeoDuel(active);
 
-  seriesFormatLabelEl.textContent = `Mejor de ${tournament.bestOf} · se necesitan ${tournament.winsNeeded} victorias`;
+  seriesFormatLabelEl.textContent = `Mejor de ${active.bestOf} · se necesitan ${active.winsNeeded} victorias`;
 
   seriesScoreEl.innerHTML = `
     <div class="series-team" style="color:${teamA.color}">
@@ -59,14 +161,14 @@ function render(tournament) {
     </div>
   `;
 
-  gameLogEl.innerHTML = (tournament.games || [])
+  gameLogEl.innerHTML = (active.games || [])
     .map((g) => {
-      const t = teamById(tournament, g.winner);
+      const t = teamById(active, g.winner);
       return `<div class="game-row"><span class="game-label">Juego ${g.number}</span><span style="color:${t.color}">${t.name}</span></div>`;
     })
     .join("");
 
-  const champion = tournament.winner ? teamById(tournament, tournament.winner) : null;
+  const champion = active.winner ? teamById(active, active.winner) : null;
   championBannerEl.innerHTML = champion
     ? `
       <div class="champion-banner">

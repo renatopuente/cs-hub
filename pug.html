@@ -35,6 +35,22 @@
     </section>
 
     <div id="protected-content" hidden>
+    <!-- Agenda -->
+    <section id="schedule-section" class="glass-card" style="margin-bottom: 20px;">
+      <h2 class="section-title"><i class="fa-solid fa-calendar-days"></i> Agendar torneo</h2>
+      <p class="section-sub">Define fecha y hora del próximo torneo. La vista pública muestra un countdown hasta que presiones "Iniciar torneo".</p>
+      <div class="player-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-bottom: 4px;">
+        <div class="field">
+          <label>Fecha y hora</label>
+          <input type="datetime-local" id="schedule-input" />
+        </div>
+      </div>
+      <div class="actions-row">
+        <button id="schedule-save-btn" class="btn btn-ghost"><i class="fa-solid fa-floppy-disk"></i> Guardar fecha</button>
+        <button id="schedule-clear-btn" class="btn btn-danger" hidden><i class="fa-solid fa-xmark"></i> Quitar agenda</button>
+      </div>
+    </section>
+
     <!-- Setup -->
     <section id="setup-section" class="glass-card">
       <h2 class="section-title">Arma la serie</h2>
@@ -108,6 +124,7 @@
 
       <div class="actions-row">
         <a href="pug-view.html" target="_blank" class="btn btn-ghost"><i class="fa-solid fa-link"></i> Ver vista pública</a>
+        <button id="start-tournament-btn" class="btn btn-primary" hidden><i class="fa-solid fa-play"></i> Iniciar torneo</button>
         <button id="finalize-btn" class="btn btn-primary"><i class="fa-solid fa-circle-check"></i> Finalizar torneo</button>
         <button id="reset-btn" class="btn btn-danger">Nuevo torneo</button>
       </div>

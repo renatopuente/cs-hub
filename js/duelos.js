@@ -14,6 +14,12 @@ const gameLogEl = document.getElementById("game-log");
 const championBannerEl = document.getElementById("champion-banner");
 const resetBtn = document.getElementById("reset-btn");
 const finalizeBtn = document.getElementById("finalize-btn");
+const scheduleInput = document.getElementById("schedule-input");
+const scheduleSaveBtn = document.getElementById("schedule-save-btn");
+const scheduleClearBtn = document.getElementById("schedule-clear-btn");
+const startTournamentBtn = document.getElementById("start-tournament-btn");
+
+let currentTournament = null;
 
 // Duelos is always exactly 2 players, auto-assigned, best of 3 or 5.
 function buildPlayerInputs() {
@@ -44,6 +50,11 @@ function createTournament(teams, bestOf, entryFee) {
     winner: "", // "" not null: Firebase RTDB strips null values on write
     entryFee,
   };
+  // Si ya había una fecha agendada (armada antes que el roster), se conserva.
+  if (currentTournament && currentTournament.scheduledAt) {
+    tournament.scheduledAt = currentTournament.scheduledAt;
+    tournament.started = currentTournament.started || false;
+  }
   saveTournament(MODE, tournament);
   return tournament;
 }
@@ -116,19 +127,24 @@ function finalizeTournament(tournament) {
     teams: computeFinalResults(tournament),
   };
   archiveTournament(MODE, record);
-  clearTournament(MODE);
+  // No se borra el nodo en vivo al instante: se marca finalizado y se
+  // mantiene 30 minutos para que la vista pública muestre "Torneo
+  // finalizado" con el resultado congelado. El próximo "Crear duelo"
+  // sobrescribe este nodo igual, así que no hace falta limpiarlo aquí.
+  saveTournament(MODE, { ...tournament, finalizedAt: Date.now() });
   currentTournament = null;
   seriesSection.hidden = true;
   setupSection.hidden = false;
+  updateScheduleUI();
   refreshPlayerInputs();
 }
-
-let currentTournament = null;
 
 function render(tournament) {
   currentTournament = tournament;
   setupSection.hidden = true;
   seriesSection.hidden = false;
+  updateScheduleUI();
+  startTournamentBtn.hidden = !(tournament.scheduledAt && !tournament.started);
 
   const [teamA, teamB] = tournament.teams;
   const scoreA = winsFor(tournament, teamA.id);
@@ -216,8 +232,10 @@ setupForm.addEventListener("submit", (e) => {
 
 resetBtn.addEventListener("click", () => {
   clearTournament(MODE);
+  currentTournament = null;
   seriesSection.hidden = true;
   setupSection.hidden = false;
+  updateScheduleUI();
   refreshPlayerInputs();
 });
 
@@ -227,10 +245,72 @@ finalizeBtn.addEventListener("click", () => {
   }
 });
 
+startTournamentBtn.addEventListener("click", () => {
+  if (!currentTournament) return;
+  currentTournament.started = true;
+  saveTournament(MODE, currentTournament);
+  render(currentTournament);
+});
+
+/* ---------- Agenda (fecha/hora + countdown en la vista pública) ---------- */
+
+function tsToScheduleInput(ts) {
+  const d = new Date(ts);
+  const pad = (n) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+function updateScheduleUI() {
+  const scheduledAt = currentTournament && currentTournament.scheduledAt;
+  scheduleClearBtn.hidden = !scheduledAt;
+  scheduleInput.value = scheduledAt ? tsToScheduleInput(scheduledAt) : "";
+}
+
+scheduleSaveBtn.addEventListener("click", () => {
+  if (!scheduleInput.value) return;
+  const ts = new Date(scheduleInput.value).getTime();
+  if (Number.isNaN(ts)) return;
+  const base = currentTournament || {};
+  const updated = { ...base, scheduledAt: ts, started: base.started || false };
+  currentTournament = updated;
+  saveTournament(MODE, updated);
+  updateScheduleUI();
+  if (updated.teams) render(updated);
+});
+
+scheduleClearBtn.addEventListener("click", () => {
+  if (!currentTournament) return;
+  const { scheduledAt, started, ...rest } = currentTournament;
+  currentTournament = Object.keys(rest).length ? rest : null;
+  if (currentTournament) {
+    saveTournament(MODE, currentTournament);
+  } else {
+    clearTournament(MODE);
+  }
+  updateScheduleUI();
+  if (currentTournament && currentTournament.teams) {
+    render(currentTournament);
+  } else {
+    seriesSection.hidden = true;
+    setupSection.hidden = false;
+    refreshPlayerInputs();
+  }
+});
+
 (function init() {
   fbLoadOnce(MODE, (existing) => {
-    if (existing) {
-      render(existing);
+    if (existing && existing.finalizedAt) {
+      // Ya finalizado: el público lo sigue mostrando un rato (30 min), pero
+      // el admin ya sigue de largo hacia un torneo nuevo.
+      currentTournament = null;
+    } else if (existing) {
+      currentTournament = existing;
+    } else {
+      currentTournament = null;
+    }
+    updateScheduleUI();
+    if (currentTournament && currentTournament.teams) {
+      render(currentTournament);
     } else {
       refreshPlayerInputs();
     }
