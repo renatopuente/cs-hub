@@ -14,7 +14,10 @@ const gameLogEl = document.getElementById("game-log");
 const championBannerEl = document.getElementById("champion-banner");
 
 const THIRTY_MIN_MS = 30 * 60 * 1000;
-const GREEK_LETTERS = ["Α", "Β", "Γ", "Δ", "Ε", "Ζ", "Η", "Θ"];
+
+function teamInitial(team) {
+  return (team.name || "?").trim().charAt(0).toUpperCase();
+}
 
 function teamById(tournament, id) {
   return tournament.teams.find((t) => t.id === id) || null;
@@ -45,7 +48,7 @@ function renderNeoDuel(tournament) {
   const [teamA, teamB] = tournament.teams;
   const winnerId = tournament.winner;
 
-  const nodeHtml = (team, idx) => {
+  const nodeHtml = (team) => {
     const dim = winnerId && winnerId !== team.id;
     const blink = !winnerId;
     const classes = ["neo-node"];
@@ -53,7 +56,7 @@ function renderNeoDuel(tournament) {
     if (blink) classes.push("neo-blink");
     return `
       <div class="neo-node-wrap">
-        <div class="${classes.join(" ")}" style="--node-color:${team.color}">${GREEK_LETTERS[idx]}</div>
+        <div class="${classes.join(" ")}" style="--node-color:${team.color}">${teamInitial(team)}</div>
         <div class="neo-node-label">${team.name}</div>
       </div>
     `;
@@ -62,9 +65,9 @@ function renderNeoDuel(tournament) {
   neoBracketScreenEl.innerHTML = `
     <div class="neo-bracket-title">Llave</div>
     <div class="neo-duel">
-      ${nodeHtml(teamA, 0)}
+      ${nodeHtml(teamA)}
       <div class="neo-connector"></div>
-      ${nodeHtml(teamB, 1)}
+      ${nodeHtml(teamB)}
     </div>
   `;
 }

@@ -15,7 +15,10 @@ const matchesViewEl = document.getElementById("matches-view");
 const championBannerEl = document.getElementById("champion-banner");
 
 const THIRTY_MIN_MS = 30 * 60 * 1000;
-const GREEK_LETTERS = ["Α", "Β", "Γ", "Δ", "Ε", "Ζ", "Η", "Θ"];
+
+function teamInitial(team) {
+  return (team.name || "?").trim().charAt(0).toUpperCase();
+}
 
 function teamById(tournament, id) {
   return tournament.teams.find((t) => t.id === id) || null;
@@ -219,18 +222,18 @@ function renderRoundRobin(tournament) {
   }
 }
 
-/* ---------- Neon screen (llaves/conexiones con letra griega + color neón) ---------- */
+/* ---------- Neon screen (llaves/conexiones con inicial + color neón) ---------- */
 
-function neoNodeHtml(team, idx, dim, blink) {
+function neoNodeHtml(team, dim, blink, nodeId) {
   if (!team) {
-    return `<div class="neo-node-wrap"><div class="neo-node neo-dim" style="--node-color:#666">?</div></div>`;
+    return `<div class="neo-node-wrap"><div class="neo-node neo-dim" id="${nodeId}" style="--node-color:#666">?</div></div>`;
   }
   const classes = ["neo-node"];
   if (dim) classes.push("neo-dim");
   if (blink) classes.push("neo-blink");
   return `
     <div class="neo-node-wrap">
-      <div class="${classes.join(" ")}" style="--node-color:${team.color}">${GREEK_LETTERS[idx]}</div>
+      <div class="${classes.join(" ")}" id="${nodeId}" style="--node-color:${team.color}">${teamInitial(team)}</div>
       <div class="neo-node-label">${team.name}</div>
     </div>
   `;
@@ -246,53 +249,145 @@ function renderNeoDuel(tournament) {
   neoBracketScreenEl.innerHTML = `
     <div class="neo-bracket-title">Llave</div>
     <div class="neo-duel">
-      ${neoNodeHtml(teamA, 0, winnerId && winnerId !== teamA.id, !winnerId)}
+      ${neoNodeHtml(teamA, winnerId && winnerId !== teamA.id, !winnerId, "neo-node-a")}
       <div class="neo-connector"></div>
-      ${neoNodeHtml(teamB, 1, winnerId && winnerId !== teamB.id, !winnerId)}
+      ${neoNodeHtml(teamB, winnerId && winnerId !== teamB.id, !winnerId, "neo-node-b")}
     </div>
   `;
 }
+
+// Cada equipo llega de un lado contrario de la pantalla y avanza ronda por
+// ronda hacia el centro, donde se juega la final. Se arma un lado a la vez
+// (izquierdo/derecho) con la mitad de los partidos de cada ronda previa a
+// la final; el lado derecho se dibuja en espejo vía CSS (row-reverse).
+function neoBracketSideHtml(tournament, side, finalMatch, finalPending) {
+  const totalRounds = tournament.matches.length;
+  const preRounds = tournament.matches.slice(0, totalRounds - 1);
+
+  const columnsHtml = preRounds
+    .map((round, r) => {
+      const half = round.length / 2;
+      const start = side === "left" ? 0 : half;
+      const end = side === "left" ? half : round.length;
+      const label = roundLabel(totalRounds, r);
+
+      const duelsHtml = [];
+      for (let m = start; m < end; m++) {
+        const match = round[m];
+        const teamA = match.a ? teamById(tournament, match.a) : null;
+        const teamB = match.b ? teamById(tournament, match.b) : null;
+        const dimA = teamA && neoIsEliminated(tournament, teamA.id);
+        const dimB = teamB && neoIsEliminated(tournament, teamB.id);
+        const blinkA = finalPending && teamA && (finalMatch.a === teamA.id || finalMatch.b === teamA.id);
+        const blinkB = finalPending && teamB && (finalMatch.a === teamB.id || finalMatch.b === teamB.id);
+        duelsHtml.push(`
+          <div class="neo-bracket-duel-pair">
+            ${neoNodeHtml(teamA, dimA, blinkA, `neo-node-r${r}-m${m}-a`)}
+            ${neoNodeHtml(teamB, dimB, blinkB, `neo-node-r${r}-m${m}-b`)}
+          </div>
+        `);
+      }
+
+      return `
+        <div class="neo-bracket-col">
+          <div class="neo-bracket-round-label">${label}</div>
+          <div class="neo-bracket-column">${duelsHtml.join("")}</div>
+        </div>
+      `;
+    })
+    .join("");
+
+  return `<div class="neo-bracket-side neo-side-${side}">${columnsHtml}</div>`;
+}
+
+function neoFinalColumnHtml(tournament, finalMatch, finalPending) {
+  const teamA = finalMatch.a ? teamById(tournament, finalMatch.a) : null;
+  const teamB = finalMatch.b ? teamById(tournament, finalMatch.b) : null;
+  const dimA = teamA && neoIsEliminated(tournament, teamA.id);
+  const dimB = teamB && neoIsEliminated(tournament, teamB.id);
+  return `
+    <div class="neo-bracket-col">
+      <div class="neo-bracket-round-label">Final</div>
+      <div class="neo-bracket-final-column">
+        ${neoNodeHtml(teamA, dimA, finalPending, "neo-node-final-a")}
+        ${neoNodeHtml(teamB, dimB, finalPending, "neo-node-final-b")}
+      </div>
+    </div>
+  `;
+}
+
+function neoNodeCenter(canvasRect, nodeId) {
+  const el = document.getElementById(nodeId);
+  if (!el) return null;
+  const r = el.getBoundingClientRect();
+  return { x: r.left + r.width / 2 - canvasRect.left, y: r.top + r.height / 2 - canvasRect.top };
+}
+
+// Dibuja los canales/conexiones de la llave con líneas SVG (stroke), midiendo
+// la posición real de cada nodo ya renderizado — más confiable que intentar
+// alinear todo por CSS puro, y se recalcula en cada resize.
+function drawNeoBracketLines(tournament) {
+  const canvas = document.getElementById("neo-bracket-canvas");
+  const svg = document.getElementById("neo-bracket-lines");
+  if (!canvas || !svg) return;
+
+  const canvasRect = canvas.getBoundingClientRect();
+  svg.setAttribute("width", canvasRect.width);
+  svg.setAttribute("height", canvasRect.height);
+
+  const totalRounds = tournament.matches.length;
+  const preRounds = tournament.matches.slice(0, totalRounds - 1);
+  const paths = [];
+
+  preRounds.forEach((round, r) => {
+    for (let m = 0; m < round.length; m++) {
+      const nextRoundIdx = r + 1;
+      const nextMatchIdx = Math.floor(m / 2);
+      const nextSlot = m % 2 === 0 ? "a" : "b";
+      const nextNodeId =
+        nextRoundIdx === totalRounds - 1
+          ? `neo-node-final-${nextSlot}`
+          : `neo-node-r${nextRoundIdx}-m${nextMatchIdx}-${nextSlot}`;
+
+      const a = neoNodeCenter(canvasRect, `neo-node-r${r}-m${m}-a`);
+      const b = neoNodeCenter(canvasRect, `neo-node-r${r}-m${m}-b`);
+      const next = neoNodeCenter(canvasRect, nextNodeId);
+      if (!a || !b || !next) continue;
+
+      paths.push(`M ${a.x},${a.y} H ${next.x} V ${next.y}`);
+      paths.push(`M ${b.x},${b.y} H ${next.x} V ${next.y}`);
+    }
+  });
+
+  svg.innerHTML = paths.map((d) => `<path d="${d}"></path>`).join("");
+}
+
+let neoBracketResizeHandler = null;
 
 function renderNeoBracket(tournament) {
   const totalRounds = tournament.matches.length;
   const finalMatch = tournament.matches[totalRounds - 1][0];
   const finalPending = !!(finalMatch.a && finalMatch.b && !finalMatch.winner);
 
-  const roundsHtml = tournament.matches
-    .map((round, r) => {
-      const label = roundLabel(totalRounds, r);
-      const matchesHtml = round
-        .map((m) => {
-          const teamA = m.a ? teamById(tournament, m.a) : null;
-          const teamB = m.b ? teamById(tournament, m.b) : null;
-          const idxA = teamA ? tournament.teams.findIndex((t) => t.id === teamA.id) : -1;
-          const idxB = teamB ? tournament.teams.findIndex((t) => t.id === teamB.id) : -1;
-          const dimA = teamA && neoIsEliminated(tournament, teamA.id);
-          const dimB = teamB && neoIsEliminated(tournament, teamB.id);
-          const blinkA = finalPending && teamA && (finalMatch.a === teamA.id || finalMatch.b === teamA.id);
-          const blinkB = finalPending && teamB && (finalMatch.a === teamB.id || finalMatch.b === teamB.id);
-          return `
-            <div class="neo-duel">
-              ${neoNodeHtml(teamA, idxA, dimA, blinkA)}
-              <div class="neo-connector"></div>
-              ${neoNodeHtml(teamB, idxB, dimB, blinkB)}
-            </div>
-          `;
-        })
-        .join("");
-      return `
-        <div class="neo-bracket-round">
-          <div class="neo-bracket-round-label">${label}</div>
-          ${matchesHtml}
-        </div>
-      `;
-    })
-    .join("");
+  const leftHtml = neoBracketSideHtml(tournament, "left", finalMatch, finalPending);
+  const rightHtml = neoBracketSideHtml(tournament, "right", finalMatch, finalPending);
+  const finalHtml = neoFinalColumnHtml(tournament, finalMatch, finalPending);
 
   neoBracketScreenEl.innerHTML = `
     <div class="neo-bracket-title">Llave del torneo</div>
-    <div class="neo-bracket-tree">${roundsHtml}</div>
+    <div class="neo-bracket-canvas" id="neo-bracket-canvas">
+      ${leftHtml}
+      ${finalHtml}
+      ${rightHtml}
+      <svg class="neo-bracket-lines" id="neo-bracket-lines"></svg>
+    </div>
   `;
+
+  drawNeoBracketLines(tournament);
+
+  if (neoBracketResizeHandler) window.removeEventListener("resize", neoBracketResizeHandler);
+  neoBracketResizeHandler = () => drawNeoBracketLines(tournament);
+  window.addEventListener("resize", neoBracketResizeHandler);
 }
 
 function renderNeoRoundRobin(tournament) {
@@ -305,10 +400,10 @@ function renderNeoRoundRobin(tournament) {
   const maxWins = Math.max(...tournament.teams.map((t) => wins[t.id]));
 
   const nodesHtml = tournament.teams
-    .map((team, idx) => {
+    .map((team) => {
       const isLeader = allDecided && wins[team.id] === maxWins;
       const dim = allDecided && !isLeader;
-      return neoNodeHtml(team, idx, dim, false);
+      return neoNodeHtml(team, dim, false, `neo-node-rr-${team.id}`);
     })
     .join("");
 

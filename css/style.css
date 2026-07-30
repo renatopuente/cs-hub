@@ -879,15 +879,15 @@ input[type="text"]:focus, select:focus {
 
 .neo-node {
   --glow: var(--node-color, var(--accent));
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
+  width: 44px;
+  height: 40px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: "Montserrat", sans-serif;
   font-weight: 800;
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   color: var(--glow);
   background: rgba(255, 255, 255, 0.03);
   border: 2px solid var(--glow);
@@ -938,19 +938,54 @@ input[type="text"]:focus, select:focus {
   .neo-connector { width: 20px; }
 }
 
-.neo-bracket-tree {
+.neo-bracket-canvas {
+  position: relative;
   display: flex;
-  gap: 28px;
+  align-items: center;
   justify-content: center;
+  gap: 36px;
   min-width: max-content;
   margin: 0 auto;
+  padding: 8px 4px;
 }
 
-.neo-bracket-round {
+.neo-bracket-side {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.neo-bracket-side { align-items: stretch; }
+.neo-bracket-side.neo-side-right { flex-direction: row-reverse; }
+
+.neo-bracket-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.neo-bracket-column {
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  gap: 22px;
+  gap: 20px;
+}
+
+.neo-bracket-duel-pair {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.neo-bracket-final-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
 }
 
 .neo-bracket-round-label {
@@ -959,7 +994,21 @@ input[type="text"]:focus, select:focus {
   color: var(--text-faint);
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  margin-bottom: 6px;
+}
+
+.neo-bracket-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.neo-bracket-lines path {
+  fill: none;
+  stroke: rgba(155, 77, 255, 0.45);
+  stroke-width: 2;
 }
 
 .neo-roundrobin-row {
