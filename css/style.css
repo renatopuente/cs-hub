@@ -1955,10 +1955,16 @@ button.fee-card-cta {
   cursor: pointer;
 }
 
+@media (max-width: 768px) {
+  .fee-radio { font-size: 0.975rem; }
+}
+
 .fee-radio input {
   accent-color: var(--accent);
   cursor: pointer;
 }
+
+.fee-radio input:checked + span { color: var(--accent); }
 
 .fee-confirm-btn {
   margin-top: auto;
