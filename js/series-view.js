@@ -13,7 +13,7 @@ const seriesFormatLabelEl = document.getElementById("series-format-label");
 const gameLogEl = document.getElementById("game-log");
 const championBannerEl = document.getElementById("champion-banner");
 
-const THIRTY_MIN_MS = 30 * 60 * 1000;
+const FIVE_MIN_MS = 5 * 60 * 1000;
 
 function teamInitial(team) {
   return (team.name || "?").trim().charAt(0).toUpperCase();
@@ -103,13 +103,49 @@ function startCountdown(targetTs) {
   countdownIntervalId = setInterval(tick, 1000);
 }
 
+/* ---------- Banner "Torneo finalizado" (notificación warning + timer) ---------- */
+
+let finishedIntervalId = null;
+
+function stopFinishedTimer() {
+  if (finishedIntervalId) {
+    clearInterval(finishedIntervalId);
+    finishedIntervalId = null;
+  }
+}
+
+function startFinishedTimer(tournament) {
+  stopFinishedTimer();
+  const deadline = tournament.finalizedAt + FIVE_MIN_MS;
+  const tick = () => {
+    const remaining = deadline - Date.now();
+    if (remaining <= 0) {
+      stopFinishedTimer();
+      render(tournament);
+      return;
+    }
+    const totalSeconds = Math.ceil(remaining / 1000);
+    const pad = (n) => String(n).padStart(2, "0");
+    const mm = pad(Math.floor(totalSeconds / 60));
+    const ss = pad(totalSeconds % 60);
+    tournamentFinishedBannerEl.innerHTML = `
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <span>Torneo finalizado · esta pantalla se cierra en <span class="tfb-timer">${mm}:${ss}</span>.
+      Puedes ver este y el resto de los torneos finalizados en el <a href="historial.html">historial</a>.</span>
+    `;
+  };
+  tick();
+  finishedIntervalId = setInterval(tick, 1000);
+}
+
 /* ---------- Main dispatch ---------- */
 
 function render(tournament) {
   stopCountdown();
+  stopFinishedTimer();
 
   const now = Date.now();
-  const isStaleFinalized = tournament && tournament.finalizedAt && now - tournament.finalizedAt > THIRTY_MIN_MS;
+  const isStaleFinalized = tournament && tournament.finalizedAt && now - tournament.finalizedAt > FIVE_MIN_MS;
   const active = !tournament || isStaleFinalized ? null : tournament;
 
   if (!active) {
@@ -142,6 +178,7 @@ function render(tournament) {
   countdownScreenEl.hidden = true;
   seriesSection.hidden = false;
   tournamentFinishedBannerEl.hidden = !active.finalizedAt;
+  if (active.finalizedAt) startFinishedTimer(active);
 
   const [teamA, teamB] = active.teams;
   const scoreA = winsFor(active, teamA.id);
