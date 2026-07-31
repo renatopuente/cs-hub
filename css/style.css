@@ -2135,12 +2135,28 @@ button.fee-card-cta {
 }
 
 .fee-nickname-field {
-  margin: 14px 0 8px;
-  text-align: left;
+  margin: 20px 0 16px;
+  text-align: center;
 }
 
-.fee-nickname-field label {
-  margin-bottom: 4px;
+.fee-nickname-field .fee-nickname-input {
+  display: inline-block;
+  width: auto;
+  max-width: 100%;
+  background: rgba(155, 77, 255, 0.16);
+  border: 1px solid rgba(155, 77, 255, 0.45);
+  color: var(--accent);
+  font-weight: 700;
+  text-align: center;
+  padding: 8px 20px;
+  border-radius: 999px;
+  cursor: default;
+  animation: fee-nickname-blink 2.27s ease-in-out infinite;
+}
+
+@keyframes fee-nickname-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
 }
 
 .fee-confirm-btn {
