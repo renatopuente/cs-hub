@@ -2118,6 +2118,20 @@ button.fee-card-cta {
 
 .fee-radio input:checked + span { color: var(--accent); }
 
+.fee-login-prompt {
+  margin: 14px 0 4px;
+  text-align: center;
+  background: rgba(155, 77, 255, 0.08);
+  border: 1px solid rgba(155, 77, 255, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+}
+
+.fee-login-prompt p {
+  margin: 0 0 8px;
+  font-size: 0.85rem;
+}
+
 .fee-nickname-field {
   margin: 14px 0 4px;
   text-align: left;

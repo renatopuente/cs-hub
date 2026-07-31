@@ -14,18 +14,31 @@ if (location.hash && window.matchMedia("(max-width: 768px)").matches) {
 
 const signupCards = document.querySelectorAll(".fee-signup-card");
 
-// El campo Nickname aparece en cuanto se elige una modalidad, y Confirmar
-// solo se habilita cuando ADEMÁS hay al menos 1 caracter escrito ahí.
+// Solo un jugador logueado puede inscribirse: sin sesión, elegir una
+// modalidad muestra un aviso para iniciar sesión en vez del campo Nickname,
+// y Confirmar se mantiene deshabilitado.
+let isPlayerLoggedIn = false;
+firebase.auth().onAuthStateChanged((user) => {
+  isPlayerLoggedIn = !!user;
+  signupCards.forEach(updateConfirmState);
+});
+
+// El campo Nickname aparece en cuanto se elige una modalidad Y hay sesión
+// iniciada, y Confirmar solo se habilita cuando ADEMÁS hay al menos 1
+// caracter escrito ahí.
 function updateConfirmState(card) {
   const selected = card.querySelector(".fee-modalidad input[type=radio]:checked");
+  const loginPrompt = card.querySelector(".fee-login-prompt");
   const nicknameField = card.querySelector(".fee-nickname-field");
   const nicknameInput = card.querySelector(".fee-nickname-input");
   const confirmBtn = card.querySelector(".fee-confirm-btn");
   if (!confirmBtn) return;
 
-  if (nicknameField) nicknameField.hidden = !selected;
+  if (loginPrompt) loginPrompt.hidden = !(selected && !isPlayerLoggedIn);
+  if (nicknameField) nicknameField.hidden = !(selected && isPlayerLoggedIn);
+
   const hasNickname = !!(nicknameInput && nicknameInput.value.trim().length > 0);
-  confirmBtn.disabled = !(selected && hasNickname);
+  confirmBtn.disabled = !(selected && isPlayerLoggedIn && hasNickname);
 }
 
 // Only one card can be "active" (a modality picked, Confirmar enabled) at a
