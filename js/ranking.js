@@ -5,6 +5,30 @@ const rankingBodyEl = document.getElementById("ranking-body");
 const rankingEmptyEl = document.getElementById("ranking-empty");
 const rankingTableCard = document.getElementById("ranking-table-card");
 
+const GENERIC_AVATAR = "img/icons/icono_app-192.png";
+
+// Avatar por jugador: se arma con la foto de Google que quedó guardada en
+// sus solicitudes de inscripción (públicas), la más reciente por Nickname.
+// Solo funciona para quienes se inscribieron logueados después de este
+// cambio — el resto (o quien nunca se inscribió) usa el avatar genérico.
+let avatarByName = {};
+if (typeof fbSubscribeSolicitudes === "function") {
+  fbSubscribeSolicitudes((list) => {
+    const sorted = [...list].sort((a, b) => (a.requestedAt || 0) - (b.requestedAt || 0));
+    avatarByName = {};
+    sorted.forEach((item) => {
+      if (item.name && item.photoURL) {
+        avatarByName[item.name.trim().toLowerCase()] = item.photoURL;
+      }
+    });
+    renderRanking();
+  });
+}
+
+function avatarForName(name) {
+  return avatarByName[(name || "").trim().toLowerCase()] || GENERIC_AVATAR;
+}
+
 // Líneas de ASCII art a los costados de "Ranking": un solo carácter
 // repetido muchas veces, recortado por overflow:hidden a lo que quepa
 // en el ancho disponible (flex:1) a cada lado.
@@ -294,7 +318,12 @@ function renderRanking() {
       return `
         <tr>
           <td class="rank" data-label="Posición">#${i + 1}</td>
-          <td data-label="Jugador">${r.name}</td>
+          <td data-label="Jugador">
+            <span class="ranking-player">
+              <img class="ranking-player-avatar" src="${avatarForName(r.name)}" alt="" />
+              ${r.name}
+            </span>
+          </td>
           <td data-label="Torneos jugados">${r.played}</td>
           <td data-label="Puntos">${formatPoints(r.points)}</td>
           <td data-label="Efectividad">${rate}%</td>

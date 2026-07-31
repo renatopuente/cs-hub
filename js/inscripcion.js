@@ -98,6 +98,7 @@ signupCards.forEach((card) => {
     const price = card.querySelector(".fee-price").textContent.trim().replace(/\s+/g, " ");
 
     if (typeof submitSolicitud === "function") {
+      const currentUser = firebase.auth().currentUser;
       submitSolicitud({
         name: nickname,
         tier,
@@ -105,6 +106,7 @@ signupCards.forEach((card) => {
         price,
         requestedAt: Date.now(),
         status: "solicitado",
+        photoURL: (currentUser && currentUser.photoURL) || "",
       });
     }
 

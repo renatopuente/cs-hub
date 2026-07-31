@@ -1306,6 +1306,21 @@ input[type="text"]:focus, select:focus {
   border-bottom: 1px solid var(--glass-border);
 }
 .standings-table tbody tr { border-bottom: 1px solid rgba(255, 255, 255, 0.04); }
+
+.ranking-player {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ranking-player-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(155, 77, 255, 0.35);
+  flex-shrink: 0;
+}
 .standings-table .rank { font-weight: 700; color: var(--accent-2); }
 
 .fee-chip {
