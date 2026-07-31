@@ -232,11 +232,9 @@ function render(tournament) {
   tournamentFinishedBannerEl.hidden = !active.finalizedAt;
   if (active.finalizedAt) startFinishedTimer(active);
 
-  if (tournamentMetaEl) {
-    tournamentMetaEl.innerHTML = active.tournamentId
-      ? `<i class="fa-solid fa-hashtag"></i> ${active.tournamentId}`
-      : "";
-  }
+  // El ID del torneo se oculta en la vista pública por ahora (a pedido) —
+  // #tournament-meta queda en el HTML sin usar, listo para reactivar.
+  if (tournamentMetaEl) tournamentMetaEl.innerHTML = "";
 
   const [teamA, teamB] = active.teams;
   const scoreA = winsFor(active, teamA.id);
