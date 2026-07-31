@@ -299,6 +299,15 @@ function computeTrends(seasonIdx, ranked) {
   return trends;
 }
 
+// Flecha verde arriba (subió puestos), roja abajo (bajó), o guion neutro
+// (sin cambio o sin datos previos) — toda fila, podio incluido, muestra
+// siempre uno de los tres.
+function trendIconHtml(trend) {
+  if (trend > 0) return '<i class="fa-solid fa-arrow-up rank-trend-up" title="Subió puestos"></i>';
+  if (trend < 0) return '<i class="fa-solid fa-arrow-down rank-trend-down" title="Bajó puestos"></i>';
+  return '<i class="fa-solid fa-minus rank-trend-flat" title="Sin cambios"></i>';
+}
+
 function renderRanking() {
   const displaySeason = getDisplaySeason();
   const ranked = buildRanking(displaySeason.index);
@@ -320,6 +329,7 @@ function renderRanking() {
 
   const statusClass = displaySeason.closed ? "season-status-ended" : "season-status-active";
   const statusLabel = displaySeason.closed ? "Finalizado" : "En curso";
+  const trends = computeTrends(displaySeason.index, ranked);
 
   podiumGridEl.innerHTML = ranked
     .slice(0, 3)
@@ -338,7 +348,7 @@ function renderRanking() {
               </button>
               <img class="podium-avatar" src="${avatarForName(r.name)}" alt="" />
               <div class="icon">${PODIUM_ICONS[i]}</div>
-              <span class="podium-rank">#${i + 1}</span>
+              <span class="podium-rank">${trendIconHtml(trends[r.name] || 0)}#${i + 1}</span>
               <div class="podium-name-row">
                 <h2>${r.name}</h2>
                 <span class="season-status-chip ${statusClass}">${statusLabel}</span>
@@ -397,7 +407,6 @@ function renderRanking() {
 
   const pageStart = rankingPage * RANKING_PAGE_SIZE;
   const pageItems = restOfTable.slice(pageStart, pageStart + RANKING_PAGE_SIZE);
-  const trends = computeTrends(displaySeason.index, ranked);
 
   rankingBodyEl.innerHTML = pageItems
     .map((r, idx) => {
@@ -405,13 +414,9 @@ function renderRanking() {
       const rate = r.played ? Math.round((r.wins / r.played) * 100) : 0;
       // Puestos 4 y 5: mención honorífica, un peldaño debajo del podio.
       const honorable = i === 3 || i === 4;
-      const trend = trends[r.name] || 0;
-      let trendIcon = "";
-      if (trend > 0) trendIcon = '<i class="fa-solid fa-arrow-up rank-trend-up" title="Subió puestos"></i>';
-      else if (trend < 0) trendIcon = '<i class="fa-solid fa-arrow-down rank-trend-down" title="Bajó puestos"></i>';
       return `
         <tr class="${honorable ? "rank-honorable" : ""}">
-          <td class="rank" data-label="Posición">${trendIcon}#${i + 1}</td>
+          <td class="rank" data-label="Posición">${trendIconHtml(trends[r.name] || 0)}#${i + 1}</td>
           <td data-label="Jugador">
             <span class="ranking-player">
               <img class="ranking-player-avatar" src="${avatarForName(r.name)}" alt="" />

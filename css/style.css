@@ -291,6 +291,7 @@ a { color: inherit; }
   background: rgba(155, 77, 255, 0.12);
   padding: 5px 12px;
   border-radius: 999px;
+  margin-bottom: 4px;
 }
 .profile-wins-chip i { color: #ffd54a; }
 
@@ -1455,8 +1456,9 @@ input[type="text"]:focus, select:focus {
   background: rgba(155, 77, 255, 0.07);
 }
 
-/* Tendencia de puesto (toda la tabla general): compara el puesto actual
-   contra el que tenía antes de la última tanda de resultados. */
+/* Tendencia de puesto (tabla general y podio): compara el puesto actual
+   contra el que tenía antes de la última tanda de resultados. Siempre se
+   muestra una de las tres — sube, baja o sin cambio. */
 .rank-trend-up {
   color: var(--win);
   margin-right: 4px;
@@ -1464,6 +1466,11 @@ input[type="text"]:focus, select:focus {
 }
 .rank-trend-down {
   color: var(--danger);
+  margin-right: 4px;
+  font-size: 0.8em;
+}
+.rank-trend-flat {
+  color: var(--text-faint);
   margin-right: 4px;
   font-size: 0.8em;
 }
