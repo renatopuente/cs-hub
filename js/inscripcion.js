@@ -48,7 +48,7 @@ function updateConfirmState(card) {
   if (nicknameField) nicknameField.hidden = !(selected && isPlayerLoggedIn);
 
   if (nicknameInput && selected && isPlayerLoggedIn) {
-    nicknameInput.textContent = `Competidor: ${playerNickname}`;
+    nicknameInput.textContent = playerNickname;
     nicknameInput.dataset.nickname = playerNickname;
   }
 
