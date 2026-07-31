@@ -1,8 +1,9 @@
 // Gates admin pages behind a real Firebase-verified GitHub login.
-// Locked to Renato's account — the DB write rule mirrors this UID too
-// (see the Firebase Realtime Database rules), so even someone who
-// signs in with a different GitHub account can't write tournament data.
-const ADMIN_UID = "XxFQBlmtI2ResAdKWAgoGPCDwqO2";
+// La lista de UIDs autorizados vive en js/admin-config.js (ADMINS) — la
+// regla de escritura de la base de datos debe reflejar esa misma lista
+// (ver Firebase Realtime Database rules), así que agregar un admin acá
+// sin actualizar las reglas del lado del servidor no alcanza para que
+// pueda escribir datos de torneos.
 
 const loginGateEl = document.getElementById("login-gate");
 const protectedContentEl = document.getElementById("protected-content");
@@ -10,8 +11,10 @@ const loginBtn = document.getElementById("login-btn");
 const logoutBtn = document.getElementById("logout-btn");
 const uidHintEl = document.getElementById("uid-hint");
 
+const bootstrapMode = Object.keys(ADMINS).length === 0;
+
 firebase.auth().onAuthStateChanged((user) => {
-  const authorized = !!user && (ADMIN_UID === "" || user.uid === ADMIN_UID);
+  const authorized = !!user && (bootstrapMode || isAdminUid(user.uid));
 
   loginGateEl.hidden = authorized;
   protectedContentEl.hidden = !authorized;
@@ -23,9 +26,9 @@ firebase.auth().onAuthStateChanged((user) => {
     return;
   }
 
-  if (user && ADMIN_UID === "" && uidHintEl) {
+  if (user && bootstrapMode && uidHintEl) {
     uidHintEl.hidden = false;
-    uidHintEl.textContent = `Bootstrap: tu UID es ${user.uid}. Pásaselo a Claude para bloquear el acceso solo a tu cuenta.`;
+    uidHintEl.textContent = `Bootstrap: tu UID es ${user.uid}. Agrégalo al mapa ADMINS en js/admin-config.js.`;
   }
 });
 

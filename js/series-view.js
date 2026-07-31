@@ -14,6 +14,7 @@ const seriesScoreEl = document.getElementById("series-score");
 const seriesFormatLabelEl = document.getElementById("series-format-label");
 const gameLogEl = document.getElementById("game-log");
 const championBannerEl = document.getElementById("champion-banner");
+const tournamentMetaEl = document.getElementById("tournament-meta");
 
 const FIVE_MIN_MS = 5 * 60 * 1000;
 
@@ -231,6 +232,12 @@ function render(tournament) {
   tournamentFinishedBannerEl.hidden = !active.finalizedAt;
   if (active.finalizedAt) startFinishedTimer(active);
 
+  if (tournamentMetaEl) {
+    tournamentMetaEl.innerHTML = active.tournamentId
+      ? `<i class="fa-solid fa-hashtag"></i> ${active.tournamentId}`
+      : "";
+  }
+
   const [teamA, teamB] = active.teams;
   const scoreA = winsFor(active, teamA.id);
   const scoreB = winsFor(active, teamB.id);
@@ -255,7 +262,9 @@ function render(tournament) {
   gameLogEl.innerHTML = (active.games || [])
     .map((g) => {
       const t = teamById(active, g.winner);
-      return `<div class="game-row"><span class="game-label">Juego ${g.number}</span><span style="color:${t.color}">${t.name}</span></div>`;
+      const label = t ? t.name : "Empate";
+      const color = t ? t.color : "var(--text-dim)";
+      return `<div class="game-row"><span class="game-label">Juego ${g.number}</span><span style="color:${color}">${label}</span></div>`;
     })
     .join("");
 

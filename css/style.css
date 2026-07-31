@@ -1420,6 +1420,26 @@ input[type="text"]:focus, select:focus {
   margin: 0 0 18px;
 }
 
+/* ID corto del torneo + admin que lo creó — visible tanto en el panel de
+   admin (duelos/duos/pug) como en historial.html, para poder retomar un
+   torneo agendado y saber a quién corresponde. */
+.tournament-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-faint);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  padding: 4px 12px;
+  margin: 0 0 16px;
+}
+.tournament-meta-sep {
+  color: var(--glass-border);
+}
+
 .table-scroll {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -2093,6 +2113,31 @@ input[type="text"]:focus, select:focus {
 .fee-card h2 {
   margin: 4px 0 2px;
   font-size: 1.3rem;
+  color: var(--accent-2);
+}
+
+.fee-card-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.fee-card-name-row h2 { margin: 4px 0 2px; }
+
+/* Etiqueta sutil en el plan Casual — mismo lenguaje visual que los demás
+   chips en pastilla del sitio (season-status-chip, fee-chip). */
+.fee-badge-recommended {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  background: rgba(255, 110, 199, 0.12);
+  border: 1px solid rgba(255, 110, 199, 0.35);
+  border-radius: 999px;
+  padding: 3px 10px;
 }
 
 .fee-card p {

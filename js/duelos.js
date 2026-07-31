@@ -18,8 +18,24 @@ const scheduleInput = document.getElementById("schedule-input");
 const scheduleSaveBtn = document.getElementById("schedule-save-btn");
 const scheduleClearBtn = document.getElementById("schedule-clear-btn");
 const startTournamentBtn = document.getElementById("start-tournament-btn");
+const tournamentMetaEl = document.getElementById("tournament-meta");
 
 let currentTournament = null;
+
+// ID corto y legible (sin 0/O/1/I para no confundir por WhatsApp) para
+// poder identificar un torneo puntual — al jugador y al admin — y saber
+// a qué admin corresponde retomarlo si quedó agendado a medias.
+function generateTournamentId(prefix) {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let code = "";
+  for (let i = 0; i < 5; i++) code += chars[Math.floor(Math.random() * chars.length)];
+  return `${prefix}-${code}`;
+}
+
+function currentAdminName() {
+  const user = firebase.auth().currentUser;
+  return (user && adminName(user.uid)) || "Admin";
+}
 
 // Los jugadores se eligen de la lista de inscritos (confirmados en el
 // dashboard de inscripciones), no se escriben a mano.
@@ -63,6 +79,8 @@ function collectTeams() {
 
 function createTournament(teams, bestOf, entryFee) {
   const tournament = {
+    tournamentId: generateTournamentId("DUE"),
+    createdBy: currentAdminName(),
     teams,
     bestOf,
     winsNeeded: Math.floor(bestOf / 2) + 1,
@@ -141,6 +159,8 @@ function computeFinalResults(tournament) {
 
 function finalizeTournament(tournament) {
   const record = {
+    tournamentId: tournament.tournamentId,
+    createdBy: tournament.createdBy,
     finalizedAt: Date.now(),
     format: "series",
     entryFee: tournament.entryFee || "Gratuito",
@@ -165,6 +185,12 @@ function render(tournament) {
   seriesSection.hidden = false;
   updateScheduleUI();
   startTournamentBtn.hidden = !(tournament.scheduledAt && !tournament.started);
+
+  if (tournamentMetaEl) {
+    tournamentMetaEl.innerHTML = tournament.tournamentId
+      ? `<i class="fa-solid fa-hashtag"></i> ${tournament.tournamentId} <span class="tournament-meta-sep">·</span> creado por ${tournament.createdBy || "Admin"}`
+      : "";
+  }
 
   const [teamA, teamB] = tournament.teams;
   const scoreA = winsFor(tournament, teamA.id);
@@ -192,6 +218,7 @@ function render(tournament) {
     gameActionsEl.innerHTML = `
       <button class="btn btn-ghost" data-win="${teamA.id}">Ganó ${teamA.name}</button>
       <button class="btn btn-ghost" data-win="${teamB.id}">Ganó ${teamB.name}</button>
+      <button class="btn btn-ghost" data-win="draw">Empate</button>
     `;
     gameActionsEl.querySelectorAll("[data-win]").forEach((btn) => {
       btn.addEventListener("click", () => recordGame(tournament, btn.dataset.win));
@@ -200,11 +227,15 @@ function render(tournament) {
 
   gameLogEl.innerHTML = tournament.games
     .map((g) => {
+      // Un empate no cuenta victoria para nadie (recomputeSeriesWinner lo
+      // ignora vía winsFor), así que la serie sigue hasta desempatar.
       const t = teamById(tournament, g.winner);
+      const label = t ? t.name : "Empate";
+      const color = t ? t.color : "var(--text-dim)";
       return `
         <div class="game-row">
           <span class="game-label">Juego ${g.number}</span>
-          <span style="color:${t.color}">${t.name}</span>
+          <span style="color:${color}">${label}</span>
           <button class="game-delete-btn" data-remove-game="${g.number}" title="Eliminar / corregir"><i class="fa-solid fa-xmark"></i></button>
         </div>
       `;

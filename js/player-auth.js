@@ -4,10 +4,12 @@
 // entrar acá, no hay UID fijo ni restricción — es la base para lo que
 // venga después (perfil, historial propio, etc).
 
-// Mismo UID que auth-gate.js/historial.js (Renato, GitHub) — si se loguea
-// acá con Google usando la cuenta ligada a ese mismo UID, lo mandamos
-// directo al panel de admin en vez del perfil de jugador.
-const KNOWN_ADMIN_UID = "XxFQBlmtI2ResAdKWAgoGPCDwqO2";
+// La lista de admins vive en js/admin-config.js (ADMINS) — si el UID de
+// Google coincide con uno de esos UIDs, lo mandamos directo al panel de
+// admin en vez del perfil de jugador. Ojo: GitHub (auth-gate.js) y Google
+// son proveedores distintos de Firebase Auth, así que el mismo humano
+// puede tener un UID de Google distinto al de GitHub — si eso pasa acá,
+// hay que agregar también ese UID de Google al mapa ADMINS.
 
 firebase.auth().onAuthStateChanged((user) => {
   document.querySelectorAll(".player-login-btn").forEach((btn) => {
@@ -40,7 +42,7 @@ document.querySelectorAll(".player-login-btn").forEach((btn) => {
       .auth()
       .signInWithPopup(provider)
       .then((result) => {
-        const isAdmin = result.user && result.user.uid === KNOWN_ADMIN_UID;
+        const isAdmin = result.user && isAdminUid(result.user.uid);
         window.location.href = isAdmin ? "l1o2t3us.html" : "perfil.html";
       })
       .catch((err) => {

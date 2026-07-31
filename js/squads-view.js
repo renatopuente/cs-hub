@@ -15,6 +15,7 @@ const matchesTitleEl = document.getElementById("matches-title");
 const matchesSubEl = document.getElementById("matches-sub");
 const matchesViewEl = document.getElementById("matches-view");
 const championBannerEl = document.getElementById("champion-banner");
+const tournamentMetaEl = document.getElementById("tournament-meta");
 
 const FIVE_MIN_MS = 5 * 60 * 1000;
 
@@ -122,7 +123,9 @@ function renderSeries(tournament) {
   const logHtml = games
     .map((g) => {
       const t = teamById(tournament, g.winner);
-      return `<div class="game-row"><span class="game-label">Juego ${g.number}</span><span style="color:${t.color}">${t.name}</span></div>`;
+      const label = t ? t.name : "Empate";
+      const color = t ? t.color : "var(--text-dim)";
+      return `<div class="game-row"><span class="game-label">Juego ${g.number}</span><span style="color:${color}">${label}</span></div>`;
     })
     .join("");
 
@@ -577,6 +580,12 @@ function render(tournament) {
   resultSection.hidden = false;
   tournamentFinishedBannerEl.hidden = !active.finalizedAt;
   if (active.finalizedAt) startFinishedTimer(active);
+
+  if (tournamentMetaEl) {
+    tournamentMetaEl.innerHTML = active.tournamentId
+      ? `<i class="fa-solid fa-hashtag"></i> ${active.tournamentId}`
+      : "";
+  }
 
   teamsListEl.innerHTML = active.teams.map(renderTeamChip).join("");
   renderNeoScreen(active);

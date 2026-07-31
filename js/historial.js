@@ -45,10 +45,10 @@ function formatPoints(points) {
   return Number.isInteger(points) ? String(points) : points.toFixed(1);
 }
 
-// Delete button only ever renders for Renato's own signed-in session (e.g.
+// Delete button only ever renders for an admin's own signed-in session (e.g.
 // left over from visiting l1o2t3us.html earlier in the same browser) — this
-// page itself requires no login. The DB rule enforces this UID regardless.
-const ADMIN_UID = "XxFQBlmtI2ResAdKWAgoGPCDwqO2";
+// page itself requires no login. The DB rule enforces the ADMINS list
+// (js/admin-config.js) regardless.
 let isAdmin = false;
 let lastDuelosList = [];
 let lastDuosList = [];
@@ -58,7 +58,7 @@ const PAGE_SIZE = 2;
 const currentPage = { duelos: 0, duos: 0, pug: 0 };
 
 firebase.auth().onAuthStateChanged((user) => {
-  isAdmin = !!user && user.uid === ADMIN_UID;
+  isAdmin = !!user && isAdminUid(user.uid);
   renderHistoryList(duelosHistoryEl, lastDuelosList, "duelos");
   renderHistoryList(duosHistoryEl, lastDuosList, "duos");
   renderHistoryList(pugHistoryEl, lastPugList, "pug");
@@ -124,6 +124,11 @@ function renderHistoryList(container, fullList, mode) {
             <i class="fa-regular fa-calendar"></i> ${formatDate(entry.finalizedAt)}
             <span class="fee-chip"><i class="fa-solid fa-ticket"></i> ${entryFee}</span>
           </p>
+          ${
+            entry.tournamentId
+              ? `<p class="tournament-meta"><i class="fa-solid fa-hashtag"></i> ${entry.tournamentId} <span class="tournament-meta-sep">·</span> creado por ${entry.createdBy || "Admin"}</p>`
+              : ""
+          }
           <div class="neo-surface table-scroll">
             <table class="standings-table history-table">
               <thead>
