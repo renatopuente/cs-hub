@@ -240,12 +240,16 @@ let duosHistory = [];
 let pugHistory = [];
 let rankingResetAt = 0;
 
-function buildRanking(seasonIdx) {
+// cutoff (opcional): si se pasa, solo cuenta resultados finalizados ANTES
+// de ese instante — así se puede reconstruir el ranking "como estaba"
+// justo antes de la última tanda de resultados, para comparar puestos.
+function buildRanking(seasonIdx, cutoff) {
   const stats = {};
   const inSeason = (entry) =>
     entry.finalizedAt &&
     seasonIndexForDate(new Date(entry.finalizedAt)) === seasonIdx &&
-    entry.finalizedAt > rankingResetAt;
+    entry.finalizedAt > rankingResetAt &&
+    (cutoff == null || entry.finalizedAt < cutoff);
 
   [...duelosHistory, ...duosHistory, ...pugHistory].filter(inSeason).forEach((entry) => {
     const weight = tierWeight(entry.entryFee);
@@ -267,6 +271,32 @@ function buildRanking(seasonIdx) {
   return Object.values(stats).sort(
     (a, b) => b.points - a.points || b.wins - a.wins || b.played - a.played || a.name.localeCompare(b.name)
   );
+}
+
+// Tendencia por jugador: compara el puesto actual contra el puesto que
+// tenía justo antes de la última tanda de resultados finalizados en la
+// temporada. Positivo = subió puestos (ganó y ascendió), negativo =
+// bajó puestos, 0/undefined = sin cambio o sin datos previos (recién
+// entra al ranking esta temporada).
+function computeTrends(seasonIdx, ranked) {
+  const entries = [...duelosHistory, ...duosHistory, ...pugHistory].filter(
+    (e) => e.finalizedAt && seasonIndexForDate(new Date(e.finalizedAt)) === seasonIdx && e.finalizedAt > rankingResetAt
+  );
+  if (!entries.length) return {};
+
+  const lastFinalizedAt = Math.max(...entries.map((e) => e.finalizedAt));
+  const previousRanked = buildRanking(seasonIdx, lastFinalizedAt);
+  const previousPositions = {};
+  previousRanked.forEach((r, idx) => {
+    previousPositions[r.name] = idx + 1;
+  });
+
+  const trends = {};
+  ranked.forEach((r, idx) => {
+    const prevPos = previousPositions[r.name];
+    trends[r.name] = prevPos == null ? 0 : prevPos - (idx + 1);
+  });
+  return trends;
 }
 
 function renderRanking() {
@@ -367,6 +397,7 @@ function renderRanking() {
 
   const pageStart = rankingPage * RANKING_PAGE_SIZE;
   const pageItems = restOfTable.slice(pageStart, pageStart + RANKING_PAGE_SIZE);
+  const trends = computeTrends(displaySeason.index, ranked);
 
   rankingBodyEl.innerHTML = pageItems
     .map((r, idx) => {
@@ -374,9 +405,13 @@ function renderRanking() {
       const rate = r.played ? Math.round((r.wins / r.played) * 100) : 0;
       // Puestos 4 y 5: mención honorífica, un peldaño debajo del podio.
       const honorable = i === 3 || i === 4;
+      const trend = trends[r.name] || 0;
+      let trendIcon = "";
+      if (trend > 0) trendIcon = '<i class="fa-solid fa-arrow-up rank-trend-up" title="Subió puestos"></i>';
+      else if (trend < 0) trendIcon = '<i class="fa-solid fa-arrow-down rank-trend-down" title="Bajó puestos"></i>';
       return `
         <tr class="${honorable ? "rank-honorable" : ""}">
-          <td class="rank" data-label="Posición">${honorable ? '<i class="fa-solid fa-star rank-honorable-icon"></i>' : ""}#${i + 1}</td>
+          <td class="rank" data-label="Posición">${trendIcon}#${i + 1}</td>
           <td data-label="Jugador">
             <span class="ranking-player">
               <img class="ranking-player-avatar" src="${avatarForName(r.name)}" alt="" />
