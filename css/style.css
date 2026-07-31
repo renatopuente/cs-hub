@@ -2135,7 +2135,7 @@ button.fee-card-cta {
 }
 
 .fee-nickname-field {
-  margin: 14px 0 4px;
+  margin: 14px 0 8px;
   text-align: left;
 }
 
@@ -2273,7 +2273,7 @@ footer.credits {
   text-decoration: underline;
   text-underline-offset: 2px;
 }
-.footer-legal-link:hover { color: var(--text-dim); }
+.footer-legal-link:hover { color: var(--accent-2); }
 
 /* Same row, different columns, on every screen size. */
 .footer-legal-divider {

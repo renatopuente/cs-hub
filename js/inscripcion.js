@@ -16,16 +16,26 @@ const signupCards = document.querySelectorAll(".fee-signup-card");
 
 // Solo un jugador logueado puede inscribirse: sin sesión, elegir una
 // modalidad muestra un aviso para iniciar sesión en vez del campo Nickname,
-// y Confirmar se mantiene deshabilitado.
+// y Confirmar se mantiene deshabilitado. Con sesión, el Nickname no se
+// escribe a mano — viene por defecto del que guardó en su perfil (o su
+// nombre de Google si todavía no lo configuró) y el campo es de solo lectura.
 let isPlayerLoggedIn = false;
+let playerNickname = "";
+
 firebase.auth().onAuthStateChanged((user) => {
   isPlayerLoggedIn = !!user;
+  playerNickname = "";
+
+  if (user) {
+    loadUserProfile(user.uid).then((profile) => {
+      playerNickname = profile.nickname || user.displayName || "";
+      signupCards.forEach(updateConfirmState);
+    });
+  }
+
   signupCards.forEach(updateConfirmState);
 });
 
-// El campo Nickname aparece en cuanto se elige una modalidad Y hay sesión
-// iniciada, y Confirmar solo se habilita cuando ADEMÁS hay al menos 1
-// caracter escrito ahí.
 function updateConfirmState(card) {
   const selected = card.querySelector(".fee-modalidad input[type=radio]:checked");
   const loginPrompt = card.querySelector(".fee-login-prompt");
@@ -36,6 +46,10 @@ function updateConfirmState(card) {
 
   if (loginPrompt) loginPrompt.hidden = !(selected && !isPlayerLoggedIn);
   if (nicknameField) nicknameField.hidden = !(selected && isPlayerLoggedIn);
+
+  if (nicknameInput && selected && isPlayerLoggedIn) {
+    nicknameInput.value = playerNickname;
+  }
 
   const hasNickname = !!(nicknameInput && nicknameInput.value.trim().length > 0);
   confirmBtn.disabled = !(selected && isPlayerLoggedIn && hasNickname);
@@ -72,10 +86,6 @@ signupCards.forEach((card) => {
       activateCard(card);
     });
   });
-
-  if (nicknameInput) {
-    nicknameInput.addEventListener("input", () => updateConfirmState(card));
-  }
 
   confirmBtn.addEventListener("click", () => {
     const selected = card.querySelector(".fee-modalidad input[type=radio]:checked");
