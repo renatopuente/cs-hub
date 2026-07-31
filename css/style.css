@@ -259,15 +259,9 @@ a { color: inherit; }
 .player-profile {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 }
 .player-profile[hidden] { display: none; }
-
-.player-identity {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
 
 .player-avatar {
   width: 28px;
@@ -278,32 +272,21 @@ a { color: inherit; }
   flex-shrink: 0;
 }
 
-.player-name {
-  font-size: 0.85rem;
-  color: var(--text-dim);
-  max-width: 120px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+/* "Mi cuenta" ya no es texto — es la propia foto de Google, que ahora
+   hace de ícono/link hacia el perfil. */
+.player-account-link {
+  display: inline-flex;
+  border-radius: 50%;
+  transition: box-shadow 0.15s ease;
 }
+.player-account-link:hover { box-shadow: 0 0 0 2px var(--accent-2); }
 
-.player-account-link,
 .player-logout-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   font-size: 0.82rem;
   white-space: nowrap;
-}
-
-.player-account-link {
-  color: var(--accent);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-.player-account-link:hover { color: var(--accent-2); }
-
-.player-logout-btn {
   background: transparent;
   border: none;
   color: var(--text-faint);
@@ -313,30 +296,25 @@ a { color: inherit; }
 }
 .player-logout-btn:hover { color: var(--accent-2); }
 
-/* Desktop: avatar+nombre, luego "Mi cuenta" y "Cerrar sesión" como
-   columnas separadas por un divisor, en vez de quedar pegados. */
+/* Desktop: avatar, luego "Cerrar sesión" en su propia columna,
+   separada por un divisor en vez de quedar pegados. */
 .main-nav .player-profile { gap: 14px; }
-.main-nav .player-account-link,
 .main-nav .player-logout-btn {
   padding-left: 14px;
   border-left: 1px solid rgba(155, 77, 255, 0.25);
 }
 
-/* Mobile: cada opción en su propia fila. */
+/* Mobile: avatar arriba, "Cerrar sesión" debajo en su propia fila. */
 .mobile-menu .player-login-btn { margin-top: 10px; }
 .mobile-menu .player-profile {
   flex-direction: column;
-  align-items: stretch;
+  align-items: flex-start;
   gap: 12px;
   padding: 16px 0;
   margin-top: 10px;
   border-top: 1px solid rgba(155, 77, 255, 0.25);
 }
-.mobile-menu .player-name { max-width: none; flex: 1; }
-.mobile-menu .player-account-link,
-.mobile-menu .player-logout-btn {
-  font-size: 0.9rem;
-}
+.mobile-menu .player-logout-btn { font-size: 0.9rem; }
 
 .mobile-menu {
   display: none;

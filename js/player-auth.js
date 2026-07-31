@@ -18,9 +18,7 @@ firebase.auth().onAuthStateChanged((user) => {
     el.hidden = !user;
     if (!user) return;
     const avatar = el.querySelector(".player-avatar");
-    const name = el.querySelector(".player-name");
     if (avatar) avatar.src = user.photoURL || "img/icons/icono_app-192.png";
-    if (name) name.textContent = user.displayName || user.email || "Jugador";
   });
 });
 

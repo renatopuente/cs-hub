@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Mi perfil · El Octágono</title>
-<meta name="description" content="Edita tu Nickname de jugador en El Octágono." />
-<link rel="canonical" href="https://eloctagono.online/perfil.html" />
+<title>Política de Privacidad · El Octágono</title>
+<meta name="description" content="Política de privacidad y tratamiento de datos de El Octágono: qué datos recopilamos, para qué los usamos y cómo ejercer tus derechos." />
+<link rel="canonical" href="https://eloctagono.online/privacidad.html" />
 <link rel="icon" href="img/icons/favicon.ico" sizes="32x32" />
 <link rel="apple-touch-icon" href="img/icons/icono_app-192.png" />
 <link rel="manifest" href="manifest.json" />
@@ -113,47 +113,104 @@
 
   <div class="page page-offset-navbar page-offset-footer">
     <div class="hero">
-      <h1>Mi perfil</h1>
-      <p>Tu identidad de jugador en El Octágono.</p>
+      <h1>Política de Privacidad</h1>
+      <p>Qué datos recopilamos, para qué los usamos y cómo pedir que los borremos. Última actualización: 30 de julio de 2026.</p>
     </div>
 
-    <div id="profile-login-required" class="glass-card" style="max-width: 420px; margin: 0 auto 40px; text-align: center;" hidden>
-      <div class="icon" style="font-size: 2rem; margin-bottom: 10px;"><i class="fa-solid fa-lock"></i></div>
-      <h2 class="section-title">Inicia sesión</h2>
-      <p class="section-sub">Necesitas iniciar sesión con Google para ver y editar tu perfil.</p>
-      <button type="button" class="player-login-btn btn btn-primary btn-block" style="margin-top: 16px;">
-        <i class="fa-brands fa-google"></i> Continuar con Google
-      </button>
+    <div class="glass-card" style="max-width: 820px; margin: 0 auto 24px;">
+      <h2 class="section-title">1. Qué datos recopilamos</h2>
+      <ul style="color: var(--text-dim); font-size: 0.92rem; padding-left: 20px; margin: 0;">
+        <li><strong style="color: var(--text);">Cuenta de Google</strong>: al iniciar sesión con Google, recibimos tu nombre, correo electrónico y foto de perfil (a través de Firebase Authentication).</li>
+        <li><strong style="color: var(--text);">Nickname</strong>: el nombre público que defines en tu <a href="perfil.html">perfil de jugador</a>.</li>
+        <li><strong style="color: var(--text);">Solicitudes de inscripción</strong>: tu Nickname, el torneo, la modalidad y el precio elegidos al confirmar en <a href="inscripcion.html">Inscribirme</a>.</li>
+        <li><strong style="color: var(--text);">Historial de torneos</strong>: tu Nickname (o el de tu equipo) y los resultados de las partidas que juegas.</li>
+      </ul>
     </div>
 
-    <div id="profile-content" class="glass-card about-card" style="max-width: 480px; margin: 0 auto 40px; text-align: center;" hidden>
-      <img id="profile-avatar" class="player-avatar" style="width: 72px; height: 72px; margin: 0 auto 14px;" alt="" />
-      <p class="section-sub" id="profile-google-name" style="margin-bottom: 24px;"></p>
-
-      <div class="field" style="text-align: left;">
-        <label>Nickname</label>
-        <input type="text" id="profile-nickname-input" placeholder="Nombre del jugador" />
-      </div>
-
-      <p id="profile-locked-hint" class="section-sub" style="margin: 10px 0 0; color: #ffb020;" hidden>
-        <i class="fa-solid fa-triangle-exclamation"></i> <span id="profile-locked-text"></span>
+    <div class="glass-card" style="max-width: 820px; margin: 0 auto 24px;">
+      <h2 class="section-title">2. Para qué usamos tus datos</h2>
+      <p style="color: var(--text-dim); font-size: 0.92rem;">
+        Usamos esta información únicamente para identificarte como jugador dentro de la plataforma,
+        gestionar tu inscripción a los torneos, coordinar el pago por WhatsApp, mostrar el historial y
+        la tabla de posiciones públicos, y revelar progresivamente en el countdown de cada torneo qué
+        jugadores ya confirmaron su inscripción. No usamos tus datos con fines publicitarios ni los
+        vendemos ni compartimos con terceros.
       </p>
+    </div>
 
-      <button type="button" id="profile-save-btn" class="btn btn-primary btn-block" style="margin-top: 14px;">
-        <i class="fa-solid fa-floppy-disk"></i> Guardar
-      </button>
-      <p id="profile-saved-hint" class="section-sub" style="margin-top: 10px; color: var(--accent-2);" hidden>
-        <i class="fa-solid fa-circle-check"></i> Nickname guardado. No podrás volver a cambiarlo por 2 temporadas.
+    <div class="glass-card" style="max-width: 820px; margin: 0 auto 24px;">
+      <h2 class="section-title">3. Dónde se almacenan tus datos</h2>
+      <p style="color: var(--text-dim); font-size: 0.92rem;">
+        Tus datos se guardan en Firebase (infraestructura de Google Cloud): Firebase Authentication
+        para el login con Google, y Firebase Realtime Database para tu Nickname, tus solicitudes de
+        inscripción y el historial de torneos. Firebase es nuestro único proveedor externo de
+        almacenamiento; no usamos ningún otro servicio de terceros para procesar tus datos.
       </p>
+    </div>
 
-      <button type="button" id="profile-logout-btn" class="btn btn-outline btn-block" style="margin-top: 20px;">
-        <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
-      </button>
+    <div class="glass-card" style="max-width: 820px; margin: 0 auto 24px;">
+      <h2 class="section-title">4. Qué es público y qué es privado</h2>
+      <p style="color: var(--text-dim); font-size: 0.92rem; margin-bottom: 10px;">
+        <strong style="color: var(--text);">Público</strong> (visible para cualquier visitante del sitio):
+        tu Nickname, los resultados de tus partidas, tu posición en el ranking, y si ya confirmaste tu
+        inscripción a un torneo agendado.
+      </p>
+      <p style="color: var(--text-dim); font-size: 0.92rem;">
+        <strong style="color: var(--text);">Privado</strong> (solo accesible por el equipo organizador
+        autorizado): tu nombre completo de Google, tu correo electrónico y tu foto de perfil.
+      </p>
+    </div>
+
+    <div class="glass-card" style="max-width: 820px; margin: 0 auto 24px;">
+      <h2 class="section-title">5. Tus derechos</h2>
+      <p style="color: var(--text-dim); font-size: 0.92rem;">
+        Puedes acceder, corregir o pedir la eliminación de tus datos en cualquier momento escribiéndonos
+        por <a href="https://wa.me/593998880675" target="_blank" rel="noopener">WhatsApp</a> o al correo
+        <a href="mailto:pulpos@eloctagono.online">pulpos@eloctagono.online</a>. Puedes cerrar sesión
+        desde tu <a href="perfil.html">perfil</a> en cualquier momento; para revocar el acceso de El
+        Octágono a tu cuenta de Google por completo, hazlo desde la configuración de seguridad de tu
+        cuenta de Google.
+      </p>
+    </div>
+
+    <div class="glass-card" style="max-width: 820px; margin: 0 auto 24px;">
+      <h2 class="section-title">6. Almacenamiento local del navegador</h2>
+      <p style="color: var(--text-dim); font-size: 0.92rem;">
+        El sitio usa el almacenamiento local de tu navegador para mantener tu sesión iniciada y, en las
+        páginas de administración, para guardar temporalmente el estado del torneo en curso. No usamos
+        cookies de rastreo publicitario ni de terceros.
+      </p>
+    </div>
+
+    <div class="glass-card" style="max-width: 820px; margin: 0 auto 24px;">
+      <h2 class="section-title">7. Menores de edad</h2>
+      <p style="color: var(--text-dim); font-size: 0.92rem;">
+        El Octágono no está dirigido específicamente a menores de 13 años. Si eres menor de edad,
+        participa con la supervisión de un adulto responsable.
+      </p>
+    </div>
+
+    <div class="glass-card" style="max-width: 820px; margin: 0 auto 24px;">
+      <h2 class="section-title">8. Cambios a esta política</h2>
+      <p style="color: var(--text-dim); font-size: 0.92rem;">
+        Podemos actualizar esta Política de Privacidad para reflejar cambios en la plataforma. La fecha
+        de la última actualización siempre estará visible al inicio de esta página.
+      </p>
+    </div>
+
+    <div class="glass-card" style="max-width: 820px; margin: 0 auto 24px;">
+      <h2 class="section-title">9. Ley aplicable y contacto</h2>
+      <p style="color: var(--text-dim); font-size: 0.92rem;">
+        Esta política se rige por las leyes de Ecuador. Si tienes alguna pregunta sobre el tratamiento
+        de tus datos, escríbenos por
+        <a href="https://wa.me/593998880675" target="_blank" rel="noopener">WhatsApp</a>. Consulta también
+        nuestros <a href="terminos.html">Términos y Condiciones</a>.
+      </p>
     </div>
 
     <div style="display:flex; flex-direction:column; align-items:center; gap: 16px; margin: 40px 0 0;">
       <a href="inscripcion.html" class="btn btn-primary btn-block"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
-      <a href="ranking.html" class="btn btn-outline btn-block"><i class="fa-solid fa-ranking-star"></i> Ver tabla de posiciones</a>
+      <a href="index.html" class="btn btn-outline btn-block"><i class="fa-solid fa-house"></i> Ir al inicio</a>
     </div>
 
     <div style="display:flex; flex-direction:column; align-items:center; gap: 6px; margin-top: 24px;">
@@ -194,9 +251,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
   <script src="js/firebase-sync.js"></script>
-  <script src="js/seasons.js"></script>
   <script src="js/player-auth.js"></script>
-  <script src="js/perfil.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/copyright.js"></script>
 </body>

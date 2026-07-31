@@ -55,11 +55,9 @@
           <i class="fa-brands fa-google"></i> Continuar con Google
         </button>
         <div class="player-profile" hidden>
-          <div class="player-identity">
-            <img class="player-avatar" alt="" />
-            <span class="player-name"></span>
-          </div>
-          <a href="perfil.html" class="player-account-link"><i class="fa-solid fa-user"></i> Mi cuenta</a>
+          <a href="perfil.html" class="player-account-link" aria-label="Mi cuenta">
+            <img class="player-avatar" alt="Mi cuenta" />
+          </a>
           <button type="button" class="player-logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
         </div>
       </nav>
@@ -105,11 +103,9 @@
         <i class="fa-brands fa-google"></i> Continuar con Google
       </button>
       <div class="player-profile" hidden>
-        <div class="player-identity">
-          <img class="player-avatar" alt="" />
-          <span class="player-name"></span>
-        </div>
-        <a href="perfil.html" class="player-account-link"><i class="fa-solid fa-user"></i> Mi cuenta</a>
+        <a href="perfil.html" class="player-account-link" aria-label="Mi cuenta">
+          <img class="player-avatar" alt="Mi cuenta" />
+        </a>
         <button type="button" class="player-logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
       </div>
     </div>
@@ -118,7 +114,7 @@
   <div class="page page-offset-navbar page-offset-footer">
     <div class="hero">
       <h1>Términos y Condiciones</h1>
-      <p>Las reglas del juego, fuera del servidor. Última actualización: 29 de julio de 2026.</p>
+      <p>Las reglas del juego, fuera del servidor. Última actualización: 30 de julio de 2026.</p>
     </div>
 
     <div class="glass-card" style="max-width: 820px; margin: 0 auto 24px;">
@@ -220,11 +216,14 @@
     <div class="glass-card" style="max-width: 820px; margin: 0 auto 24px;">
       <h2 class="section-title">9. Tus datos</h2>
       <p style="color: var(--text-dim); font-size: 0.92rem;">
-        Para inscribirte solo necesitamos tu nombre (o el de tu equipo) y un número de WhatsApp para
-        coordinar el torneo y el pago. Esta información se usa únicamente para organizar los torneos
-        de El Octágono: no la vendemos ni la compartimos con terceros. Los nombres de los jugadores y
-        los resultados de las partidas se publican de forma pública en el historial y la tabla de
-        posiciones de este sitio, ya que son parte del registro deportivo de la plataforma.
+        Para inscribirte necesitas iniciar sesión con tu cuenta de Google (obtenemos tu nombre, correo
+        y foto de perfil) y definir un Nickname público en tu <a href="perfil.html">perfil de jugador</a>.
+        Coordinamos el torneo y el pago por WhatsApp. Esta información se usa únicamente para organizar
+        los torneos de El Octágono: no la vendemos ni la compartimos con terceros. El Nickname de los
+        jugadores y los resultados de las partidas se publican de forma pública en el historial y la
+        tabla de posiciones de este sitio, ya que son parte del registro deportivo de la plataforma.
+        Para el detalle completo de qué datos recopilamos y cómo los tratamos, revisa nuestra
+        <a href="privacidad.html">Política de Privacidad</a>.
       </p>
     </div>
 
@@ -288,7 +287,7 @@
         rel="noopener"
         style="color: var(--accent); text-decoration: underline; text-underline-offset: 2px; font-size: 0.9rem;"
       >Ayuda</a>
-      <p style="color: var(--text-faint); font-size: 0.72rem; margin: 0;">v1.0.0</p>
+      <p style="color: var(--text-faint); font-size: 0.72rem; margin: 0;">v2.0.0</p>
     </div>
   </div>
 
@@ -305,6 +304,8 @@
       </div>
       <div class="footer-legal-row">
         <a href="terminos.html" class="footer-legal-link">Términos y Condiciones</a>
+        <span class="footer-legal-divider"></span>
+        <a href="privacidad.html" class="footer-legal-link">Política de Privacidad</a>
         <span class="footer-legal-divider"></span>
         <a href="mailto:pulpos@eloctagono.online" class="footer-legal-link">pulpos@eloctagono.online</a>
       </div>
