@@ -21,14 +21,17 @@ const signupCards = document.querySelectorAll(".fee-signup-card");
 // nombre de Google si todavía no lo configuró) y el campo es de solo lectura.
 let isPlayerLoggedIn = false;
 let playerNickname = "";
+let playerPhotoURL = "";
 
 firebase.auth().onAuthStateChanged((user) => {
   isPlayerLoggedIn = !!user;
   playerNickname = "";
+  playerPhotoURL = "";
 
   if (user) {
     loadUserProfile(user.uid).then((profile) => {
       playerNickname = profile.nickname || user.displayName || "";
+      playerPhotoURL = profile.customPhotoURL || user.photoURL || "";
       signupCards.forEach(updateConfirmState);
     });
   }
@@ -98,7 +101,6 @@ signupCards.forEach((card) => {
     const price = card.querySelector(".fee-price").textContent.trim().replace(/\s+/g, " ");
 
     if (typeof submitSolicitud === "function") {
-      const currentUser = firebase.auth().currentUser;
       submitSolicitud({
         name: nickname,
         tier,
@@ -106,7 +108,7 @@ signupCards.forEach((card) => {
         price,
         requestedAt: Date.now(),
         status: "solicitado",
-        photoURL: (currentUser && currentUser.photoURL) || "",
+        photoURL: playerPhotoURL,
       });
     }
 

@@ -131,23 +131,37 @@
     </div>
 
     <div id="profile-content" class="glass-card about-card" style="max-width: 480px; margin: 0 auto 40px; text-align: center;" hidden>
-      <img id="profile-avatar" class="player-avatar" style="width: 72px; height: 72px; margin: 0 auto 14px;" alt="" />
-      <p class="section-sub" id="profile-google-name" style="margin-bottom: 24px;"></p>
+      <div class="profile-avatar-wrap">
+        <img id="profile-avatar" class="player-avatar" alt="" />
+        <button type="button" id="profile-avatar-edit-btn" class="profile-avatar-edit-btn" title="Cambiar foto de perfil">
+          <i class="fa-solid fa-camera"></i>
+        </button>
+        <input type="file" id="profile-avatar-input" accept="image/jpeg,image/png" hidden />
+      </div>
+      <p class="section-sub" style="font-size: 0.7rem; margin: 6px 0 0;">JPG o PNG, máx. 1 MB · recomendado 512×512 px, cuadrada</p>
+      <p id="profile-avatar-error" class="section-sub" style="margin: 4px 0 0; color: #ffb020;" hidden></p>
+
+      <p class="section-sub" id="profile-google-name" style="margin: 18px 0 24px;"></p>
 
       <div class="field" style="text-align: left;">
         <label>Nickname</label>
-        <input type="text" id="profile-nickname-input" placeholder="Nombre del jugador" />
+        <div class="profile-nickname-row">
+          <input type="text" id="profile-nickname-input" placeholder="Nombre del jugador" readonly />
+          <button type="button" id="profile-nickname-edit-btn" class="profile-nickname-edit-btn" title="Editar Nickname">
+            <i class="fa-solid fa-pen"></i>
+          </button>
+        </div>
       </div>
 
       <p id="profile-locked-hint" class="section-sub" style="margin: 10px 0 0; color: #ffb020;" hidden>
         <i class="fa-solid fa-triangle-exclamation"></i> <span id="profile-locked-text"></span>
       </p>
 
-      <button type="button" id="profile-save-btn" class="btn btn-primary btn-block" style="margin-top: 14px;">
+      <button type="button" id="profile-save-btn" class="btn btn-primary btn-block" style="margin-top: 14px;" hidden>
         <i class="fa-solid fa-floppy-disk"></i> Guardar
       </button>
       <p id="profile-saved-hint" class="section-sub" style="margin-top: 10px; color: var(--accent-2);" hidden>
-        <i class="fa-solid fa-circle-check"></i> Nickname guardado. No podrás volver a cambiarlo por 2 temporadas.
+        <i class="fa-solid fa-circle-check"></i> Nickname guardado.
       </p>
     </div>
 
@@ -195,6 +209,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
   <script src="js/firebase-sync.js"></script>
   <script src="js/seasons.js"></script>
   <script src="js/player-auth.js"></script>

@@ -118,6 +118,23 @@ function loadUserProfile(uid) {
     .then((snapshot) => snapshot.val() || {});
 }
 
-function saveUserNickname(uid, nickname) {
-  return fbDb.ref(`users/${uid}`).update({ nickname, updatedAt: Date.now() });
+function saveUserNickname(uid, nickname, extra) {
+  return fbDb.ref(`users/${uid}`).update(Object.assign({ nickname, updatedAt: Date.now() }, extra || {}));
+}
+
+// Foto de perfil propia (JPG/PNG, máx 1MB): sube el archivo a Firebase
+// Storage bajo avatars/{uid}.{ext} y devuelve la URL de descarga. Requiere
+// que la página haya cargado firebase-storage-compat.js — si no, falla
+// con un error claro en vez de un TypeError críptico.
+function uploadAvatar(uid, file) {
+  if (typeof firebase.storage !== "function") {
+    return Promise.reject(new Error("Firebase Storage no está disponible en esta página."));
+  }
+  const ext = file.type === "image/png" ? "png" : "jpg";
+  const ref = firebase.storage().ref(`avatars/${uid}.${ext}`);
+  return ref.put(file, { contentType: file.type }).then((snapshot) => snapshot.ref.getDownloadURL());
+}
+
+function saveUserPhoto(uid, photoURL) {
+  return fbDb.ref(`users/${uid}`).update({ customPhotoURL: photoURL });
 }

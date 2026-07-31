@@ -272,6 +272,55 @@ a { color: inherit; }
   flex-shrink: 0;
 }
 
+/* Perfil de jugador: avatar grande con botón de cámara para subir foto,
+   y el Nickname como texto de solo lectura + botón de lápiz para editar. */
+.profile-avatar-wrap {
+  position: relative;
+  width: 72px;
+  margin: 0 auto;
+}
+.profile-avatar-wrap .player-avatar { width: 72px; height: 72px; }
+
+.profile-avatar-edit-btn {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #1a1000;
+  border: 2px solid var(--surface);
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.profile-avatar-edit-btn:hover { background: var(--accent-2); }
+
+.profile-nickname-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.profile-nickname-row input { flex: 1; }
+
+.profile-nickname-edit-btn {
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text-dim);
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.profile-nickname-edit-btn:hover { color: var(--accent-2); border-color: var(--accent-2); }
+.profile-nickname-edit-btn[hidden] { display: none; }
+
 /* Desktop: la foto de Google sola hace de ícono/link hacia el perfil,
    sin el texto "Mi cuenta" (ver .player-account-text más abajo). */
 .player-account-link {

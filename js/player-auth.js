@@ -20,6 +20,17 @@ firebase.auth().onAuthStateChanged((user) => {
     const avatar = el.querySelector(".player-avatar");
     if (avatar) avatar.src = user.photoURL || "img/icons/icono_app-192.png";
   });
+
+  // Si subió una foto propia en su perfil, reemplaza la de Google en el
+  // navbar en cuanto se conoce (después del primer paint con la de Google).
+  if (user && typeof loadUserProfile === "function") {
+    loadUserProfile(user.uid).then((profile) => {
+      if (!profile.customPhotoURL) return;
+      document.querySelectorAll(".player-profile .player-avatar").forEach((avatar) => {
+        avatar.src = profile.customPhotoURL;
+      });
+    });
+  }
 });
 
 document.querySelectorAll(".player-login-btn").forEach((btn) => {
