@@ -1470,7 +1470,7 @@ input[type="text"]:focus, select:focus {
   font-size: 0.8em;
 }
 .rank-trend-flat {
-  color: var(--text-faint);
+  color: #ffb020;
   margin-right: 4px;
   font-size: 0.8em;
 }

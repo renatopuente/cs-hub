@@ -24,6 +24,7 @@ const profileSavedHintEl = document.getElementById("profile-saved-hint");
 const profileLockedHintEl = document.getElementById("profile-locked-hint");
 const profileLockedTextEl = document.getElementById("profile-locked-text");
 const profileLogoutBtn = document.getElementById("profile-logout-btn");
+const profileSwitchAccountBtn = document.getElementById("profile-switch-account-btn");
 const profileWinsChipEl = document.getElementById("profile-wins-chip");
 const profileWinsCountEl = document.getElementById("profile-wins-count");
 
@@ -132,6 +133,7 @@ firebase.auth().onAuthStateChanged((user) => {
   profileLoginRequiredEl.hidden = !!user;
   profileContentEl.hidden = !user;
   profileLogoutBtn.hidden = !user;
+  profileSwitchAccountBtn.hidden = !user;
   if (!user) {
     currentUid = null;
     updateWinsChip();
@@ -194,6 +196,24 @@ profileSaveBtn.addEventListener("click", () => {
 });
 
 profileLogoutBtn.addEventListener("click", () => firebase.auth().signOut());
+
+// Cierra la sesión actual y abre el selector de cuentas de Google de una
+// vez, para no dejar al jugador en la pantalla de "Inicia sesión" a mitad
+// de camino.
+profileSwitchAccountBtn.addEventListener("click", () => {
+  firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: "select_account" });
+      return firebase.auth().signInWithPopup(provider);
+    })
+    .catch((err) => {
+      console.error("No se pudo cambiar de cuenta", err);
+      alert("No se pudo cambiar de cuenta: " + err.message);
+    });
+});
 
 /* ---------- Foto de perfil (JPG/PNG, máx 1MB) ---------- */
 
