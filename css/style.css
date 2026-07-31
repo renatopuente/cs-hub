@@ -281,6 +281,15 @@ a { color: inherit; }
   white-space: nowrap;
 }
 
+.player-account-link {
+  font-size: 0.82rem;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  white-space: nowrap;
+}
+.player-account-link:hover { color: var(--accent-2); }
+
 .player-logout-btn {
   background: transparent;
   border: none;

@@ -57,6 +57,7 @@
         <div class="player-profile" hidden>
           <img class="player-avatar" alt="" />
           <span class="player-name"></span>
+          <a href="perfil.html" class="player-account-link">Mi cuenta</a>
           <button type="button" class="player-logout-btn" title="Cerrar sesión"><i class="fa-solid fa-right-from-bracket"></i></button>
         </div>
       </nav>
@@ -104,6 +105,7 @@
       <div class="player-profile" hidden>
         <img class="player-avatar" alt="" />
         <span class="player-name"></span>
+        <a href="perfil.html" class="player-account-link">Mi cuenta</a>
         <button type="button" class="player-logout-btn" title="Cerrar sesión"><i class="fa-solid fa-right-from-bracket"></i></button>
       </div>
     </div>
@@ -133,12 +135,20 @@
         <input type="text" id="profile-nickname-input" placeholder="Nombre del jugador" />
       </div>
 
+      <p id="profile-locked-hint" class="section-sub" style="margin: 10px 0 0; color: #ffb020;" hidden>
+        <i class="fa-solid fa-triangle-exclamation"></i> <span id="profile-locked-text"></span>
+      </p>
+
       <button type="button" id="profile-save-btn" class="btn btn-primary btn-block" style="margin-top: 14px;">
         <i class="fa-solid fa-floppy-disk"></i> Guardar
       </button>
       <p id="profile-saved-hint" class="section-sub" style="margin-top: 10px; color: var(--accent-2);" hidden>
-        <i class="fa-solid fa-circle-check"></i> Nickname guardado.
+        <i class="fa-solid fa-circle-check"></i> Nickname guardado. No podrás volver a cambiarlo por 2 temporadas.
       </p>
+
+      <button type="button" id="profile-logout-btn" class="btn btn-outline btn-block" style="margin-top: 20px;">
+        <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
+      </button>
     </div>
 
     <div style="display:flex; flex-direction:column; align-items:center; gap: 16px; margin: 40px 0 0;">
@@ -182,6 +192,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
   <script src="js/firebase-sync.js"></script>
+  <script src="js/seasons.js"></script>
   <script src="js/player-auth.js"></script>
   <script src="js/perfil.js"></script>
   <script src="js/nav.js"></script>
