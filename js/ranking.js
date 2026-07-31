@@ -93,6 +93,12 @@ const scrambleTargets = [];
 let masterTickId = null;
 let masterPhaseId = null;
 
+// Una vez que el ranking ya cargó datos reales, el ciclo termina su fase
+// legible en curso y se detiene ahí — nunca vuelve a entrar en glitch.
+// Mientras no haya datos (o tarde en cargar), sigue en bucle como
+// indicador de carga.
+let rankingDataLoaded = false;
+
 function makeScrambleTarget(el, text) {
   const chars = text.split("");
   return { el, original: text, chars, nonSpaceIdx: chars.map((_, i) => i).filter((i) => chars[i] !== " "), glitchTimeouts: [] };
@@ -139,16 +145,34 @@ function runMasterScramblePhase() {
   masterPhaseId = setTimeout(runMasterSteadyPhase, SCRAMBLE_PHASE_MS);
 }
 
+function stopMasterScramble() {
+  clearInterval(masterTickId);
+  clearTimeout(masterPhaseId);
+  masterTickId = null;
+  masterPhaseId = null;
+  scrambleTargets.forEach((t) => {
+    clearGlitchTimeouts(t);
+    t.el.textContent = t.original;
+  });
+}
+
 function runMasterSteadyPhase() {
   clearInterval(masterTickId);
   scrambleTargets.forEach((t) => {
     t.el.textContent = t.original;
-    scheduleSteadyGlitches(t);
   });
+
+  if (rankingDataLoaded) {
+    stopMasterScramble();
+    return;
+  }
+
+  scrambleTargets.forEach(scheduleSteadyGlitches);
   masterPhaseId = setTimeout(runMasterScramblePhase, STEADY_PHASE_MS);
 }
 
 function ensureMasterScrambleRunning() {
+  if (rankingDataLoaded) return;
   if (masterTickId || masterPhaseId) return;
   runMasterScramblePhase();
 }
@@ -324,6 +348,7 @@ function renderRanking() {
     return;
   }
 
+  rankingDataLoaded = true;
   scrambleSeasonBadge(displaySeason.info.name);
   podiumSeasonBadgeEl.hidden = false;
 
