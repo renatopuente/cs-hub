@@ -109,12 +109,12 @@ function clearGlitchTimeouts(target) {
   target.glitchTimeouts = [];
 }
 
-// Aunque el texto se lee normal en esta fase, se cuelan 1 o 2 chispazos
+// Aunque el texto se lee normal en esta fase, se cuelan 2 o 3 chispazos
 // breves (un par de letras al azar por un instante) para darle vida sin
 // afectar la legibilidad general.
 function scheduleSteadyGlitches(target) {
   if (!target.nonSpaceIdx.length) return;
-  const glitchCount = Math.random() < 0.5 ? 1 : 2;
+  const glitchCount = 2 + Math.floor(Math.random() * 2);
   for (let g = 0; g < glitchCount; g++) {
     const at = 200 + Math.random() * (STEADY_PHASE_MS - STEADY_GLITCH_DURATION_MS - 400);
     target.glitchTimeouts.push(
@@ -161,14 +161,18 @@ function runMasterSteadyPhase() {
   scrambleTargets.forEach((t) => {
     t.el.textContent = t.original;
   });
-
-  if (rankingDataLoaded) {
-    stopMasterScramble();
-    return;
-  }
-
   scrambleTargets.forEach(scheduleSteadyGlitches);
-  masterPhaseId = setTimeout(runMasterScramblePhase, STEADY_PHASE_MS);
+
+  // Esta fase legible (con sus chispazos) siempre se reproduce completa;
+  // recién al terminar se decide si se detiene para siempre (datos ya
+  // cargados) o si vuelve a entrar en glitch (todavía cargando).
+  masterPhaseId = setTimeout(() => {
+    if (rankingDataLoaded) {
+      stopMasterScramble();
+    } else {
+      runMasterScramblePhase();
+    }
+  }, STEADY_PHASE_MS);
 }
 
 function ensureMasterScrambleRunning() {
