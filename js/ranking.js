@@ -395,6 +395,10 @@ function renderRanking() {
               <div class="podium-prize-amount">$${PODIUM_PRIZES[i]} <span class="unit">USD</span></div>
               <p class="podium-prize-label">Premio de temporada</p>
               <p class="podium-prize-note">Adicional a lo que ganas en cada torneo. Se entrega al cierre de la temporada.</p>
+              <button type="button" class="podium-claim-btn" data-claim-id="${i}">
+                <i class="fa-solid fa-gift"></i> Reclamar premio
+              </button>
+              <a href="terminos.html" class="podium-terms-link">Términos y condiciones</a>
               <button type="button" class="podium-flip-btn podium-flip-back-btn" data-flip-id="${i}">
                 <i class="fa-solid fa-rotate"></i> Volver
               </button>
@@ -409,6 +413,12 @@ function renderRanking() {
     btn.addEventListener("click", () => {
       const card = btn.closest(".podium-card");
       shareAsImage(card, "podio-el-octagono.png", "Mi puesto en la tabla de posiciones de El Octágono 🐙");
+    });
+  });
+
+  podiumGridEl.querySelectorAll("[data-claim-id]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      alert("El premio se habilita para reclamar al finalizar la temporada.");
     });
   });
 
