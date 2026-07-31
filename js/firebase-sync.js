@@ -107,3 +107,17 @@ function markSolicitudInscrito(id) {
 function deleteSolicitud(id) {
   return fbDb.ref(`solicitudes/${id}`).remove();
 }
+
+// Perfil de jugador (perfil.html): cada quien solo puede leer/escribir su
+// propio nodo users/{uid} — la regla de Firebase debe restringirlo a
+// auth.uid === $uid.
+function loadUserProfile(uid) {
+  return fbDb
+    .ref(`users/${uid}`)
+    .once("value")
+    .then((snapshot) => snapshot.val() || {});
+}
+
+function saveUserNickname(uid, nickname) {
+  return fbDb.ref(`users/${uid}`).update({ nickname, updatedAt: Date.now() });
+}

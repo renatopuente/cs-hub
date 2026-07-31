@@ -22,10 +22,16 @@ firebase.auth().onAuthStateChanged((user) => {
 document.querySelectorAll(".player-login-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider).catch((err) => {
-      console.error(err);
-      alert("No se pudo iniciar sesión: " + err.message);
-    });
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then(() => {
+        window.location.href = "perfil.html";
+      })
+      .catch((err) => {
+        console.error(err);
+        alert("No se pudo iniciar sesión: " + err.message);
+      });
   });
 });
 
