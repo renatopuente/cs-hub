@@ -164,6 +164,12 @@ const PODIUM_ICONS = [
   '<i class="fa-solid fa-medal icon-bronze"></i>',
 ];
 
+// Premio en efectivo de fin de temporada — adicional a lo que cada quien
+// ya gana torneo por torneo. Se paga al cierre de la temporada (último
+// día, cuando el podio queda definitivo); al día siguiente arranca la
+// temporada nueva y el ranking se reinicia.
+const PODIUM_PRIZES = [20, 15, 10];
+
 // Matches both current plain-text results and any legacy record still
 // carrying the old 🏆 prefix — no Firebase migration needed.
 function isWinningResult(result) {
@@ -269,24 +275,40 @@ function renderRanking() {
     .map((r, i) => {
       const rate = r.played ? Math.round((r.wins / r.played) * 100) : 0;
       return `
-        <div class="glass-card podium-card" data-podium-id="${i}">
-          <div class="podium-card-banner"></div>
-          <button class="share-btn" data-share-id="${i}" title="Compartir">
-            <i class="fa-solid fa-share-nodes"></i>
-          </button>
-          <div class="icon">${PODIUM_ICONS[i]}</div>
-          <span class="podium-rank">#${i + 1}</span>
-          <div class="podium-name-row">
-            <h2>${r.name}</h2>
-            <span class="season-status-chip ${statusClass}">${statusLabel}</span>
-          </div>
-          <div class="podium-stats-row">
-            <p class="section-sub podium-season"><i class="fa-solid fa-calendar"></i> ${displaySeason.info.name}</p>
-            <div class="fee-price">${formatPoints(r.points)} <span class="unit">puntos</span></div>
-          </div>
-          <div class="podium-stats-row">
-            <p><span class="podium-stat-num">${r.played}</span> torneos jugados</p>
-            <p><span class="podium-stat-num">${rate}%</span> efectividad</p>
+        <div class="glass-card podium-card flip-card" data-podium-id="${i}">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <div class="podium-card-banner"></div>
+              <button class="share-btn" data-share-id="${i}" title="Compartir">
+                <i class="fa-solid fa-share-nodes"></i>
+              </button>
+              <button class="podium-flip-btn" data-flip-id="${i}" title="Conocer mi premio">
+                <i class="fa-solid fa-rotate"></i>
+              </button>
+              <img class="podium-avatar" src="${avatarForName(r.name)}" alt="" />
+              <div class="icon">${PODIUM_ICONS[i]}</div>
+              <span class="podium-rank">#${i + 1}</span>
+              <div class="podium-name-row">
+                <h2>${r.name}</h2>
+                <span class="season-status-chip ${statusClass}">${statusLabel}</span>
+              </div>
+              <div class="podium-stats-row">
+                <p class="section-sub podium-season"><i class="fa-solid fa-calendar"></i> ${displaySeason.info.name}</p>
+                <div class="fee-price">${formatPoints(r.points)} <span class="unit">puntos</span></div>
+              </div>
+              <div class="podium-stats-row">
+                <p><span class="podium-stat-num">${r.played}</span> torneos jugados</p>
+                <p><span class="podium-stat-num">${rate}%</span> efectividad</p>
+              </div>
+            </div>
+            <div class="flip-card-back">
+              <div class="podium-prize-amount">$${PODIUM_PRIZES[i]} <span class="unit">USD</span></div>
+              <p class="podium-prize-label">Premio de temporada</p>
+              <p class="podium-prize-note">Adicional a lo que ganas en cada torneo. Se entrega al cierre de la temporada.</p>
+              <button type="button" class="podium-flip-btn podium-flip-back-btn" data-flip-id="${i}">
+                <i class="fa-solid fa-rotate"></i> Volver
+              </button>
+            </div>
           </div>
         </div>
       `;
@@ -297,6 +319,12 @@ function renderRanking() {
     btn.addEventListener("click", () => {
       const card = btn.closest(".podium-card");
       shareAsImage(card, "podio-el-octagono.png", "Mi puesto en la tabla de posiciones de El Octágono 🐙");
+    });
+  });
+
+  podiumGridEl.querySelectorAll("[data-flip-id]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      btn.closest(".flip-card")?.classList.toggle("is-flipped");
     });
   });
 
