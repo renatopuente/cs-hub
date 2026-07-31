@@ -2457,6 +2457,26 @@ input[type="text"]:focus, select:focus {
 }
 .podium-claim-btn:hover { opacity: 0.85; }
 
+/* CTA para quien visita el podio sin ser el dueño de esa card (sin
+   sesión, o logueado con otro Nickname) — invita a inscribirse en vez
+   de mostrar el botón de reclamar premio de otra persona. */
+.podium-participate-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 110, 199, 0.45);
+  background: rgba(255, 110, 199, 0.14);
+  color: var(--accent-2);
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+.podium-participate-cta:hover { background: rgba(255, 110, 199, 0.24); }
+
 .podium-terms-link {
   font-size: 0.72rem;
   color: var(--text-faint);

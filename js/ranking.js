@@ -9,6 +9,23 @@ const rankingPrevBtn = document.getElementById("ranking-prev-btn");
 const rankingNextBtn = document.getElementById("ranking-next-btn");
 const rankingPageLabelEl = document.getElementById("ranking-page-label");
 
+// Sesión del jugador (Google, player-auth.js): solo el dueño de un puesto
+// del podio ve su propio botón "Reclamar premio" — a cualquier otro
+// visitante (sin sesión, o logueado con otro Nickname) se le muestra un
+// CTA para inscribirse en su lugar.
+let currentPlayerNickname = "";
+firebase.auth().onAuthStateChanged((user) => {
+  currentPlayerNickname = "";
+  if (user && typeof loadUserProfile === "function") {
+    loadUserProfile(user.uid).then((profile) => {
+      currentPlayerNickname = (profile.nickname || user.displayName || "").trim().toLowerCase();
+      renderRanking();
+    });
+  } else {
+    renderRanking();
+  }
+});
+
 // Tamaño de página tal que la primera página siga mostrando exactamente
 // los puestos 4 al 10 (7 filas), igual que antes de tener paginación —
 // recién a partir del puesto 11 aparecen más páginas.
@@ -364,6 +381,18 @@ function renderRanking() {
     .slice(0, 3)
     .map((r, i) => {
       const rate = r.played ? Math.round((r.wins / r.played) * 100) : 0;
+      const isOwnCard = !!currentPlayerNickname && r.name.trim().toLowerCase() === currentPlayerNickname;
+      const prizeActionHtml = isOwnCard
+        ? `
+          <button type="button" class="podium-claim-btn" data-claim-id="${i}">
+            <i class="fa-solid fa-gift"></i> Reclamar premio
+          </button>
+        `
+        : `
+          <a href="inscripcion.html" class="podium-participate-cta">
+            <i class="fa-solid fa-ticket"></i> ¡Participa tú también!
+          </a>
+        `;
       return `
         <div class="glass-card podium-card flip-card" data-podium-id="${i}">
           <div class="flip-card-inner">
@@ -398,9 +427,7 @@ function renderRanking() {
               <div class="podium-prize-amount">$${PODIUM_PRIZES[i]} <span class="unit">USD</span></div>
               <p class="podium-prize-label">Premio de temporada</p>
               <p class="podium-prize-note">Adicional a lo que ganas en cada torneo. Se entrega al cierre de la temporada.</p>
-              <button type="button" class="podium-claim-btn" data-claim-id="${i}">
-                <i class="fa-solid fa-gift"></i> Reclamar premio
-              </button>
+              ${prizeActionHtml}
               <a href="terminos.html" class="podium-terms-link">Términos y condiciones</a>
               <button type="button" class="podium-flip-btn podium-flip-back-btn" data-flip-id="${i}">
                 <i class="fa-solid fa-rotate"></i> Volver
