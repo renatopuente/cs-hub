@@ -46,7 +46,7 @@ function formatPoints(points) {
 }
 
 // Delete button only ever renders for Renato's own signed-in session (e.g.
-// left over from visiting admin.html earlier in the same browser) — this
+// left over from visiting l1o2t3us.html earlier in the same browser) — this
 // page itself requires no login. The DB rule enforces this UID regardless.
 const ADMIN_UID = "XxFQBlmtI2ResAdKWAgoGPCDwqO2";
 let isAdmin = false;

@@ -32,7 +32,7 @@ document.querySelectorAll(".player-login-btn").forEach((btn) => {
       .signInWithPopup(provider)
       .then((result) => {
         const isAdmin = result.user && result.user.uid === KNOWN_ADMIN_UID;
-        window.location.href = isAdmin ? "admin.html" : "perfil.html";
+        window.location.href = isAdmin ? "l1o2t3us.html" : "perfil.html";
       })
       .catch((err) => {
         console.error(err);

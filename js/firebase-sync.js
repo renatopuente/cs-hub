@@ -69,7 +69,7 @@ function fbSubscribeHistory(mode, onData) {
   });
 }
 
-// "Reiniciar marcadores" (admin.html) doesn't delete any historial — that
+// "Reiniciar marcadores" (l1o2t3us.html) doesn't delete any historial — that
 // stays permanent by design. It just stores a cutoff timestamp; the ranking
 // page ignores any result finalized at or before it, zeroing the scoreboard
 // without touching the archived results.
