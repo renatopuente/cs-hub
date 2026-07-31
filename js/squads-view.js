@@ -4,7 +4,9 @@
 
 const emptyStateEl = document.getElementById("empty-state");
 const countdownScreenEl = document.getElementById("countdown-screen");
+const countdownDateEl = document.getElementById("countdown-date");
 const countdownClockEl = document.getElementById("countdown-clock");
+const countdownTeamsEl = document.getElementById("countdown-teams");
 const resultSection = document.getElementById("result-section");
 const tournamentFinishedBannerEl = document.getElementById("tournament-finished-banner");
 const neoBracketScreenEl = document.getElementById("neo-bracket-screen");
@@ -422,12 +424,51 @@ function renderNeoScreen(tournament) {
 /* ---------- Countdown ---------- */
 
 let countdownIntervalId = null;
+let countdownTournament = null;
+
+// Solicitudes confirmadas (inscripcion.html + dashboard de admin): se usan
+// para ir revelando, jugador por jugador, quién ya confirmó su inscripción
+// bajo el nombre de su equipo mientras se muestra el countdown.
+let latestSolicitudes = [];
+if (typeof fbSubscribeSolicitudes === "function") {
+  fbSubscribeSolicitudes((list) => {
+    latestSolicitudes = list;
+    if (countdownTournament) renderCountdownTeams(countdownTournament);
+  });
+}
+
+function isPlayerConfirmed(playerName) {
+  const norm = (s) => (s || "").trim().toLowerCase();
+  return latestSolicitudes.some((s) => s.status === "inscrito" && norm(s.name) === norm(playerName));
+}
+
+function countdownTeamHtml(team) {
+  const playersHtml = (team.players || [])
+    .filter((p) => isPlayerConfirmed(p))
+    .map((p) => `<div class="countdown-player">${p}</div>`)
+    .join("");
+  return `
+    <div class="countdown-team">
+      <div class="countdown-team-name" style="color:${team.color}">${team.name}</div>
+      <div class="countdown-team-players">${playersHtml}</div>
+    </div>
+  `;
+}
+
+function renderCountdownTeams(tournament) {
+  if (!tournament.teams) {
+    countdownTeamsEl.innerHTML = "";
+    return;
+  }
+  countdownTeamsEl.innerHTML = tournament.teams.map(countdownTeamHtml).join("");
+}
 
 function stopCountdown() {
   if (countdownIntervalId) {
     clearInterval(countdownIntervalId);
     countdownIntervalId = null;
   }
+  countdownTournament = null;
 }
 
 function formatCountdown(ms) {
@@ -441,10 +482,20 @@ function formatCountdown(ms) {
   return days > 0 ? `${days}d ${pad(hours)}:${pad(minutes)}:${pad(seconds)}` : `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
 }
 
-function startCountdown(targetTs) {
+function formatTournamentDate(ts) {
+  const d = new Date(ts);
+  const dateStr = d.toLocaleDateString("es-EC", { weekday: "long", day: "numeric", month: "long" });
+  const timeStr = d.toLocaleTimeString("es-EC", { hour: "numeric", minute: "2-digit" });
+  return `${dateStr.charAt(0).toUpperCase()}${dateStr.slice(1)} · ${timeStr}`;
+}
+
+function startCountdown(tournament) {
   stopCountdown();
+  countdownTournament = tournament;
+  countdownDateEl.textContent = formatTournamentDate(tournament.scheduledAt);
+  renderCountdownTeams(tournament);
   const tick = () => {
-    countdownClockEl.textContent = formatCountdown(targetTs - Date.now());
+    countdownClockEl.textContent = formatCountdown(tournament.scheduledAt - Date.now());
   };
   tick();
   countdownIntervalId = setInterval(tick, 1000);
@@ -510,7 +561,7 @@ function render(tournament) {
     emptyStateEl.hidden = true;
     resultSection.hidden = true;
     countdownScreenEl.hidden = false;
-    startCountdown(active.scheduledAt);
+    startCountdown(active);
     return;
   }
 

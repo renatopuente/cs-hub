@@ -1041,6 +1041,39 @@ input[type="text"]:focus, select:focus {
   .countdown-clock { font-size: 3.2rem; }
 }
 
+.countdown-date {
+  color: var(--text);
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.countdown-teams {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 28px;
+}
+
+.countdown-team { min-width: 130px; }
+
+.countdown-team-name {
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.countdown-team-players {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.countdown-player {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
 /* ---------- Torneo finalizado (notificación global, estado warning) ---------- */
 
 .tournament-finished-banner {
@@ -1758,6 +1791,22 @@ input[type="text"]:focus, select:focus {
   margin: 10px 0 0;
 }
 
+.podium-season-display {
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--text);
+  margin: 0 0 20px;
+  letter-spacing: 0.01em;
+}
+
+.podium-season-accent { color: var(--accent-2); }
+
+@media (min-width: 769px) {
+  .podium-season-display { font-size: 2.1rem; }
+}
+
 .podium-card {
   position: relative;
   overflow: hidden;
@@ -2020,6 +2069,15 @@ button.fee-card-cta {
 }
 
 .fee-radio input:checked + span { color: var(--accent); }
+
+.fee-nickname-field {
+  margin: 14px 0 4px;
+  text-align: left;
+}
+
+.fee-nickname-field label {
+  margin-bottom: 4px;
+}
 
 .fee-confirm-btn {
   margin-top: auto;

@@ -80,3 +80,30 @@ function resetRankingScores() {
 function fbSubscribeRankingReset(onData) {
   fbDb.ref("meta/rankingResetAt").on("value", (snapshot) => onData(snapshot.val() || 0));
 }
+
+// Solicitudes de inscripción (inscripcion.html, público, sin login): cada
+// jugador que confirma con su Nickname crea un registro acá. El dashboard de
+// admin (inscripciones.html) los separa en "solicitando" vs "inscritos"
+// según el campo status, y las vistas en vivo los usan para ir revelando
+// nombres bajo cada equipo en el countdown a medida que se confirman.
+function submitSolicitud(record) {
+  return fbDb.ref("solicitudes").push(record).catch((err) => console.error("No se pudo enviar la solicitud", err));
+}
+
+function fbSubscribeSolicitudes(onData) {
+  fbDb.ref("solicitudes").on("value", (snapshot) => {
+    const val = snapshot.val() || {};
+    const list = Object.keys(val)
+      .map((key) => ({ id: key, ...val[key] }))
+      .sort((a, b) => (b.requestedAt || 0) - (a.requestedAt || 0));
+    onData(list);
+  });
+}
+
+function markSolicitudInscrito(id) {
+  return fbDb.ref(`solicitudes/${id}`).update({ status: "inscrito", confirmedAt: Date.now() });
+}
+
+function deleteSolicitud(id) {
+  return fbDb.ref(`solicitudes/${id}`).remove();
+}

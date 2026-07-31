@@ -14,28 +14,43 @@ if (location.hash && window.matchMedia("(max-width: 768px)").matches) {
 
 const signupCards = document.querySelectorAll(".fee-signup-card");
 
+// El campo Nickname aparece en cuanto se elige una modalidad, y Confirmar
+// solo se habilita cuando ADEMÁS hay al menos 1 caracter escrito ahí.
+function updateConfirmState(card) {
+  const selected = card.querySelector(".fee-modalidad input[type=radio]:checked");
+  const nicknameField = card.querySelector(".fee-nickname-field");
+  const nicknameInput = card.querySelector(".fee-nickname-input");
+  const confirmBtn = card.querySelector(".fee-confirm-btn");
+  if (!confirmBtn) return;
+
+  if (nicknameField) nicknameField.hidden = !selected;
+  const hasNickname = !!(nicknameInput && nicknameInput.value.trim().length > 0);
+  confirmBtn.disabled = !(selected && hasNickname);
+}
+
 // Only one card can be "active" (a modality picked, Confirmar enabled) at a
 // time across the whole bento — picking a radio in any card resets and dims
 // every other card, instead of letting several cards be armed at once.
 function activateCard(activeCard) {
   signupCards.forEach((card) => {
-    const confirmBtn = card.querySelector(".fee-confirm-btn");
     if (card === activeCard) {
       card.classList.remove("fee-card-inactive");
-      if (confirmBtn) confirmBtn.disabled = false;
     } else {
       card.classList.add("fee-card-inactive");
       card.querySelectorAll(".fee-modalidad input[type=radio]").forEach((r) => {
         r.checked = false;
       });
-      if (confirmBtn) confirmBtn.disabled = true;
+      const nicknameInput = card.querySelector(".fee-nickname-input");
+      if (nicknameInput) nicknameInput.value = "";
     }
+    updateConfirmState(card);
   });
 }
 
 signupCards.forEach((card) => {
   const tier = card.dataset.tier;
   const radios = card.querySelectorAll(".fee-modalidad input[type=radio]");
+  const nicknameInput = card.querySelector(".fee-nickname-input");
   const confirmBtn = card.querySelector(".fee-confirm-btn");
   if (!radios.length || !confirmBtn) return;
 
@@ -45,11 +60,28 @@ signupCards.forEach((card) => {
     });
   });
 
+  if (nicknameInput) {
+    nicknameInput.addEventListener("input", () => updateConfirmState(card));
+  }
+
   confirmBtn.addEventListener("click", () => {
     const selected = card.querySelector(".fee-modalidad input[type=radio]:checked");
-    if (!selected) return;
+    if (!selected || !nicknameInput || !nicknameInput.value.trim()) return;
+    const nickname = nicknameInput.value.trim();
     const price = card.querySelector(".fee-price").textContent.trim().replace(/\s+/g, " ");
-    const message = `Hola Pulpos 👋, quiero inscribirme al torneo *${tier}* 🏆 en la modalidad *${selected.value}* 🎮, valor *${price}* 💵.\n\nMi Nickname es:`;
+
+    if (typeof submitSolicitud === "function") {
+      submitSolicitud({
+        name: nickname,
+        tier,
+        modalidad: selected.value,
+        price,
+        requestedAt: Date.now(),
+        status: "solicitado",
+      });
+    }
+
+    const message = `Hola Pulpos 👋, quiero inscribirme al torneo *${tier}* 🏆 en la modalidad *${selected.value}* 🎮, valor *${price}* 💵.\n\nMi Nickname es: *${nickname}*`;
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank", "noopener");
   });
