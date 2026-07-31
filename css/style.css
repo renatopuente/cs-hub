@@ -1982,7 +1982,6 @@ input[type="text"]:focus, select:focus {
 .fee-card.flip-card .flip-card-back p {
   color: var(--text-dim);
   font-size: 0.9rem;
-  overflow-y: auto;
 }
 
 .fee-card-top-row {
@@ -2278,8 +2277,27 @@ input[type="text"]:focus, select:focus {
   max-width: 220px;
 }
 
+/* Back face: undo the front-trigger's circular/absolute button chrome
+   (inherited from .podium-flip-btn) so "Volver" reads as a normal
+   inline text+icon control, centered in the flow with the rest of the
+   back face content, in accent lilac. */
 .podium-flip-back-btn {
+  position: static;
+  width: auto;
+  height: auto;
   margin-top: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  gap: 6px;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+.podium-flip-back-btn:hover {
+  color: var(--accent-2);
+  background: none;
 }
 
 /* The ranking table card has no banner strip to clear, so its share button
