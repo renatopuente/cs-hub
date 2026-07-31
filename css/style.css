@@ -1428,6 +1428,47 @@ input[type="text"]:focus, select:focus {
 }
 .standings-table .rank { font-weight: 700; color: var(--accent-2); }
 
+/* 4to y 5to lugar: mención honorífica — apenas un tinte de fondo y una
+   estrella junto a la posición, bastante más discreto que el podio
+   (que tiene su propia card con foto, banner y flip de premio). */
+.standings-table tbody tr.rank-honorable {
+  background: rgba(155, 77, 255, 0.07);
+}
+.rank-honorable-icon {
+  color: var(--accent-2);
+  margin-right: 4px;
+  font-size: 0.85em;
+}
+
+.ranking-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+.ranking-page-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  color: var(--text);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.ranking-page-btn:hover:not(:disabled) { background: var(--glass-bg-hover); color: var(--accent-2); }
+.ranking-page-btn:disabled { opacity: 0.35; cursor: default; }
+.ranking-page-label {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  min-width: 90px;
+  text-align: center;
+}
+
 .fee-chip {
   display: inline-flex;
   align-items: center;
@@ -2385,7 +2426,7 @@ button.fee-card-cta {
    desktop bento layout gives cards different widths in the same row). */
 .fee-card .fee-card-cta {
   margin-top: 24px;
-  font-size: 1.32rem;
+  font-size: 1.1rem;
 }
 
 @media (max-width: 768px) {
@@ -2394,7 +2435,7 @@ button.fee-card-cta {
   }
 
   .fee-card .fee-card-cta {
-    font-size: 1.51rem;
+    font-size: 1.25rem;
   }
 }
 

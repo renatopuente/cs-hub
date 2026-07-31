@@ -4,6 +4,26 @@ const podiumRankingTitleEl = document.getElementById("podium-ranking-title");
 const rankingBodyEl = document.getElementById("ranking-body");
 const rankingEmptyEl = document.getElementById("ranking-empty");
 const rankingTableCard = document.getElementById("ranking-table-card");
+const rankingPaginationEl = document.getElementById("ranking-pagination");
+const rankingPrevBtn = document.getElementById("ranking-prev-btn");
+const rankingNextBtn = document.getElementById("ranking-next-btn");
+const rankingPageLabelEl = document.getElementById("ranking-page-label");
+
+// Tamaño de página tal que la primera página siga mostrando exactamente
+// los puestos 4 al 10 (7 filas), igual que antes de tener paginación —
+// recién a partir del puesto 11 aparecen más páginas.
+const RANKING_PAGE_SIZE = 7;
+let rankingPage = 0;
+
+rankingPrevBtn.addEventListener("click", () => {
+  if (rankingPage <= 0) return;
+  rankingPage -= 1;
+  renderRanking();
+});
+rankingNextBtn.addEventListener("click", () => {
+  rankingPage += 1;
+  renderRanking();
+});
 
 const GENERIC_AVATAR = "img/icons/icono_app-192.png";
 
@@ -260,6 +280,7 @@ function renderRanking() {
     podiumGridEl.innerHTML = "";
     rankingBodyEl.innerHTML = "";
     rankingTableCard.hidden = true;
+    rankingPaginationEl.hidden = true;
     rankingEmptyEl.hidden = false;
     return;
   }
@@ -328,10 +349,11 @@ function renderRanking() {
     });
   });
 
-  const restOfTable = ranked.slice(3, 10);
+  const restOfTable = ranked.slice(3);
 
   if (!restOfTable.length) {
     rankingTableCard.hidden = true;
+    rankingPaginationEl.hidden = true;
     rankingEmptyEl.hidden = false;
     return;
   }
@@ -339,13 +361,22 @@ function renderRanking() {
   rankingTableCard.hidden = false;
   rankingEmptyEl.hidden = true;
 
-  rankingBodyEl.innerHTML = restOfTable
+  const totalPages = Math.ceil(restOfTable.length / RANKING_PAGE_SIZE);
+  if (rankingPage >= totalPages) rankingPage = totalPages - 1;
+  if (rankingPage < 0) rankingPage = 0;
+
+  const pageStart = rankingPage * RANKING_PAGE_SIZE;
+  const pageItems = restOfTable.slice(pageStart, pageStart + RANKING_PAGE_SIZE);
+
+  rankingBodyEl.innerHTML = pageItems
     .map((r, idx) => {
-      const i = idx + 3;
+      const i = pageStart + idx + 3;
       const rate = r.played ? Math.round((r.wins / r.played) * 100) : 0;
+      // Puestos 4 y 5: mención honorífica, un peldaño debajo del podio.
+      const honorable = i === 3 || i === 4;
       return `
-        <tr>
-          <td class="rank" data-label="Posición">#${i + 1}</td>
+        <tr class="${honorable ? "rank-honorable" : ""}">
+          <td class="rank" data-label="Posición">${honorable ? '<i class="fa-solid fa-star rank-honorable-icon"></i>' : ""}#${i + 1}</td>
           <td data-label="Jugador">
             <span class="ranking-player">
               <img class="ranking-player-avatar" src="${avatarForName(r.name)}" alt="" />
@@ -359,6 +390,11 @@ function renderRanking() {
       `;
     })
     .join("");
+
+  rankingPaginationEl.hidden = totalPages <= 1;
+  rankingPageLabelEl.textContent = `Página ${rankingPage + 1} de ${totalPages}`;
+  rankingPrevBtn.disabled = rankingPage === 0;
+  rankingNextBtn.disabled = rankingPage >= totalPages - 1;
 }
 
 async function shareAsImage(el, filename, shareText) {
