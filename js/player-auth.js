@@ -7,7 +7,7 @@
 // Mismo UID que auth-gate.js/historial.js (Renato, GitHub) — si se loguea
 // acá con Google usando la cuenta ligada a ese mismo UID, lo mandamos
 // directo al panel de admin en vez del perfil de jugador.
-const KNOWN_ADMIN_UID = "Bbr8haYuDWMHBK4ZzmjfIp2kbz42";
+const KNOWN_ADMIN_UID = "XxFQBlmtI2ResAdKWAgoGPCDwqO2";
 
 firebase.auth().onAuthStateChanged((user) => {
   document.querySelectorAll(".player-login-btn").forEach((btn) => {
