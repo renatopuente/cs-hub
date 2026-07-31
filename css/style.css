@@ -1676,6 +1676,15 @@ input[type="text"]:focus, select:focus {
   margin: 0 0 28px;
 }
 
+/* Torneos en vivo (Duelos/Duos/Pug view): en móvil el botón Volver ocupa
+   la mitad del ancho de pantalla disponible en vez de ajustarse al
+   contenido. */
+@media (max-width: 768px) {
+  .live-view-back-btn {
+    width: 50%;
+  }
+}
+
 .season-heading-name {
   font-size: 2.1rem;
   margin: 0;
