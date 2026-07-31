@@ -151,15 +151,23 @@
             <i class="fa-solid fa-pen"></i>
           </button>
         </div>
+        <p id="profile-edit-hint" class="section-sub" style="margin: 8px 0 0; font-size: 0.78rem;" hidden>
+          <i class="fa-solid fa-circle-info"></i> <span id="profile-edit-hint-text"></span>
+        </p>
       </div>
 
       <p id="profile-locked-hint" class="section-sub" style="margin: 10px 0 0; color: #ffb020;" hidden>
         <i class="fa-solid fa-triangle-exclamation"></i> <span id="profile-locked-text"></span>
       </p>
 
-      <button type="button" id="profile-save-btn" class="btn btn-primary btn-block" style="margin-top: 14px;" hidden>
-        <i class="fa-solid fa-floppy-disk"></i> Guardar
-      </button>
+      <div id="profile-nickname-actions" style="display: flex; gap: 10px; margin-top: 14px;" hidden>
+        <button type="button" id="profile-save-btn" class="btn btn-primary" style="flex: 1;">
+          <i class="fa-solid fa-floppy-disk"></i> Guardar
+        </button>
+        <button type="button" id="profile-cancel-btn" class="btn btn-outline" style="flex: 1;">
+          <i class="fa-solid fa-xmark"></i> Cancelar
+        </button>
+      </div>
       <p id="profile-saved-hint" class="section-sub" style="margin-top: 10px; color: var(--accent-2);" hidden>
         <i class="fa-solid fa-circle-check"></i> Nickname guardado.
       </p>

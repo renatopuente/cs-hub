@@ -15,15 +15,22 @@ const profileAvatarErrorEl = document.getElementById("profile-avatar-error");
 const profileGoogleNameEl = document.getElementById("profile-google-name");
 const profileNicknameInput = document.getElementById("profile-nickname-input");
 const profileNicknameEditBtn = document.getElementById("profile-nickname-edit-btn");
+const profileEditHintEl = document.getElementById("profile-edit-hint");
+const profileEditHintTextEl = document.getElementById("profile-edit-hint-text");
+const profileNicknameActionsEl = document.getElementById("profile-nickname-actions");
 const profileSaveBtn = document.getElementById("profile-save-btn");
+const profileCancelBtn = document.getElementById("profile-cancel-btn");
 const profileSavedHintEl = document.getElementById("profile-saved-hint");
 const profileLockedHintEl = document.getElementById("profile-locked-hint");
 const profileLockedTextEl = document.getElementById("profile-locked-text");
 const profileLogoutBtn = document.getElementById("profile-logout-btn");
 
+profileEditHintTextEl.textContent = `Puedes cambiar tu Nickname hasta ${NICKNAME_CHANGES_PER_SEASON} veces por temporada.`;
+
 let currentUid = null;
 let currentProfile = {};
 let isEditingNickname = false;
+let savedNicknameValue = "";
 
 function seasonChangesUsed(profile) {
   return profile.nicknameChangeSeason === currentSeasonIndex() ? profile.nicknameChangeCount || 0 : 0;
@@ -36,7 +43,8 @@ function applyLockState(profile) {
   if (locked) isEditingNickname = false;
   profileNicknameInput.readOnly = !isEditingNickname;
   profileNicknameEditBtn.hidden = locked;
-  profileSaveBtn.hidden = !isEditingNickname;
+  profileEditHintEl.hidden = !isEditingNickname;
+  profileNicknameActionsEl.hidden = !isEditingNickname;
   profileLockedHintEl.hidden = !locked;
   if (locked) {
     profileLockedTextEl.textContent = `Ya usaste tus ${NICKNAME_CHANGES_PER_SEASON} cambios de Nickname esta temporada. Podrás cambiarlo de nuevo en la próxima.`;
@@ -61,7 +69,8 @@ firebase.auth().onAuthStateChanged((user) => {
 
   loadUserProfile(user.uid).then((profile) => {
     currentProfile = profile;
-    profileNicknameInput.value = profile.nickname || user.displayName || "";
+    savedNicknameValue = profile.nickname || user.displayName || "";
+    profileNicknameInput.value = savedNicknameValue;
     renderAvatar(user, profile);
     isEditingNickname = false;
     applyLockState(profile);
@@ -76,6 +85,12 @@ profileNicknameEditBtn.addEventListener("click", () => {
   profileNicknameInput.setSelectionRange(profileNicknameInput.value.length, profileNicknameInput.value.length);
 });
 
+profileCancelBtn.addEventListener("click", () => {
+  profileNicknameInput.value = savedNicknameValue;
+  isEditingNickname = false;
+  applyLockState(currentProfile);
+});
+
 profileSaveBtn.addEventListener("click", () => {
   if (!currentUid) return;
   const nickname = profileNicknameInput.value.trim();
@@ -87,6 +102,7 @@ profileSaveBtn.addEventListener("click", () => {
   saveUserNickname(currentUid, nickname, { nicknameChangeSeason: nowSeasonIdx, nicknameChangeCount: newCount })
     .then(() => {
       currentProfile = { ...currentProfile, nickname, nicknameChangeSeason: nowSeasonIdx, nicknameChangeCount: newCount };
+      savedNicknameValue = nickname;
       isEditingNickname = false;
       applyLockState(currentProfile);
       profileSavedHintEl.hidden = false;
