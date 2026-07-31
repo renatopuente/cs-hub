@@ -35,17 +35,60 @@ firebase.auth().onAuthStateChanged((user) => {
   }
 });
 
+function goAfterLogin(user) {
+  const isAdmin = user && isAdminUid(user.uid);
+  window.location.href = isAdmin ? "l1o2t3us.html" : "perfil.html";
+}
+
+// Si el correo de Google ya tiene cuenta con otro proveedor (típico:
+// alguien que ya entró al panel de admin con GitHub usando el mismo
+// correo), Firebase bloquea el login por defecto. Se ofrece iniciar
+// sesión primero con ese otro proveedor y vincular ambas cuentas bajo
+// el mismo UID — mismo mecanismo que auth-gate.js del lado de GitHub.
+function handleAccountExists(err) {
+  const pendingCredential = err.credential;
+  const email = (err.customData && err.customData.email) || err.email;
+  if (!email) {
+    alert("No se pudo iniciar sesión: " + err.message);
+    return;
+  }
+
+  firebase
+    .auth()
+    .fetchSignInMethodsForEmail(email)
+    .then((methods) => {
+      const providerId = methods[0] || "";
+      const providerLabel = providerId === "github.com" ? "GitHub" : providerId || "otro proveedor";
+      const proceed = confirm(
+        `Ya existe una cuenta con ${email} usando ${providerLabel}. ¿Iniciar sesión con ${providerLabel} para vincular tu acceso de Google a esa misma cuenta?`
+      );
+      if (!proceed) return;
+
+      const otherProvider = providerId === "github.com" ? new firebase.auth.GithubAuthProvider() : new firebase.auth.GoogleAuthProvider();
+      firebase
+        .auth()
+        .signInWithPopup(otherProvider)
+        .then((signInResult) => signInResult.user.linkWithCredential(pendingCredential))
+        .then((linkResult) => goAfterLogin(linkResult.user))
+        .catch((err2) => {
+          console.error(err2);
+          alert("No se pudo vincular la cuenta: " + err2.message);
+        });
+    });
+}
+
 document.querySelectorAll(".player-login-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase
       .auth()
       .signInWithPopup(provider)
-      .then((result) => {
-        const isAdmin = result.user && isAdminUid(result.user.uid);
-        window.location.href = isAdmin ? "l1o2t3us.html" : "perfil.html";
-      })
+      .then((result) => goAfterLogin(result.user))
       .catch((err) => {
+        if (err.code === "auth/account-exists-with-different-credential") {
+          handleAccountExists(err);
+          return;
+        }
         console.error(err);
         alert("No se pudo iniciar sesión: " + err.message);
       });
