@@ -101,10 +101,17 @@ faqToggles.forEach((toggle) => {
 });
 
 // Home: fee-card flip — the rotate icon and the Leer más / Volver links
-// all just toggle the flip state of their own card.
+// all just toggle the flip state of their own card. Only one card stays
+// flipped at a time: flipping a new one closes whichever was open.
 document.querySelectorAll(".fee-card-flip-trigger").forEach((trigger) => {
   trigger.addEventListener("click", () => {
-    trigger.closest(".flip-card")?.classList.toggle("is-flipped");
+    const card = trigger.closest(".flip-card");
+    if (!card) return;
+    const willFlip = !card.classList.contains("is-flipped");
+    document.querySelectorAll(".fee-card.flip-card.is-flipped").forEach((other) => {
+      if (other !== card) other.classList.remove("is-flipped");
+    });
+    card.classList.toggle("is-flipped", willFlip);
   });
 });
 
