@@ -343,6 +343,18 @@ a { color: inherit; }
   display: flex;
   background: var(--bg);
 }
+
+/* Cuando el menú móvil está abierto, oscurece el contenido de la página
+   para que el foco quede en el menú — navbar (100) y footer (90) se
+   mantienen por encima, sin oscurecer. */
+.mobile-menu-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 80;
+}
+.mobile-menu-overlay.open { display: block; }
 .mobile-menu a {
   color: var(--text-dim);
   text-decoration: none;
@@ -499,6 +511,15 @@ a { color: inherit; }
   .fee-grid .fee-card:nth-child(3) { grid-column: span 4; } /* Competitivo $2 */
   .fee-grid .fee-card:nth-child(4) { grid-column: span 5; } /* Premier $5 */
   .fee-grid .fee-card:nth-child(5) { grid-column: span 7; } /* Élite $10 */
+
+  /* Panel de admin: Duelos/Duos/Pug en una fila pareja, Historial +
+     Inscripciones en la fila siguiente, mas anchas. */
+  .admin-bento { grid-template-columns: repeat(12, 1fr); }
+  .admin-bento .mode-card:nth-child(1),
+  .admin-bento .mode-card:nth-child(2),
+  .admin-bento .mode-card:nth-child(3) { grid-column: span 4; }
+  .admin-bento .mode-card:nth-child(4),
+  .admin-bento .mode-card:nth-child(5) { grid-column: span 6; }
 }
 
 /* ---------- Glass + neomorphic cards ---------- */
@@ -1783,7 +1804,7 @@ input[type="text"]:focus, select:focus {
    texture) lives on .flip-card-front/.flip-card-back themselves, so the
    whole card appears to flip, not just the text inside a static frame. */
 .fee-card.flip-card {
-  min-height: 300px;
+  min-height: 340px;
   background: none;
   border: none;
   box-shadow: none;
