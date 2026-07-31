@@ -1,6 +1,7 @@
 // Shared public (read-only) view for any 2-team series (Duelos, Pug). Each
 // page sets MODE in a small inline <script> before this file loads.
 
+const liveBadgeRowEl = document.getElementById("live-badge-row");
 const emptyStateEl = document.getElementById("empty-state");
 const countdownScreenEl = document.getElementById("countdown-screen");
 const countdownDateEl = document.getElementById("countdown-date");
@@ -201,6 +202,7 @@ function render(tournament) {
   const active = !tournament || isStaleFinalized ? null : tournament;
 
   if (!active) {
+    if (liveBadgeRowEl) liveBadgeRowEl.hidden = true;
     emptyStateEl.hidden = false;
     countdownScreenEl.hidden = true;
     seriesSection.hidden = true;
@@ -212,6 +214,7 @@ function render(tournament) {
   // muestra igual, sin requerir que el torneo ya tenga datos completos.
   const showCountdown = active.scheduledAt && !active.started && !active.finalizedAt;
   if (showCountdown) {
+    if (liveBadgeRowEl) liveBadgeRowEl.hidden = true;
     emptyStateEl.hidden = true;
     seriesSection.hidden = true;
     countdownScreenEl.hidden = false;
@@ -220,6 +223,7 @@ function render(tournament) {
   }
 
   if (!active.teams) {
+    if (liveBadgeRowEl) liveBadgeRowEl.hidden = true;
     emptyStateEl.hidden = false;
     countdownScreenEl.hidden = true;
     seriesSection.hidden = true;
@@ -229,6 +233,9 @@ function render(tournament) {
   emptyStateEl.hidden = true;
   countdownScreenEl.hidden = true;
   seriesSection.hidden = false;
+  // "EN VIVO" solo mientras el torneo está realmente en curso — no en
+  // espera, no en cuenta regresiva, y no una vez finalizado.
+  if (liveBadgeRowEl) liveBadgeRowEl.hidden = !!active.finalizedAt;
   tournamentFinishedBannerEl.hidden = !active.finalizedAt;
   if (active.finalizedAt) startFinishedTimer(active);
 
