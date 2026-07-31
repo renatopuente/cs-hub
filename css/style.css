@@ -2171,7 +2171,7 @@ button.fee-card-cta {
 
 .fee-nickname-field {
   margin: 20px 0 16px;
-  text-align: center;
+  text-align: left;
 }
 
 .fee-nickname-field .fee-nickname-input {
@@ -2183,7 +2183,7 @@ button.fee-card-cta {
   color: var(--accent);
   font-weight: 700;
   text-align: center;
-  padding: 8px 20px;
+  padding: 8px 4px;
   border-radius: 999px;
   cursor: default;
   animation: fee-nickname-blink 2.27s ease-in-out infinite;

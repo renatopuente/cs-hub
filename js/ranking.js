@@ -1,8 +1,76 @@
 const podiumGridEl = document.getElementById("podium-grid");
 const podiumSeasonBadgeEl = document.getElementById("podium-season-badge");
+const podiumRankingTitleEl = document.getElementById("podium-ranking-title");
 const rankingBodyEl = document.getElementById("ranking-body");
 const rankingEmptyEl = document.getElementById("ranking-empty");
 const rankingTableCard = document.getElementById("ranking-table-card");
+
+/* ---------- Scramble: "Ranking" y el nombre de temporada alternan 8s de
+   glitch (letras al azar, nunca todas a la vez para poder deducir el
+   texto) con 8s de lectura normal, en bucle. ---------- */
+
+const SCRAMBLE_CHARS = "0123456789!@#$%^&*_+-=<>?/[]{}~";
+const SCRAMBLE_PHASE_MS = 8000;
+const SCRAMBLE_TICK_MS = 120;
+
+function randomScrambleChar() {
+  return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+}
+
+// Cada tick elige una sola estrategia (pares, impares o mixta) para todo
+// el texto, así siempre queda al menos la mitad de las letras reales
+// visibles y se puede deducir el titular durante el glitch.
+function scrambledOnce(chars) {
+  const strategy = ["even", "odd", "mixed"][Math.floor(Math.random() * 3)];
+  return chars
+    .map((ch, i) => {
+      if (ch === " ") return ch;
+      const hit = strategy === "even" ? i % 2 === 0 : strategy === "odd" ? i % 2 === 1 : Math.random() < 0.5;
+      return hit ? randomScrambleChar() : ch;
+    })
+    .join("");
+}
+
+function startScrambleCycle(el) {
+  const original = el.textContent;
+  const chars = original.split("");
+  let tickId = null;
+  let phaseId = null;
+
+  function runScramblePhase() {
+    tickId = setInterval(() => {
+      el.textContent = scrambledOnce(chars);
+    }, SCRAMBLE_TICK_MS);
+    phaseId = setTimeout(runSteadyPhase, SCRAMBLE_PHASE_MS);
+  }
+
+  function runSteadyPhase() {
+    clearInterval(tickId);
+    el.textContent = original;
+    phaseId = setTimeout(runScramblePhase, SCRAMBLE_PHASE_MS);
+  }
+
+  runScramblePhase();
+
+  return function stop() {
+    clearInterval(tickId);
+    clearTimeout(phaseId);
+    el.textContent = original;
+  };
+}
+
+if (podiumRankingTitleEl) startScrambleCycle(podiumRankingTitleEl);
+
+let stopSeasonBadgeScramble = null;
+let currentScrambledSeasonName = null;
+
+function scrambleSeasonBadge(name) {
+  if (name === currentScrambledSeasonName && stopSeasonBadgeScramble) return;
+  if (stopSeasonBadgeScramble) stopSeasonBadgeScramble();
+  currentScrambledSeasonName = name;
+  podiumSeasonBadgeEl.textContent = name;
+  stopSeasonBadgeScramble = startScrambleCycle(podiumSeasonBadgeEl);
+}
 
 const PODIUM_ICONS = [
   '<i class="fa-solid fa-trophy icon-gold"></i>',
@@ -94,6 +162,9 @@ function renderRanking() {
   const ranked = buildRanking(displaySeason.index);
 
   if (!ranked.length) {
+    if (stopSeasonBadgeScramble) stopSeasonBadgeScramble();
+    stopSeasonBadgeScramble = null;
+    currentScrambledSeasonName = null;
     podiumSeasonBadgeEl.hidden = true;
     podiumGridEl.innerHTML = "";
     rankingBodyEl.innerHTML = "";
@@ -102,7 +173,7 @@ function renderRanking() {
     return;
   }
 
-  podiumSeasonBadgeEl.textContent = displaySeason.info.name;
+  scrambleSeasonBadge(displaySeason.info.name);
   podiumSeasonBadgeEl.hidden = false;
 
   const statusClass = displaySeason.closed ? "season-status-ended" : "season-status-active";
