@@ -53,11 +53,11 @@
 
         <div class="nav-dropdown">
           <button class="nav-dropdown-toggle" aria-expanded="false">
-            <i class="fa-solid fa-chart-simple"></i> Resultados <i class="fa-solid fa-chevron-down nav-dropdown-caret"></i>
+            <i class="fa-solid fa-ranking-star"></i> Ranking <i class="fa-solid fa-chevron-down nav-dropdown-caret"></i>
           </button>
           <div class="nav-dropdown-menu">
-            <a href="historial.html"><i class="fa-solid fa-clock-rotate-left"></i> Historial de torneos</a>
             <a href="ranking.html"><i class="fa-solid fa-ranking-star"></i> Tabla de posiciones</a>
+            <a href="historial.html"><i class="fa-solid fa-clock-rotate-left"></i> Historial de torneos</a>
           </div>
         </div>
 
@@ -102,12 +102,12 @@
 
       <div class="mobile-menu-group">
         <button class="mobile-menu-group-toggle" aria-expanded="false">
-          <span><i class="fa-solid fa-chart-simple"></i> Resultados</span>
+          <span><i class="fa-solid fa-ranking-star"></i> Ranking</span>
           <i class="fa-solid fa-chevron-down toggle-icon"></i>
         </button>
         <div class="mobile-menu-submenu" hidden>
-          <a href="historial.html" class="mobile-menu-sub"><i class="fa-solid fa-clock-rotate-left"></i> Historial de torneos</a>
           <a href="ranking.html" class="mobile-menu-sub"><i class="fa-solid fa-ranking-star"></i> Tabla de posiciones</a>
+          <a href="historial.html" class="mobile-menu-sub"><i class="fa-solid fa-clock-rotate-left"></i> Historial de torneos</a>
         </div>
       </div>
 
@@ -148,33 +148,46 @@
       <img class="season-banner-img" src="img/banners/bannerlite.webp" alt="Temporada actual: Monaco Emerald" />
     </div>
 
+    <div class="section-heading">
+      <h2>Sigue tus torneos en vivo</h2>
+    </div>
+
     <div class="bento-grid" id="tournament-modes" style="margin-bottom: 20px;">
-      <a class="glass-card interactive mode-card" href="duelos-view.html">
-        <div>
+      <div class="glass-card mode-card">
+        <a class="mode-card-link" href="duelos-view.html">
           <img class="icon-img" src="img/icons/duelos.png" alt="" />
           <h2>Duelos</h2>
           <p>Torneos online 1 vs 1. Duelo directo en serie al mejor de 3 o de 5.</p>
+        </a>
+        <div class="mode-card-ctas">
+          <a class="btn btn-primary" href="duelos-view.html"><i class="fa-solid fa-video"></i> Ver en vivo →</a>
+          <a class="btn btn-outline" href="inscripcion.html"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
         </div>
-        <span class="btn btn-primary"><i class="fa-solid fa-video"></i> Ver en vivo →</span>
-      </a>
+      </div>
 
-      <a class="glass-card interactive mode-card" href="duos-view.html">
-        <div>
+      <div class="glass-card mode-card">
+        <a class="mode-card-link" href="duos-view.html">
           <img class="icon-img" src="img/icons/duos.png" alt="" />
           <h2>Duos</h2>
           <p>Torneos online en Duos, equipos de 2 jugadores. De 2 a 8 equipos, en serie, todos contra todos o llaves clásicas.</p>
+        </a>
+        <div class="mode-card-ctas">
+          <a class="btn btn-primary" href="duos-view.html"><i class="fa-solid fa-video"></i> Ver en vivo →</a>
+          <a class="btn btn-outline" href="inscripcion.html"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
         </div>
-        <span class="btn btn-primary"><i class="fa-solid fa-video"></i> Ver en vivo →</span>
-      </a>
+      </div>
 
-      <a class="glass-card interactive mode-card" href="pug-view.html">
-        <div>
+      <div class="glass-card mode-card">
+        <a class="mode-card-link" href="pug-view.html">
           <img class="icon-img" src="img/icons/pug.png" alt="" />
           <h2>Pug</h2>
           <p>Torneos online en Pug, el clásico 5 vs 5. Serie al mejor de X partidas.</p>
+        </a>
+        <div class="mode-card-ctas">
+          <a class="btn btn-primary" href="pug-view.html"><i class="fa-solid fa-video"></i> Ver en vivo →</a>
+          <a class="btn btn-outline" href="inscripcion.html"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
         </div>
-        <span class="btn btn-primary"><i class="fa-solid fa-video"></i> Ver en vivo →</span>
-      </a>
+      </div>
     </div>
 
     <div class="section-heading">

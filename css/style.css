@@ -494,9 +494,9 @@ a { color: inherit; }
   .fee-grid {
     grid-template-columns: repeat(12, 1fr);
   }
-  .fee-grid .fee-card:nth-child(1) { grid-column: span 3; } /* Amistoso $0 */
+  .fee-grid .fee-card:nth-child(1) { grid-column: span 4; } /* Amistoso $0 */
   .fee-grid .fee-card:nth-child(2) { grid-column: span 4; } /* Casual $1 */
-  .fee-grid .fee-card:nth-child(3) { grid-column: span 5; } /* Competitivo $2 */
+  .fee-grid .fee-card:nth-child(3) { grid-column: span 4; } /* Competitivo $2 */
   .fee-grid .fee-card:nth-child(4) { grid-column: span 5; } /* Premier $5 */
   .fee-grid .fee-card:nth-child(5) { grid-column: span 7; } /* Élite $10 */
 }
@@ -608,6 +608,37 @@ a { color: inherit; }
   width: 100%;
   margin-top: 24px;
   animation: live-blink 1s ease-in-out infinite; /* half speed of the original 120 BPM cycle */
+}
+
+/* Home mode-cards (Duelos/Duos/Pug): the whole card is a plain div now
+   (not an <a>, so it can hold two real links — "Ver en vivo" + the
+   secondary "Inscribirme" — instead of an invalid nested anchor). */
+.mode-card:hover {
+  transform: translateY(-4px);
+  background: var(--glass-bg-hover);
+}
+
+.mode-card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.mode-card-ctas {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.mode-card-ctas .btn {
+  width: 100%;
+  margin-top: 0;
+}
+
+.mode-card-ctas .btn-outline {
+  animation: none;
 }
 
 @keyframes live-blink {
@@ -2237,6 +2268,8 @@ button.fee-card-cta {
   margin: 0 0 8px;
   font-size: 0.85rem;
 }
+
+.fee-login-prompt .fee-login-btn { width: 100%; }
 
 .fee-nickname-field {
   margin: 20px 0 16px;
