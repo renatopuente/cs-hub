@@ -5,13 +5,16 @@ const rankingBodyEl = document.getElementById("ranking-body");
 const rankingEmptyEl = document.getElementById("ranking-empty");
 const rankingTableCard = document.getElementById("ranking-table-card");
 
-/* ---------- Scramble: "Ranking" y el nombre de temporada alternan 8s de
-   glitch (letras al azar, nunca todas a la vez para poder deducir el
-   texto) con 8s de lectura normal, en bucle. ---------- */
+/* ---------- Scramble: "Ranking" y el nombre de temporada alternan 4s de
+   lectura normal (con 1-2 glitches breves de un par de letras) con 2s de
+   glitch completo (letras al azar, nunca todas a la vez para poder
+   deducir el texto), en bucle. ---------- */
 
 const SCRAMBLE_CHARS = "0123456789!@#$%^&*_+-=<>?/[]{}~";
-const SCRAMBLE_PHASE_MS = 8000;
+const SCRAMBLE_PHASE_MS = 2000;
+const STEADY_PHASE_MS = 4000;
 const SCRAMBLE_TICK_MS = 120;
+const STEADY_GLITCH_DURATION_MS = 120;
 
 function randomScrambleChar() {
   return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
@@ -34,20 +37,55 @@ function scrambledOnce(chars) {
 function startScrambleCycle(el) {
   const original = el.textContent;
   const chars = original.split("");
+  const nonSpaceIdx = chars.map((_, i) => i).filter((i) => chars[i] !== " ");
   let tickId = null;
   let phaseId = null;
+  let glitchTimeouts = [];
+
+  function clearGlitchTimeouts() {
+    glitchTimeouts.forEach(clearTimeout);
+    glitchTimeouts = [];
+  }
 
   function runScramblePhase() {
+    clearGlitchTimeouts();
     tickId = setInterval(() => {
       el.textContent = scrambledOnce(chars);
     }, SCRAMBLE_TICK_MS);
     phaseId = setTimeout(runSteadyPhase, SCRAMBLE_PHASE_MS);
   }
 
+  // Aunque el texto se lee normal en esta fase, se cuelan 1 o 2 chispazos
+  // breves (un par de letras al azar por un instante) para darle vida sin
+  // afectar la legibilidad general.
+  function scheduleSteadyGlitches() {
+    if (!nonSpaceIdx.length) return;
+    const glitchCount = Math.random() < 0.5 ? 1 : 2;
+    for (let g = 0; g < glitchCount; g++) {
+      const at = 200 + Math.random() * (STEADY_PHASE_MS - STEADY_GLITCH_DURATION_MS - 400);
+      glitchTimeouts.push(
+        setTimeout(() => {
+          const count = Math.random() < 0.5 ? 1 : 2;
+          const picked = new Set();
+          while (picked.size < Math.min(count, nonSpaceIdx.length)) {
+            picked.add(nonSpaceIdx[Math.floor(Math.random() * nonSpaceIdx.length)]);
+          }
+          el.textContent = chars.map((ch, i) => (picked.has(i) ? randomScrambleChar() : ch)).join("");
+          glitchTimeouts.push(
+            setTimeout(() => {
+              el.textContent = original;
+            }, STEADY_GLITCH_DURATION_MS)
+          );
+        }, at)
+      );
+    }
+  }
+
   function runSteadyPhase() {
     clearInterval(tickId);
     el.textContent = original;
-    phaseId = setTimeout(runScramblePhase, SCRAMBLE_PHASE_MS);
+    scheduleSteadyGlitches();
+    phaseId = setTimeout(runScramblePhase, STEADY_PHASE_MS);
   }
 
   runScramblePhase();
@@ -55,6 +93,7 @@ function startScrambleCycle(el) {
   return function stop() {
     clearInterval(tickId);
     clearTimeout(phaseId);
+    clearGlitchTimeouts();
     el.textContent = original;
   };
 }
