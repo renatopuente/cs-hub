@@ -24,6 +24,8 @@ const profileSavedHintEl = document.getElementById("profile-saved-hint");
 const profileLockedHintEl = document.getElementById("profile-locked-hint");
 const profileLockedTextEl = document.getElementById("profile-locked-text");
 const profileLogoutBtn = document.getElementById("profile-logout-btn");
+const profileWinsChipEl = document.getElementById("profile-wins-chip");
+const profileWinsCountEl = document.getElementById("profile-wins-count");
 
 profileEditHintTextEl.textContent = `Puedes cambiar tu Nickname hasta ${NICKNAME_CHANGES_PER_SEASON} veces por temporada.`;
 
@@ -31,6 +33,77 @@ let currentUid = null;
 let currentProfile = {};
 let isEditingNickname = false;
 let savedNicknameValue = "";
+let currentDisplayName = "";
+
+/* ---------- Chip de victorias (por temporada) ---------- */
+
+let duelosHistory = [];
+let duosHistory = [];
+let pugHistory = [];
+let rankingResetAt = 0;
+
+// Mismo criterio de resultado ganador que ranking.js.
+function isWinningResult(result) {
+  return typeof result === "string" && (result.includes("Ganó") || result.includes("Campeón") || /^#1\b/.test(result));
+}
+
+// Mismo criterio de "temporada mostrada" que ranking.js: el último día de
+// temporada cierra a las 8am, y el primer día de la siguiente todavía
+// muestra la anterior (los torneos de ese primer día son Amistoso y no
+// cuentan) — así el chip de victorias siempre coincide con lo que se ve
+// en la tabla de posiciones.
+function displaySeasonIndex() {
+  const now = new Date();
+  let index = currentSeasonIndex();
+  const info = getSeasonInfo(index);
+  if (info.start.toDateString() === now.toDateString()) index -= 1;
+  return index;
+}
+
+function countSeasonWins(nickname) {
+  const name = (nickname || "").trim();
+  if (!name) return 0;
+  const seasonIdx = displaySeasonIndex();
+  let wins = 0;
+  [...duelosHistory, ...duosHistory, ...pugHistory].forEach((entry) => {
+    if (!entry.finalizedAt || entry.finalizedAt <= rankingResetAt) return;
+    if (seasonIndexForDate(new Date(entry.finalizedAt)) !== seasonIdx) return;
+    (entry.teams || []).forEach((t) => {
+      if (!isWinningResult(t.result)) return;
+      (t.players || []).forEach((rawName) => {
+        if ((rawName || "").trim() === name) wins += 1;
+      });
+    });
+  });
+  return wins;
+}
+
+function updateWinsChip() {
+  if (!currentUid) {
+    profileWinsChipEl.hidden = true;
+    return;
+  }
+  const nickname = currentProfile.nickname || currentDisplayName;
+  profileWinsCountEl.textContent = countSeasonWins(nickname);
+  profileWinsChipEl.hidden = false;
+}
+
+fbSubscribeHistory("duelos", (list) => {
+  duelosHistory = list;
+  updateWinsChip();
+});
+fbSubscribeHistory("duos", (list) => {
+  duosHistory = list;
+  updateWinsChip();
+});
+fbSubscribeHistory("pug", (list) => {
+  pugHistory = list;
+  updateWinsChip();
+});
+fbSubscribeRankingReset((ts) => {
+  rankingResetAt = ts;
+  updateWinsChip();
+});
 
 function seasonChangesUsed(profile) {
   return profile.nicknameChangeSeason === currentSeasonIndex() ? profile.nicknameChangeCount || 0 : 0;
@@ -61,10 +134,12 @@ firebase.auth().onAuthStateChanged((user) => {
   profileLogoutBtn.hidden = !user;
   if (!user) {
     currentUid = null;
+    updateWinsChip();
     return;
   }
 
   currentUid = user.uid;
+  currentDisplayName = user.displayName || "";
   profileGoogleNameEl.textContent = user.displayName || user.email || "Jugador";
 
   loadUserProfile(user.uid).then((profile) => {
@@ -74,6 +149,7 @@ firebase.auth().onAuthStateChanged((user) => {
     renderAvatar(user, profile);
     isEditingNickname = false;
     applyLockState(profile);
+    updateWinsChip();
   });
 });
 
@@ -105,6 +181,7 @@ profileSaveBtn.addEventListener("click", () => {
       savedNicknameValue = nickname;
       isEditingNickname = false;
       applyLockState(currentProfile);
+      updateWinsChip();
       profileSavedHintEl.hidden = false;
       setTimeout(() => {
         profileSavedHintEl.hidden = true;

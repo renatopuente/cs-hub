@@ -275,6 +275,25 @@ a { color: inherit; }
 
 /* Perfil de jugador: avatar grande con botón de cámara para subir foto,
    y el Nickname como texto de solo lectura + botón de lápiz para editar. */
+
+/* Chip de victorias (por temporada) en la esquina de la card. */
+.profile-wins-chip {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent-2);
+  border: 1px solid rgba(255, 110, 199, 0.35);
+  background: rgba(155, 77, 255, 0.12);
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+.profile-wins-chip i { color: #ffd54a; }
+
 .profile-avatar-wrap {
   position: relative;
   width: 72px;
