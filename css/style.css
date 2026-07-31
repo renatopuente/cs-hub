@@ -557,11 +557,12 @@ a { color: inherit; }
 .back-link:hover { background: var(--glass-bg-hover); color: var(--text); }
 
 /* Ranking: el Volver vive debajo de la descripción, alineado a la
-   izquierda, con el 50% del ancho disponible en vez de ajustarse al
+   derecha, con el 50% del ancho disponible en vez de ajustarse al
    contenido. */
 .ranking-back-link {
   display: block;
   width: 50%;
+  margin-left: auto;
   text-align: center;
   margin-top: 16px;
 }
