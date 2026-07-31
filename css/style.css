@@ -2240,12 +2240,16 @@ input[type="text"]:focus, select:focus {
     flex: 1 1 0;
     min-width: 0;
   }
+  /* #3 se mantiene en los 460px base; #1 un 16% más alta y #2 un 8% más
+     alta que esa base — solo en desktop. */
   #podium-grid .podium-card[data-podium-id="0"] {
     order: 2;
     padding-bottom: 68px;
+    min-height: 534px;
   }
   #podium-grid .podium-card[data-podium-id="1"] {
     order: 1;
+    min-height: 497px;
   }
   #podium-grid .podium-card[data-podium-id="2"] {
     order: 3;
