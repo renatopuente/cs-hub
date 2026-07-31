@@ -1841,20 +1841,46 @@ input[type="text"]:focus, select:focus {
   margin: 10px 0 0;
 }
 
-.podium-season-display {
+.podium-title-display {
   text-align: center;
   font-family: "Montserrat", sans-serif;
   font-weight: 800;
   font-size: 1.5rem;
   color: var(--text);
-  margin: 0 0 20px;
+  margin: 0 0 12px;
   letter-spacing: 0.01em;
 }
 
-.podium-season-accent { color: var(--accent-2); }
-
 @media (min-width: 769px) {
-  .podium-season-display { font-size: 2.1rem; }
+  .podium-title-display { font-size: 2.1rem; }
+}
+
+.podium-season-row {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 20px;
+}
+
+.podium-season-badge {
+  display: inline-block;
+  padding: 6px 20px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 1.05rem;
+  animation: podium-season-blink 1.8s ease-in-out infinite;
+}
+
+@keyframes podium-season-blink {
+  0%, 100% {
+    color: var(--accent-2);
+    background: rgba(255, 110, 199, 0.14);
+    box-shadow: 0 0 14px rgba(255, 110, 199, 0.55);
+  }
+  50% {
+    color: var(--accent);
+    background: rgba(155, 77, 255, 0.14);
+    box-shadow: 0 0 14px rgba(155, 77, 255, 0.55);
+  }
 }
 
 .podium-card {

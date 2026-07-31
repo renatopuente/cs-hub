@@ -1,5 +1,5 @@
 const podiumGridEl = document.getElementById("podium-grid");
-const podiumSeasonDisplayEl = document.getElementById("podium-season-display");
+const podiumSeasonBadgeEl = document.getElementById("podium-season-badge");
 const rankingBodyEl = document.getElementById("ranking-body");
 const rankingEmptyEl = document.getElementById("ranking-empty");
 const rankingTableCard = document.getElementById("ranking-table-card");
@@ -94,7 +94,7 @@ function renderRanking() {
   const ranked = buildRanking(displaySeason.index);
 
   if (!ranked.length) {
-    podiumSeasonDisplayEl.hidden = true;
+    podiumSeasonBadgeEl.hidden = true;
     podiumGridEl.innerHTML = "";
     rankingBodyEl.innerHTML = "";
     rankingTableCard.hidden = true;
@@ -102,8 +102,8 @@ function renderRanking() {
     return;
   }
 
-  podiumSeasonDisplayEl.innerHTML = `Podio Temporada <span class="podium-season-accent">${displaySeason.info.name}</span>`;
-  podiumSeasonDisplayEl.hidden = false;
+  podiumSeasonBadgeEl.textContent = displaySeason.info.name;
+  podiumSeasonBadgeEl.hidden = false;
 
   const statusClass = displaySeason.closed ? "season-status-ended" : "season-status-active";
   const statusLabel = displaySeason.closed ? "Finalizado" : "En curso";
