@@ -923,7 +923,19 @@ input[type="text"]:focus, select:focus {
   font-weight: 800;
   line-height: 1;
 }
-.series-team .name { margin-top: 6px; font-weight: 600; }
+.series-team .name {
+  margin-top: 6px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+@media (max-width: 480px) {
+  .series-score { gap: 12px; padding: 20px 12px; }
+  .series-team { min-width: 0; flex: 1; }
+}
 
 .series-vs {
   color: var(--text-faint);
