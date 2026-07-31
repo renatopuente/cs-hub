@@ -44,6 +44,7 @@ function applyLockState(profile) {
 firebase.auth().onAuthStateChanged((user) => {
   profileLoginRequiredEl.hidden = !!user;
   profileContentEl.hidden = !user;
+  profileLogoutBtn.hidden = !user;
   if (!user) {
     currentUid = null;
     return;

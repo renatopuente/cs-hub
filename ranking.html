@@ -57,6 +57,7 @@
         <div class="player-profile" hidden>
           <a href="perfil.html" class="player-account-link" aria-label="Mi cuenta">
             <img class="player-avatar" alt="Mi cuenta" />
+            <span class="player-account-text">Mi cuenta</span>
           </a>
           <button type="button" class="player-logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
         </div>
@@ -105,6 +106,7 @@
       <div class="player-profile" hidden>
         <a href="perfil.html" class="player-account-link" aria-label="Mi cuenta">
           <img class="player-avatar" alt="Mi cuenta" />
+          <span class="player-account-text">Mi cuenta</span>
         </a>
         <button type="button" class="player-logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
       </div>
@@ -136,9 +138,9 @@
     </div>
 
     <h2 class="podium-title-display">
-      <i class="fa-solid fa-ranking-star podium-title-icon"></i>
+      <span class="podium-title-ascii" id="podium-title-ascii-left" aria-hidden="true"></span>
       <span id="podium-ranking-title">Ranking</span>
-      <i class="fa-solid fa-ranking-star podium-title-icon"></i>
+      <span class="podium-title-ascii" id="podium-title-ascii-right" aria-hidden="true"></span>
     </h2>
     <div class="podium-season-row">
       <span class="podium-season-badge" id="podium-season-badge" hidden></span>

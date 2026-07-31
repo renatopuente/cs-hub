@@ -5,6 +5,13 @@ const rankingBodyEl = document.getElementById("ranking-body");
 const rankingEmptyEl = document.getElementById("ranking-empty");
 const rankingTableCard = document.getElementById("ranking-table-card");
 
+// Líneas de ASCII art a los costados de "Ranking": un solo carácter
+// repetido muchas veces, recortado por overflow:hidden a lo que quepa
+// en el ancho disponible (flex:1) a cada lado.
+document.querySelectorAll(".podium-title-ascii").forEach((el) => {
+  el.textContent = "═".repeat(300);
+});
+
 /* ---------- Scramble: "Ranking" y el nombre de temporada alternan 4s de
    lectura normal (con 1-2 glitches breves de un par de letras) con 2s de
    glitch completo (letras al azar, nunca todas a la vez para poder

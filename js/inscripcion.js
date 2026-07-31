@@ -48,10 +48,11 @@ function updateConfirmState(card) {
   if (nicknameField) nicknameField.hidden = !(selected && isPlayerLoggedIn);
 
   if (nicknameInput && selected && isPlayerLoggedIn) {
-    nicknameInput.value = playerNickname;
+    nicknameInput.textContent = `Competidor: ${playerNickname}`;
+    nicknameInput.dataset.nickname = playerNickname;
   }
 
-  const hasNickname = !!(nicknameInput && nicknameInput.value.trim().length > 0);
+  const hasNickname = !!(nicknameInput && nicknameInput.dataset.nickname && nicknameInput.dataset.nickname.trim().length > 0);
   confirmBtn.disabled = !(selected && isPlayerLoggedIn && hasNickname);
 }
 
@@ -68,7 +69,10 @@ function activateCard(activeCard) {
         r.checked = false;
       });
       const nicknameInput = card.querySelector(".fee-nickname-input");
-      if (nicknameInput) nicknameInput.value = "";
+      if (nicknameInput) {
+        nicknameInput.textContent = "";
+        nicknameInput.dataset.nickname = "";
+      }
     }
     updateConfirmState(card);
   });
@@ -89,8 +93,8 @@ signupCards.forEach((card) => {
 
   confirmBtn.addEventListener("click", () => {
     const selected = card.querySelector(".fee-modalidad input[type=radio]:checked");
-    if (!selected || !nicknameInput || !nicknameInput.value.trim()) return;
-    const nickname = nicknameInput.value.trim();
+    const nickname = nicknameInput && nicknameInput.dataset.nickname;
+    if (!selected || !nickname || !nickname.trim()) return;
     const price = card.querySelector(".fee-price").textContent.trim().replace(/\s+/g, " ");
 
     if (typeof submitSolicitud === "function") {

@@ -272,14 +272,29 @@ a { color: inherit; }
   flex-shrink: 0;
 }
 
-/* "Mi cuenta" ya no es texto — es la propia foto de Google, que ahora
-   hace de ícono/link hacia el perfil. */
+/* Desktop: la foto de Google sola hace de ícono/link hacia el perfil,
+   sin el texto "Mi cuenta" (ver .player-account-text más abajo). */
 .player-account-link {
   display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.player-account-text { display: none; }
+
+.main-nav .player-account-link {
   border-radius: 50%;
   transition: box-shadow 0.15s ease;
 }
-.player-account-link:hover { box-shadow: 0 0 0 2px var(--accent-2); }
+.main-nav .player-account-link:hover { box-shadow: 0 0 0 2px var(--accent-2); }
+
+/* Mobile: junto al avatar sí se muestra el texto "Mi cuenta". */
+.mobile-menu .player-account-text {
+  display: inline;
+  color: var(--accent);
+  font-size: 0.9rem;
+}
+.mobile-menu .player-account-link:hover .player-account-text { color: var(--accent-2); }
 
 .player-logout-btn {
   display: inline-flex;
@@ -1871,10 +1886,18 @@ input[type="text"]:focus, select:focus {
   letter-spacing: 0.01em;
 }
 
-.podium-title-icon {
+.podium-title-display #podium-ranking-title { flex-shrink: 0; }
+
+.podium-title-ascii {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: "Courier New", monospace;
+  font-weight: 400;
+  font-size: 0.7em;
+  letter-spacing: 2px;
   color: var(--accent);
-  font-size: 0.85em;
-  text-shadow: 0 0 12px var(--accent-glow);
+  opacity: 0.5;
 }
 
 @media (min-width: 769px) {
