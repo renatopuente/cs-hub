@@ -34,81 +34,97 @@ function scrambledOnce(chars) {
     .join("");
 }
 
-function startScrambleCycle(el) {
-  const original = el.textContent;
-  const chars = original.split("");
-  const nonSpaceIdx = chars.map((_, i) => i).filter((i) => chars[i] !== " ");
-  let tickId = null;
-  let phaseId = null;
-  let glitchTimeouts = [];
+// Un solo reloj maestro controla la fase (glitch/legible) de TODOS los
+// textos registrados a la vez, en vez de que cada uno corra su propio
+// setTimeout — así "Ranking" y el nombre de temporada siempre entran y
+// salen del glitch completo exactamente juntos, sin desfase posible.
+const scrambleTargets = [];
+let masterTickId = null;
+let masterPhaseId = null;
 
-  function clearGlitchTimeouts() {
-    glitchTimeouts.forEach(clearTimeout);
-    glitchTimeouts = [];
-  }
-
-  function runScramblePhase() {
-    clearGlitchTimeouts();
-    tickId = setInterval(() => {
-      el.textContent = scrambledOnce(chars);
-    }, SCRAMBLE_TICK_MS);
-    phaseId = setTimeout(runSteadyPhase, SCRAMBLE_PHASE_MS);
-  }
-
-  // Aunque el texto se lee normal en esta fase, se cuelan 1 o 2 chispazos
-  // breves (un par de letras al azar por un instante) para darle vida sin
-  // afectar la legibilidad general.
-  function scheduleSteadyGlitches() {
-    if (!nonSpaceIdx.length) return;
-    const glitchCount = Math.random() < 0.5 ? 1 : 2;
-    for (let g = 0; g < glitchCount; g++) {
-      const at = 200 + Math.random() * (STEADY_PHASE_MS - STEADY_GLITCH_DURATION_MS - 400);
-      glitchTimeouts.push(
-        setTimeout(() => {
-          const count = Math.random() < 0.5 ? 1 : 2;
-          const picked = new Set();
-          while (picked.size < Math.min(count, nonSpaceIdx.length)) {
-            picked.add(nonSpaceIdx[Math.floor(Math.random() * nonSpaceIdx.length)]);
-          }
-          el.textContent = chars.map((ch, i) => (picked.has(i) ? randomScrambleChar() : ch)).join("");
-          glitchTimeouts.push(
-            setTimeout(() => {
-              el.textContent = original;
-            }, STEADY_GLITCH_DURATION_MS)
-          );
-        }, at)
-      );
-    }
-  }
-
-  function runSteadyPhase() {
-    clearInterval(tickId);
-    el.textContent = original;
-    scheduleSteadyGlitches();
-    phaseId = setTimeout(runScramblePhase, STEADY_PHASE_MS);
-  }
-
-  runScramblePhase();
-
-  return function stop() {
-    clearInterval(tickId);
-    clearTimeout(phaseId);
-    clearGlitchTimeouts();
-    el.textContent = original;
-  };
+function makeScrambleTarget(el, text) {
+  const chars = text.split("");
+  return { el, original: text, chars, nonSpaceIdx: chars.map((_, i) => i).filter((i) => chars[i] !== " "), glitchTimeouts: [] };
 }
 
-if (podiumRankingTitleEl) startScrambleCycle(podiumRankingTitleEl);
+function clearGlitchTimeouts(target) {
+  target.glitchTimeouts.forEach(clearTimeout);
+  target.glitchTimeouts = [];
+}
 
-let stopSeasonBadgeScramble = null;
-let currentScrambledSeasonName = null;
+// Aunque el texto se lee normal en esta fase, se cuelan 1 o 2 chispazos
+// breves (un par de letras al azar por un instante) para darle vida sin
+// afectar la legibilidad general.
+function scheduleSteadyGlitches(target) {
+  if (!target.nonSpaceIdx.length) return;
+  const glitchCount = Math.random() < 0.5 ? 1 : 2;
+  for (let g = 0; g < glitchCount; g++) {
+    const at = 200 + Math.random() * (STEADY_PHASE_MS - STEADY_GLITCH_DURATION_MS - 400);
+    target.glitchTimeouts.push(
+      setTimeout(() => {
+        const count = Math.random() < 0.5 ? 1 : 2;
+        const picked = new Set();
+        while (picked.size < Math.min(count, target.nonSpaceIdx.length)) {
+          picked.add(target.nonSpaceIdx[Math.floor(Math.random() * target.nonSpaceIdx.length)]);
+        }
+        target.el.textContent = target.chars.map((ch, i) => (picked.has(i) ? randomScrambleChar() : ch)).join("");
+        target.glitchTimeouts.push(
+          setTimeout(() => {
+            target.el.textContent = target.original;
+          }, STEADY_GLITCH_DURATION_MS)
+        );
+      }, at)
+    );
+  }
+}
+
+function runMasterScramblePhase() {
+  scrambleTargets.forEach(clearGlitchTimeouts);
+  masterTickId = setInterval(() => {
+    scrambleTargets.forEach((t) => {
+      t.el.textContent = scrambledOnce(t.chars);
+    });
+  }, SCRAMBLE_TICK_MS);
+  masterPhaseId = setTimeout(runMasterSteadyPhase, SCRAMBLE_PHASE_MS);
+}
+
+function runMasterSteadyPhase() {
+  clearInterval(masterTickId);
+  scrambleTargets.forEach((t) => {
+    t.el.textContent = t.original;
+    scheduleSteadyGlitches(t);
+  });
+  masterPhaseId = setTimeout(runMasterScramblePhase, STEADY_PHASE_MS);
+}
+
+function ensureMasterScrambleRunning() {
+  if (masterTickId || masterPhaseId) return;
+  runMasterScramblePhase();
+}
+
+function removeScrambleTarget(target) {
+  if (!target) return;
+  clearGlitchTimeouts(target);
+  const idx = scrambleTargets.indexOf(target);
+  if (idx !== -1) scrambleTargets.splice(idx, 1);
+}
+
+let rankingTitleTarget = null;
+if (podiumRankingTitleEl) {
+  rankingTitleTarget = makeScrambleTarget(podiumRankingTitleEl, podiumRankingTitleEl.textContent);
+  scrambleTargets.push(rankingTitleTarget);
+  ensureMasterScrambleRunning();
+}
+
+let seasonBadgeTarget = null;
 
 function scrambleSeasonBadge(name) {
-  if (name === currentScrambledSeasonName && stopSeasonBadgeScramble) return;
-  if (stopSeasonBadgeScramble) stopSeasonBadgeScramble();
-  currentScrambledSeasonName = name;
+  if (seasonBadgeTarget && seasonBadgeTarget.original === name) return;
+  if (seasonBadgeTarget) removeScrambleTarget(seasonBadgeTarget);
+  seasonBadgeTarget = makeScrambleTarget(podiumSeasonBadgeEl, name);
+  scrambleTargets.push(seasonBadgeTarget);
   podiumSeasonBadgeEl.textContent = name;
-  stopSeasonBadgeScramble = startScrambleCycle(podiumSeasonBadgeEl);
+  ensureMasterScrambleRunning();
 }
 
 const PODIUM_ICONS = [
@@ -201,9 +217,8 @@ function renderRanking() {
   const ranked = buildRanking(displaySeason.index);
 
   if (!ranked.length) {
-    if (stopSeasonBadgeScramble) stopSeasonBadgeScramble();
-    stopSeasonBadgeScramble = null;
-    currentScrambledSeasonName = null;
+    removeScrambleTarget(seasonBadgeTarget);
+    seasonBadgeTarget = null;
     podiumSeasonBadgeEl.hidden = true;
     podiumGridEl.innerHTML = "";
     rankingBodyEl.innerHTML = "";
