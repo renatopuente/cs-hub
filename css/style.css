@@ -2341,7 +2341,7 @@ footer.credits {
 }
 .site-footer-fixed .footer-top { margin-bottom: 6px; }
 .site-footer-fixed .made-with-love { margin: 7px 0 3px; }
-.site-footer-fixed footer.credits { margin-top: 0; }
+.site-footer-fixed footer.credits { margin-top: 12px; }
 
 /* Desktop: taller footer, slightly larger footer type (+2px across the
    board). Mobile keeps the original compact sizing. */
