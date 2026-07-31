@@ -50,6 +50,15 @@
         <a href="quienes-somos.html"><i class="fa-solid fa-circle-info"></i> Quiénes somos</a>
 
         <a href="inscripcion.html" class="btn btn-primary"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
+
+        <button type="button" class="player-login-btn btn btn-ghost btn-sm">
+          <i class="fa-brands fa-google"></i> Iniciar sesión
+        </button>
+        <div class="player-profile" hidden>
+          <img class="player-avatar" alt="" />
+          <span class="player-name"></span>
+          <button type="button" class="player-logout-btn" title="Cerrar sesión"><i class="fa-solid fa-right-from-bracket"></i></button>
+        </div>
       </nav>
 
       <button type="button" id="install-chip" class="install-chip" hidden>
@@ -89,6 +98,14 @@
       <a href="quienes-somos.html"><i class="fa-solid fa-circle-info"></i> Quiénes somos</a>
 
       <a href="inscripcion.html" class="btn btn-primary btn-block"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
+      <button type="button" class="player-login-btn btn btn-outline btn-block">
+        <i class="fa-brands fa-google"></i> Iniciar sesión
+      </button>
+      <div class="player-profile" hidden>
+        <img class="player-avatar" alt="" />
+        <span class="player-name"></span>
+        <button type="button" class="player-logout-btn" title="Cerrar sesión"><i class="fa-solid fa-right-from-bracket"></i></button>
+      </div>
     </div>
   </div>
 
@@ -290,6 +307,11 @@
     </div>
   </footer>
 
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+  <script src="js/firebase-sync.js"></script>
+  <script src="js/player-auth.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/copyright.js"></script>
 </body>

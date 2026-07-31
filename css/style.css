@@ -250,6 +250,54 @@ a { color: inherit; }
   }
 }
 
+/* Login de jugadores (Google) — visible en navbar desktop y en el menú
+   móvil. El botón y el perfil nunca se muestran los dos a la vez: player-
+   auth.js alterna [hidden] entre ambos según haya sesión o no. */
+.player-login-btn { white-space: nowrap; }
+
+.player-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.player-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(155, 77, 255, 0.35);
+  flex-shrink: 0;
+}
+
+.player-name {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.player-logout-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-faint);
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 4px;
+  transition: color 0.15s ease;
+}
+.player-logout-btn:hover { color: var(--accent-2); }
+
+.mobile-menu .player-login-btn { margin-top: 10px; }
+.mobile-menu .player-profile {
+  padding: 16px 0;
+  margin-top: 10px;
+  border-top: 1px solid rgba(155, 77, 255, 0.25);
+}
+.mobile-menu .player-name { max-width: none; flex: 1; }
+
 .mobile-menu {
   display: none;
   flex-direction: column;
