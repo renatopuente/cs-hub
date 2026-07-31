@@ -377,7 +377,10 @@ function renderRanking() {
               </button>
               <img class="podium-avatar" src="${avatarForName(r.name)}" alt="" />
               <div class="icon">${PODIUM_ICONS[i]}</div>
-              <span class="podium-rank">${trendIconHtml(trends[r.name] || 0)}#${i + 1}</span>
+              <span class="podium-rank-row">
+                <span class="podium-rank">#${i + 1}</span>
+                ${trendIconHtml(trends[r.name] || 0)}
+              </span>
               <div class="podium-name-row">
                 <h2>${r.name}</h2>
                 <span class="season-status-chip ${statusClass}">${statusLabel}</span>
