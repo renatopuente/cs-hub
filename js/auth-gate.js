@@ -2,7 +2,7 @@
 // Locked to Renato's account — the DB write rule mirrors this UID too
 // (see the Firebase Realtime Database rules), so even someone who
 // signs in with a different GitHub account can't write tournament data.
-const ADMIN_UID = "NlLYYKa6lQXRIk2m2PlpXYkGk1e2";
+const ADMIN_UID = "Bbr8haYuDWMHBK4ZzmjfIp2kbz42";
 
 const loginGateEl = document.getElementById("login-gate");
 const protectedContentEl = document.getElementById("protected-content");
