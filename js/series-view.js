@@ -214,7 +214,7 @@ function render(tournament) {
   // muestra igual, sin requerir que el torneo ya tenga datos completos.
   const showCountdown = active.scheduledAt && !active.started && !active.finalizedAt;
   if (showCountdown) {
-    if (liveBadgeRowEl) liveBadgeRowEl.hidden = true;
+    if (liveBadgeRowEl) liveBadgeRowEl.hidden = false;
     emptyStateEl.hidden = true;
     seriesSection.hidden = true;
     countdownScreenEl.hidden = false;
@@ -233,8 +233,8 @@ function render(tournament) {
   emptyStateEl.hidden = true;
   countdownScreenEl.hidden = true;
   seriesSection.hidden = false;
-  // "EN VIVO" solo mientras el torneo está realmente en curso — no en
-  // espera, no en cuenta regresiva, y no una vez finalizado.
+  // "EN VIVO" se muestra mientras haya un torneo programado o en curso —
+  // solo se oculta en espera (sin torneo) y una vez finalizado.
   if (liveBadgeRowEl) liveBadgeRowEl.hidden = !!active.finalizedAt;
   tournamentFinishedBannerEl.hidden = !active.finalizedAt;
   if (active.finalizedAt) startFinishedTimer(active);
