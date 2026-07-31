@@ -706,8 +706,10 @@ input[type="text"]:focus, select:focus {
   border: none;
   border-radius: var(--radius-sm);
   padding: 12px 22px;
+  font-family: inherit;
   font-size: 0.95rem;
   font-weight: 600;
+  line-height: normal;
   text-decoration: none;
   cursor: pointer;
   transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
