@@ -556,10 +556,11 @@ a { color: inherit; }
 }
 .back-link:hover { background: var(--glass-bg-hover); color: var(--text); }
 
-/* Ranking, mobile (base): "Tabla de posiciones" y el Volver comparten la
-   primera fila (título en la 1ra columna, Volver en la 2da, alineado a
-   la derecha dentro del padding del contenedor), la descripción ocupa
-   la fila de abajo completa. En mobile Volver muestra solo el icono. */
+/* Ranking (mobile y desktop por igual): "Tabla de posiciones" y el
+   Volver comparten la primera fila (título en la 1ra columna, Volver en
+   la 2da, alineado a la derecha dentro del padding del contenedor), la
+   descripción ocupa la fila de abajo completa. Volver muestra solo el
+   icono, sin texto. */
 .ranking-top-bar-inner {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -581,24 +582,6 @@ a { color: inherit; }
   text-align: center;
 }
 .ranking-back-link-text { display: none; }
-
-/* Desktop: vuelve al layout apilado — título, descripción y Volver (con
-   texto) debajo de la descripción, al 50% del ancho, alineado a la
-   derecha. */
-@media (min-width: 769px) {
-  .ranking-top-bar-inner {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "title"
-      "desc"
-      "back";
-  }
-  .ranking-back-link {
-    width: 50%;
-    margin-top: 16px;
-  }
-  .ranking-back-link-text { display: inline; }
-}
 
 /* ---------- Bento grid ---------- */
 
