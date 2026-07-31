@@ -7,6 +7,9 @@ const NICKNAME_CHANGES_PER_SEASON = 2;
 const MAX_AVATAR_BYTES = 1 * 1024 * 1024; // 1 MB
 
 const profileLoginRequiredEl = document.getElementById("profile-login-required");
+const profileTabsWrapEl = document.getElementById("profile-tabs-wrap");
+const profileTabButtons = document.querySelectorAll(".profile-tab-btn");
+const profileTabPanels = document.querySelectorAll(".profile-tab-panel");
 const profileContentEl = document.getElementById("profile-content");
 const profileAvatarEl = document.getElementById("profile-avatar");
 const profileAvatarEditBtn = document.getElementById("profile-avatar-edit-btn");
@@ -131,12 +134,14 @@ function renderAvatar(user, profile) {
 
 firebase.auth().onAuthStateChanged((user) => {
   profileLoginRequiredEl.hidden = !!user;
+  profileTabsWrapEl.hidden = !user;
   profileContentEl.hidden = !user;
   profileLogoutBtn.hidden = !user;
   profileSwitchAccountBtn.hidden = !user;
   if (!user) {
     currentUid = null;
     updateWinsChip();
+    renderMyTournaments();
     return;
   }
 
@@ -152,6 +157,17 @@ firebase.auth().onAuthStateChanged((user) => {
     isEditingNickname = false;
     applyLockState(profile);
     updateWinsChip();
+    renderMyTournaments();
+  });
+});
+
+profileTabButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    profileTabButtons.forEach((b) => b.classList.toggle("is-active", b === btn));
+    const targetTab = btn.dataset.tab;
+    profileTabPanels.forEach((panel) => {
+      panel.hidden = panel.dataset.tabPanel !== targetTab;
+    });
   });
 });
 
@@ -184,6 +200,7 @@ profileSaveBtn.addEventListener("click", () => {
       isEditingNickname = false;
       applyLockState(currentProfile);
       updateWinsChip();
+      renderMyTournaments();
       profileSavedHintEl.hidden = false;
       setTimeout(() => {
         profileSavedHintEl.hidden = true;
@@ -254,3 +271,97 @@ profileAvatarInput.addEventListener("change", () => {
       profileAvatarInput.value = "";
     });
 });
+
+/* ---------- Mis torneos (solicitudes de inscripción, solo esta temporada) ---------- */
+
+const myTournamentsTableEl = document.getElementById("my-tournaments-table");
+const myTournamentsBodyEl = document.getElementById("my-tournaments-body");
+const myTournamentsEmptyEl = document.getElementById("my-tournaments-empty");
+const myTournamentsPaginationEl = document.getElementById("my-tournaments-pagination");
+const myTournamentsPrevBtn = document.getElementById("my-tournaments-prev-btn");
+const myTournamentsNextBtn = document.getElementById("my-tournaments-next-btn");
+const myTournamentsPageLabelEl = document.getElementById("my-tournaments-page-label");
+
+const MY_TOURNAMENTS_PAGE_SIZE = 5;
+const SOLICITUD_STATUS_LABELS = { solicitado: "Solicitado", inscrito: "Inscrito" };
+
+let allSolicitudes = [];
+let myTournamentsPage = 0;
+
+function formatSolicitudDate(ts) {
+  if (!ts) return "—";
+  const dateStr = new Date(ts).toLocaleDateString("es-EC", { day: "numeric", month: "short", year: "numeric" });
+  return dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+}
+
+// Las solicitudes no se borran realmente al cambiar de temporada — se
+// filtran por fecha igual que el chip de victorias, así que "desaparecen"
+// del lado del jugador sin tocar el dato archivado.
+function renderMyTournaments() {
+  if (!currentUid) {
+    myTournamentsTableEl.hidden = true;
+    myTournamentsPaginationEl.hidden = true;
+    myTournamentsEmptyEl.hidden = true;
+    return;
+  }
+
+  const name = (currentProfile.nickname || currentDisplayName || "").trim().toLowerCase();
+  const seasonIdx = displaySeasonIndex();
+  const mine = allSolicitudes
+    .filter((s) => (s.name || "").trim().toLowerCase() === name)
+    .filter((s) => s.requestedAt && seasonIndexForDate(new Date(s.requestedAt)) === seasonIdx)
+    .sort((a, b) => (b.requestedAt || 0) - (a.requestedAt || 0));
+
+  if (!mine.length) {
+    myTournamentsTableEl.hidden = true;
+    myTournamentsPaginationEl.hidden = true;
+    myTournamentsEmptyEl.hidden = false;
+    return;
+  }
+
+  myTournamentsTableEl.hidden = false;
+  myTournamentsEmptyEl.hidden = true;
+
+  const totalPages = Math.ceil(mine.length / MY_TOURNAMENTS_PAGE_SIZE);
+  if (myTournamentsPage >= totalPages) myTournamentsPage = totalPages - 1;
+  if (myTournamentsPage < 0) myTournamentsPage = 0;
+
+  const pageStart = myTournamentsPage * MY_TOURNAMENTS_PAGE_SIZE;
+  const pageItems = mine.slice(pageStart, pageStart + MY_TOURNAMENTS_PAGE_SIZE);
+
+  myTournamentsBodyEl.innerHTML = pageItems
+    .map(
+      (s) => `
+      <tr>
+        <td data-label="Torneo">${s.tier || "—"}</td>
+        <td data-label="Modalidad">${s.modalidad || "—"}</td>
+        <td data-label="Valor">${s.price || "—"}</td>
+        <td data-label="Estado">${SOLICITUD_STATUS_LABELS[s.status] || s.status || "—"}</td>
+        <td data-label="Fecha">${formatSolicitudDate(s.requestedAt)}</td>
+      </tr>
+    `
+    )
+    .join("");
+
+  myTournamentsPaginationEl.hidden = totalPages <= 1;
+  myTournamentsPageLabelEl.textContent = `Página ${myTournamentsPage + 1} de ${totalPages}`;
+  myTournamentsPrevBtn.disabled = myTournamentsPage === 0;
+  myTournamentsNextBtn.disabled = myTournamentsPage >= totalPages - 1;
+}
+
+myTournamentsPrevBtn.addEventListener("click", () => {
+  if (myTournamentsPage <= 0) return;
+  myTournamentsPage -= 1;
+  renderMyTournaments();
+});
+myTournamentsNextBtn.addEventListener("click", () => {
+  myTournamentsPage += 1;
+  renderMyTournaments();
+});
+
+if (typeof fbSubscribeSolicitudes === "function") {
+  fbSubscribeSolicitudes((list) => {
+    allSolicitudes = list;
+    renderMyTournaments();
+  });
+}

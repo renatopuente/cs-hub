@@ -100,6 +100,11 @@ signupCards.forEach((card) => {
     if (!selected || !nickname || !nickname.trim()) return;
     const price = card.querySelector(".fee-price").textContent.trim().replace(/\s+/g, " ");
 
+    // Amistoso no cuesta nada, así que no hay pago que coordinar por
+    // WhatsApp: la inscripción queda confirmada de una, sin pasar por
+    // "solicitado".
+    const isDirect = tier === "Amistoso";
+
     if (typeof submitSolicitud === "function") {
       submitSolicitud({
         name: nickname,
@@ -107,9 +112,14 @@ signupCards.forEach((card) => {
         modalidad: selected.value,
         price,
         requestedAt: Date.now(),
-        status: "solicitado",
+        status: isDirect ? "inscrito" : "solicitado",
         photoURL: playerPhotoURL,
       });
+    }
+
+    if (isDirect) {
+      alert(`¡Listo! Quedaste inscrito directo al torneo Amistoso en modalidad ${selected.value}, sin costo. Nos vemos en la cancha 🐙`);
+      return;
     }
 
     const message = `Hola Pulpos 👋, quiero inscribirme al torneo *${tier}* 🏆 en la modalidad *${selected.value}* 🎮, valor *${price}* 💵.\n\nMi Nickname es: *${nickname}*`;

@@ -130,61 +130,101 @@
       </button>
     </div>
 
-    <div id="profile-content" class="glass-card about-card" style="max-width: 480px; margin: 0 auto 40px; text-align: center; position: relative;" hidden>
-      <span id="profile-wins-chip" class="profile-wins-chip" hidden>
-        <i class="fa-solid fa-trophy"></i> <span id="profile-wins-count">0</span> victorias
-      </span>
-      <div class="profile-avatar-wrap">
-        <img id="profile-avatar" class="player-avatar" alt="" />
-        <button type="button" id="profile-avatar-edit-btn" class="profile-avatar-edit-btn" title="Cambiar foto de perfil">
-          <i class="fa-solid fa-camera"></i>
-        </button>
-        <input type="file" id="profile-avatar-input" accept="image/jpeg,image/png" hidden />
+    <div id="profile-tabs-wrap" hidden>
+      <div class="profile-tabs" role="tablist">
+        <button type="button" class="profile-tab-btn is-active" data-tab="inicio" role="tab">Inicio</button>
+        <button type="button" class="profile-tab-btn" data-tab="mis-torneos" role="tab">Mis torneos</button>
       </div>
-      <p class="section-sub" style="font-size: 0.7rem; margin: 6px 0 0;">JPG o PNG, máx. 1 MB · recomendado 512×512 px, cuadrada</p>
-      <p id="profile-avatar-error" class="section-sub" style="margin: 4px 0 0; color: #ffb020;" hidden></p>
 
-      <p class="section-sub" id="profile-google-name" style="margin: 18px 0 24px;"></p>
+      <div class="profile-tab-panel" data-tab-panel="inicio">
+        <div id="profile-content" class="glass-card about-card" style="max-width: 480px; margin: 0 auto 40px; text-align: center; position: relative;">
+          <span id="profile-wins-chip" class="profile-wins-chip" hidden>
+            <i class="fa-solid fa-trophy"></i> <span id="profile-wins-count">0</span> victorias
+          </span>
+          <div class="profile-avatar-wrap">
+            <img id="profile-avatar" class="player-avatar" alt="" />
+            <button type="button" id="profile-avatar-edit-btn" class="profile-avatar-edit-btn" title="Cambiar foto de perfil">
+              <i class="fa-solid fa-camera"></i>
+            </button>
+            <input type="file" id="profile-avatar-input" accept="image/jpeg,image/png" hidden />
+          </div>
+          <p class="section-sub" style="font-size: 0.7rem; margin: 6px 0 0;">JPG o PNG, máx. 1 MB · recomendado 512×512 px, cuadrada</p>
+          <p id="profile-avatar-error" class="section-sub" style="margin: 4px 0 0; color: #ffb020;" hidden></p>
 
-      <div class="field" style="text-align: left;">
-        <label>Nickname</label>
-        <div class="profile-nickname-row">
-          <input type="text" id="profile-nickname-input" placeholder="Nombre del jugador" readonly />
-          <button type="button" id="profile-nickname-edit-btn" class="profile-nickname-edit-btn" title="Editar Nickname">
-            <i class="fa-solid fa-pen"></i>
-          </button>
+          <p class="section-sub" id="profile-google-name" style="margin: 18px 0 24px;"></p>
+
+          <div class="field" style="text-align: left;">
+            <label>Nickname</label>
+            <div class="profile-nickname-row">
+              <input type="text" id="profile-nickname-input" placeholder="Nombre del jugador" readonly />
+              <button type="button" id="profile-nickname-edit-btn" class="profile-nickname-edit-btn" title="Editar Nickname">
+                <i class="fa-solid fa-pen"></i>
+              </button>
+            </div>
+            <p id="profile-edit-hint" class="section-sub" style="margin: 8px 0 0; font-size: 0.78rem;" hidden>
+              <i class="fa-solid fa-circle-info"></i> <span id="profile-edit-hint-text"></span>
+            </p>
+          </div>
+
+          <p id="profile-locked-hint" class="section-sub" style="margin: 10px 0 0; color: #ffb020;" hidden>
+            <i class="fa-solid fa-triangle-exclamation"></i> <span id="profile-locked-text"></span>
+          </p>
+
+          <div id="profile-nickname-actions" style="display: flex; gap: 10px; margin-top: 14px;" hidden>
+            <button type="button" id="profile-save-btn" class="btn btn-primary" style="flex: 1;">
+              <i class="fa-solid fa-floppy-disk"></i> Guardar
+            </button>
+            <button type="button" id="profile-cancel-btn" class="btn btn-outline" style="flex: 1;">
+              <i class="fa-solid fa-xmark"></i> Cancelar
+            </button>
+          </div>
+          <p id="profile-saved-hint" class="section-sub" style="margin-top: 10px; color: var(--accent-2);" hidden>
+            <i class="fa-solid fa-circle-check"></i> Nickname guardado.
+          </p>
         </div>
-        <p id="profile-edit-hint" class="section-sub" style="margin: 8px 0 0; font-size: 0.78rem;" hidden>
-          <i class="fa-solid fa-circle-info"></i> <span id="profile-edit-hint-text"></span>
-        </p>
       </div>
 
-      <p id="profile-locked-hint" class="section-sub" style="margin: 10px 0 0; color: #ffb020;" hidden>
-        <i class="fa-solid fa-triangle-exclamation"></i> <span id="profile-locked-text"></span>
-      </p>
+      <div class="profile-tab-panel" data-tab-panel="mis-torneos" hidden>
+        <div class="glass-card" style="max-width: 720px; margin: 0 auto 40px;">
+          <h2 class="section-title">Mis torneos</h2>
+          <p class="section-sub">Torneos a los que te has inscrito esta temporada — se reinicia con cada temporada nueva.</p>
+          <div class="neo-surface table-scroll">
+            <table class="standings-table" id="my-tournaments-table">
+              <thead>
+                <tr>
+                  <th><i class="fa-solid fa-trophy"></i> Torneo</th>
+                  <th><i class="fa-solid fa-gamepad"></i> Modalidad</th>
+                  <th><i class="fa-solid fa-ticket"></i> Valor</th>
+                  <th><i class="fa-solid fa-circle-check"></i> Estado</th>
+                  <th><i class="fa-regular fa-calendar"></i> Fecha</th>
+                </tr>
+              </thead>
+              <tbody id="my-tournaments-body"></tbody>
+            </table>
+          </div>
+          <div class="empty-hint" id="my-tournaments-empty" hidden>Todavía no te has inscrito a ningún torneo esta temporada.</div>
+          <div class="ranking-pagination" id="my-tournaments-pagination" hidden>
+            <button type="button" id="my-tournaments-prev-btn" class="ranking-page-btn" aria-label="Página anterior">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <span id="my-tournaments-page-label" class="ranking-page-label"></span>
+            <button type="button" id="my-tournaments-next-btn" class="ranking-page-btn" aria-label="Página siguiente">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
 
-      <div id="profile-nickname-actions" style="display: flex; gap: 10px; margin-top: 14px;" hidden>
-        <button type="button" id="profile-save-btn" class="btn btn-primary" style="flex: 1;">
-          <i class="fa-solid fa-floppy-disk"></i> Guardar
+      <div style="display:flex; flex-direction:column; align-items:center; gap: 16px; margin: 40px 0 0;">
+        <a href="inscripcion.html" class="btn btn-primary btn-block"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
+        <a href="ranking.html" class="btn btn-outline btn-block"><i class="fa-solid fa-ranking-star"></i> Ver tabla de posiciones</a>
+        <button type="button" id="profile-switch-account-btn" class="btn btn-outline btn-block" hidden>
+          <i class="fa-solid fa-right-left"></i> Cambiar de cuenta
         </button>
-        <button type="button" id="profile-cancel-btn" class="btn btn-outline" style="flex: 1;">
-          <i class="fa-solid fa-xmark"></i> Cancelar
+        <button type="button" id="profile-logout-btn" class="btn btn-outline btn-block" hidden>
+          <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
         </button>
       </div>
-      <p id="profile-saved-hint" class="section-sub" style="margin-top: 10px; color: var(--accent-2);" hidden>
-        <i class="fa-solid fa-circle-check"></i> Nickname guardado.
-      </p>
-    </div>
-
-    <div style="display:flex; flex-direction:column; align-items:center; gap: 16px; margin: 40px 0 0;">
-      <a href="inscripcion.html" class="btn btn-primary btn-block"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
-      <a href="ranking.html" class="btn btn-outline btn-block"><i class="fa-solid fa-ranking-star"></i> Ver tabla de posiciones</a>
-      <button type="button" id="profile-switch-account-btn" class="btn btn-outline btn-block" hidden>
-        <i class="fa-solid fa-right-left"></i> Cambiar de cuenta
-      </button>
-      <button type="button" id="profile-logout-btn" class="btn btn-outline btn-block" hidden>
-        <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
-      </button>
     </div>
 
     <div style="display:flex; flex-direction:column; align-items:center; gap: 6px; margin-top: 24px;">
