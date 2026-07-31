@@ -401,9 +401,12 @@ function renderRanking() {
               <button class="share-btn" data-share-id="${i}" title="Compartir">
                 <i class="fa-solid fa-share-nodes"></i>
               </button>
-              <button class="podium-flip-btn" data-flip-id="${i}" title="Conocer mi premio">
-                <i class="fa-solid fa-rotate"></i>
-              </button>
+              <div class="podium-flip-trigger-row">
+                <span class="podium-flip-label" data-flip-id="${i}">Mira tu premio</span>
+                <button class="podium-flip-btn" data-flip-id="${i}" title="Conocer mi premio">
+                  <i class="fa-solid fa-rotate"></i>
+                </button>
+              </div>
               <img class="podium-avatar" src="${avatarForName(r.name)}" alt="" />
               <div class="icon">${PODIUM_ICONS[i]}</div>
               <span class="podium-rank-row">

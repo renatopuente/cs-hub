@@ -2325,10 +2325,28 @@ input[type="text"]:focus, select:focus {
    flip-cards del home — el chroma visual vive en front/back, el wrapper
    exterior queda transparente, asi la card entera gira, no solo el
    contenido). El icono junto al de compartir dispara el flip. */
-.podium-flip-btn {
+/* Fila del frente con el trigger de flip: el link de texto vive a la
+   izquierda del icono, ambos disparan el mismo flip. */
+.podium-flip-trigger-row {
   position: absolute;
   top: 78px;
   right: 64px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.podium-flip-label {
+  color: var(--accent-2);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.podium-flip-label:hover { color: var(--accent); }
+
+.podium-flip-btn {
   border: 1px solid var(--glass-border);
   background: var(--glass-bg);
   color: var(--text-dim);
@@ -2342,6 +2360,7 @@ input[type="text"]:focus, select:focus {
   justify-content: center;
   transition: color 0.15s ease, background 0.15s ease;
 }
+.podium-flip-trigger-row .podium-flip-btn { position: static; }
 .podium-flip-btn:hover { color: var(--accent-2); background: var(--glass-bg-hover); }
 
 .glass-card.podium-card.flip-card {
