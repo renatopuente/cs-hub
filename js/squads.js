@@ -28,6 +28,23 @@ const startTournamentBtn = document.getElementById("start-tournament-btn");
 
 let currentTournament = null;
 
+// Los jugadores se eligen de la lista de inscritos (confirmados en el
+// dashboard de inscripciones), no se escriben a mano.
+let inscritosNicknames = [];
+if (typeof fbSubscribeSolicitudes === "function") {
+  fbSubscribeSolicitudes((list) => {
+    inscritosNicknames = list
+      .filter((item) => item.status === "inscrito" && item.name)
+      .map((item) => item.name)
+      .filter((name, idx, arr) => arr.indexOf(name) === idx)
+      .sort((a, b) => a.localeCompare(b));
+  });
+}
+
+function playerSelectOptionsHtml() {
+  return inscritosNicknames.map((n) => `<option value="${n}">${n}</option>`).join("");
+}
+
 function buildPlayerInputs(numTeams, assignMode) {
   playerInputsEl.innerHTML = "";
 
@@ -41,7 +58,10 @@ function buildPlayerInputs(numTeams, assignMode) {
         fieldsHtml += `
           <div class="field">
             <label>Jugador ${p}</label>
-            <input type="text" data-team="${t}" name="team-${t}-player-${p}" required />
+            <select data-team="${t}" name="team-${t}-player-${p}" required>
+              <option value="" disabled selected>Selecciona un jugador inscrito</option>
+              ${playerSelectOptionsHtml()}
+            </select>
           </div>
         `;
       }
@@ -55,7 +75,10 @@ function buildPlayerInputs(numTeams, assignMode) {
       wrap.className = "field";
       wrap.innerHTML = `
         <label>Jugador ${i}</label>
-        <input type="text" name="player-${i}" required />
+        <select name="player-${i}" required>
+          <option value="" disabled selected>Selecciona un jugador inscrito</option>
+          ${playerSelectOptionsHtml()}
+        </select>
       `;
       playerInputsEl.appendChild(wrap);
     }
@@ -67,12 +90,12 @@ function collectTeams(numTeams, assignMode) {
     const groups = [];
     for (let t = 0; t < numTeams; t++) {
       groups.push(
-        Array.from(playerInputsEl.querySelectorAll(`input[data-team="${t}"]`)).map((i) => i.value)
+        Array.from(playerInputsEl.querySelectorAll(`select[data-team="${t}"]`)).map((s) => s.value)
       );
     }
     return buildTeamsManual(groups);
   }
-  const names = Array.from(playerInputsEl.querySelectorAll("input")).map((i) => i.value);
+  const names = Array.from(playerInputsEl.querySelectorAll("select")).map((s) => s.value);
   return buildTeams(names, numTeams, TEAM_SIZE);
 }
 

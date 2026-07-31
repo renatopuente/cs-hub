@@ -21,6 +21,23 @@ const startTournamentBtn = document.getElementById("start-tournament-btn");
 
 let currentTournament = null;
 
+// Los jugadores se eligen de la lista de inscritos (confirmados en el
+// dashboard de inscripciones), no se escriben a mano.
+let inscritosNicknames = [];
+if (typeof fbSubscribeSolicitudes === "function") {
+  fbSubscribeSolicitudes((list) => {
+    inscritosNicknames = list
+      .filter((item) => item.status === "inscrito" && item.name)
+      .map((item) => item.name)
+      .filter((name, idx, arr) => arr.indexOf(name) === idx)
+      .sort((a, b) => a.localeCompare(b));
+  });
+}
+
+function playerSelectOptionsHtml() {
+  return inscritosNicknames.map((n) => `<option value="${n}">${n}</option>`).join("");
+}
+
 // Duelos is always exactly 2 players, auto-assigned, best of 3 or 5.
 function buildPlayerInputs() {
   playerInputsEl.innerHTML = "";
@@ -30,14 +47,17 @@ function buildPlayerInputs() {
     wrap.className = "field";
     wrap.innerHTML = `
       <label>Jugador ${i}</label>
-      <input type="text" name="player-${i}" required />
+      <select name="player-${i}" required>
+        <option value="" disabled selected>Selecciona un jugador inscrito</option>
+        ${playerSelectOptionsHtml()}
+      </select>
     `;
     playerInputsEl.appendChild(wrap);
   }
 }
 
 function collectTeams() {
-  const names = Array.from(playerInputsEl.querySelectorAll("input")).map((i) => i.value);
+  const names = Array.from(playerInputsEl.querySelectorAll("select")).map((s) => s.value);
   return buildTeams(names, 2, 1);
 }
 
