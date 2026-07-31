@@ -254,12 +254,14 @@ a { color: inherit; }
    móvil. El botón y el perfil nunca se muestran los dos a la vez: player-
    auth.js alterna [hidden] entre ambos según haya sesión o no. */
 .player-login-btn { white-space: nowrap; }
+.player-login-btn[hidden] { display: none; }
 
 .player-profile {
   display: flex;
   align-items: center;
   gap: 8px;
 }
+.player-profile[hidden] { display: none; }
 
 .player-avatar {
   width: 28px;
