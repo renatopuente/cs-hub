@@ -116,26 +116,27 @@
   <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div>
 
   <div class="page page-offset-navbar page-offset-footer">
-    <div class="hero-banner">
-      <picture>
-        <source media="(max-width: 499px)" srcset="img/banners/octobannermobile.webp" />
-        <img src="img/banners/octobanner.webp" alt="El Octágono · Torneos de Counter-Strike 2" />
-      </picture>
-    </div>
-
     <div class="season-banner-wrap">
-      <img class="season-banner-img" src="img/banners/bannerlite.webp" alt="Temporada actual" />
+      <img id="season-lore-hero-img" class="season-banner-img" src="img/banners/bannerlite.webp" alt="Temporada actual" />
     </div>
 
     <div class="hero">
-      <p class="section-sub" style="margin: 0;">Temporada actual</p>
+      <p class="section-sub lore-eyebrow" style="margin: 0;">Temporada actual · Solo para mayores de edad</p>
       <h1 id="season-lore-title">—</h1>
-      <p id="season-lore-tagline"></p>
+      <p id="season-lore-tagline" class="lore-tagline"></p>
     </div>
 
-    <div class="glass-card about-card" style="max-width: 760px; margin: 0 auto 40px; text-align: left;">
-      <h2 class="section-title" style="text-align: center; margin-bottom: 16px;"><i class="fa-solid fa-book-skull"></i> La leyenda</h2>
-      <div id="season-lore-story"></div>
+    <div class="lore-comic">
+      <div class="lore-issue-tag"><i class="fa-solid fa-book-skull"></i> La leyenda · Parte I</div>
+      <div id="season-lore-part1" class="lore-panels"></div>
+
+      <div id="season-lore-divider" class="lore-divider">
+        <img src="img/banners/bannerlite.webp" alt="" />
+        <span class="lore-divider-label">Tres meses después</span>
+      </div>
+
+      <div class="lore-issue-tag"><i class="fa-solid fa-book-skull"></i> La leyenda · Parte II</div>
+      <div id="season-lore-part2" class="lore-panels"></div>
     </div>
 
     <div style="display:flex; flex-direction:column; align-items:center; gap: 16px; margin: 40px 0 0;">
