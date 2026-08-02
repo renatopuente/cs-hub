@@ -13,7 +13,7 @@
 // cada proveedor (pueden ser distintos), no solo uno.
 const ADMINS = {
   "XxFQBlmtI2ResAdKWAgoGPCDwqO2": "Renato",
-  // "<uid-nuevo-admin>": "<nombre>",
+  "7ejpez1CYFeRefY9xMMQrSZfJGC2": "Nark",
 };
 
 function isAdminUid(uid) {
