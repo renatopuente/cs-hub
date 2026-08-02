@@ -363,6 +363,56 @@ scheduleClearBtn.addEventListener("click", () => {
   }
 });
 
+/* ---------- Torneos armados entre jugadores (Comunidad → Fase 4) ---------- */
+
+const playerLobbiesSection = document.getElementById("player-lobbies-section");
+const playerLobbiesListEl = document.getElementById("player-lobbies-list");
+
+function renderPlayerLobbies(list) {
+  if (!playerLobbiesSection) return;
+  const requested = (list || []).filter((l) => l.status === "requested");
+
+  if (!requested.length) {
+    playerLobbiesSection.hidden = true;
+    playerLobbiesListEl.innerHTML = "";
+    return;
+  }
+
+  playerLobbiesSection.hidden = false;
+  playerLobbiesListEl.innerHTML = requested
+    .map(
+      (lobby) => `
+      <div class="glass-card" style="margin-bottom: 12px;">
+        <p style="margin:0 0 8px; font-weight:700;">Mejor de ${lobby.bestOf} · creado por ${lobby.creatorNickname || "Jugador"}</p>
+        <p class="section-sub" style="margin:0 0 12px;">${lobby.teams.map((t) => t.players.map((p) => p.nickname).join(" & ")).join(" vs ")}</p>
+        <button type="button" class="btn btn-primary btn-sm" data-start-lobby="${lobby.id}">
+          <i class="fa-solid fa-play"></i> Iniciar este pug
+        </button>
+      </div>
+    `
+    )
+    .join("");
+
+  playerLobbiesListEl.querySelectorAll("[data-start-lobby]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const lobby = requested.find((l) => l.id === btn.dataset.startLobby);
+      if (!lobby) return;
+      if (currentTournament && currentTournament.teams && !currentTournament.finalizedAt) {
+        alert("Ya tienes un pug en curso. Finalízalo antes de iniciar este.");
+        return;
+      }
+      const teams = lobby.teams.map((t) => ({ id: t.id, name: t.name, color: t.color, players: t.players.map((p) => p.nickname) }));
+      const tournament = createTournament(teams, lobby.bestOf, "Gratuito");
+      fbUpdateLobbyStatus(MODE, lobby.id, "converted");
+      render(tournament);
+    });
+  });
+}
+
+if (typeof fbSubscribeLobbies === "function") {
+  fbSubscribeLobbies(MODE, renderPlayerLobbies);
+}
+
 (function init() {
   fbLoadOnce(MODE, (existing) => {
     if (existing && existing.finalizedAt) {

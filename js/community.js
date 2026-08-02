@@ -17,6 +17,7 @@ const communityFriendsPaginationEl = document.getElementById("community-friends-
 const communityFriendsPrevBtn = document.getElementById("community-friends-prev-btn");
 const communityFriendsNextBtn = document.getElementById("community-friends-next-btn");
 const communityFriendsPageLabelEl = document.getElementById("community-friends-page-label");
+const communityTabBadgeEl = document.getElementById("comunidad-tab-badge");
 
 const lobbyModeButtons = document.querySelectorAll(".lobby-mode-btn");
 const lobbyCreateForm = document.getElementById("lobby-create-form");
@@ -131,6 +132,21 @@ if (communitySearchInput) {
   communitySearchInput.addEventListener("input", renderSearchResults);
 }
 
+/* ---------- Badge de notificaciones en la pestaña ---------- */
+
+// Cuenta solicitudes de amistad recibidas + lobbies propios ya llenos
+// que todavía no se le pidieron al admin — ambas cosas requieren que el
+// jugador haga algo, así que suman al mismo contador.
+function updateCommunityBadge() {
+  if (!communityTabBadgeEl) return;
+  const myFullLobbies = Object.values(lobbiesByMode)
+    .flat()
+    .filter((l) => l.status === "full" && myUid && l.creatorUid === myUid).length;
+  const total = incomingRequests.length + myFullLobbies;
+  communityTabBadgeEl.textContent = total;
+  communityTabBadgeEl.hidden = total === 0;
+}
+
 /* ---------- Solicitudes de amistad ---------- */
 
 function watchFriendRequests() {
@@ -139,6 +155,7 @@ function watchFriendRequests() {
     incomingRequests = list;
     renderFriendRequests();
     renderSearchResults();
+    updateCommunityBadge();
   });
   fbSubscribeSentFriendRequests(myUid, (uids) => {
     sentRequestUids = uids;
@@ -265,6 +282,7 @@ firebase.auth().onAuthStateChanged((user) => {
     friendsList = [];
     renderFriendRequests();
     renderFriendsList();
+    updateCommunityBadge();
   }
 });
 
@@ -344,6 +362,7 @@ function watchLobbies() {
     fbSubscribeLobbies(mode, (list) => {
       lobbiesByMode[mode] = list;
       if (mode === currentLobbyMode) renderLobbyList();
+      updateCommunityBadge();
     });
   });
 }
@@ -370,6 +389,26 @@ function renderLobbyTeamHtml(lobby, teamIdx) {
     })
     .join("");
   return `<div class="lobby-team"><div class="lobby-team-name" style="color:${team.color}">${team.name}</div><div class="lobby-team-slots">${slotsHtml}</div></div>`;
+}
+
+// Cuando se llenan los cupos, solo quien creó el lobby puede avisarle al
+// admin que ya está listo para arrancar de verdad — el admin lo recoge
+// desde su propio panel (Fase 4).
+function lobbyActionHtml(lobby) {
+  if (lobby.status === "requested") {
+    return `<p class="lobby-status-note"><i class="fa-solid fa-hourglass-half"></i> Solicitado al admin, esperando que lo inicie.</p>`;
+  }
+  if (lobby.status === "full" && myUid && lobby.creatorUid === myUid) {
+    return `
+      <button type="button" class="btn btn-primary btn-block lobby-request-admin-btn" data-request-lobby="${lobby.id}" data-request-mode="${lobby.mode}">
+        <i class="fa-solid fa-paper-plane"></i> Solicitar inicio al admin
+      </button>
+    `;
+  }
+  if (lobby.status === "full") {
+    return `<p class="lobby-status-note"><i class="fa-solid fa-circle-check"></i> Cupos completos, esperando que el creador lo solicite.</p>`;
+  }
+  return "";
 }
 
 function renderLobbyList() {
@@ -404,10 +443,18 @@ function renderLobbyList() {
           <div class="lobby-vs">VS</div>
           ${renderLobbyTeamHtml(lobby, 1)}
         </div>
+        ${lobbyActionHtml(lobby)}
       </div>
     `
     )
     .join("");
+
+  lobbyListEl.querySelectorAll("[data-request-lobby]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      btn.disabled = true;
+      fbUpdateLobbyStatus(btn.dataset.requestMode, btn.dataset.requestLobby, "requested");
+    });
+  });
 
   lobbyListEl.querySelectorAll("[data-join-lobby]").forEach((btn) => {
     btn.addEventListener("click", () => {

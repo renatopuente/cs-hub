@@ -724,6 +724,60 @@ scheduleClearBtn.addEventListener("click", () => {
   }
 });
 
+/* ---------- Torneos armados entre jugadores (Comunidad → Fase 4) ---------- */
+// Los lobbies de Duos siempre son de 2 equipos, así que se arman con el
+// mismo branch "series" que ya usa createTournament — igual que un Duos
+// 1v1 creado a mano, la serie queda fija en mejor de 3 sin importar lo
+// que haya elegido el jugador al crear el lobby.
+
+const playerLobbiesSection = document.getElementById("player-lobbies-section");
+const playerLobbiesListEl = document.getElementById("player-lobbies-list");
+
+function renderPlayerLobbies(list) {
+  if (!playerLobbiesSection) return;
+  const requested = (list || []).filter((l) => l.status === "requested");
+
+  if (!requested.length) {
+    playerLobbiesSection.hidden = true;
+    playerLobbiesListEl.innerHTML = "";
+    return;
+  }
+
+  playerLobbiesSection.hidden = false;
+  playerLobbiesListEl.innerHTML = requested
+    .map(
+      (lobby) => `
+      <div class="glass-card" style="margin-bottom: 12px;">
+        <p style="margin:0 0 8px; font-weight:700;">Mejor de 3 · creado por ${lobby.creatorNickname || "Jugador"}</p>
+        <p class="section-sub" style="margin:0 0 12px;">${lobby.teams.map((t) => t.players.map((p) => p.nickname).join(" & ")).join(" vs ")}</p>
+        <button type="button" class="btn btn-primary btn-sm" data-start-lobby="${lobby.id}">
+          <i class="fa-solid fa-play"></i> Iniciar este torneo
+        </button>
+      </div>
+    `
+    )
+    .join("");
+
+  playerLobbiesListEl.querySelectorAll("[data-start-lobby]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const lobby = requested.find((l) => l.id === btn.dataset.startLobby);
+      if (!lobby) return;
+      if (currentTournament && currentTournament.teams && !currentTournament.finalizedAt) {
+        alert("Ya tienes un torneo en curso. Finalízalo antes de iniciar este.");
+        return;
+      }
+      const teams = lobby.teams.map((t) => ({ id: t.id, name: t.name, color: t.color, players: t.players.map((p) => p.nickname) }));
+      const tournament = createTournament(teams, 2, "series", "Gratuito");
+      fbUpdateLobbyStatus(MODE, lobby.id, "converted");
+      render(tournament);
+    });
+  });
+}
+
+if (typeof fbSubscribeLobbies === "function") {
+  fbSubscribeLobbies(MODE, renderPlayerLobbies);
+}
+
 (function init() {
   fbLoadOnce(MODE, (existing) => {
     if (existing && existing.finalizedAt) {
