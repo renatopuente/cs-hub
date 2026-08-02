@@ -156,24 +156,32 @@
     </div>
 
     <section id="series-section" hidden>
-      <div id="tournament-finished-banner" class="tournament-finished-banner" hidden></div>
-
       <div id="neo-bracket-screen" class="neo-bracket-screen"></div>
 
       <div id="champion-banner"></div>
       <p class="tournament-meta" id="tournament-meta"></p>
 
-      <div class="glass-card" style="margin-bottom: 20px;">
-        <h2 class="section-title">Equipos</h2>
-        <div class="bento-grid two-col" id="teams-list"></div>
+      <button type="button" id="finalized-next-btn" class="btn btn-primary btn-block" hidden style="margin-bottom: 20px;">
+        Ver estadísticas <i class="fa-solid fa-arrow-right"></i>
+      </button>
+
+      <div id="finalized-detail-wrap">
+        <div class="glass-card" style="margin-bottom: 20px;">
+          <h2 class="section-title">Equipos</h2>
+          <div class="bento-grid two-col" id="teams-list"></div>
+        </div>
+
+        <div class="glass-card">
+          <h2 class="section-title">Marcador de la serie</h2>
+          <p class="section-sub" id="series-format-label"></p>
+          <div class="neo-surface series-score" id="series-score"></div>
+          <div class="game-log" id="game-log"></div>
+        </div>
       </div>
 
-      <div class="glass-card">
-        <h2 class="section-title">Marcador de la serie</h2>
-        <p class="section-sub" id="series-format-label"></p>
-        <div class="neo-surface series-score" id="series-score"></div>
-        <div class="game-log" id="game-log"></div>
-      </div>
+      <button type="button" id="finalized-close-btn" class="btn btn-outline btn-block" hidden style="margin-top: 20px;">
+        <i class="fa-solid fa-xmark"></i> Cerrar
+      </button>
     </section>
 
     <div style="display:flex; flex-direction:column; align-items:center; gap: 16px; margin: 40px 0 0;">

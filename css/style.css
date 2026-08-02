@@ -1529,39 +1529,6 @@ input[type="text"]:focus, select:focus {
   color: var(--text-dim);
 }
 
-/* ---------- Torneo finalizado (notificación global, estado warning) ---------- */
-
-.tournament-finished-banner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 8px 10px;
-  text-align: center;
-  background: rgba(255, 176, 32, 0.14);
-  border: 1px solid rgba(255, 176, 32, 0.45);
-  color: #ffb020;
-  font-weight: 600;
-  font-size: 0.9rem;
-  padding: 12px 20px;
-  border-radius: var(--radius-sm);
-  margin-bottom: 20px;
-}
-
-.tournament-finished-banner i { font-size: 1rem; }
-
-.tournament-finished-banner .tfb-timer {
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-}
-
-.tournament-finished-banner a {
-  color: #ffb020;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  font-weight: 700;
-}
-
 .game-log {
   display: flex;
   flex-direction: column;

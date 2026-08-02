@@ -8,7 +8,6 @@ const countdownDateEl = document.getElementById("countdown-date");
 const countdownClockEl = document.getElementById("countdown-clock");
 const countdownTeamsEl = document.getElementById("countdown-teams");
 const seriesSection = document.getElementById("series-section");
-const tournamentFinishedBannerEl = document.getElementById("tournament-finished-banner");
 const neoBracketScreenEl = document.getElementById("neo-bracket-screen");
 const teamsListEl = document.getElementById("teams-list");
 const seriesScoreEl = document.getElementById("series-score");
@@ -18,8 +17,9 @@ const championBannerEl = document.getElementById("champion-banner");
 const tournamentMetaEl = document.getElementById("tournament-meta");
 const seasonBannerImgEl = document.getElementById("season-banner-img");
 const seasonHeadingNameEl = document.getElementById("season-heading-name");
-
-const FIVE_MIN_MS = 5 * 60 * 1000;
+const finalizedNextBtn = document.getElementById("finalized-next-btn");
+const finalizedCloseBtn = document.getElementById("finalized-close-btn");
+const finalizedDetailWrapEl = document.getElementById("finalized-detail-wrap");
 
 // Estado "por defecto" del banner de temporada (arte propio o texto), tal
 // como lo dejó season-heading.js antes de que este archivo cargue — para
@@ -181,50 +181,52 @@ function startCountdown(tournament) {
   countdownIntervalId = setInterval(tick, 1000);
 }
 
-/* ---------- Banner "Torneo finalizado" (notificación warning + timer) ---------- */
+/* ---------- Resultado final: 2 pasos (campeón → estadísticas) en vez de
+   la barra "se cierra en 5 minutos". Cada navegador recuerda (localStorage)
+   qué torneo finalizado ya cerró, así no vuelve a interrumpir a la misma
+   persona con el mismo resultado si recarga la página. ---------- */
 
-let finishedIntervalId = null;
+let lastRenderedRaw = null;
+let resultsStep = 1;
+let lastFinalizedId = null;
 
-function stopFinishedTimer() {
-  if (finishedIntervalId) {
-    clearInterval(finishedIntervalId);
-    finishedIntervalId = null;
-  }
+function dismissKey() {
+  return `dismissedFinalized_${MODE}`;
 }
 
-function startFinishedTimer(tournament) {
-  stopFinishedTimer();
-  const deadline = tournament.finalizedAt + FIVE_MIN_MS;
-  const tick = () => {
-    const remaining = deadline - Date.now();
-    if (remaining <= 0) {
-      stopFinishedTimer();
-      render(tournament);
-      return;
+function finalizedId(tournament) {
+  return tournament.tournamentId || String(tournament.finalizedAt);
+}
+
+function isDismissed(tournament) {
+  if (!tournament || !tournament.finalizedAt) return false;
+  return localStorage.getItem(dismissKey()) === finalizedId(tournament);
+}
+
+if (finalizedNextBtn) {
+  finalizedNextBtn.addEventListener("click", () => {
+    resultsStep = 2;
+    render(lastRenderedRaw);
+  });
+}
+
+if (finalizedCloseBtn) {
+  finalizedCloseBtn.addEventListener("click", () => {
+    if (lastRenderedRaw && lastRenderedRaw.finalizedAt) {
+      localStorage.setItem(dismissKey(), finalizedId(lastRenderedRaw));
     }
-    const totalSeconds = Math.ceil(remaining / 1000);
-    const pad = (n) => String(n).padStart(2, "0");
-    const mm = pad(Math.floor(totalSeconds / 60));
-    const ss = pad(totalSeconds % 60);
-    tournamentFinishedBannerEl.innerHTML = `
-      <i class="fa-solid fa-triangle-exclamation"></i>
-      <span>Torneo finalizado · esta pantalla se cierra en <span class="tfb-timer">${mm}:${ss}</span>.
-      Puedes ver este y el resto de los torneos finalizados en el <a href="historial.html">historial</a>.</span>
-    `;
-  };
-  tick();
-  finishedIntervalId = setInterval(tick, 1000);
+    resultsStep = 1;
+    render(lastRenderedRaw);
+  });
 }
 
 /* ---------- Main dispatch ---------- */
 
 function render(tournament) {
   stopCountdown();
-  stopFinishedTimer();
+  lastRenderedRaw = tournament;
 
-  const now = Date.now();
-  const isStaleFinalized = tournament && tournament.finalizedAt && now - tournament.finalizedAt > FIVE_MIN_MS;
-  const active = !tournament || isStaleFinalized ? null : tournament;
+  const active = !tournament || isDismissed(tournament) ? null : tournament;
 
   if (!active) {
     if (liveBadgeRowEl) liveBadgeRowEl.hidden = true;
@@ -265,8 +267,21 @@ function render(tournament) {
   // "EN VIVO" se muestra mientras haya un torneo programado o en curso —
   // solo se oculta en espera (sin torneo) y una vez finalizado.
   if (liveBadgeRowEl) liveBadgeRowEl.hidden = !!active.finalizedAt;
-  tournamentFinishedBannerEl.hidden = !active.finalizedAt;
-  if (active.finalizedAt) startFinishedTimer(active);
+
+  if (active.finalizedAt) {
+    const thisId = finalizedId(active);
+    if (thisId !== lastFinalizedId) {
+      lastFinalizedId = thisId;
+      resultsStep = 1;
+    }
+    if (finalizedNextBtn) finalizedNextBtn.hidden = resultsStep !== 1;
+    if (finalizedCloseBtn) finalizedCloseBtn.hidden = resultsStep !== 2;
+    if (finalizedDetailWrapEl) finalizedDetailWrapEl.hidden = resultsStep !== 2;
+  } else {
+    if (finalizedNextBtn) finalizedNextBtn.hidden = true;
+    if (finalizedCloseBtn) finalizedCloseBtn.hidden = true;
+    if (finalizedDetailWrapEl) finalizedDetailWrapEl.hidden = false;
+  }
 
   // El ID del torneo se oculta en la vista pública por ahora (a pedido) —
   // #tournament-meta queda en el HTML sin usar, listo para reactivar.
