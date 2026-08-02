@@ -309,8 +309,11 @@ function renderBracket(tournament) {
 
 /* ---------- Series format (2 teams) ---------- */
 
+// Firebase RTDB borra los arrays vacíos al guardar, así que un torneo
+// recién cargado (tras recargar la página) puede llegar sin la clave
+// "games" del todo — no solo con un array vacío.
 function winsFor(tournament, teamId) {
-  return tournament.games.filter((g) => g.winner === teamId).length;
+  return (tournament.games || []).filter((g) => g.winner === teamId).length;
 }
 
 function recomputeSeriesWinner(tournament) {
@@ -322,6 +325,7 @@ function recomputeSeriesWinner(tournament) {
 
 function recordGame(tournament, teamId) {
   if (tournament.winner) return;
+  tournament.games = tournament.games || [];
   tournament.games.push({ number: tournament.games.length + 1, winner: teamId });
   recomputeSeriesWinner(tournament);
   saveTournament(MODE, tournament);
@@ -329,7 +333,7 @@ function recordGame(tournament, teamId) {
 }
 
 function removeGame(tournament, gameNumber) {
-  tournament.games = tournament.games.filter((g) => g.number !== gameNumber);
+  tournament.games = (tournament.games || []).filter((g) => g.number !== gameNumber);
   tournament.games.forEach((g, i) => (g.number = i + 1));
   recomputeSeriesWinner(tournament);
   saveTournament(MODE, tournament);
@@ -354,7 +358,7 @@ function renderSeries(tournament) {
       </div>
     `;
 
-  const logHtml = tournament.games
+  const logHtml = (tournament.games || [])
     .map((g) => {
       // Un empate no cuenta victoria para nadie (recomputeSeriesWinner lo
       // ignora vía winsFor), así que la serie sigue hasta desempatar.
@@ -548,8 +552,8 @@ function bracketPlacementRank(tournament, teamId) {
 function computeFinalResults(tournament) {
   if (tournament.format === "series") {
     const [teamA, teamB] = tournament.teams;
-    const scoreA = tournament.games.filter((g) => g.winner === teamA.id).length;
-    const scoreB = tournament.games.filter((g) => g.winner === teamB.id).length;
+    const scoreA = (tournament.games || []).filter((g) => g.winner === teamA.id).length;
+    const scoreB = (tournament.games || []).filter((g) => g.winner === teamB.id).length;
     // Winner listed first (if decided), loser after — undecided series keep creation order.
     const ordered = tournament.winner
       ? [...tournament.teams].sort((a, b) => (a.id === tournament.winner ? -1 : b.id === tournament.winner ? 1 : 0))

@@ -113,8 +113,11 @@ function teamById(tournament, id) {
   return tournament.teams.find((t) => t.id === id) || null;
 }
 
+// Firebase RTDB borra los arrays vacíos al guardar, así que un torneo
+// recién cargado (tras recargar la página) puede llegar sin la clave
+// "games" del todo — no solo con un array vacío.
 function winsFor(tournament, teamId) {
-  return tournament.games.filter((g) => g.winner === teamId).length;
+  return (tournament.games || []).filter((g) => g.winner === teamId).length;
 }
 
 function recomputeSeriesWinner(tournament) {
@@ -126,6 +129,7 @@ function recomputeSeriesWinner(tournament) {
 
 function recordGame(tournament, teamId) {
   if (tournament.winner) return;
+  tournament.games = tournament.games || [];
   tournament.games.push({ number: tournament.games.length + 1, winner: teamId });
   recomputeSeriesWinner(tournament);
   saveTournament(MODE, tournament);
@@ -133,7 +137,7 @@ function recordGame(tournament, teamId) {
 }
 
 function removeGame(tournament, gameNumber) {
-  tournament.games = tournament.games.filter((g) => g.number !== gameNumber);
+  tournament.games = (tournament.games || []).filter((g) => g.number !== gameNumber);
   tournament.games.forEach((g, i) => (g.number = i + 1));
   recomputeSeriesWinner(tournament);
   saveTournament(MODE, tournament);
@@ -237,7 +241,7 @@ function render(tournament) {
     });
   }
 
-  gameLogEl.innerHTML = tournament.games
+  gameLogEl.innerHTML = (tournament.games || [])
     .map((g) => {
       // Un empate no cuenta victoria para nadie (recomputeSeriesWinner lo
       // ignora vía winsFor), así que la serie sigue hasta desempatar.
