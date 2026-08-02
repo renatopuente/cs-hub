@@ -328,7 +328,12 @@ a { color: inherit; }
   gap: 8px;
   margin: 0 0 24px;
 }
-.profile-tab-btn {
+/* .pill-tab-btn es solo el estilo visual (pastilla), reusado por
+   selectores que NO deben disparar el cambio de pestaña del perfil —
+   ese JS busca específicamente .profile-tab-btn, así que cualquier otro
+   selector de este mismo look (modo de lobby, etc.) usa .pill-tab-btn
+   en vez de compartir la clase con las pestañas reales. */
+.profile-tab-btn, .pill-tab-btn {
   padding: 8px 20px;
   border-radius: 999px;
   border: 1px solid var(--glass-border);
@@ -339,8 +344,8 @@ a { color: inherit; }
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
-.profile-tab-btn:hover { background: var(--glass-bg-hover); color: var(--text); }
-.profile-tab-btn.is-active {
+.profile-tab-btn:hover, .pill-tab-btn:hover { background: var(--glass-bg-hover); color: var(--text); }
+.profile-tab-btn.is-active, .pill-tab-btn.is-active {
   background: rgba(155, 77, 255, 0.16);
   border-color: rgba(155, 77, 255, 0.45);
   color: var(--accent-2);
