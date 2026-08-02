@@ -138,3 +138,108 @@ function uploadAvatar(uid, file) {
 function saveUserPhoto(uid, photoURL) {
   return fbDb.ref(`users/${uid}`).update({ customPhotoURL: photoURL });
 }
+
+// Espejo público mínimo de users/{uid} (ese nodo es de solo lectura para el
+// dueño) para poder buscar jugadores por Nickname y mostrarles su avatar en
+// solicitudes de amistad / lobbies. Se escribe junto con saveUserNickname /
+// saveUserPhoto — ver js/perfil.js.
+function savePublicProfile(uid, data) {
+  return fbDb.ref(`usersPublic/${uid}`).update(Object.assign({ updatedAt: Date.now() }, data));
+}
+
+function fbSubscribeUsersPublic(onData) {
+  fbDb.ref("usersPublic").on("value", (snapshot) => {
+    const val = snapshot.val() || {};
+    const list = Object.keys(val).map((uid) => ({ uid, ...val[uid] }));
+    onData(list);
+  });
+}
+
+/* ---------- Amigos ---------- */
+
+function fbSendFriendRequest(fromUid, fromNickname, fromPhotoURL, toUid) {
+  const request = { fromNickname, fromPhotoURL: fromPhotoURL || "", sentAt: Date.now() };
+  return Promise.all([
+    fbDb.ref(`friendRequests/${toUid}/${fromUid}`).set(request),
+    fbDb.ref(`sentFriendRequests/${fromUid}/${toUid}`).set(true),
+  ]);
+}
+
+function fbSubscribeFriendRequests(uid, onData) {
+  fbDb.ref(`friendRequests/${uid}`).on("value", (snapshot) => {
+    const val = snapshot.val() || {};
+    const list = Object.keys(val).map((fromUid) => ({ fromUid, ...val[fromUid] }));
+    onData(list);
+  });
+}
+
+function fbSubscribeSentFriendRequests(uid, onData) {
+  fbDb.ref(`sentFriendRequests/${uid}`).on("value", (snapshot) => {
+    onData(Object.keys(snapshot.val() || {}));
+  });
+}
+
+function fbAcceptFriendRequest(myUid, myNickname, myPhotoURL, fromUid, fromNickname, fromPhotoURL) {
+  const since = Date.now();
+  return Promise.all([
+    fbDb.ref(`friends/${myUid}/${fromUid}`).set({ nickname: fromNickname, photoURL: fromPhotoURL || "", since }),
+    fbDb.ref(`friends/${fromUid}/${myUid}`).set({ nickname: myNickname, photoURL: myPhotoURL || "", since }),
+    fbDb.ref(`friendRequests/${myUid}/${fromUid}`).remove(),
+    fbDb.ref(`sentFriendRequests/${fromUid}/${myUid}`).remove(),
+  ]);
+}
+
+function fbRejectFriendRequest(myUid, fromUid) {
+  return Promise.all([
+    fbDb.ref(`friendRequests/${myUid}/${fromUid}`).remove(),
+    fbDb.ref(`sentFriendRequests/${fromUid}/${myUid}`).remove(),
+  ]);
+}
+
+function fbSubscribeFriends(uid, onData) {
+  fbDb.ref(`friends/${uid}`).on("value", (snapshot) => {
+    const val = snapshot.val() || {};
+    const list = Object.keys(val).map((friendUid) => ({ uid: friendUid, ...val[friendUid] }));
+    onData(list);
+  });
+}
+
+function fbRemoveFriend(myUid, friendUid) {
+  return Promise.all([
+    fbDb.ref(`friends/${myUid}/${friendUid}`).remove(),
+    fbDb.ref(`friends/${friendUid}/${myUid}`).remove(),
+  ]);
+}
+
+/* ---------- Lobbies: torneos organizados entre jugadores (Fase 2: solo
+   públicos — el campo visibility ya queda listo para "private" en la
+   siguiente fase, sin tener que rehacer el modelo). ---------- */
+
+function fbCreateLobby(mode, lobby) {
+  return fbDb.ref(`lobbies/${mode}`).push(lobby);
+}
+
+function fbSubscribeLobbies(mode, onData) {
+  fbDb.ref(`lobbies/${mode}`).on("value", (snapshot) => {
+    const val = snapshot.val() || {};
+    const list = Object.keys(val)
+      .map((id) => ({ id, ...val[id] }))
+      .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+    onData(list);
+  });
+}
+
+// Un cupo abierto se guarda como { uid: "", nickname: "" } (nunca null —
+// Firebase RTDB borra silenciosamente los null dentro de arrays, ver el
+// mismo cuidado documentado en buildBracketRounds de js/squads.js).
+function fbClaimLobbySlot(mode, lobbyId, teamIdx, slotIdx, uid, nickname) {
+  return fbDb.ref(`lobbies/${mode}/${lobbyId}/teams/${teamIdx}/players/${slotIdx}`).set({ uid, nickname });
+}
+
+function fbUpdateLobbyStatus(mode, lobbyId, status) {
+  return fbDb.ref(`lobbies/${mode}/${lobbyId}/status`).set(status);
+}
+
+function fbDeleteLobby(mode, lobbyId) {
+  return fbDb.ref(`lobbies/${mode}/${lobbyId}`).remove();
+}

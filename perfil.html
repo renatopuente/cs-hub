@@ -134,6 +134,7 @@
       <div class="profile-tabs" role="tablist">
         <button type="button" class="profile-tab-btn is-active" data-tab="inicio" role="tab">Inicio</button>
         <button type="button" class="profile-tab-btn" data-tab="mis-torneos" role="tab">Mis torneos</button>
+        <button type="button" class="profile-tab-btn" data-tab="comunidad" role="tab">Comunidad</button>
       </div>
 
       <div class="profile-tab-panel" data-tab-panel="inicio">
@@ -215,6 +216,88 @@
         </div>
       </div>
 
+      <div class="profile-tab-panel" data-tab-panel="comunidad" hidden>
+        <div class="glass-card" style="max-width: 720px; margin: 0 auto 24px;">
+          <h2 class="section-title"><i class="fa-solid fa-magnifying-glass"></i> Buscar jugadores</h2>
+          <p class="section-sub">Encuentra a otros jugadores por su Nickname y envíales una solicitud de amistad.</p>
+          <input type="text" id="community-search-input" placeholder="Buscar por Nickname…" style="margin-bottom: 12px;" />
+          <div id="community-search-results"></div>
+        </div>
+
+        <div class="glass-card" style="max-width: 720px; margin: 0 auto 24px;">
+          <h2 class="section-title"><i class="fa-solid fa-user-plus"></i> Solicitudes recibidas</h2>
+          <div id="community-requests-list"></div>
+          <div class="empty-hint" id="community-requests-empty" hidden>No tienes solicitudes pendientes.</div>
+        </div>
+
+        <div class="glass-card" style="max-width: 720px; margin: 0 auto 40px;">
+          <h2 class="section-title"><i class="fa-solid fa-people-group"></i> Mis amigos</h2>
+          <div id="community-friends-list"></div>
+          <div class="empty-hint" id="community-friends-empty" hidden>Todavía no tienes amigos agregados.</div>
+          <div class="ranking-pagination" id="community-friends-pagination" hidden>
+            <button type="button" id="community-friends-prev-btn" class="ranking-page-btn" aria-label="Página anterior">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <span id="community-friends-page-label" class="ranking-page-label"></span>
+            <button type="button" id="community-friends-next-btn" class="ranking-page-btn" aria-label="Página siguiente">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="glass-card" style="max-width: 720px; margin: 0 auto 24px;">
+          <h2 class="section-title"><i class="fa-solid fa-plus"></i> Crear torneo entre jugadores</h2>
+          <p class="section-sub">Por ahora, público: cualquiera puede ver tu torneo en la lista y unirse a un cupo abierto. Los torneos privados (solo para tu lista de amigos) llegan pronto.</p>
+          <form id="lobby-create-form">
+            <div class="field">
+              <label>Modalidad</label>
+              <div class="profile-tabs" style="justify-content:flex-start; margin: 0 0 14px;">
+                <button type="button" class="profile-tab-btn lobby-create-mode-btn is-active" data-create-mode="duelos">Duelos</button>
+                <button type="button" class="profile-tab-btn lobby-create-mode-btn" data-create-mode="duos">Duos</button>
+                <button type="button" class="profile-tab-btn lobby-create-mode-btn" data-create-mode="pug">Pug</button>
+              </div>
+            </div>
+            <div id="lobby-bestof-field" class="field">
+              <label>Mejor de</label>
+              <select id="lobby-bestof">
+                <option value="3" selected>3</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <div id="lobby-teamsize-field" class="field" hidden>
+              <label>Jugadores por equipo</label>
+              <select id="lobby-teamsize">
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5" selected>5</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block"><i class="fa-solid fa-flag"></i> Publicar torneo</button>
+          </form>
+        </div>
+
+        <div class="glass-card" style="max-width: 720px; margin: 0 auto 40px;">
+          <h2 class="section-title"><i class="fa-solid fa-list"></i> Torneos abiertos</h2>
+          <div class="profile-tabs" style="margin-bottom: 16px;">
+            <button type="button" class="profile-tab-btn lobby-mode-btn is-active" data-lobby-mode="duelos">Duelos</button>
+            <button type="button" class="profile-tab-btn lobby-mode-btn" data-lobby-mode="duos">Duos</button>
+            <button type="button" class="profile-tab-btn lobby-mode-btn" data-lobby-mode="pug">Pug</button>
+          </div>
+          <div id="lobby-list"></div>
+          <div class="empty-hint" id="lobby-empty" hidden>Todavía no hay torneos publicados en esta modalidad.</div>
+          <div class="ranking-pagination" id="lobby-pagination" hidden>
+            <button type="button" id="lobby-prev-btn" class="ranking-page-btn" aria-label="Página anterior">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <span id="lobby-page-label" class="ranking-page-label"></span>
+            <button type="button" id="lobby-next-btn" class="ranking-page-btn" aria-label="Página siguiente">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div style="display:flex; flex-direction:column; align-items:center; gap: 16px; margin: 40px 0 0;">
         <a href="inscripcion.html" class="btn btn-primary btn-block"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
         <a href="ranking.html" class="btn btn-outline btn-block"><i class="fa-solid fa-ranking-star"></i> Ver tabla de posiciones</a>
@@ -269,6 +352,7 @@
   <script src="js/seasons.js"></script>
   <script src="js/player-auth.js"></script>
   <script src="js/perfil.js"></script>
+  <script src="js/community.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/copyright.js"></script>
 </body>

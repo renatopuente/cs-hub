@@ -346,6 +346,121 @@ a { color: inherit; }
   color: var(--accent-2);
 }
 
+/* Pestaña Comunidad: filas de búsqueda / solicitudes / amigos. */
+.community-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--glass-border);
+  text-align: left;
+}
+.community-row:last-child { border-bottom: none; }
+
+.community-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(155, 77, 255, 0.35);
+  flex-shrink: 0;
+}
+
+.community-row-name {
+  flex: 1;
+  font-weight: 600;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.community-row-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.community-state-chip {
+  font-size: 0.78rem;
+  color: var(--text-faint);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* Cards de torneos entre jugadores (lobbies). */
+.lobby-card { margin-bottom: 16px; }
+.lobby-card:last-child { margin-bottom: 0; }
+
+.lobby-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.lobby-card-title {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.lobby-teams-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.lobby-team { flex: 1; min-width: 0; }
+
+.lobby-team-name {
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+}
+
+.lobby-team-slots {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lobby-slot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+}
+
+.lobby-slot-filled {
+  background: rgba(155, 77, 255, 0.1);
+  border: 1px solid rgba(155, 77, 255, 0.3);
+  color: var(--text);
+}
+
+button.lobby-slot-open {
+  background: none;
+  border: 1px dashed var(--glass-border);
+  color: var(--text-dim);
+  cursor: pointer;
+  font-family: inherit;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+button.lobby-slot-open:hover { color: var(--accent-2); border-color: rgba(255, 110, 199, 0.45); }
+span.lobby-slot-open {
+  border: 1px dashed var(--glass-border);
+  color: var(--text-faint);
+}
+
+.lobby-vs {
+  font-weight: 800;
+  color: var(--text-faint);
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
 .profile-nickname-row {
   display: flex;
   align-items: center;

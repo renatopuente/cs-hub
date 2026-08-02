@@ -158,6 +158,9 @@ firebase.auth().onAuthStateChanged((user) => {
     applyLockState(profile);
     updateWinsChip();
     renderMyTournaments();
+    // Backfill: si nunca guardó nickname/foto desde que existe usersPublic,
+    // esto lo crea igual, para que aparezca en la búsqueda de jugadores.
+    savePublicProfile(currentUid, { nickname: savedNicknameValue, photoURL: profile.customPhotoURL || user.photoURL || "" });
   });
 });
 
@@ -201,6 +204,7 @@ profileSaveBtn.addEventListener("click", () => {
       applyLockState(currentProfile);
       updateWinsChip();
       renderMyTournaments();
+      savePublicProfile(currentUid, { nickname, photoURL: currentProfile.customPhotoURL || "" });
       profileSavedHintEl.hidden = false;
       setTimeout(() => {
         profileSavedHintEl.hidden = true;
@@ -260,6 +264,7 @@ profileAvatarInput.addEventListener("change", () => {
     .then((url) => {
       currentProfile = { ...currentProfile, customPhotoURL: url };
       profileAvatarEl.src = url;
+      savePublicProfile(currentUid, { nickname: currentProfile.nickname || currentDisplayName, photoURL: url });
     })
     .catch((err) => {
       console.error("No se pudo subir la foto de perfil", err);
