@@ -839,6 +839,35 @@ span.lobby-slot-open {
   overflow: hidden;
 }
 
+/* Chip de estado en la esquina de cada mode-card del home — respeta el
+   padding de la card (mismo inset que .profile-wins-chip). Solo una a
+   la vez: en curso tiene prioridad sobre programado. */
+.mode-card-status-chip {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+.mode-card-status-chip.status-live {
+  color: var(--win);
+  background: rgba(53, 224, 176, 0.14);
+  border: 1px solid var(--win-glow);
+}
+.mode-card-status-chip.status-scheduled {
+  color: var(--accent-2);
+  background: rgba(255, 110, 199, 0.14);
+  border: 1px solid rgba(255, 110, 199, 0.4);
+}
+
 /* .glass-card.interactive sets display:block (2 classes), which otherwise
    beats .mode-card's display:flex (1 class) on specificity alone and
    silently kills the flex layout — leaving the "Ver en vivo" button

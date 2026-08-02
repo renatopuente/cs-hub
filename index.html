@@ -156,37 +156,40 @@
 
     <div class="bento-grid" id="tournament-modes" style="margin-bottom: 20px;">
       <div class="glass-card mode-card">
+        <span class="mode-card-status-chip" id="mode-status-duelos" hidden></span>
         <a class="mode-card-link" href="duelos-view.html">
           <img class="icon-img" src="img/icons/duelos.png" alt="" />
           <h2>Duelos</h2>
           <p>Torneos online 1 vs 1. Duelo directo en serie al mejor de 3 o de 5.</p>
         </a>
         <div class="mode-card-ctas">
-          <a class="btn btn-primary" href="duelos-view.html"><i class="fa-solid fa-video"></i> Ver en vivo →</a>
+          <a class="btn btn-primary" href="duelos-view.html"><i class="fa-solid fa-video"></i> Ver en vivo</a>
           <a class="btn btn-outline" href="inscripcion.html"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
         </div>
       </div>
 
       <div class="glass-card mode-card">
+        <span class="mode-card-status-chip" id="mode-status-duos" hidden></span>
         <a class="mode-card-link" href="duos-view.html">
           <img class="icon-img" src="img/icons/duos.png" alt="" />
           <h2>Duos</h2>
           <p>Torneos online en Duos, equipos de 2 jugadores. De 2 a 8 equipos, en serie, todos contra todos o llaves clásicas.</p>
         </a>
         <div class="mode-card-ctas">
-          <a class="btn btn-primary" href="duos-view.html"><i class="fa-solid fa-video"></i> Ver en vivo →</a>
+          <a class="btn btn-primary" href="duos-view.html"><i class="fa-solid fa-video"></i> Ver en vivo</a>
           <a class="btn btn-outline" href="inscripcion.html"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
         </div>
       </div>
 
       <div class="glass-card mode-card">
+        <span class="mode-card-status-chip" id="mode-status-pug" hidden></span>
         <a class="mode-card-link" href="pug-view.html">
           <img class="icon-img" src="img/icons/pug.png" alt="" />
           <h2>Pug</h2>
           <p>Torneos online en Pug, el clásico 5 vs 5. Serie al mejor de X partidas.</p>
         </a>
         <div class="mode-card-ctas">
-          <a class="btn btn-primary" href="pug-view.html"><i class="fa-solid fa-video"></i> Ver en vivo →</a>
+          <a class="btn btn-primary" href="pug-view.html"><i class="fa-solid fa-video"></i> Ver en vivo</a>
           <a class="btn btn-outline" href="inscripcion.html"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
         </div>
       </div>
@@ -455,6 +458,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
   <script src="js/firebase-sync.js"></script>
+  <script src="js/mode-status.js"></script>
   <script src="js/admin-config.js"></script>
   <script src="js/player-auth.js"></script>
   <script src="js/nav.js"></script>
