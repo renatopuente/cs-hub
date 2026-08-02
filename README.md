@@ -28,7 +28,7 @@ El estado de cada torneo se guarda en Firebase Realtime Database; las páginas `
 
 ## Versionado
 
-El sitio sigue versionado semántico (`vMAJOR.MINOR.PATCH`), mostrado al final de cada página pública. Versión actual: **v2.0.0**.
+El sitio sigue versionado semántico (`vMAJOR.MINOR.PATCH`), mostrado al final de cada página pública. Versión actual: **v3.0.0**.
 
 - **MAJOR**: un sistema o capacidad completamente nueva para la plataforma.
 - **MINOR**: features o secciones nuevas dentro de la versión actual (una página nueva, un flujo nuevo, etc.).
@@ -38,6 +38,7 @@ Al desplegar un cambio que amerite subir de versión, actualiza el número en el
 
 - **v1.0.0**: primera versión pública. Torneos (Duelos/Duos/Pug), inscripción con niveles de precio, ranking por puntos ponderados por torneo, historial, y páginas informativas.
 - **v2.0.0**: sistema de gestión de usuarios. Login de jugadores con Google (`js/player-auth.js`), página de perfil (`perfil.html`) con Nickname editable (bloqueado 2 temporadas tras cada cambio), flujo de inscripción ligado a la cuenta del jugador con dashboard de admin (`inscripciones.html`) separando solicitudes vs inscritos, y countdown de torneo agendado con revelado progresivo de jugadores confirmados.
+- **v3.0.0**: multi-admin (`js/admin-config.js`, mapa de UIDs con vinculación de cuentas GitHub/Google), ID único visible por torneo con admin creador (`tournamentId`/`createdBy`), opción de empate en las series, pestaña "Mis torneos" en el perfil, inscripción directa (sin WhatsApp) al torneo Amistoso, y el sistema nuevo de **Comunidad**: los jugadores buscan y agregan amigos, y arman sus propios torneos (Duelos/Duos/Pug, públicos por ahora) invitando gente a unirse a un cupo — el admin sigue siendo quien inicia, marca resultados y finaliza cada torneo real, pero ahora puede recoger el roster armado por los jugadores desde su propio panel en vez de armarlo a mano.
 
 ## Desarrollo local
 
