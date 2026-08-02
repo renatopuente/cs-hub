@@ -2282,6 +2282,16 @@ input[type="text"]:focus, select:focus {
   font-size: 0.9rem;
 }
 
+.fee-card-terms-link {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 0.76rem;
+  color: var(--text-faint);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.fee-card-terms-link:hover { color: var(--accent-2); }
+
 .fee-card-top-row {
   display: flex;
   align-items: center;

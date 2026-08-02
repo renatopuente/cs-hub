@@ -118,16 +118,18 @@
   <div class="page page-offset-navbar page-offset-footer">
     <div class="hero">
       <h1>Política de Privacidad</h1>
-      <p>Qué datos recopilamos, para qué los usamos y cómo pedir que los borremos. Última actualización: 30 de julio de 2026.</p>
+      <p>Qué datos recopilamos, para qué los usamos y cómo pedir que los borremos. Última actualización: 2 de agosto de 2026.</p>
     </div>
 
     <div class="glass-card" style="max-width: 820px; margin: 0 auto 24px;">
       <h2 class="section-title">1. Qué datos recopilamos</h2>
       <ul style="color: var(--text-dim); font-size: 0.92rem; padding-left: 20px; margin: 0;">
         <li><strong style="color: var(--text);">Cuenta de Google</strong>: al iniciar sesión con Google, recibimos tu nombre, correo electrónico y foto de perfil (a través de Firebase Authentication).</li>
-        <li><strong style="color: var(--text);">Nickname</strong>: el nombre público que defines en tu <a href="perfil.html">perfil de jugador</a>.</li>
+        <li><strong style="color: var(--text);">Nickname y foto de perfil</strong>: el nombre público que defines en tu <a href="perfil.html">perfil de jugador</a>, y opcionalmente una foto propia (JPG o PNG, máx. 1 MB) que puedes subir ahí mismo.</li>
         <li><strong style="color: var(--text);">Solicitudes de inscripción</strong>: tu Nickname, el torneo, la modalidad y el precio elegidos al confirmar en <a href="inscripcion.html">Inscribirme</a>.</li>
         <li><strong style="color: var(--text);">Historial de torneos</strong>: tu Nickname (o el de tu equipo) y los resultados de las partidas que juegas.</li>
+        <li><strong style="color: var(--text);">Amigos y solicitudes de amistad</strong>: si usas la sección Comunidad de tu perfil, guardamos tu lista de amigos y las solicitudes que envías o recibes.</li>
+        <li><strong style="color: var(--text);">Torneos entre jugadores</strong>: los torneos de Duelos/Duos/Pug que organizas o a los que te unes con otros jugadores desde la sección Comunidad.</li>
       </ul>
     </div>
 
@@ -136,8 +138,9 @@
       <p style="color: var(--text-dim); font-size: 0.92rem;">
         Usamos esta información únicamente para identificarte como jugador dentro de la plataforma,
         gestionar tu inscripción a los torneos, coordinar el pago por WhatsApp, mostrar el historial y
-        la tabla de posiciones públicos, y revelar progresivamente en el countdown de cada torneo qué
-        jugadores ya confirmaron su inscripción. No usamos tus datos con fines publicitarios ni los
+        la tabla de posiciones públicos, revelar progresivamente en el countdown de cada torneo qué
+        jugadores ya confirmaron su inscripción, y permitirte buscar amigos y organizar torneos con
+        otros jugadores en la sección Comunidad. No usamos tus datos con fines publicitarios ni los
         vendemos ni compartimos con terceros.
       </p>
     </div>
@@ -146,22 +149,29 @@
       <h2 class="section-title">3. Dónde se almacenan tus datos</h2>
       <p style="color: var(--text-dim); font-size: 0.92rem;">
         Tus datos se guardan en Firebase (infraestructura de Google Cloud): Firebase Authentication
-        para el login con Google, y Firebase Realtime Database para tu Nickname, tus solicitudes de
-        inscripción y el historial de torneos. Firebase es nuestro único proveedor externo de
-        almacenamiento; no usamos ningún otro servicio de terceros para procesar tus datos.
+        para el login con Google, Firebase Realtime Database para tu Nickname, tus solicitudes de
+        inscripción, el historial de torneos, tu lista de amigos y los torneos entre jugadores, y
+        Firebase Storage si subes una foto de perfil propia. Firebase es nuestro único proveedor
+        externo de almacenamiento; no usamos ningún otro servicio de terceros para procesar tus datos.
       </p>
     </div>
 
     <div class="glass-card" style="max-width: 820px; margin: 0 auto 24px;">
       <h2 class="section-title">4. Qué es público y qué es privado</h2>
       <p style="color: var(--text-dim); font-size: 0.92rem; margin-bottom: 10px;">
-        <strong style="color: var(--text);">Público</strong> (visible para cualquier visitante del sitio):
-        tu Nickname, los resultados de tus partidas, tu posición en el ranking, y si ya confirmaste tu
-        inscripción a un torneo agendado.
+        <strong style="color: var(--text);">Público</strong> (visible para cualquier visitante del
+        sitio, o para cualquier jugador con sesión iniciada en el caso del buscador de Comunidad):
+        tu Nickname, tu foto de perfil, los resultados de tus partidas, tu posición en el ranking, si
+        ya confirmaste tu inscripción a un torneo agendado, y los torneos entre jugadores que
+        organizas o en los que te unes mientras sean públicos.
+      </p>
+      <p style="color: var(--text-dim); font-size: 0.92rem; margin-bottom: 10px;">
+        <strong style="color: var(--text);">Solo entre las partes involucradas</strong>: tu lista de
+        amigos y las solicitudes de amistad son visibles únicamente para ti y la otra persona.
       </p>
       <p style="color: var(--text-dim); font-size: 0.92rem;">
         <strong style="color: var(--text);">Privado</strong> (solo accesible por el equipo organizador
-        autorizado): tu nombre completo de Google, tu correo electrónico y tu foto de perfil.
+        autorizado): tu nombre completo de Google y tu correo electrónico.
       </p>
     </div>
 
@@ -170,10 +180,11 @@
       <p style="color: var(--text-dim); font-size: 0.92rem;">
         Puedes acceder, corregir o pedir la eliminación de tus datos en cualquier momento escribiéndonos
         por <a href="https://wa.me/593998880675" target="_blank" rel="noopener">WhatsApp</a> o al correo
-        <a href="mailto:pulpos@eloctagono.online">pulpos@eloctagono.online</a>. Puedes cerrar sesión
-        desde tu <a href="perfil.html">perfil</a> en cualquier momento; para revocar el acceso de El
-        Octágono a tu cuenta de Google por completo, hazlo desde la configuración de seguridad de tu
-        cuenta de Google.
+        <a href="mailto:pulpos@eloctagono.online">pulpos@eloctagono.online</a>. Desde la sección
+        Comunidad de tu <a href="perfil.html">perfil</a> también puedes quitar un amigo de tu lista o
+        rechazar una solicitud tú mismo, sin necesidad de escribirnos. Puedes cerrar sesión desde tu
+        perfil en cualquier momento; para revocar el acceso de El Octágono a tu cuenta de Google por
+        completo, hazlo desde la configuración de seguridad de tu cuenta de Google.
       </p>
     </div>
 
