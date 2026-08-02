@@ -16,8 +16,33 @@ const seriesFormatLabelEl = document.getElementById("series-format-label");
 const gameLogEl = document.getElementById("game-log");
 const championBannerEl = document.getElementById("champion-banner");
 const tournamentMetaEl = document.getElementById("tournament-meta");
+const seasonBannerImgEl = document.getElementById("season-banner-img");
+const seasonHeadingNameEl = document.getElementById("season-heading-name");
 
 const FIVE_MIN_MS = 5 * 60 * 1000;
+
+// Estado "por defecto" del banner de temporada (arte propio o texto), tal
+// como lo dejó season-heading.js antes de que este archivo cargue — para
+// poder volver exactamente a eso cuando no haya torneo.
+const defaultSeasonBannerSrc = seasonBannerImgEl ? seasonBannerImgEl.src : "";
+const defaultSeasonBannerHidden = seasonBannerImgEl ? seasonBannerImgEl.hidden : true;
+const defaultSeasonHeadingHidden = seasonHeadingNameEl ? seasonHeadingNameEl.hidden : true;
+
+// Con un torneo programado o en curso se prioriza el bannerlite genérico
+// de temporada (más compacto) por encima del arte especial, para no
+// competir visualmente con el countdown/la serie.
+function updateSeasonBannerForTournament(hasTournament) {
+  if (!seasonBannerImgEl) return;
+  if (hasTournament) {
+    seasonBannerImgEl.src = "img/banners/bannerlite.webp";
+    seasonBannerImgEl.hidden = false;
+    if (seasonHeadingNameEl) seasonHeadingNameEl.hidden = true;
+  } else {
+    seasonBannerImgEl.src = defaultSeasonBannerSrc;
+    seasonBannerImgEl.hidden = defaultSeasonBannerHidden;
+    if (seasonHeadingNameEl) seasonHeadingNameEl.hidden = defaultSeasonHeadingHidden;
+  }
+}
 
 function teamInitial(team) {
   return (team.name || "?").trim().charAt(0).toUpperCase();
@@ -203,6 +228,7 @@ function render(tournament) {
 
   if (!active) {
     if (liveBadgeRowEl) liveBadgeRowEl.hidden = true;
+    updateSeasonBannerForTournament(false);
     emptyStateEl.hidden = false;
     countdownScreenEl.hidden = true;
     seriesSection.hidden = true;
@@ -215,6 +241,7 @@ function render(tournament) {
   const showCountdown = active.scheduledAt && !active.started && !active.finalizedAt;
   if (showCountdown) {
     if (liveBadgeRowEl) liveBadgeRowEl.hidden = false;
+    updateSeasonBannerForTournament(true);
     emptyStateEl.hidden = true;
     seriesSection.hidden = true;
     countdownScreenEl.hidden = false;
@@ -224,12 +251,14 @@ function render(tournament) {
 
   if (!active.teams) {
     if (liveBadgeRowEl) liveBadgeRowEl.hidden = true;
+    updateSeasonBannerForTournament(false);
     emptyStateEl.hidden = false;
     countdownScreenEl.hidden = true;
     seriesSection.hidden = true;
     return;
   }
 
+  updateSeasonBannerForTournament(true);
   emptyStateEl.hidden = true;
   countdownScreenEl.hidden = true;
   seriesSection.hidden = false;
