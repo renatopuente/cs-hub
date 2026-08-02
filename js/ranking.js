@@ -221,6 +221,13 @@ function scrambleSeasonBadge(name) {
   scrambleTargets.push(seasonBadgeTarget);
   podiumSeasonBadgeEl.textContent = name;
   ensureMasterScrambleRunning();
+  // Si el reloj maestro ya estaba corriendo (lo normal: "Ranking" arranca
+  // solo, antes de que lleguen los datos de temporada), este target se
+  // suma a mitad de ciclo — y scheduleSteadyGlitches solo se agenda una
+  // vez por fase, al arrancar. Sin este empujón extra, si los datos
+  // llegan a mitad de una fase legible, el nombre de temporada nunca
+  // llega a titilar antes de que el reloj se detenga para siempre.
+  if (masterTickId || masterPhaseId) scheduleSteadyGlitches(seasonBadgeTarget);
 }
 
 const PODIUM_ICONS = [
