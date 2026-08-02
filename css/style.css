@@ -841,13 +841,19 @@ span.lobby-slot-open {
 
 /* Chip de estado en la esquina de cada mode-card del home — respeta el
    padding de la card (mismo inset que .profile-wins-chip). Solo una a
-   la vez: en curso tiene prioridad sobre programado. */
-.mode-card-status-chip {
+   la vez: en curso tiene prioridad sobre programado.
+   Selector de 2 clases (.mode-card .mode-card-status-chip) porque
+   .mode-card > * (más abajo) también vale 1 clase de especificidad y,
+   al aparecer después en el archivo, le ganaría a position:absolute con
+   un selector de una sola clase — dejando el chip estirado a lo ancho
+   como cualquier otro flex item de .mode-card (display:flex column). */
+.mode-card .mode-card-status-chip {
   position: absolute;
   top: 16px;
   right: 16px;
   z-index: 2;
   display: inline-flex;
+  align-self: flex-start;
   align-items: center;
   gap: 6px;
   font-size: 0.7rem;
