@@ -13,49 +13,49 @@
 const SEASON_LORE = {
   "Monaco Emerald": {
     heroArt: "img/seasons/monaco.webp",
-    tagline: "Entre yates y curvas de asfalto, una esmeralda que no se compra: se gana, o se paga con algo que no vuelve.",
+    tagline: "Una frecuencia pirata, un satélite que nadie reclama, y una cuenta regresiva verde que ya empezó.",
     part1: [
       {
-        title: "I. La ciudad que no duerme",
-        text: "Mónaco no cierra los ojos. Ni siquiera de madrugada, cuando los casinos apagan las luces grandes y dejan solo las necesarias para que nadie tropiece con su propia suerte. Fue en una de esas madrugadas cuando el pulpo llegó por primera vez — nadie sabe bien cuándo —, y desde entonces la ciudad aprendió a no hacer preguntas.",
+        title: "I. La señal que nadie debía captar",
+        text: "Ocurrió a las 3:14 de la madrugada, en un cuarto de control frente al puerto de Mónaco: un técnico de guardia sintonizó por accidente una frecuencia que no estaba en ningún registro. En la pantalla, entre líneas de estática, un temporizador verde corría hacia atrás. Nadie en la sala reconoció el protocolo. Todos reconocieron el sonido: el mismo pitido de una bomba plantada, sitio B, cuarenta segundos.",
       },
       {
-        title: "II. Ocho tratos, una sola noche",
-        text: "Dicen los croupiers más viejos que un hombre de ocho brazos se sentó una vez en cada mesa del Casino de Montecarlo, la misma noche, a la misma hora. Ocho partidas. Ocho ganadores distintos. Ninguno volvió a jugar en Mónaco jamás. Algunos dicen que se retiraron ricos. Otros, que solo desaparecieron de las listas de invitados.",
+        title: "II. Ocho monitores, una sola marca",
+        text: "La señal no venía de un solo lugar. Venía de ocho, transmitiendo en simultáneo, cada una mostrando una partida distinta desde un ángulo que ninguna cámara oficial podía tener. En la esquina inferior de cada feed, la misma marca de agua: un pulpo de ocho tentáculos, cada uno conectado a un cable distinto, cada cable a un servidor que nadie había firmado.",
       },
       {
-        title: "III. La piedra que no se compra",
-        text: "Corrió la voz de una esmeralda hundida en el puerto, tan verde como el fondo del Mediterráneo en sus zonas más profundas, donde ya no llega el sol. El pulpo la había tallado él mismo, con la paciencia de quien no envejece y la precisión de quien nunca se equivoca dos veces. No estaba en venta. No se heredaba. Solo se ganaba, ronda tras ronda, temporada tras temporada.",
+        title: "III. El color del temporizador",
+        text: "Los ingenieros que lograron aislar un fragmento de la señal coincidieron en un detalle: el verde del contador no era el verde estándar de ningún HUD conocido. Era más profundo, casi mineral — el mismo verde, dirían después los que llegaron a jugar esa temporada, de una esmeralda cortada para reflejar la luz de una mira. Alguien, en algún reporte interno, ya la había bautizado: Monaco Emerald.",
       },
       {
-        title: "IV. Los que llegaron por hambre",
-        text: "Vinieron pilotos que ya habían apostado sus autos, herederos que ya habían apostado su apellido, y jugadores a quienes solo les quedaba apostar el orgullo. Todos miraron la esmeralda y pensaron lo mismo: esta vez sí. Ninguno se detuvo a preguntar qué fue de quienes la persiguieron la temporada anterior. En Mónaco esa pregunta se hace una sola vez, y solo antes de empezar.",
+        title: "IV. Los que decodificaron las coordenadas",
+        text: "Bastaron dos semanas para que la señal dejara de ser un rumor de ingenieros y se convirtiera en una dirección: una arena improvisada en la costa, sin nombre en ningún mapa turístico. Llegaron equipos que ya se conocían de otros torneos, y llegaron también nombres nuevos que nadie había visto competir antes. Todos traían la misma pregunta sin decirla en voz alta: ¿quién más descifró esto?",
       },
       {
-        title: "V. El primer sacrificio",
-        text: "El primero en caer no perdió una partida. Perdió a su compañero de equipo, que una noche entendió que solo uno de los dos iba a sostener esa piedra bajo la luz, y decidió que sería él antes de que su amigo lo decidiera primero. No hubo traición gritada ni pelea. Solo un silencio nuevo entre dos personas que antes no lo tenían.",
+        title: "V. El primer error de cálculo",
+        text: "La primera baja de la temporada no fue una eliminación en el marcador. Fue un rotate mal calculado: un jugador dejó su sitio dos segundos antes de tiempo, confiado en que su compañero cubriría el hueco, y su compañero — por primera vez en meses — dudó. El round se perdió por eso. El equipo, poco después, también.",
       },
     ],
     part2: [
       {
-        title: "VI. Lo que la codicia deja atrás",
-        text: "Para cuando llegó el ecuador de la temporada, ya no quedaban equipos completos. Quedaban individuos calculando cuánto valía cada punto de más, cada ronda ganada, cada nombre que subía en la tabla mientras otro bajaba. El pulpo observaba sin intervenir. Nunca interviene. Su único trabajo es esconder la piedra; el precio de encontrarla lo pone cada quien.",
+        title: "VI. La economía no perdona",
+        text: "Para el ecuador de la temporada, ya nadie jugaba solo por ganar la ronda: jugaba por sobrevivir a la siguiente. Un force-buy mal calculado podía dejar a un equipo entero sin rifles durante tres rounds seguidos, y en esa frecuencia, tres rounds sin rifles equivalían a tres semanas fuera de la tabla. Se ahorraba, se apostaba, se perdía. La señal seguía transmitiendo, indiferente.",
       },
       {
-        title: "VII. La noche de las cuentas pendientes",
-        text: "Hubo una noche — siempre hay una — en que dos finalistas se cruzaron fuera del Octágono, lejos de las cámaras y del marcador. Nadie sabe qué se dijeron. Lo que se sabe es que al día siguiente uno de los dos jugó la mejor serie de su vida, y el otro no volvió a jugar esa temporada.",
+        title: "VII. Silencio de radio en sitio B",
+        text: "Hubo una final regional en la que el equipo favorito cortó su propia comunicación interna durante los últimos diez segundos de un round decisivo — una jugada calculada para que el rival, que llevaba semanas interceptando su frecuencia, no escuchara el plan. Funcionó. Ganaron el sitio. Pero dos jugadores del equipo, los que ejecutaron la jugada a ciegas y en silencio, no volvieron a confiar del todo en el resto del roster.",
       },
       {
-        title: "VIII. El costo de sostenerla",
-        text: "Los que llegan a tocar la Monaco Emerald cuentan lo mismo: que pesa más de lo que parece. No en las manos — en la memoria. Se recuerda cada decisión que se tomó para llegar hasta ahí, cada nombre que quedó atrás en el camino, cada vez que la ambición ganó una discusión que la lealtad debería haber ganado.",
+        title: "VIII. Lo que cuesta un clutch",
+        text: "Los que llegaron a jugar un 1vs3 en esa frecuencia describen lo mismo después: el sonido de la propia respiración tapando el resto del audio, el temporizador verde en la esquina bajando más rápido de lo que debería ser posible, y una claridad extraña — como si el resto de la temporada, hasta ese punto, hubiera sido solo el entrenamiento para ese round exacto.",
       },
       {
-        title: "IX. Lo que queda cuando se apaga el brillo",
-        text: "Al cierre de la temporada, el brillo de la gema se apaga — siempre se apaga — y el pulpo recoge sus tentáculos rumbo a la siguiente ciudad. Lo que deja atrás no es solo un nombre en el historial. Es la pregunta que cada campeón se lleva consigo, sin responder del todo: ¿valió la pena lo que costó llegar hasta aquí?",
+        title: "IX. La última transmisión",
+        text: "Cuando se acerca el final de la temporada, los ocho monitores empiezan a sincronizarse en un solo feed: la gran final. La marca del pulpo se queda fija en pantalla hasta el último disparo, y luego — siempre así, sin excepción — la señal se corta. No hay despedida, no hay créditos. Solo estática, y un nombre nuevo grabado en el historial.",
       },
       {
-        title: "X. La invitación",
-        text: "Mónaco ya eligió su gema. Ahora te toca a ti decidir cuánto estás dispuesto a apostar para sostenerla. El Octágono no promete que sea fácil. Promete que, ganes o pierdas, quedará escrito.",
+        title: "X. Sintoniza tu frecuencia",
+        text: "Nadie ha logrado rastrear el origen real de la señal, ni por qué elige Mónaco esta vez, ni quién programó ese temporizador verde que ya está corriendo. Lo único seguro es que la próxima transmisión ya tiene fecha. La pregunta es si tu equipo va a estar del otro lado de la pantalla, o dentro de ella.",
       },
     ],
   },
