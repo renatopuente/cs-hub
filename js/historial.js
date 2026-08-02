@@ -45,10 +45,12 @@ function formatPoints(points) {
   return Number.isInteger(points) ? String(points) : points.toFixed(1);
 }
 
-// Delete button only ever renders for an admin's own signed-in session (e.g.
-// left over from visiting l1o2t3us.html earlier in the same browser) — this
-// page itself requires no login. The DB rule enforces the ADMINS list
-// (js/admin-config.js) regardless.
+// Delete button only ever renders for the superadmin's own signed-in
+// session (e.g. left over from visiting l1o2t3us.html earlier in the same
+// browser) — this page itself requires no login. Borrar del historial es
+// una acción destructiva y permanente, reservada al superadmin (ver
+// js/admin-config.js) — el resto de admins puede ver el historial igual,
+// solo no borrar entradas.
 let isAdmin = false;
 let lastDuelosList = [];
 let lastDuosList = [];
@@ -58,7 +60,7 @@ const PAGE_SIZE = 2;
 const currentPage = { duelos: 0, duos: 0, pug: 0 };
 
 firebase.auth().onAuthStateChanged((user) => {
-  isAdmin = !!user && isAdminUid(user.uid);
+  isAdmin = !!user && isSuperAdminUid(user.uid);
   renderHistoryList(duelosHistoryEl, lastDuelosList, "duelos");
   renderHistoryList(duosHistoryEl, lastDuosList, "duos");
   renderHistoryList(pugHistoryEl, lastPugList, "pug");

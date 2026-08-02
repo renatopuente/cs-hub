@@ -16,8 +16,18 @@ const ADMINS = {
   "7ejpez1CYFeRefY9xMMQrSZfJGC2": "Nark",
 };
 
+// Único superadmin (Renato): mismos permisos que cualquier admin sobre
+// torneos del día a día (crear, marcar resultados, finalizar), más las
+// acciones destructivas/globales que afectan a todo el sitio y no a un
+// torneo puntual — reiniciar marcadores y borrar del historial.
+const SUPERADMIN_UID = "XxFQBlmtI2ResAdKWAgoGPCDwqO2";
+
 function isAdminUid(uid) {
   return !!uid && Object.prototype.hasOwnProperty.call(ADMINS, uid);
+}
+
+function isSuperAdminUid(uid) {
+  return !!uid && uid === SUPERADMIN_UID;
 }
 
 function adminName(uid) {
