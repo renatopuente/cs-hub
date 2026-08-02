@@ -1939,6 +1939,9 @@ input[type="text"]:focus, select:focus {
 .season-banner-wrap {
   margin: 0 0 12px;
 }
+.season-banner-wrap a {
+  display: block;
+}
 
 .season-banner-img {
   display: block;

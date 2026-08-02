@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Historial de torneos · El Octágono</title>
-<meta name="description" content="Consulta los resultados de todos los torneos de Counter-Strike 2 ya finalizados en El Octágono, por modalidad: Duelos, Duos y Pug." />
-<link rel="canonical" href="https://eloctagono.online/historial.html" />
+<title>Temporada Actual · El Octágono</title>
+<meta name="description" content="La leyenda detrás de la temporada actual de El Octágono: la ciudad, la gema, y por qué se compite por ella." />
+<link rel="canonical" href="https://eloctagono.online/temporada-actual.html" />
 <link rel="icon" href="img/icons/favicon.ico" sizes="32x32" />
 <link rel="apple-touch-icon" href="img/icons/icono_app-192.png" />
 <link rel="manifest" href="manifest.json" />
@@ -116,58 +116,34 @@
   <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div>
 
   <div class="page page-offset-navbar page-offset-footer">
-    <div class="top-bar">
-      <div>
-        <h1 class="section-title" style="margin:0;">Historial de torneos</h1>
-        <p class="section-sub" style="margin:6px 0 0;">Resultados de todos los torneos ya finalizados, por modalidad.</p>
-      </div>
-      <a class="back-link" href="index.html"><i class="fa-solid fa-arrow-left"></i> Volver</a>
+    <div class="hero-banner">
+      <picture>
+        <source media="(max-width: 499px)" srcset="img/banners/octobannermobile.webp" />
+        <img src="img/banners/octobanner.webp" alt="El Octágono · Torneos de Counter-Strike 2" />
+      </picture>
     </div>
 
     <div class="season-banner-wrap">
-      <a href="temporada-actual.html" aria-label="Ver la leyenda de la temporada actual"><img class="season-banner-img" id="season-banner-img" alt="" hidden /></a>
+      <img class="season-banner-img" src="img/banners/bannerlite.webp" alt="Temporada actual" />
     </div>
 
-    <div class="season-marquee" id="season-marquee">
-      <div class="season-marquee-track" id="season-marquee-track">
-        <span class="season-marquee-content"></span>
-        <span class="season-marquee-content" aria-hidden="true"></span>
-      </div>
+    <div class="hero">
+      <p class="section-sub" style="margin: 0;">Temporada actual</p>
+      <h1 id="season-lore-title">—</h1>
+      <p id="season-lore-tagline"></p>
     </div>
 
-    <div class="season-heading-block">
-      <h2 class="season-heading-name" id="season-heading-name" hidden></h2>
+    <div class="glass-card about-card" style="max-width: 760px; margin: 0 auto 40px; text-align: left;">
+      <h2 class="section-title" style="text-align: center; margin-bottom: 16px;"><i class="fa-solid fa-book-skull"></i> La leyenda</h2>
+      <div id="season-lore-story"></div>
     </div>
 
-    <div class="history-accordion">
-      <button class="history-accordion-toggle" data-target="duelos-history" aria-expanded="false">
-        <span><i class="fa-solid fa-hand-fist"></i> Duelos</span>
-        <i class="fa-solid fa-chevron-down toggle-icon"></i>
-      </button>
-      <div id="duelos-history" class="history-accordion-panel" hidden></div>
-
-      <button class="history-accordion-toggle" data-target="duos-history" aria-expanded="false">
-        <span><i class="fa-solid fa-people-group"></i> Duos</span>
-        <i class="fa-solid fa-chevron-down toggle-icon"></i>
-      </button>
-      <div id="duos-history" class="history-accordion-panel" hidden></div>
-
-      <button class="history-accordion-toggle" data-target="pug-history" aria-expanded="false">
-        <span><i class="fa-solid fa-users-rectangle"></i> Pug</span>
-        <i class="fa-solid fa-chevron-down toggle-icon"></i>
-      </button>
-      <div id="pug-history" class="history-accordion-panel" hidden></div>
+    <div style="display:flex; flex-direction:column; align-items:center; gap: 16px; margin: 40px 0 0;">
+      <a href="inscripcion.html" class="btn btn-primary btn-block"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
+      <a href="ranking.html" class="btn btn-outline btn-block"><i class="fa-solid fa-ranking-star"></i> Ver tabla de posiciones</a>
+      <a href="index.html" class="btn btn-outline btn-block"><i class="fa-solid fa-arrow-left"></i> Volver</a>
     </div>
 
-    <div style="display:flex; justify-content:flex-end; margin-top: 28px;">
-      <a class="btn btn-ghost" href="index.html"><i class="fa-solid fa-arrow-left"></i> Volver</a>
-    </div>
-
-    <div style="display:flex; flex-direction:column; align-items:center; gap: 16px; margin-top: 12px;">
-      <a class="btn btn-primary btn-block" href="inscripcion.html"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
-      <a class="btn btn-outline btn-block" href="ranking.html"><i class="fa-solid fa-ranking-star"></i> Ver tabla de posiciones</a>
-    </div>
-  
     <div style="display:flex; flex-direction:column; align-items:center; gap: 6px; margin-top: 24px;">
       <a
         href="https://wa.me/593998880675?text=Hola%20Pulpos%2C%20tengo%20una%20pregunta%20sobre%20El%20Oct%C3%A1gono."
@@ -204,13 +180,10 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="js/firebase-sync.js"></script>
   <script src="js/admin-config.js"></script>
   <script src="js/seasons.js"></script>
-  <script src="js/season-heading.js"></script>
-  <script src="js/season-marquee.js"></script>
-  <script src="js/historial.js"></script>
+  <script src="js/season-lore.js"></script>
   <script src="js/player-auth.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/copyright.js"></script>
