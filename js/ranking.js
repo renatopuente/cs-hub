@@ -309,7 +309,7 @@ function buildRanking(seasonIdx, cutoff) {
       const won = isWinningResult(t.result);
       (t.players || []).forEach((rawName) => {
         const name = (rawName || "").trim();
-        if (!name) return;
+        if (!name || name.startsWith("Invitado")) return;
         if (!stats[name]) stats[name] = { name, wins: 0, played: 0, points: 0 };
         stats[name].played += 1;
         if (won) {

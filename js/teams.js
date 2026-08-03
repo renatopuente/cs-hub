@@ -1,5 +1,21 @@
 // Shared team-building logic: team-name pool, shuffling, and roster assignment.
 
+// Perfil de invitado: para que admin/superadmin llenen cupos vacíos cuando
+// no hay suficientes jugadores inscritos (esta página ya está detrás de
+// auth-gate.js, así que solo ellos llegan a este formulario). Cualquier
+// nombre "Invitado N" queda excluido del ranking — ver buildRanking() en
+// js/ranking.js, que filtra por este mismo prefijo.
+const GUEST_NAME_PREFIX = "Invitado";
+const GUEST_SLOTS = 5;
+
+function guestOptionsHtml() {
+  let html = "";
+  for (let i = 1; i <= GUEST_SLOTS; i++) {
+    html += `<option value="${GUEST_NAME_PREFIX} ${i}">${GUEST_NAME_PREFIX} ${i}</option>`;
+  }
+  return html;
+}
+
 const COLOR_POOL = [
   { name: "Alfa Team", hex: "#ff7a1a" },
   { name: "Bravo Team", hex: "#ff5a5a" },

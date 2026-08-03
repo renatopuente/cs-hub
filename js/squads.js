@@ -58,7 +58,8 @@ if (typeof fbSubscribeSolicitudes === "function") {
 }
 
 function playerSelectOptionsHtml() {
-  return inscritosNicknames.map((n) => `<option value="${n}">${n}</option>`).join("");
+  const realOptions = inscritosNicknames.map((n) => `<option value="${n}">${n}</option>`).join("");
+  return `${realOptions}<optgroup label="Invitado (no rankea)">${guestOptionsHtml()}</optgroup>`;
 }
 
 function buildPlayerInputs(numTeams, assignMode) {

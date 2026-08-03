@@ -53,7 +53,8 @@ if (typeof fbSubscribeSolicitudes === "function") {
 }
 
 function playerSelectOptionsHtml() {
-  return inscritosNicknames.map((n) => `<option value="${n}">${n}</option>`).join("");
+  const realOptions = inscritosNicknames.map((n) => `<option value="${n}">${n}</option>`).join("");
+  return `${realOptions}<optgroup label="Invitado (no rankea)">${guestOptionsHtml()}</optgroup>`;
 }
 
 // Pug is always manual (uneven squads like 5v3 can't be auto-shuffled evenly)

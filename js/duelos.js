@@ -51,7 +51,8 @@ if (typeof fbSubscribeSolicitudes === "function") {
 }
 
 function playerSelectOptionsHtml() {
-  return inscritosNicknames.map((n) => `<option value="${n}">${n}</option>`).join("");
+  const realOptions = inscritosNicknames.map((n) => `<option value="${n}">${n}</option>`).join("");
+  return `${realOptions}<optgroup label="Invitado (no rankea)">${guestOptionsHtml()}</optgroup>`;
 }
 
 // Duelos is always exactly 2 players, auto-assigned, best of 3 or 5.
