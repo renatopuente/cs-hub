@@ -321,6 +321,14 @@ lobbyModeButtons.forEach((btn) => {
   });
 });
 
+// Deep-link desde un torneo compartido por WhatsApp (perfil.html?tab=comunidad&mode=pug):
+// abre directo la modalidad correcta en el listado de torneos entre jugadores.
+const communityDeepLinkMode = new URLSearchParams(location.search).get("mode");
+if (communityDeepLinkMode && MODE_LABELS[communityDeepLinkMode]) {
+  const targetModeBtn = document.querySelector(`.lobby-mode-btn[data-lobby-mode="${communityDeepLinkMode}"]`);
+  if (targetModeBtn) targetModeBtn.click();
+}
+
 let currentCreateMode = "duelos";
 document.querySelectorAll(".lobby-create-mode-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -411,6 +419,18 @@ function lobbyActionHtml(lobby) {
   return "";
 }
 
+function lobbyShareText(lobby) {
+  const modeLabel = MODE_LABELS[lobby.mode] || lobby.mode;
+  const [teamA, teamB] = lobby.teams;
+  const link = `https://eloctagono.online/perfil.html?tab=comunidad&mode=${lobby.mode}`;
+  return (
+    `🎮 Partida de ${modeLabel} en El Octágono (Mejor de ${lobby.bestOf})\n` +
+    `${teamA.name} vs ${teamB.name}\n` +
+    `Cupos: ${lobbySlotsSummary(lobby)}\n` +
+    `Únete aquí: ${link}`
+  );
+}
+
 function renderLobbyList() {
   if (!lobbyListEl) return;
   const list = lobbiesByMode[currentLobbyMode] || [];
@@ -444,6 +464,9 @@ function renderLobbyList() {
           ${renderLobbyTeamHtml(lobby, 1)}
         </div>
         ${lobbyActionHtml(lobby)}
+        <button type="button" class="btn btn-outline btn-sm lobby-share-btn" data-share-lobby="${lobby.id}">
+          <i class="fa-brands fa-whatsapp"></i> Compartir por WhatsApp
+        </button>
       </div>
     `
     )
@@ -481,6 +504,15 @@ function renderLobbyList() {
           alert("Ese cupo ya no está disponible.");
           btn.disabled = false;
         });
+    });
+  });
+
+  lobbyListEl.querySelectorAll("[data-share-lobby]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const lobby = list.find((l) => l.id === btn.dataset.shareLobby);
+      if (!lobby) return;
+      const shareUrl = `https://wa.me/?text=${encodeURIComponent(lobbyShareText(lobby))}`;
+      window.open(shareUrl, "_blank", "noopener");
     });
   });
 

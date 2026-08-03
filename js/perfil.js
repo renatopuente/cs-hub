@@ -132,6 +132,18 @@ function renderAvatar(user, profile) {
   profileAvatarEl.src = profile.customPhotoURL || user.photoURL || "img/icons/icono_app-192.png";
 }
 
+// Deep-link desde un torneo compartido por WhatsApp (perfil.html?tab=comunidad):
+// abre directo la pestaña Comunidad en vez de Inicio. Solo se aplica una vez.
+let deepLinkTabApplied = false;
+function applyDeepLinkTab() {
+  if (deepLinkTabApplied) return;
+  deepLinkTabApplied = true;
+  const targetTab = new URLSearchParams(location.search).get("tab");
+  if (!targetTab) return;
+  const targetBtn = [...profileTabButtons].find((b) => b.dataset.tab === targetTab);
+  if (targetBtn) targetBtn.click();
+}
+
 firebase.auth().onAuthStateChanged((user) => {
   profileLoginRequiredEl.hidden = !!user;
   profileTabsWrapEl.hidden = !user;
@@ -148,6 +160,7 @@ firebase.auth().onAuthStateChanged((user) => {
   currentUid = user.uid;
   currentDisplayName = user.displayName || "";
   profileGoogleNameEl.textContent = user.displayName || user.email || "Jugador";
+  applyDeepLinkTab();
 
   loadUserProfile(user.uid).then((profile) => {
     currentProfile = profile;
