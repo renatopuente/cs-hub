@@ -2,18 +2,40 @@
 
 // Perfil de invitado: para que admin/superadmin llenen cupos vacíos cuando
 // no hay suficientes jugadores inscritos (esta página ya está detrás de
-// auth-gate.js, así que solo ellos llegan a este formulario). Cualquier
-// nombre "Invitado N" queda excluido del ranking — ver buildRanking() en
-// js/ranking.js, que filtra por este mismo prefijo.
+// auth-gate.js, así que solo ellos llegan a este formulario). Toda opción
+// "Invitado" trae al lado un input de texto para escribir a mano un tag
+// que lo identifique (ej. "Invitado (Pedro)") — el tag es opcional. Se
+// arma como "Invitado" o "Invitado (tag)"; en ambos casos sigue empezando
+// con "Invitado", que es lo que buildRanking() en js/ranking.js filtra
+// para que sus resultados no rankeen.
 const GUEST_NAME_PREFIX = "Invitado";
-const GUEST_SLOTS = 5;
 
 function guestOptionsHtml() {
-  let html = "";
-  for (let i = 1; i <= GUEST_SLOTS; i++) {
-    html += `<option value="${GUEST_NAME_PREFIX} ${i}">${GUEST_NAME_PREFIX} ${i}</option>`;
-  }
-  return html;
+  return `<option value="${GUEST_NAME_PREFIX}">${GUEST_NAME_PREFIX}</option>`;
+}
+
+// Revela/oculta el input de tag junto a cada select cuando su valor es
+// "Invitado" — se llama una vez después de armar los <select> de una
+// pantalla (cada .field trae el select y su .guest-tag-input hermano).
+function bindGuestTagToggles(container) {
+  container.querySelectorAll("select").forEach((select) => {
+    const tagInput = select.parentElement.querySelector(".guest-tag-input");
+    if (!tagInput) return;
+    select.addEventListener("change", () => {
+      tagInput.hidden = select.value !== GUEST_NAME_PREFIX;
+      if (tagInput.hidden) tagInput.value = "";
+    });
+  });
+}
+
+// Arma el nombre final de un slot: si es un cupo de invitado, combina el
+// tag manual escrito al lado; si no, es simplemente el jugador inscrito
+// elegido en el select.
+function resolvePlayerName(select) {
+  if (select.value !== GUEST_NAME_PREFIX) return select.value;
+  const tagInput = select.parentElement.querySelector(".guest-tag-input");
+  const tag = tagInput ? tagInput.value.trim() : "";
+  return tag ? `${GUEST_NAME_PREFIX} (${tag})` : GUEST_NAME_PREFIX;
 }
 
 const COLOR_POOL = [

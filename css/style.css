@@ -1065,6 +1065,8 @@ input[type="text"]:focus, select:focus {
 
 .manual-team-group .field:last-child { margin-bottom: 0; }
 
+.guest-tag-input { margin-top: 8px; }
+
 /* ---------- Buttons ---------- */
 
 .btn {

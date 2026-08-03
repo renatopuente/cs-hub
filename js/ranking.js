@@ -451,8 +451,11 @@ function renderRanking() {
 
   podiumGridEl.querySelectorAll("[data-share-id]").forEach((btn) => {
     btn.addEventListener("click", () => {
-      const card = btn.closest(".podium-card");
-      shareAsImage(card, "podio-el-octagono.png", "Mi puesto en la tabla de posiciones de El Octágono 🐙");
+      // Capturar .podium-card entero incluiría el reverso (flip-card-back):
+      // html2canvas no respeta backface-visibility/rotateY, así que pintaba
+      // el back encima del front. Se captura solo el front.
+      const front = btn.closest(".flip-card-front");
+      shareAsImage(front, "podio-el-octagono.png", "Mi puesto en la tabla de posiciones de El Octágono 🐙");
     });
   });
 

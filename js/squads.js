@@ -79,6 +79,7 @@ function buildPlayerInputs(numTeams, assignMode) {
               <option value="" disabled selected>Selecciona un jugador inscrito</option>
               ${playerSelectOptionsHtml()}
             </select>
+            <input type="text" class="guest-tag-input" placeholder="Nombre del invitado (opcional)" maxlength="30" hidden />
           </div>
         `;
       }
@@ -96,10 +97,12 @@ function buildPlayerInputs(numTeams, assignMode) {
           <option value="" disabled selected>Selecciona un jugador inscrito</option>
           ${playerSelectOptionsHtml()}
         </select>
+        <input type="text" class="guest-tag-input" placeholder="Nombre del invitado (opcional)" maxlength="30" hidden />
       `;
       playerInputsEl.appendChild(wrap);
     }
   }
+  bindGuestTagToggles(playerInputsEl);
 }
 
 function collectTeams(numTeams, assignMode) {
@@ -107,12 +110,12 @@ function collectTeams(numTeams, assignMode) {
     const groups = [];
     for (let t = 0; t < numTeams; t++) {
       groups.push(
-        Array.from(playerInputsEl.querySelectorAll(`select[data-team="${t}"]`)).map((s) => s.value)
+        Array.from(playerInputsEl.querySelectorAll(`select[data-team="${t}"]`)).map(resolvePlayerName)
       );
     }
     return buildTeamsManual(groups);
   }
-  const names = Array.from(playerInputsEl.querySelectorAll("select")).map((s) => s.value);
+  const names = Array.from(playerInputsEl.querySelectorAll("select")).map(resolvePlayerName);
   return buildTeams(names, numTeams, TEAM_SIZE);
 }
 

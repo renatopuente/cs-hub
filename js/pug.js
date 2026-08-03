@@ -75,17 +75,19 @@ function buildPlayerInputs(sizeA, sizeB) {
             <option value="" disabled selected>Selecciona un jugador inscrito</option>
             ${playerSelectOptionsHtml()}
           </select>
+          <input type="text" class="guest-tag-input" placeholder="Nombre del invitado (opcional)" maxlength="30" hidden />
         </div>
       `;
     }
     group.innerHTML = fieldsHtml;
     playerInputsEl.appendChild(group);
   });
+  bindGuestTagToggles(playerInputsEl);
 }
 
 function collectTeams() {
   const groups = [0, 1].map((t) =>
-    Array.from(playerInputsEl.querySelectorAll(`select[data-team="${t}"]`)).map((s) => s.value)
+    Array.from(playerInputsEl.querySelectorAll(`select[data-team="${t}"]`)).map(resolvePlayerName)
   );
   return buildTeamsManual(groups);
 }

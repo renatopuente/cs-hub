@@ -68,13 +68,15 @@ function buildPlayerInputs() {
         <option value="" disabled selected>Selecciona un jugador inscrito</option>
         ${playerSelectOptionsHtml()}
       </select>
+      <input type="text" class="guest-tag-input" placeholder="Nombre del invitado (opcional)" maxlength="30" hidden />
     `;
     playerInputsEl.appendChild(wrap);
   }
+  bindGuestTagToggles(playerInputsEl);
 }
 
 function collectTeams() {
-  const names = Array.from(playerInputsEl.querySelectorAll("select")).map((s) => s.value);
+  const names = Array.from(playerInputsEl.querySelectorAll("select")).map(resolvePlayerName);
   return buildTeams(names, 2, 1);
 }
 
