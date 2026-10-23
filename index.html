@@ -23,450 +23,251 @@
 <link rel="icon" href="img/icons/favicon.ico" sizes="32x32" />
 <link rel="apple-touch-icon" href="img/icons/icono_app-192.png" />
 <link rel="manifest" href="manifest.json" />
-<meta name="theme-color" content="#9b4dff" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" />
+<meta name="theme-color" content="#0b0a0f" />
+<script>document.documentElement.classList.add("has-js");</script>
+<link rel="preconnect" href="https://api.fontshare.com" />
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600&display=swap" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/home.css" />
 </head>
 <body>
-  <div class="navbar-fixed">
-    <div class="navbar-inner">
-      <div class="navbar-brand-center">
-        <a class="brand" href="index.html"><img class="brand-logo" src="img/logos/octologo.svg" alt="El Octágono · Torneos Online" /></a>
-      </div>
+  <header class="bar">
+    <div class="bar-inner">
+      <a class="bar-brand" href="index.html"><img src="img/logos/octologo.svg" alt="El Octágono · Torneos Online" width="124" height="48" /></a>
 
-      <nav class="main-nav">
-        <a href="index.html"><i class="fa-solid fa-house"></i> Inicio</a>
-
+      <nav class="main-nav" aria-label="Principal">
         <div class="nav-dropdown">
-          <button class="nav-dropdown-toggle" aria-expanded="false">
-            <i class="fa-solid fa-gamepad"></i> Torneos <i class="fa-solid fa-chevron-down nav-dropdown-caret"></i>
-          </button>
+          <button class="nav-dropdown-toggle" aria-expanded="false">Torneos <i class="fa-solid fa-chevron-down nav-dropdown-caret" aria-hidden="true"></i></button>
           <div class="nav-dropdown-menu">
-            <a href="duelos-view.html"><i class="fa-solid fa-hand-fist"></i> Duelos</a>
-            <a href="duos-view.html"><i class="fa-solid fa-people-group"></i> Duos</a>
-            <a href="pug-view.html"><i class="fa-solid fa-users-rectangle"></i> Pug</a>
+            <a href="duelos-view.html">Duelos</a>
+            <a href="duos-view.html">Duos</a>
+            <a href="pug-view.html">Pug</a>
           </div>
         </div>
-
         <div class="nav-dropdown">
-          <button class="nav-dropdown-toggle" aria-expanded="false">
-            <i class="fa-solid fa-ranking-star"></i> Ranking <i class="fa-solid fa-chevron-down nav-dropdown-caret"></i>
-          </button>
+          <button class="nav-dropdown-toggle" aria-expanded="false">Ranking <i class="fa-solid fa-chevron-down nav-dropdown-caret" aria-hidden="true"></i></button>
           <div class="nav-dropdown-menu">
-            <a href="ranking.html"><i class="fa-solid fa-ranking-star"></i> Tabla de posiciones</a>
-            <a href="historial.html"><i class="fa-solid fa-clock-rotate-left"></i> Historial de torneos</a>
+            <a href="ranking.html">Tabla de posiciones</a>
+            <a href="historial.html">Historial de torneos</a>
           </div>
         </div>
-
-        <a href="quienes-somos.html"><i class="fa-solid fa-circle-info"></i> Quiénes somos</a>
-
-        <a href="inscripcion.html" class="btn btn-primary"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
-
-        <button type="button" class="player-login-btn btn btn-ghost btn-sm">
-          <i class="fa-brands fa-google"></i> Continuar con Google
-        </button>
+        <a href="quienes-somos.html">Quiénes somos</a>
+        <button type="button" class="player-login-btn btn-text"><i class="fa-brands fa-google" aria-hidden="true"></i> Continuar con Google</button>
         <div class="player-profile" hidden>
           <a href="perfil.html" class="player-account-link" aria-label="Mi cuenta">
-            <img class="player-avatar" alt="Mi cuenta" />
+            <img class="player-avatar" alt="" width="28" height="28" />
             <span class="player-account-text">Mi cuenta</span>
           </a>
-          <button type="button" class="player-logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
+          <button type="button" class="player-logout-btn btn-text">Cerrar sesión</button>
         </div>
+        <a href="inscripcion.html" class="btn">Inscribirme</a>
       </nav>
 
-      <button type="button" id="install-chip" class="install-chip" hidden>
-        <i class="fa-solid fa-download"></i> Instalar
-      </button>
-      <button class="hamburger-btn" id="hamburger-btn" aria-label="Abrir menú" aria-expanded="false">
-        <i class="fa-solid fa-bars"></i>
-      </button>
+      <button type="button" id="install-chip" class="install-chip btn-text" hidden><i class="fa-solid fa-download" aria-hidden="true"></i> Instalar</button>
+      <button class="hamburger-btn" id="hamburger-btn" aria-label="Abrir menú" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
     </div>
 
     <div class="mobile-menu" id="mobile-menu">
-      <a href="index.html"><i class="fa-solid fa-house"></i> Inicio</a>
-
       <div class="mobile-menu-group">
-        <button class="mobile-menu-group-toggle" aria-expanded="false">
-          <span><i class="fa-solid fa-gamepad"></i> Torneos</span>
-          <i class="fa-solid fa-chevron-down toggle-icon"></i>
-        </button>
+        <button class="mobile-menu-group-toggle" aria-expanded="false"><span>Torneos</span> <i class="fa-solid fa-chevron-down toggle-icon" aria-hidden="true"></i></button>
         <div class="mobile-menu-submenu" hidden>
-          <a href="duelos-view.html" class="mobile-menu-sub"><i class="fa-solid fa-hand-fist"></i> Duelos</a>
-          <a href="duos-view.html" class="mobile-menu-sub"><i class="fa-solid fa-people-group"></i> Duos</a>
-          <a href="pug-view.html" class="mobile-menu-sub"><i class="fa-solid fa-users-rectangle"></i> Pug</a>
+          <a href="duelos-view.html" class="mobile-menu-sub">Duelos</a>
+          <a href="duos-view.html" class="mobile-menu-sub">Duos</a>
+          <a href="pug-view.html" class="mobile-menu-sub">Pug</a>
         </div>
       </div>
-
       <div class="mobile-menu-group">
-        <button class="mobile-menu-group-toggle" aria-expanded="false">
-          <span><i class="fa-solid fa-ranking-star"></i> Ranking</span>
-          <i class="fa-solid fa-chevron-down toggle-icon"></i>
-        </button>
+        <button class="mobile-menu-group-toggle" aria-expanded="false"><span>Ranking</span> <i class="fa-solid fa-chevron-down toggle-icon" aria-hidden="true"></i></button>
         <div class="mobile-menu-submenu" hidden>
-          <a href="ranking.html" class="mobile-menu-sub"><i class="fa-solid fa-ranking-star"></i> Tabla de posiciones</a>
-          <a href="historial.html" class="mobile-menu-sub"><i class="fa-solid fa-clock-rotate-left"></i> Historial de torneos</a>
+          <a href="ranking.html" class="mobile-menu-sub">Tabla de posiciones</a>
+          <a href="historial.html" class="mobile-menu-sub">Historial de torneos</a>
         </div>
       </div>
-
-      <a href="quienes-somos.html"><i class="fa-solid fa-circle-info"></i> Quiénes somos</a>
-
-      <a href="inscripcion.html" class="btn btn-primary btn-block"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
-      <button type="button" class="player-login-btn btn btn-outline btn-block">
-        <i class="fa-brands fa-google"></i> Continuar con Google
-      </button>
+      <a href="quienes-somos.html">Quiénes somos</a>
+      <a href="inscripcion.html" class="btn btn-block">Inscribirme</a>
+      <button type="button" class="player-login-btn btn-text"><i class="fa-brands fa-google" aria-hidden="true"></i> Continuar con Google</button>
       <div class="player-profile" hidden>
         <a href="perfil.html" class="player-account-link" aria-label="Mi cuenta">
-          <img class="player-avatar" alt="Mi cuenta" />
+          <img class="player-avatar" alt="" width="28" height="28" />
           <span class="player-account-text">Mi cuenta</span>
         </a>
-        <button type="button" class="player-logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
+        <button type="button" class="player-logout-btn btn-text">Cerrar sesión</button>
       </div>
     </div>
-  </div>
-
+  </header>
   <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div>
 
-  <div class="page page-offset-footer">
-    <div class="pre-home-banner"></div>
+  <main>
+    <!-- La ficha del torneo: tarjeta impresa con la franja en los tonos de la gema de la temporada, junto a "la sala" (la arena del pulpo). -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-card">
+        <div class="season-stripe" aria-hidden="true">
+          <span style="--c:hsl(266 100% 22%)"></span><span style="--c:hsl(266 100% 27.6%)"></span><span style="--c:hsl(266 100% 33.2%)"></span><span style="--c:hsl(266 100% 38.8%)"></span><span style="--c:hsl(266 100% 44.4%)"></span><span style="--c:hsl(266 100% 50%)"></span><span style="--c:hsl(266 100% 55.6%)"></span><span style="--c:hsl(266 100% 61.2%)"></span><span style="--c:hsl(266 100% 66.8%)"></span><span style="--c:hsl(266 100% 72.4%)"></span><span style="--c:hsl(266 100% 78%)"></span>
+        </div>
+        <div class="hero-body">
+          <img class="hero-wordmark" src="img/logos/octologo.svg" alt="" width="300" height="116" data-reveal />
+          <h1 id="hero-title" data-reveal>Torneos de CS2 entre amigos</h1>
+          <p class="hero-lead" data-reveal>Arma tu dúo o tu escuadra, juega la llave en vivo y sube en el ranking de la temporada.</p>
+          <a href="inscripcion.html" class="btn btn-large">Inscribirme</a>
 
-    <div class="hero-banner" id="hero-banner-scroll" style="cursor:pointer;" title="Ver los modos de torneo">
-      <picture>
-        <source media="(max-width: 499px)" srcset="img/banners/octobannermobile.webp" />
-        <img src="img/banners/octobanner.webp" alt="El Octágono · Torneos de Counter-Strike 2. Compite con tu dúo o escuadra y sigue las llaves en vivo." />
-      </picture>
-    </div>
-
-    <div class="season-marquee" id="season-marquee">
-      <div class="season-marquee-track" id="season-marquee-track">
-        <span class="season-marquee-content"></span>
-        <span class="season-marquee-content" aria-hidden="true"></span>
-      </div>
-    </div>
-
-    <div class="season-banner-wrap">
-      <a href="temporada-actual.html" aria-label="Ver la leyenda de la temporada actual"><img class="season-banner-img" src="img/banners/bannerlite.webp" alt="Temporada actual: Monaco Emerald" /></a>
-    </div>
-
-    <div class="section-heading">
-      <h2>Sigue tus torneos en vivo</h2>
-    </div>
-
-    <div class="bento-grid" id="tournament-modes" style="margin-bottom: 20px;">
-      <div class="glass-card mode-card">
-        <span class="mode-card-status-chip" id="mode-status-duelos" hidden></span>
-        <a class="mode-card-link" href="duelos-view.html">
-          <img class="icon-img" src="img/icons/duelos.png" alt="" />
-          <h2>Duelos</h2>
-          <p>Torneos online 1 vs 1. Duelo directo en serie al mejor de 3 o de 5.</p>
-        </a>
-        <div class="mode-card-ctas">
-          <a class="btn btn-primary" href="duelos-view.html"><i class="fa-solid fa-video"></i> Ver en vivo</a>
-          <a class="btn btn-outline" href="inscripcion.html"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
+          <h2 class="board-title" data-reveal>La arena ahora</h2>
+          <ul class="arena-board" aria-live="polite" data-reveal>
+            <li><a href="duelos-view.html"><span class="board-mode">Duelos</span><span class="board-format">1 vs 1</span><span class="board-state" data-mode="duelos">Ver la llave en vivo</span></a></li>
+            <li><a href="duos-view.html"><span class="board-mode">Duos</span><span class="board-format">2 vs 2</span><span class="board-state" data-mode="duos">Ver la llave en vivo</span></a></li>
+            <li><a href="pug-view.html"><span class="board-mode">Pug</span><span class="board-format">5 vs 5</span><span class="board-state" data-mode="pug">Ver la llave en vivo</span></a></li>
+          </ul>
         </div>
       </div>
 
-      <div class="glass-card mode-card">
-        <span class="mode-card-status-chip" id="mode-status-duos" hidden></span>
-        <a class="mode-card-link" href="duos-view.html">
-          <img class="icon-img" src="img/icons/duos.png" alt="" />
-          <h2>Duos</h2>
-          <p>Torneos online en Duos, equipos de 2 jugadores. De 2 a 8 equipos, en serie, todos contra todos o llaves clásicas.</p>
-        </a>
-        <div class="mode-card-ctas">
-          <a class="btn btn-primary" href="duos-view.html"><i class="fa-solid fa-video"></i> Ver en vivo</a>
-          <a class="btn btn-outline" href="inscripcion.html"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
-        </div>
+      <div class="hero-room" aria-hidden="true">
+        <img class="room-img room-octopus is-on" src="img/banners/octobannermobile.webp" alt="" width="941" height="1672" />
+        <img class="room-img room-frame" src="img/banners/octoframe.webp" alt="" width="2172" height="724" loading="lazy" />
+        <img class="room-img room-city" src="img/seasons/manhatan.webp" alt="" width="1916" height="821" loading="lazy" />
       </div>
+    </section>
 
-      <div class="glass-card mode-card">
-        <span class="mode-card-status-chip" id="mode-status-pug" hidden></span>
-        <a class="mode-card-link" href="pug-view.html">
-          <img class="icon-img" src="img/icons/pug.png" alt="" />
-          <h2>Pug</h2>
-          <p>Torneos online en Pug, el clásico 5 vs 5. Serie al mejor de X partidas.</p>
-        </a>
-        <div class="mode-card-ctas">
-          <a class="btn btn-primary" href="pug-view.html"><i class="fa-solid fa-video"></i> Ver en vivo</a>
-          <a class="btn btn-outline" href="inscripcion.html"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
+    <!-- Los modos como menú impreso: nombre, formato y la regla de cada uno. -->
+    <section class="modes" aria-labelledby="modes-title">
+      <div class="menu-sheet">
+        <h2 id="modes-title" data-reveal>Elige tu modo</h2>
+        <div class="menu-group" data-reveal>
+          <h3>Modos de torneo</h3>
+          <a class="menu-item" href="duelos-view.html">
+            <span class="menu-row"><span class="menu-name">Duelos</span><span class="menu-leader"></span><span class="menu-value">1 vs 1</span></span>
+            <span class="menu-desc">Duelo directo en serie al mejor de 3 o de 5.</span>
+          </a>
+          <a class="menu-item" href="duos-view.html">
+            <span class="menu-row"><span class="menu-name">Duos</span><span class="menu-leader"></span><span class="menu-value">2 vs 2</span></span>
+            <span class="menu-desc">Equipos de 2 jugadores, de 2 a 8 equipos: en serie, todos contra todos o llaves clásicas.</span>
+          </a>
+          <a class="menu-item" href="pug-view.html">
+            <span class="menu-row"><span class="menu-name">Pug</span><span class="menu-leader"></span><span class="menu-value">5 vs 5</span></span>
+            <span class="menu-desc">El clásico de escuadras, en serie al mejor de 1, 3, 5 o 7 partidas. Los equipos pueden ser disparejos.</span>
+          </a>
         </div>
-      </div>
-    </div>
-
-    <div class="section-heading">
-      <h2>Valor de inscripción</h2>
-      <p>Transfiere el valor por QR a Deuna y ya estás participando con tu dúo o equipo, en cualquiera de nuestros modos.</p>
-    </div>
-
-    <div class="bento-grid fee-grid">
-      <div class="glass-card fee-card flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <div class="fee-card-top-row">
-              <div class="icon"><i class="fa-solid fa-gift"></i></div>
-              <button type="button" class="fee-card-readmore-btn fee-card-flip-trigger">Leer más <i class="fa-solid fa-rotate"></i></button>
-            </div>
-            <h2>Amistoso</h2>
-            <div class="fee-price">$0 <span class="unit">USD</span></div>
-            <p>Torneo sin costo de inscripción, solo por diversión.</p>
-            <a href="inscripcion.html#plan-amistoso" class="fee-card-cta">Inscribirme <i class="fa-solid fa-arrow-right"></i></a>
+        <div class="menu-group" data-reveal>
+          <h3>En cada torneo</h3>
+          <div class="menu-item">
+            <span class="menu-row"><span class="menu-name">Llave en vivo</span><span class="menu-leader"></span><span class="menu-value">incluida</span></span>
+            <span class="menu-desc">El sorteo, la llave, el marcador y los resultados en un solo lugar, al instante.</span>
           </div>
-          <div class="flip-card-back">
-            <div class="fee-card-top-row">
-              <h2>Amistoso</h2>
-              <button type="button" class="fee-card-readmore-btn fee-card-flip-trigger">Volver <i class="fa-solid fa-rotate"></i></button>
-            </div>
-            <p>Torneo sin costo de inscripción, ideal para jugar por diversión y conocer la plataforma. Disponible en las tres modalidades: Duelos (1 contra 1), Duos (equipos de 2) y Pug (el clásico 5 contra 5). Perfecto para empezar sin compromiso.</p>
-            <a href="terminos.html" class="fee-card-terms-link">Ver términos y condiciones</a>
-          </div>
+          <a class="menu-item" href="ranking.html">
+            <span class="menu-row"><span class="menu-name">Ranking de la temporada</span><span class="menu-leader"></span><span class="menu-value">incluido</span></span>
+            <span class="menu-desc">Cada victoria suma, con más puntos en los torneos de mayor valor.</span>
+          </a>
+          <a class="menu-item" href="historial.html">
+            <span class="menu-row"><span class="menu-name">Historial</span><span class="menu-leader"></span><span class="menu-value">incluido</span></span>
+            <span class="menu-desc">Ganarle a un amigo queda registrado, no solo en la memoria.</span>
+          </a>
+          <a class="menu-item" href="perfil.html">
+            <span class="menu-row"><span class="menu-name">Comunidad</span><span class="menu-leader"></span><span class="menu-value">con tu cuenta</span></span>
+            <span class="menu-desc">Agrega amigos, arma tu propio torneo e invítalos a llenar los cupos.</span>
+          </a>
         </div>
       </div>
 
-      <div class="glass-card fee-card flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <div class="fee-card-top-row">
-              <div class="icon icon-bronze"><i class="fa-solid fa-medal"></i></div>
-              <button type="button" class="fee-card-readmore-btn fee-card-flip-trigger">Leer más <i class="fa-solid fa-rotate"></i></button>
-            </div>
-            <div class="fee-card-name-row">
-              <h2>Casual</h2>
-              <span class="fee-badge-recommended">Recomendado</span>
-            </div>
-            <div class="fee-price">$1 <span class="unit">USD</span></div>
-            <p>Inscripción por cada jugador, vía QR a Deuna.</p>
-            <a href="inscripcion.html#plan-casual" class="fee-card-cta">Inscribirme <i class="fa-solid fa-arrow-right"></i></a>
-          </div>
-          <div class="flip-card-back">
-            <div class="fee-card-top-row">
-              <h2>Casual</h2>
-              <button type="button" class="fee-card-readmore-btn fee-card-flip-trigger">Volver <i class="fa-solid fa-rotate"></i></button>
-            </div>
-            <p>Inscripción simbólica de $1 por jugador, para partidas con un poco más de motivación sin dejar de ser relajadas. Disponible en Duelos, Duos y Pug · ideal si quieres competir casualmente con tus amigos.</p>
-            <a href="terminos.html" class="fee-card-terms-link">Ver términos y condiciones</a>
-          </div>
+      <div class="mode-plates">
+        <figure data-reveal><img src="img/icons/duelos.png" alt="Un pulpo de vóxeles con dos rifles: Duelos, uno contra uno" width="801" height="377" loading="lazy" /><figcaption>Duelos, 1 vs 1</figcaption></figure>
+        <figure data-reveal><img src="img/icons/duos.png" alt="Dos pulpos de vóxeles armados: Duos, en pareja" width="814" height="519" loading="lazy" /><figcaption>Duos, 2 vs 2</figcaption></figure>
+        <figure class="plate-wide" data-reveal><img src="img/icons/pug.png" alt="Cinco pulpos de vóxeles en formación: Pug, la escuadra de cinco" width="949" height="799" loading="lazy" /><figcaption>Pug, 5 vs 5</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- Carta de los Pulpos (texto de Quiénes somos) y la temporada en curso. -->
+    <section class="story" aria-labelledby="story-title">
+      <article class="letter">
+        <img class="letter-portrait" src="img/icons/icono_app-192.png" alt="" width="44" height="44" />
+        <h2 id="story-title" data-reveal>Hecho por jugadores</h2>
+        <p data-reveal>Jugamos Counter-Strike juntos desde el 1.6, allá por 2002. Han pasado más de dos décadas, muchos mapas y muchas rondas de eco, y ese mismo grupo de amigos sigue organizando partidas cada semana.</p>
+        <p data-reveal>El Octágono nació de una pregunta simple: ¿por qué seguir coordinando torneos entre amigos por chat, con hojas de cálculo y capturas de pantalla, cuando podíamos construir un sitio que lo haga por nosotros?</p>
+        <p data-reveal>Esto no lo hizo una agencia que nunca jugó Counter-Strike. Cada función nació de algo que a nosotros mismos nos hacía falta.</p>
+        <figure class="letter-plate" data-reveal>
+          <img src="img/banners/bannerabout.gif" alt="Dust2 en Counter-Strike 1.6, el mapa donde empezó todo" width="728" height="280" loading="lazy" />
+          <figcaption>Dust2, Counter-Strike 1.6</figcaption>
+        </figure>
+        <p class="letter-sign" data-reveal>Renato Puente y Juan Francisco Ponce<span>Fundadores de El Octágono</span></p>
+        <div class="letter-stub">
+          <a href="mailto:pulpos@eloctagono.online">pulpos@eloctagono.online</a>
+          <a href="https://wa.me/593998880675?text=Hola%20Pulpos%2C%20tengo%20una%20pregunta%20sobre%20El%20Oct%C3%A1gono." target="_blank" rel="noopener">Escríbenos por WhatsApp</a>
+        </div>
+      </article>
+
+      <a class="season-plate" href="temporada-actual.html" data-reveal>
+        <img src="img/seasons/manhatan.webp" alt="Arte de la temporada actual: un pulpo sobre la ciudad de noche" width="1916" height="821" loading="lazy" />
+        <span class="season-name" id="season-name">Temporada actual</span>
+        <span class="season-dates" id="season-dates">Cada temporada dura un trimestre y tiene su propio ranking.</span>
+        <span class="season-more">Leer la leyenda de la temporada</span>
+      </a>
+    </section>
+
+    <!-- La inscripción como ticket: los cinco valores en la parte principal, el pago en el talón. -->
+    <section class="pricing" aria-labelledby="pricing-title">
+      <div class="ticket">
+        <div class="ticket-main">
+          <h2 id="pricing-title" data-reveal>Valor de inscripción</h2>
+          <ul class="ticket-levels" data-reveal>
+            <li><a href="inscripcion.html#plan-amistoso"><span class="lvl">Amistoso</span><span class="menu-leader"></span><span class="lvl-price">$0</span></a><span class="lvl-note">Sin costo, solo por diversión. Ideal para conocer la plataforma.</span></li>
+            <li><a href="inscripcion.html#plan-casual"><span class="lvl">Casual, el recomendado</span><span class="menu-leader"></span><span class="lvl-price">$1</span></a><span class="lvl-note">Simbólico, para partidas con un poco más de motivación.</span></li>
+            <li><a href="inscripcion.html#plan-competitivo"><span class="lvl">Competitivo</span><span class="menu-leader"></span><span class="lvl-price">$2</span></a><span class="lvl-note">Resultados que cuentan doble para el ranking.</span></li>
+            <li><a href="inscripcion.html#plan-premier"><span class="lvl">Premier</span><span class="menu-leader"></span><span class="lvl-price">$5</span></a><span class="lvl-note">El triple de puntos y más prestigio para el campeón.</span></li>
+            <li><a href="inscripcion.html#plan-elite"><span class="lvl">Élite</span><span class="menu-leader"></span><span class="lvl-price">$10</span></a><span class="lvl-note">Nuestro torneo de mayor exigencia, el que más puntos aporta.</span></li>
+          </ul>
+        </div>
+        <div class="ticket-stub">
+          <p class="stub-price" data-reveal>desde $0</p>
+          <p class="stub-label" data-reveal>Por cada jugador, en Duelos, Duos o Pug. Pagas por QR con Deuna y te enviamos el código al confirmar tu inscripción.</p>
+          <a href="inscripcion.html" class="btn btn-bar">Inscribirme</a>
+          <a class="stub-terms" href="terminos.html">Términos y condiciones</a>
         </div>
       </div>
+    </section>
 
-      <div class="glass-card fee-card flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <div class="fee-card-top-row">
-              <div class="icon icon-silver"><i class="fa-solid fa-medal"></i></div>
-              <button type="button" class="fee-card-readmore-btn fee-card-flip-trigger">Leer más <i class="fa-solid fa-rotate"></i></button>
-            </div>
-            <h2>Competitivo</h2>
-            <div class="fee-price">$2 <span class="unit">USD</span></div>
-            <p>Inscripción por cada jugador, vía QR a Deuna.</p>
-            <a href="inscripcion.html#plan-competitivo" class="fee-card-cta">Inscribirme <i class="fa-solid fa-arrow-right"></i></a>
-          </div>
-          <div class="flip-card-back">
-            <div class="fee-card-top-row">
-              <h2>Competitivo</h2>
-              <button type="button" class="fee-card-readmore-btn fee-card-flip-trigger">Volver <i class="fa-solid fa-rotate"></i></button>
-            </div>
-            <p>Inscripción de $2 por jugador para quienes buscan un nivel más serio de competencia. Disponible en Duelos, Duos y Pug, con llaves y resultados que cuentan doble para el ranking de la temporada.</p>
-            <a href="terminos.html" class="fee-card-terms-link">Ver términos y condiciones</a>
-          </div>
-        </div>
+    <!-- Preguntas como texto de lectura: todo respondido a la vista. -->
+    <section class="faq" aria-labelledby="faq-title">
+      <h2 id="faq-title" data-reveal>Preguntas frecuentes</h2>
+      <div class="faq-text" data-reveal>
+        <p><strong>¿Qué es El Octágono?</strong> Una plataforma para organizar torneos de Counter-Strike 2 entre amigos: arma los equipos, sigue la llave en vivo y guarda los resultados, todo en un solo lugar.</p>
+        <p><strong>¿Cómo me inscribo a un torneo?</strong> Entra a Inscribirme, elige el valor de tu torneo (Amistoso, Casual, Competitivo, Premier o Élite) y la modalidad (Duelos, Duos o Pug), y presiona Confirmar. Te escribimos por WhatsApp para coordinar todo.</p>
+        <p><strong>¿Cuánto cuesta participar?</strong> Depende del torneo: Amistoso es gratis, Casual $1, Competitivo $2, Premier $5 y Élite $10, todos por dúo o equipo.</p>
+        <p><strong>¿Cómo pago la inscripción?</strong> Por transferencia vía QR a Deuna. Apenas confirmas tu inscripción por WhatsApp, te enviamos el código para pagar.</p>
+        <p><strong>¿Qué diferencia hay entre Duelos, Duos y Pug?</strong> Duelos es 1 contra 1, Duos son equipos de 2 jugadores (de 2 a 8 equipos), y Pug es el clásico 5 contra 5.</p>
+        <p><strong>¿Qué es una temporada?</strong> Cada temporada dura un trimestre (enero-marzo, abril-junio, julio-septiembre, octubre-diciembre). Al terminar, el ranking se reinicia y empieza una nueva temporada con su propio nombre.</p>
+        <p><strong>¿Dónde veo los resultados y el ranking?</strong> En Resultados, en el menú, están el Historial de torneos y la Tabla de posiciones con las victorias de la temporada actual.</p>
+        <p><strong>¿Quiénes organizan El Octágono?</strong> Un grupo de amigos que juega Counter-Strike desde el 1.6. Puedes conocernos mejor en <a href="quienes-somos.html">Quiénes somos</a>.</p>
       </div>
+    </section>
+  </main>
 
-      <div class="glass-card fee-card flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <div class="fee-card-top-row">
-              <div class="icon icon-gold"><i class="fa-solid fa-trophy"></i></div>
-              <button type="button" class="fee-card-readmore-btn fee-card-flip-trigger">Leer más <i class="fa-solid fa-rotate"></i></button>
-            </div>
-            <h2>Premier</h2>
-            <div class="fee-price">$5 <span class="unit">USD</span></div>
-            <p>Inscripción por cada jugador, vía QR a Deuna.</p>
-            <a href="inscripcion.html#plan-premier" class="fee-card-cta">Inscribirme <i class="fa-solid fa-arrow-right"></i></a>
-          </div>
-          <div class="flip-card-back">
-            <div class="fee-card-top-row">
-              <h2>Premier</h2>
-              <button type="button" class="fee-card-readmore-btn fee-card-flip-trigger">Volver <i class="fa-solid fa-rotate"></i></button>
-            </div>
-            <p>Inscripción de $5 por jugador, el nivel premium de nuestros torneos regulares. Disponible en Duelos, Duos y Pug, con el triple de puntos en el ranking y mayor prestigio para quien se corona campeón.</p>
-            <a href="terminos.html" class="fee-card-terms-link">Ver términos y condiciones</a>
-          </div>
-        </div>
+  <!-- El reverso de la ficha. -->
+  <footer class="card-back">
+    <svg class="scallops" viewBox="0 0 1200 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40 V20 Q50 -10 100 20 Q150 -10 200 20 Q250 -10 300 20 Q350 -10 400 20 Q450 -10 500 20 Q550 -10 600 20 Q650 -10 700 20 Q750 -10 800 20 Q850 -10 900 20 Q950 -10 1000 20 Q1050 -10 1100 20 Q1150 -10 1200 20 V40 Z" /></svg>
+    <div class="card-back-body">
+      <div class="card-back-note">
+        <h2>Nos vemos en la arena</h2>
+        <p>El Octágono es un proyecto de los Pulpos, un grupo de amigos de Ecuador que arma torneos de Counter-Strike desde el 1.6.</p>
       </div>
-
-      <div class="glass-card fee-card flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <div class="fee-card-top-row">
-              <div class="icon icon-platinum"><i class="fa-solid fa-crown"></i></div>
-              <button type="button" class="fee-card-readmore-btn fee-card-flip-trigger">Leer más <i class="fa-solid fa-rotate"></i></button>
-            </div>
-            <h2>Élite</h2>
-            <div class="fee-price">$10 <span class="unit">USD</span></div>
-            <p>Inscripción por cada jugador, vía QR a Deuna.</p>
-            <a href="inscripcion.html#plan-elite" class="fee-card-cta">Inscribirme <i class="fa-solid fa-arrow-right"></i></a>
-          </div>
-          <div class="flip-card-back">
-            <div class="fee-card-top-row">
-              <h2>Élite</h2>
-              <button type="button" class="fee-card-readmore-btn fee-card-flip-trigger">Volver <i class="fa-solid fa-rotate"></i></button>
-            </div>
-            <p>Inscripción de $10 por jugador, nuestro torneo de mayor exigencia y prestigio. Disponible en Duelos, Duos y Pug, y el que más puntos aporta al ranking de la temporada · para los que quieren llegar a la cima.</p>
-            <a href="terminos.html" class="fee-card-terms-link">Ver términos y condiciones</a>
-          </div>
-        </div>
+      <div class="card-back-address">
+        <img class="stamp" src="img/icons/icono_app-192.png" alt="" width="88" height="88" loading="lazy" />
+        <a href="mailto:pulpos@eloctagono.online">pulpos@eloctagono.online</a>
+        <a href="https://wa.me/593998880675?text=Hola%20Pulpos%2C%20tengo%20una%20pregunta%20sobre%20El%20Oct%C3%A1gono." target="_blank" rel="noopener">WhatsApp de ayuda</a>
+        <a href="terminos.html">Términos y Condiciones</a>
+        <a href="privacidad.html">Política de Privacidad</a>
       </div>
     </div>
-
-    <div style="display:flex; flex-direction:column; align-items:center; gap: 16px; margin: 40px 0 0;">
-      <a href="inscripcion.html" class="btn btn-primary btn-block"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
-      <a href="ranking.html" class="btn btn-outline btn-block"><i class="fa-solid fa-ranking-star"></i> Tabla de posiciones</a>
-      <a href="historial.html" class="btn btn-outline btn-block"><i class="fa-solid fa-clock-rotate-left"></i> Ver historial de torneos</a>
-    </div>
-
-    <div class="section-heading" style="margin-top: 56px;">
-      <h2>Preguntas frecuentes</h2>
-      <p>Lo que más nos preguntan sobre El Octágono.</p>
-    </div>
-
-    <div class="faq-list">
-      <div class="faq-item">
-        <button class="faq-toggle" data-target="faq-1" aria-expanded="false">
-          <span>¿Qué es El Octágono?</span>
-          <i class="fa-solid fa-chevron-down toggle-icon"></i>
-        </button>
-        <div id="faq-1" class="faq-answer" hidden>
-          Una plataforma para organizar torneos de Counter-Strike 2 entre amigos: arma los equipos,
-          sigue la llave en vivo y guarda los resultados, todo en un solo lugar.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-toggle" data-target="faq-2" aria-expanded="false">
-          <span>¿Cómo me inscribo a un torneo?</span>
-          <i class="fa-solid fa-chevron-down toggle-icon"></i>
-        </button>
-        <div id="faq-2" class="faq-answer" hidden>
-          Entra a Inscribirme, elige el valor de tu torneo (Amistoso, Casual, Competitivo, Premier o
-          Élite) y la modalidad (Duelos, Duos o Pug), y presiona Confirmar. Te escribimos por
-          WhatsApp para coordinar todo.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-toggle" data-target="faq-3" aria-expanded="false">
-          <span>¿Cuánto cuesta participar?</span>
-          <i class="fa-solid fa-chevron-down toggle-icon"></i>
-        </button>
-        <div id="faq-3" class="faq-answer" hidden>
-          Depende del torneo: Amistoso es gratis, Casual $1, Competitivo $2, Premier $5 y Élite $10,
-          todos por dúo o equipo.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-toggle" data-target="faq-4" aria-expanded="false">
-          <span>¿Cómo pago la inscripción?</span>
-          <i class="fa-solid fa-chevron-down toggle-icon"></i>
-        </button>
-        <div id="faq-4" class="faq-answer" hidden>
-          Por transferencia vía QR a Deuna. Apenas confirmas tu inscripción por WhatsApp, te
-          enviamos el código para pagar.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-toggle" data-target="faq-5" aria-expanded="false">
-          <span>¿Qué diferencia hay entre Duelos, Duos y Pug?</span>
-          <i class="fa-solid fa-chevron-down toggle-icon"></i>
-        </button>
-        <div id="faq-5" class="faq-answer" hidden>
-          Duelos es 1 contra 1, Duos son equipos de 2 jugadores (de 2 a 8 equipos), y Pug es el
-          clásico 5 contra 5.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-toggle" data-target="faq-6" aria-expanded="false">
-          <span>¿Qué es una temporada?</span>
-          <i class="fa-solid fa-chevron-down toggle-icon"></i>
-        </button>
-        <div id="faq-6" class="faq-answer" hidden>
-          Cada temporada dura un trimestre (enero-marzo, abril-junio, julio-septiembre,
-          octubre-diciembre). Al terminar, el ranking se reinicia y empieza una nueva temporada
-          con su propio nombre.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-toggle" data-target="faq-7" aria-expanded="false">
-          <span>¿Dónde veo los resultados y el ranking?</span>
-          <i class="fa-solid fa-chevron-down toggle-icon"></i>
-        </button>
-        <div id="faq-7" class="faq-answer" hidden>
-          En Resultados, en el menú, están el Historial de torneos y la Tabla de posiciones con
-          las victorias de la temporada actual.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-toggle" data-target="faq-8" aria-expanded="false">
-          <span>¿Quiénes organizan El Octágono?</span>
-          <i class="fa-solid fa-chevron-down toggle-icon"></i>
-        </button>
-        <div id="faq-8" class="faq-answer" hidden>
-          Un grupo de amigos que juega Counter-Strike desde el 1.6. Puedes conocernos mejor en
-          Quiénes somos.
-        </div>
-      </div>
-    </div>
-
-    <div style="display:flex; flex-direction:column; align-items:center; gap: 6px; margin-top: 24px;">
-      <a
-        href="https://wa.me/593998880675?text=Hola%20Pulpos%2C%20tengo%20una%20pregunta%20sobre%20El%20Oct%C3%A1gono."
-        target="_blank"
-        rel="noopener"
-        style="color: var(--accent); text-decoration: underline; text-underline-offset: 2px; font-size: 0.9rem;"
-      >Ayuda</a>
-      <a href="mailto:pulpos@eloctagono.online" style="color: var(--text-faint); text-decoration: none; font-size: 0.72rem;">pulpos@eloctagono.online</a>
-      <p style="color: var(--text-faint); font-size: 0.72rem; margin: 0;">v3.0.0</p>
-    </div>
-
-  </div>
-
-  <footer class="site-footer-fixed">
-    <div class="footer-inner">
-      <div class="footer-top">
-        <img class="footer-logo" src="img/logos/octologo.svg" alt="El Octágono" />
-        <div class="footer-divider"></div>
-        <div class="social-icons">
-          <a href="#" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-          <a href="#" aria-label="Twitch"><i class="fa-brands fa-twitch"></i></a>
-          <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-        </div>
-      </div>
-      <div class="footer-legal-row">
-        <a href="terminos.html" class="footer-legal-link">Términos y Condiciones</a>
-        <span class="footer-legal-divider"></span>
-        <a href="privacidad.html" class="footer-legal-link">Política de Privacidad</a>
-      </div>
-      <p class="made-with-love">Diseñado por un equipo de <span style="color: var(--accent);">Pulpos</span> de 🇪🇨 con 💜</p>
-      <footer class="credits">© <span id="copyright-year"></span> El Octágono</footer>
-    </div>
+    <p class="imprint">© <span id="copyright-year"></span> El Octágono · v3.1.0 · Diseñado por los Pulpos de Ecuador</p>
   </footer>
 
   <script src="js/seasons.js"></script>
-  <script src="js/season-marquee.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
   <script src="js/firebase-sync.js"></script>
-  <script src="js/mode-status.js"></script>
   <script src="js/admin-config.js"></script>
   <script src="js/player-auth.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/copyright.js"></script>
+  <script src="js/season-heading.js"></script>
+  <script src="js/home-live.js"></script>
 </body>
 </html>
