@@ -93,7 +93,7 @@ p {
    el foco del teclado se dibuja por dentro. */
 .btn:focus-visible {
   outline-color: #fff;
-  outline-offset: -5px;
+  outline-offset: calc(-5px - var(--bezel, 0px));
 }
 
 .nav-dropdown-menu a:focus-visible,
@@ -120,8 +120,9 @@ p {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  min-height: 48px;
-  padding: 0 24px;
+  --bezel: 0px; /* el marco de vidrio de los llamados a la acción (más abajo) */
+  min-height: calc(48px + 2 * var(--bezel));
+  padding: 0 calc(24px + var(--bezel));
   border: 0;
   /* Degradado morado a rosa de la marca, pedido por el dueño; ambos extremos dejan el texto blanco legible. */
   background: linear-gradient(135deg, var(--accent), var(--accent-2)); /* taste-skill-ignore */
@@ -139,8 +140,8 @@ p {
 }
 
 .btn-large {
-  min-height: 56px;
-  padding: 0 32px;
+  min-height: calc(56px + 2 * var(--bezel));
+  padding: 0 calc(32px + var(--bezel));
   font-size: var(--step-lead);
   letter-spacing: -0.02em;
 }
@@ -151,8 +152,42 @@ p {
 }
 
 .btn-bar {
-  min-height: 56px;
+  min-height: calc(56px + 2 * var(--bezel));
   font-size: var(--step-lead);
+}
+
+/* Los llamados a la acción van dentro de un marco grueso de vidrio: el botón
+   es el marco, translúcido y desenfocado, con un brillo de arriba hacia abajo
+   en el tono de la gema; la cara con el degradado de la marca es ::before,
+   metida --bezel hacia adentro con sus propias esquinas cortadas, y el filo de
+   gema (::after) queda en el borde de afuera. Los botones secundarios
+   (ghost, outline, danger) no llevan marco. */
+.btn:not(.btn-ghost, .btn-outline, .btn-danger) {
+  --bezel: 6px;
+  isolation: isolate;
+  background: linear-gradient(160deg, rgb(255 255 255 / 0.34), rgb(255 255 255 / 0.07) 42%, hsl(var(--season-h, 266) var(--season-s, 100%) 72% / 0.26)); /* taste-skill-ignore: vidrio */
+  background-size: 100% 100%;
+  -webkit-backdrop-filter: blur(12px) saturate(1.5);
+  backdrop-filter: blur(12px) saturate(1.5);
+}
+
+.btn:not(.btn-ghost, .btn-outline, .btn-danger)::before {
+  --face-cut: calc(var(--c-cut, var(--cut)) - var(--bezel) * 0.586);
+  content: "";
+  position: absolute;
+  inset: var(--bezel);
+  z-index: -1;
+  /* Degradado morado a rosa de la marca, pedido por el dueño. */
+  background: linear-gradient(135deg, var(--accent), var(--accent-2)); /* taste-skill-ignore */
+  background-size: 180% 100%;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.3);
+  clip-path: polygon(var(--face-cut) 0, calc(100% - var(--face-cut)) 0, 100% var(--face-cut), 100% calc(100% - var(--face-cut)), calc(100% - var(--face-cut)) 100%, var(--face-cut) 100%, 0 calc(100% - var(--face-cut)), 0 var(--face-cut));
+  transition: background-position 300ms ease-out;
+}
+
+/* En la barra, el marco es más fino para que el botón no la desborde. */
+.bar .btn:not(.btn-ghost, .btn-outline, .btn-danger) {
+  --bezel: 4px;
 }
 
 .btn-text {
@@ -174,7 +209,8 @@ p {
 }
 
 @media (hover: hover) {
-  .btn:hover {
+  .btn:hover,
+  .btn:not(.btn-ghost, .btn-outline, .btn-danger):hover::before {
     background-position: 100% 0;
   }
 

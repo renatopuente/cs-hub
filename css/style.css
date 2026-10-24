@@ -636,9 +636,14 @@ input[readonly] {
 }
 
 .btn-sm {
-  min-height: 40px;
-  padding: 0 16px;
+  min-height: calc(40px + 2 * var(--bezel));
+  padding: 0 calc(16px + var(--bezel));
   font-size: var(--step-small);
+}
+
+/* Los llamados a la acción chicos llevan un marco de vidrio más fino (theme.css). */
+.btn-sm:not(.btn-ghost, .btn-outline, .btn-danger) {
+  --bezel: 4px;
 }
 
 .btn:disabled {
