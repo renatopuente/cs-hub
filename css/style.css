@@ -1551,6 +1551,21 @@ input[readonly] {
   height: auto;
 }
 
+/* El clip de mapas de CS2 en Nosotros, en la banda del banner anterior: el recorte
+   deja afuera el logo del juego (arriba) y la marca de NVIDIA (abajo). */
+.season-banner-clip {
+  aspect-ratio: 13 / 5;
+  overflow: hidden;
+  background: var(--paper-2);
+}
+
+.season-banner-clip video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* La portada de la leyenda: el arte sin texto y el nombre encima, en la zona oscura. */
 .lore-hero {
   position: relative;

@@ -33,7 +33,7 @@ El estado de cada torneo se guarda en Firebase Realtime Database; las páginas `
 
 ## Versionado
 
-El sitio sigue versionado semántico (`vMAJOR.MINOR.PATCH`), mostrado al final de cada página pública. Versión actual: **v3.4.2**.
+El sitio sigue versionado semántico (`vMAJOR.MINOR.PATCH`), mostrado al final de cada página pública. Versión actual: **v3.4.3**.
 
 - **MAJOR**: un sistema o capacidad completamente nueva para la plataforma.
 - **MINOR**: features o secciones nuevas dentro de la versión actual (una página nueva, un flujo nuevo, etc.).
@@ -52,6 +52,7 @@ Al desplegar un cambio que amerite subir de versión, actualiza el número en el
 - **v3.4.0**: aviso «Reconectando…» en las vistas en vivo cuando se corta la conexión con Firebase (`js/live-connection.js`, nodo `.info/connected`). Leyendas de las cuatro temporadas de 2027 en `js/season-lore.js`. Vinculación de cuentas Google ↔ GitHub arreglada (`credentialFromError`; el otro proveedor es fijo porque `fetchSignInMethodsForEmail` devuelve vacío con la protección contra enumeración de correos; el panel no cierra la sesión a mitad de vincular). Las cintas de la portada corren siempre. Preguntas frecuentes, inscripción y términos al día: precio por jugador, Amistoso directo, pago por WhatsApp con QR de Deuna.
 - **v3.4.1**: leyendas y crípticos de las cuatro temporadas de 2028 (Marrakech Jade, Tokio Ónix, Milán Ópalo, Aspen Perla; los crípticos llegan hasta Dubái Aguamarina, enero de 2029). README al día: páginas públicas, varios admins y modos según el código.
 - **v3.4.2**: los llamados a la acción (`.btn` sin ghost, outline ni danger) van dentro de un marco grueso de vidrio desenfocado, con un brillo en el tono de la gema de la temporada; la cara con el degradado de la marca queda metida adentro con sus propias esquinas cortadas (`--bezel`, más fino en la barra y en los botones chicos).
+- **v3.4.3**: en el teléfono la ficha del hero ya no se monta sobre la imagen de la temporada: van separadas, con el mismo hueco que en escritorio. El clip de mapas de CS2 reemplaza al de Dust2 en la carta de la portada y al GIF del banner de Nosotros, recortado para dejar afuera el logo del juego y la marca de NVIDIA.
 
 ## Desarrollo local
 

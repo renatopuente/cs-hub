@@ -423,16 +423,22 @@
   margin: 32px 0;
 }
 
-/* El clip de Dust2 es 4:3 con el marcador arriba y una marca de agua abajo:
-   la banda 2:1 del centro deja las dos afuera. */
+/* El clip de mapas de CS2 trae el logo del juego arriba a la izquierda y una
+   marca de NVIDIA abajo a la derecha: se muestra en una banda 2:1, un poco
+   ampliado y corrido hacia abajo, para que las dos queden afuera del marco. */
+.letter-frame {
+  overflow: hidden;
+  aspect-ratio: 2 / 1;
+  background: var(--paper-2);
+}
+
 .letter-plate video {
   display: block;
   width: 100%;
-  height: auto;
-  aspect-ratio: 2 / 1;
+  height: 100%;
   object-fit: cover;
-  object-position: 50% 50%;
-  background: var(--paper-2);
+  object-position: 50% 56%;
+  transform: scale(1.22);
 }
 
 .letter-plate figcaption {
@@ -659,7 +665,6 @@
 @media (max-width: 960px) {
   .hero {
     grid-template-columns: minmax(0, 1fr);
-    gap: 0;
     min-height: 0;
   }
 
@@ -669,12 +674,6 @@
     order: -1;
     height: 48svh;
     min-height: 280px;
-  }
-
-  .hero-card {
-    position: relative;
-    z-index: 1;
-    margin-top: -24px;
   }
 
   .modes,

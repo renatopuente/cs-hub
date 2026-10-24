@@ -132,7 +132,7 @@
     start();
   }
 
-  // --- El clip de Dust2 de la carta ----------------------------------------
+  // --- El clip de mapas de CS2 de la carta ----------------------------------------
 
   // Se reproduce solo mientras está en pantalla; con menos movimiento pedido
   // se queda en su imagen fija.
