@@ -5,25 +5,25 @@
 
 // Tono y saturación de cada gema de SEASON_GEMS (seasons.js).
 const GEM_HUES = {
-  Sapphire: [224, 82], Emerald: [152, 72], Amethyst: [266, 100], Topaz: [37, 92],
-  Ruby: [337, 86], Opal: [190, 60], Garnet: [350, 64], Jade: [158, 100],
-  Onyx: [240, 8], Diamond: [192, 85], Pearl: [42, 45], Aquamarine: [174, 70],
-  Citrine: [50, 80], Peridot: [74, 55], Moonstone: [220, 35], Turquoise: [175, 68],
+  Zafiro: [224, 82], Esmeralda: [152, 72], Amatista: [266, 100], Topacio: [37, 92],
+  Rubí: [337, 86], Ópalo: [190, 60], Granate: [350, 64], Jade: [158, 100],
+  Ónix: [240, 8], Diamante: [192, 85], Perla: [42, 45], Aguamarina: [174, 70],
+  Citrino: [50, 80], Peridoto: [74, 55], Selenita: [220, 35], Turquesa: [175, 68],
 };
 
 // Arte de cada temporada sin texto horneado (el nombre lo pone la página).
 // Las temporadas sin arte propio usan los tentáculos de la marca.
 const SEASON_ART = {
-  "Manhattan Amethyst": "/img/seasons/manhattan-arte.webp",
-  "Ibiza Topaz": "/img/seasons/ibiza.webp",
+  "Manhattan Amatista": "/img/seasons/manhattan-arte.webp",
+  "Ibiza Topacio": "/img/seasons/ibiza.webp",
 };
 const SEASON_ART_FALLBACK = "/img/banners/octoframe.webp";
 
 // Escenas de la leyenda de cada temporada, con un tentáculo en primer plano,
 // para el hero de la portada. Sin escenas, el hero muestra los tentáculos.
 const SEASON_SCENES = {
-  "Manhattan Amethyst": ["/img/seasons/manhattan-apagon.webp", "/img/seasons/manhattan-metro.webp", "/img/seasons/manhattan-puente.webp"],
-  "Ibiza Topaz": ["/img/seasons/ibiza-muralla.webp", "/img/seasons/ibiza-cueva.webp", "/img/seasons/ibiza-vedra.webp"],
+  "Manhattan Amatista": ["/img/seasons/manhattan-apagon.webp", "/img/seasons/manhattan-metro.webp", "/img/seasons/manhattan-puente.webp"],
+  "Ibiza Topacio": ["/img/seasons/ibiza-muralla.webp", "/img/seasons/ibiza-cueva.webp", "/img/seasons/ibiza-vedra.webp"],
 };
 
 (function () {
@@ -45,7 +45,7 @@ const SEASON_SCENES = {
     else img.remove();
   });
 
-  const hue = GEM_HUES[name.split(" ").pop()];
+  const hue = GEM_HUES[info.gem];
   if (!hue) return;
   root.setProperty("--season-h", hue[0]);
   root.setProperty("--season-s", `${hue[1]}%`);

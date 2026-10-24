@@ -12,7 +12,7 @@
 // temporada no tiene entrada todavía, se usa SEASON_LORE_FALLBACK. Los
 // crípticos se escriben aparte, en CRYPTICS (más abajo).
 const SEASON_LORE = {
-  "Monaco Emerald": {
+  "Mónaco Esmeralda": {
     heroArt: "img/seasons/monaco.webp",
     tagline: "Una frecuencia pirata, un satélite que nadie reclama, y una cuenta regresiva verde que ya empezó.",
     part1: [
@@ -26,7 +26,7 @@ const SEASON_LORE = {
       },
       {
         title: "III. El color del temporizador",
-        text: "Los ingenieros que lograron aislar un fragmento de la señal coincidieron en un detalle: el verde del contador no era el verde estándar de ningún HUD conocido. Era más profundo, casi mineral — el mismo verde, dirían después los que llegaron a jugar esa temporada, de una esmeralda cortada para reflejar la luz de una mira. Alguien, en algún reporte interno, ya la había bautizado: Monaco Emerald.",
+        text: "Los ingenieros que lograron aislar un fragmento de la señal coincidieron en un detalle: el verde del contador no era el verde estándar de ningún HUD conocido. Era más profundo, casi mineral — el mismo verde, dirían después los que llegaron a jugar esa temporada, de una esmeralda cortada para reflejar la luz de una mira. Alguien, en algún reporte interno, ya la había bautizado: Mónaco Esmeralda.",
       },
       {
         title: "IV. Los que decodificaron las coordenadas",
@@ -60,7 +60,7 @@ const SEASON_LORE = {
       },
     ],
   },
-  "Manhattan Amethyst": {
+  "Manhattan Amatista": {
     heroArt: "img/seasons/manhattan-arte.webp",
     tagline: "Un apagón en toda la isla, una sola torre encendida en morado y cristales que crecen donde nadie mira.",
     part1: [
@@ -96,7 +96,7 @@ const SEASON_LORE = {
       },
       {
         title: "VIII. El color de la amatista",
-        text: "Los que llegaron a ganar un clutch esa temporada describen lo mismo: el último segundo antes de que la bomba explote tiene un color, y es morado. Dicen que los cristales se encienden justo ahí, cuando una sola persona decide la ronda. Un reporte interno ya los había bautizado desde el primer apagón, sin que nadie supiera quién lo escribió: Manhattan Amethyst.",
+        text: "Los que llegaron a ganar un clutch esa temporada describen lo mismo: el último segundo antes de que la bomba explote tiene un color, y es morado. Dicen que los cristales se encienden justo ahí, cuando una sola persona decide la ronda. Un reporte interno ya los había bautizado desde el primer apagón, sin que nadie supiera quién lo escribió: Manhattan Amatista.",
       },
       {
         title: "IX. Ocho torres, un solo feed",
@@ -121,26 +121,26 @@ const SEASON_LORE_FALLBACK = {
 // final) de la temporada siguiente, para jugar (js/lore-cipher.js).
 const CIPHERS = {
   city: {
-    pick: (seasonName) => seasonName.split(" ").slice(0, -1).join(" "),
+    pick: (season) => season.city,
     intro: "A mitad de la temporada, la señal soltó una frase torcida. Esconde la ciudad donde el pulpo guardará la próxima gema.",
     solved: (word) => `Descifrado: el pulpo va a ${word}.`,
   },
   gem: {
-    pick: (seasonName) => seasonName.split(" ").pop(),
+    pick: (season) => season.gem,
     intro: "Antes de cortarse, la señal soltó una última frase. Esconde el nombre de la próxima gema.",
     solved: (word) => `Descifrado: la próxima gema es ${word}.`,
   },
 };
 
-// Un críptico por palabra, escrito a mano, con la clave tal como sale de
-// seasonName(). La frase tiene la definición (al principio o al final) y un
-// juego de palabras: indicadores (qué hacer) y materiales (con qué). Las
-// pistas de Significado, Indicador y Materiales muestran definition,
-// indicator y materials; solution se lee al resolver o al rendirse. Una
-// palabra sin críptico acá deja su transmisión oculta: escribir los de la
-// temporada siguiente antes de que empiece.
+// Un críptico por palabra, escrito a mano, con la clave tal como está en
+// SEASON_CITIES o SEASON_GEMS (js/seasons.js). La frase tiene la definición
+// (al principio o al final) y un juego de palabras: indicadores (qué hacer)
+// y materiales (con qué). Las pistas de Significado, Indicador y Materiales
+// muestran definition, indicator y materials; solution se lee al resolver o
+// al rendirse. Una palabra sin críptico acá deja su transmisión oculta:
+// escribir los de la temporada siguiente antes de que empiece.
 const CRYPTICS = {
-  // Para Manhattan Amethyst (oct–dic 2026)
+  // Para Manhattan Amatista (oct–dic 2026)
   Ibiza: {
     clue: "Un Dalí bizarro esconde la isla de la fiesta",
     definition: "la isla de la fiesta",
@@ -148,44 +148,44 @@ const CRYPTICS = {
     materials: "Las letras están en «Dalí bizarro». No cuentan los espacios ni las tildes.",
     solution: "«esconde» marca una palabra escondida: dal·IBIZA·rro.",
   },
-  Topaz: {
-    clue: "La gema amarilla de los ingleses choca con el final de la paz",
-    definition: "la gema amarilla de los ingleses",
-    indicator: "«El final de» se queda solo con la última letra de lo que sigue. «Con» pega una parte detrás de la otra.",
-    materials: "«Choca» se cambia por un verbo de cuatro letras que significa lo mismo; de «la paz» sale una sola letra.",
-    solution: "choca = TOPA (de topar), más el final de la paz = Z: TOPAZ, el topacio en inglés.",
+  Topacio: {
+    clue: "La óptica revuelta con una o da la gema amarilla",
+    definition: "la gema amarilla",
+    indicator: "«Revuelta» avisa un anagrama: las mismas letras en otro orden. «Con» suma lo que sigue; «da» solo une con la definición.",
+    materials: "«La óptica» y «una o», que es una sola letra.",
+    solution: "ÓPTICA + O, revueltas: TOPACIO.",
   },
-  // Para Ibiza Topaz (ene–mar 2027)
+  // Para Ibiza Topacio (ene–mar 2027)
   Osaka: {
-    clue: "La ciudad japonesa se atreve con una ka",
+    clue: "Una osa con las dos primeras del kárate: la ciudad japonesa",
     definition: "la ciudad japonesa",
-    indicator: "«Con» pega una parte detrás de la otra.",
-    materials: "«Se atreve» se cambia por un verbo de tres letras que significa lo mismo; «una ka» es el nombre de una letra, escrito tal cual.",
-    solution: "se atreve = OSA (de osar), más KA: OSAKA.",
+    indicator: "«Las dos primeras de» se queda con las dos primeras letras de lo que sigue. «Con» pega una parte detrás de la otra.",
+    materials: "«Una osa», tal cual, y «kárate».",
+    solution: "OSA más KA, las dos primeras de kárate: OSAKA.",
   },
-  Ruby: {
-    clue: "La gema roja de los ingleses cambia el final del rubí por una y",
-    definition: "la gema roja de los ingleses",
-    indicator: "«Cambia el final por» quita la última letra y pone otra en su lugar.",
-    materials: "«Rubí» y «una y».",
-    solution: "RUB(Í) con una Y en lugar del final: RUBY, el rubí en inglés.",
+  Rubí: {
+    clue: "Un querubín esconde la gema roja",
+    definition: "la gema roja",
+    indicator: "«Esconde» avisa que la respuesta está escrita, seguida, dentro de otra palabra de la frase.",
+    materials: "Las letras están en «querubín». No cuentan las tildes.",
+    solution: "«esconde» marca una palabra escondida: que·RUBÍ·n.",
   },
-  // Para Osaka Ruby (abr–jun 2027)
-  Vienna: {
-    clue: "La ciudad del vals, en inglés, viene sin final y trae sodio",
-    definition: "la ciudad del vals, en inglés",
-    indicator: "«Sin final» quita la última letra. «Trae» suma lo que sigue.",
-    materials: "«Viene» y «sodio», que entra con su símbolo químico.",
-    solution: "VIEN(E) más NA, el símbolo del sodio: VIENNA, Viena en inglés.",
+  // Para Osaka Rubí (abr–jun 2027)
+  Viena: {
+    clue: "Nieva de otra manera en la ciudad del vals",
+    definition: "la ciudad del vals",
+    indicator: "«De otra manera» avisa un anagrama: las mismas letras en otro orden. «En» solo une con la definición.",
+    materials: "Las cinco letras de «nieva».",
+    solution: "NIEVA revuelto: VIENA.",
   },
-  Opal: {
-    clue: "Un aro y un palo cortado: la gema lechosa de los ingleses",
-    definition: "la gema lechosa de los ingleses",
-    indicator: "«Cortado» quita la última letra. «Y» pone una parte detrás de la otra.",
-    materials: "«Un aro» es una letra con esa forma; «un palo» es la palabra tal cual.",
-    solution: "un aro = O, más PAL(O): OPAL, el ópalo en inglés.",
+  Ópalo: {
+    clue: "Un aro junto a un palo forma la gema lechosa",
+    definition: "la gema lechosa",
+    indicator: "«Junto a» pega una parte al lado de la otra. «Forma» solo une con la definición.",
+    materials: "«Un aro» es una letra con esa forma; «un palo» se usa tal cual.",
+    solution: "un aro = O, más PALO: ÓPALO.",
   },
-  // Para Vienna Opal (jul–sep 2027)
+  // Para Viena Ópalo (jul–sep 2027)
   Miami: {
     clue: "Una nota y luego a mí: la ciudad de Florida",
     definition: "la ciudad de Florida",
@@ -193,19 +193,19 @@ const CRYPTICS = {
     materials: "«Una nota» es una nota musical de dos letras; «a mí» se usa tal cual, sin la tilde.",
     solution: "MI, la nota, más A MÍ: MIAMI.",
   },
-  Garnet: {
-    clue: "La gema rojo vino de los ingleses revuelve Tánger",
-    definition: "la gema rojo vino de los ingleses",
-    indicator: "«Revuelve» avisa un anagrama: las mismas letras en otro orden.",
-    materials: "Las seis letras de «Tánger».",
-    solution: "TÁNGER revuelto: GARNET, el granate en inglés.",
+  Granate: {
+    clue: "Tánger revuelto con una a: la gema rojo vino",
+    definition: "la gema rojo vino",
+    indicator: "«Revuelto» avisa un anagrama: las mismas letras en otro orden. «Con» suma lo que sigue.",
+    materials: "Las seis letras de «Tánger» y «una a», que es una sola letra.",
+    solution: "TÁNGER + A, revueltos: GRANATE.",
   },
-  // Para Miami Garnet (oct–dic 2027)
+  // Para Miami Granate (oct–dic 2027)
   Marrakech: {
-    clue: "Ciudad roja de Marruecos: el karma del Che, revuelto con una erre",
+    clue: "Ciudad roja de Marruecos: karma y Che revueltos con otra erre",
     definition: "ciudad roja de Marruecos",
-    indicator: "«Revuelto» avisa un anagrama: las mismas letras en otro orden. «Con» suma lo que sigue; «del» solo une.",
-    materials: "«Karma», «Che» y «una erre», que es una sola letra.",
+    indicator: "«Revueltos» avisa un anagrama: las mismas letras en otro orden. «Y» y «con» suman las partes.",
+    materials: "«Karma», «Che» y «otra erre», que es una sola letra (karma ya trae la primera).",
     solution: "KARMA + CHE + R, revueltos: MARRAKECH.",
   },
   Jade: {
@@ -251,11 +251,11 @@ const CRYPTICS = {
   if (part1El) part1El.innerHTML = renderPanels(lore.part1);
   if (part2El) part2El.innerHTML = renderPanels(lore.part2);
 
-  const nextName = getSeasonInfo(info.index + 1).name;
+  const next = getSeasonInfo(info.index + 1);
   document.querySelectorAll(".lore-cipher[data-cipher]").forEach((el) => {
     const cipher = CIPHERS[el.dataset.cipher];
     if (!cipher) return;
-    const word = cipher.pick(nextName);
+    const word = cipher.pick(next);
     const cryptic = CRYPTICS[word];
     if (!cryptic) return;
     el.querySelector(".lore-cipher-intro").textContent = cipher.intro;

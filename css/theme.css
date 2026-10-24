@@ -515,9 +515,103 @@ p {
   }
 }
 
+/* ---------- Borde de gema ----------
+   Un filo fino en los tonos de la gema de la temporada (--season-h y
+   --season-s, de js/season-tone.js) sobre las piezas de interés: botones,
+   tarjetas y secciones enteras. Sigue las esquinas cortadas, y cada cara toma
+   otro tono, como una piedra tallada. Va en ::after: las piezas que ya usan
+   esa pseudo (.ticket, .bar) no lo llevan. */
+@property --gem-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 200deg;
+}
+
+:root {
+  --gem-hi: hsl(var(--season-h, 266) var(--season-s, 100%) 86% / 0.9);
+  --gem-mid: hsl(var(--season-h, 266) var(--season-s, 100%) 68% / 0.7);
+  --gem-low: hsl(var(--season-h, 266) var(--season-s, 100%) 46% / 0.3);
+}
+
+.btn,
+.letter,
+.arena-board a,
+.mode-plates figure,
+.menu-sheet,
+.page-head,
+.neo-surface,
+.series-score,
+.series-team,
+.lore-panel,
+.lore-cipher,
+.fee-login-prompt,
+.tournament-meta,
+.legal,
+#ranking-empty {
+  position: relative;
+}
+
+/* Las que se cortan con --cut directo, sin --c-cut. */
+.hero-room,
+.mode-plates figure,
+.lore-cipher,
+.legal,
+#ranking-empty {
+  --gem-c: var(--cut);
+}
+
+/* Las secciones enteras llevan el filo un poco más grueso. */
+.hero-card,
+.page-head,
+.lore-hero,
+.lore-cipher,
+.legal,
+.champion-banner {
+  --gem-w: 1.5px;
+}
+
+:is(.btn, .glass-card:not(.flip-card), .hero-card, .season-plate, .letter, .arena-board a, .mode-plates figure, .hero-room, .menu-sheet,
+  .page-head, .neo-surface, .champion-banner, .series-score, .series-team, .lore-panel, .lore-hero, .lore-cipher,
+  .fee-radio, .fee-login-prompt, .tournament-meta, .legal, #ranking-empty,
+  .podium-card.flip-card .flip-card-front, .podium-card.flip-card .flip-card-back)::after {
+  --ring-c: var(--gem-c, var(--c-cut, var(--cut)));
+  --ring-w: var(--gem-w, 1px);
+  --ring-k: calc(var(--ring-c) + var(--ring-w) * 0.414); /* la cara inclinada, corrida hacia adentro lo mismo que las rectas */
+  content: var(--gem-content, "");
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: conic-gradient(from var(--gem-angle), var(--gem-hi), var(--gem-low) 12%, var(--gem-mid) 25%, var(--gem-low) 38%, var(--gem-hi) 50%, var(--gem-low) 62%, var(--gem-mid) 75%, var(--gem-low) 88%, var(--gem-hi));
+  /* Un anillo: el octágono de afuera menos el de adentro (evenodd). */
+  clip-path: polygon(evenodd,
+    var(--ring-c) 0, calc(100% - var(--ring-c)) 0, 100% var(--ring-c), 100% calc(100% - var(--ring-c)), calc(100% - var(--ring-c)) 100%, var(--ring-c) 100%, 0 calc(100% - var(--ring-c)), 0 var(--ring-c), var(--ring-c) 0,
+    var(--ring-k) var(--ring-w), calc(100% - var(--ring-k)) var(--ring-w), calc(100% - var(--ring-w)) var(--ring-k), calc(100% - var(--ring-w)) calc(100% - var(--ring-k)), calc(100% - var(--ring-k)) calc(100% - var(--ring-w)), var(--ring-k) calc(100% - var(--ring-w)), var(--ring-w) calc(100% - var(--ring-k)), var(--ring-w) var(--ring-k), var(--ring-k) var(--ring-w));
+}
+
+/* La captura para compartir (html2canvas) no entiende el anillo: sin filo. */
+.is-capture {
+  --gem-content: none;
+}
+
 /* ---------- Movimiento ---------- */
 
 @media (prefers-reduced-motion: no-preference) {
+  /* En lo que se puede tocar, el brillo da una vuelta por el filo. */
+  :is(.btn, .glass-card.interactive, .arena-board a, .mode-plates figure, .fee-radio)::after {
+    transition: --gem-angle 900ms var(--ease-out);
+  }
+
+  @media (hover: hover) {
+    :is(.btn, .glass-card.interactive, .arena-board a, .mode-plates figure, .fee-radio):hover::after {
+      --gem-angle: 560deg;
+    }
+  }
+
+  :is(.btn, .arena-board a):focus-visible::after,
+  .fee-radio:has(:focus-visible)::after {
+    --gem-angle: 560deg;
+  }
+
   /* La franja de la temporada se despliega al cargar. */
   .season-stripe span {
     animation: stripe-drop 700ms var(--ease-out) both;
