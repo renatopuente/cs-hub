@@ -94,6 +94,7 @@
           <p class="page-lead">Equipos de 2 jugadores. De 2 a 8 equipos, en serie, todos contra todos o llaves clásicas.</p>
         </div>
         <div class="page-head-side">
+          <p class="live-badge is-reconnecting" id="connection-badge" role="status" hidden><span class="blip"></span>Reconectando…</p>
           <div class="live-badge-row" id="live-badge-row" hidden><span class="live-badge"><span class="blip"></span>En vivo</span></div>
           <a class="season-chip" href="temporada-actual.html"><span class="season-chip-name" data-season="name">Temporada actual</span><span class="season-chip-dates" data-season="dates">Ver la leyenda</span></a>
         </div>
@@ -160,13 +161,14 @@
         <a href="privacidad.html">Política de Privacidad</a>
       </div>
     </div>
-    <p class="imprint">© <span id="copyright-year"></span> El Octágono · v3.3.0 · Diseñado por los Pulpos de Ecuador</p>
+    <p class="imprint">© <span id="copyright-year"></span> El Octágono · v3.4.0 · Diseñado por los Pulpos de Ecuador</p>
   </footer>
 
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
   <script src="js/firebase-sync.js"></script>
+  <script src="js/live-connection.js"></script>
   <script src="js/admin-config.js"></script>
   <script src="js/seasons.js"></script>
   <script src="js/season-tone.js"></script>

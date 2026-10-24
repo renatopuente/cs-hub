@@ -29,7 +29,16 @@ function resetLinkPrompt() {
   if (linkAccountPromptEl) linkAccountPromptEl.hidden = true;
 }
 
+// Mientras se vinculan las cuentas no se evalúa el cambio de sesión: el
+// popup de Google entra con una cuenta que recién tiene acceso cuando
+// termina de vincularse, y cerrarla antes cortaría la vinculación.
+let linking = false;
+
 firebase.auth().onAuthStateChanged((user) => {
+  if (!linking) applyAuthState(user);
+});
+
+function applyAuthState(user) {
   const authorized = !!user && (bootstrapMode || isAdminUid(user.uid));
 
   loginGateEl.hidden = authorized;
@@ -51,32 +60,30 @@ firebase.auth().onAuthStateChanged((user) => {
     uidHintEl.hidden = false;
     uidHintEl.textContent = `Bootstrap: tu UID es ${user.uid}. Agrégalo al mapa ADMINS en js/admin-config.js.`;
   }
-});
+}
 
 function handleAccountExists(err) {
-  pendingCredential = err.credential;
+  // En Firebase v10 err.credential llega vacío: la credencial de GitHub
+  // pendiente se saca del error con el proveedor.
+  pendingCredential = firebase.auth.GithubAuthProvider.credentialFromError(err) || err.credential || null;
   const email = (err.customData && err.customData.email) || err.email;
-  if (!email) {
+  if (!pendingCredential || !email) {
     alert("No se pudo iniciar sesión: " + err.message);
     return;
   }
 
-  firebase
-    .auth()
-    .fetchSignInMethodsForEmail(email)
-    .then((methods) => {
-      const providerId = methods[0] || "";
-      const providerLabel = providerId === "google.com" ? "Google" : providerId || "otro proveedor";
+  // La cuenta que ya existe es de Google: es el único otro proveedor del
+  // sitio (player-auth.js). No se le pregunta a Firebase cuál es porque,
+  // con la protección contra la enumeración de correos,
+  // fetchSignInMethodsForEmail devuelve una lista vacía.
+  if (!linkAccountPromptEl || !linkAccountBtn || !linkAccountTextEl) {
+    alert(`Ya existe una cuenta con ${email} usando Google. Inicia sesión con Google primero para poder vincular GitHub.`);
+    return;
+  }
 
-      if (!linkAccountPromptEl || !linkAccountBtn || !linkAccountTextEl) {
-        alert(`Ya existe una cuenta con ${email} usando ${providerLabel}. Inicia sesión con ese proveedor primero para poder vincular GitHub.`);
-        return;
-      }
-
-      linkAccountTextEl.textContent = `Ya existe una cuenta con ${email} usando ${providerLabel}. Inicia sesión con ${providerLabel} para vincular tu acceso de GitHub a esa misma cuenta.`;
-      linkAccountBtn.textContent = `Continuar con ${providerLabel} para vincular`;
-      linkAccountPromptEl.hidden = false;
-    });
+  linkAccountTextEl.textContent = `Ya existe una cuenta con ${email} usando Google. Inicia sesión con Google para vincular tu acceso de GitHub a esa misma cuenta.`;
+  linkAccountBtn.textContent = "Continuar con Google para vincular";
+  linkAccountPromptEl.hidden = false;
 }
 
 if (loginBtn) {
@@ -100,19 +107,25 @@ if (loginBtn) {
 if (linkAccountBtn) {
   linkAccountBtn.addEventListener("click", () => {
     if (!pendingCredential) return;
+    const credential = pendingCredential;
     // El único otro proveedor que existe en este sitio es Google
     // (player-auth.js) — GitHub es exclusivo del panel de admin.
     const provider = new firebase.auth.GoogleAuthProvider();
+    linking = true;
     firebase
       .auth()
       .signInWithPopup(provider)
-      .then((result) => result.user.linkWithCredential(pendingCredential))
+      .then((result) => result.user.linkWithCredential(credential))
       .then(() => {
         resetLinkPrompt();
       })
       .catch((err) => {
         console.error(err);
         alert("No se pudo vincular la cuenta: " + err.message);
+      })
+      .finally(() => {
+        linking = false;
+        applyAuthState(firebase.auth().currentUser);
       });
   });
 }

@@ -354,24 +354,30 @@
   clip-path: polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%);
 }
 
-@media (prefers-reduced-motion: no-preference) {
+/* Las cintas corren siempre, en bucle (pedido del dueño). Con movimiento
+   reducido van a la mitad de velocidad; al pasar el puntero o enfocarlas se
+   detienen para poder leerlas. */
+.ribbon-track {
+  animation: ribbon-run 45s linear infinite;
+}
+
+.season-ribbon.is-alt .ribbon-track {
+  animation-direction: reverse;
+}
+
+.season-ribbon:is(:hover, :focus-visible) .ribbon-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
   .ribbon-track {
-    animation: ribbon-run 60s linear infinite;
+    animation-duration: 90s;
   }
+}
 
-  .season-ribbon.is-alt .ribbon-track {
-    animation-direction: reverse;
-  }
-
-  /* La de cierre es un enlace: se detiene para poder leerla antes de tocarla. */
-  .season-ribbon.is-alt:is(:hover, :focus-visible) .ribbon-track {
-    animation-play-state: paused;
-  }
-
-  @keyframes ribbon-run {
-    to {
-      transform: translateX(-50%);
-    }
+@keyframes ribbon-run {
+  to {
+    transform: translateX(-50%);
   }
 }
 

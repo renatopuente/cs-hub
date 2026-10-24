@@ -108,6 +108,194 @@ const SEASON_LORE = {
       },
     ],
   },
+  "Ibiza Topacio": {
+    tagline: "Una isla de fiesta en pleno invierno, sin una sola luz encendida, y una muralla que brilla en ámbar desde adentro.",
+    part1: [
+      {
+        title: "I. La isla apagada",
+        text: "Tres meses después de que la señal se cortara en Manhattan, apareció en el lugar menos pensado: Ibiza en enero, con las discotecas cerradas y el puerto vacío. A las 3:14 de la madrugada, la muralla de Dalt Vila empezó a brillar desde adentro, en un ámbar caliente que se filtraba por las grietas de la piedra. Los pocos vecinos que se asomaron juran que el muro latía.",
+      },
+      {
+        title: "II. Cristales en la muralla",
+        text: "Al amanecer, las grietas tenían dueño: cristales de topacio del tamaño de un puño, incrustados en la piedra como si hubieran crecido ahí durante siglos. Un arqueólogo del ayuntamiento intentó sacar uno con un cincel y lo dejó a la mitad: el cristal estaba tibio y vibraba con el mismo pitido que todos conocían de Manhattan. La bomba plantada, otra vez, acelerando.",
+      },
+      {
+        title: "III. La arena bajo el mar",
+        text: "Esta vez la marca no apareció en pantallas sino en el agua: en una cala del oeste, la marea baja dejó al descubierto la entrada de una cueva marina. Adentro había corriente, ocho monitores colgados de la roca y un tentáculo de topacio enroscado sobre la mesa de control. La arena de la temporada estaba bajo el nivel del mar, y solo se podía llegar con la marea baja.",
+      },
+      {
+        title: "IV. Los que cruzaron el mar",
+        text: "Llegaron en ferris, en vuelos de madrugada y hasta en un velero prestado. Algunos venían de ganar en Manhattan; otros, de perder ahí por dos décimas y con ganas de cobrársela. En la cueva no había señal de teléfono, así que los equipos tuvieron que aprender algo que en las ciudades grandes se había olvidado: hablarse sin pantalla de por medio, mirándose a los ojos entre ronda y ronda.",
+      },
+      {
+        title: "V. Una frase en la roca",
+        text: "La primera eliminación llegó con un AWP desde el fondo de la cueva, un tiro que nadie vio venir porque el destello rebotó en el agua. Esa misma noche, cuando bajó la marea, apareció una frase tallada en la roca, encima de los monitores. Hablaba de una fiera que duerme todo el invierno y de un arte de pelear con las manos vacías. Nadie entendió qué tenían que ver. Alguien la copió en el chat del torneo con la nota de siempre: el pulpo nunca dice las cosas de frente.",
+      },
+    ],
+    part2: [
+      {
+        title: "VI. El invierno cobra",
+        text: "A mitad de la temporada, el frío ya pesaba tanto como la economía. Las rondas se jugaban con la ropa mojada por la marea y los equipos aprendieron a ahorrar en serio: rondas eco con pistola, rifles comprados entre todos, nadie se daba el lujo de un force-buy a destiempo. Los cristales de la muralla, decían los que pasaban por Dalt Vila de noche, se apagaban un poco cada vez que un equipo se quedaba sin dinero.",
+      },
+      {
+        title: "VII. El haz de Es Vedrà",
+        text: "La final regional se definió en la última ronda, con la bomba plantada y un solo jugador vivo de cada lado. Cuando el defensor cortó el último cable, desde la cima del islote de Es Vedrà salió disparado hacia las nubes un haz de luz ámbar, recto como una antena. Se vio desde toda la isla y desde los barcos que pasaban. Duró exactamente lo que dura una bomba: cuarenta segundos.",
+      },
+      {
+        title: "VIII. El color del topacio",
+        text: "Los que ganaron un clutch esa temporada describen la misma sensación: un calor que sube por las manos justo antes del último disparo, como si alguien encendiera una lámpara ámbar adentro del pecho. Dicen que los cristales de la muralla brillan más en ese instante. Un reporte interno, sin firma, ya les había puesto nombre desde la primera noche: Ibiza Topacio.",
+      },
+      {
+        title: "IX. La marea de la final",
+        text: "La gran final se jugó en la cueva, con la marea bajando minuto a minuto y el agua golpeando la roca detrás de los monitores. El pulpo apareció completo en la boca de la cueva, con los ojos encendidos en ámbar, mirando la partida como un espectador más. Cuando cayó la última ronda, la marea empezó a subir y la señal se cortó. A la mañana siguiente, la entrada de la cueva estaba otra vez bajo el agua.",
+      },
+      {
+        title: "X. La próxima gema",
+        text: "Nadie sabe quién talló la frase de la roca ni cómo llegaron los cristales a una muralla de quinientos años. Los que la descifraron ya saben dónde va a reaparecer la señal. Pero la última transmisión de Ibiza guardó algo más: antes de que la marea tapara la cueva, la señal proyectó otra frase a los pies de un ángel de piedra de la catedral, bañado en una luz roja que nadie supo de dónde salía. Dicen que esconde el nombre de la próxima gema. La pregunta es si tu equipo va a estar ahí cuando se encienda.",
+      },
+    ],
+  },
+  "Osaka Rubí": {
+    tagline: "Un canal de neón que se tiñe de rojo, cerezos que florecen fuera de tiempo y farolillos que se encienden solos.",
+    part1: [
+      {
+        title: "I. El canal rojo",
+        text: "Tres meses después de que la marea tapara la cueva de Ibiza, la señal volvió al otro lado del mundo. A las 3:14 de la madrugada, todos los neones del canal de Dotonbori, en Osaka, se apagaron a la vez y volvieron a encenderse en un solo color: rojo rubí. Debajo del agua, entre los reflejos, algo grande se movió. Los que estaban en el puente juran que vieron un tentáculo apoyarse en la baranda.",
+      },
+      {
+        title: "II. Cristales bajo el agua",
+        text: "Los buzos de la ciudad bajaron al canal al día siguiente. En el fondo, entre bicicletas viejas y monedas, encontraron cristales de rubí que brillaban con luz propia y latían con el pitido de siempre: la bomba plantada, acelerando. Los sacaron en baldes durante toda la tarde. A la noche, el fondo del canal estaba lleno otra vez.",
+      },
+      {
+        title: "III. Cerezos fuera de tiempo",
+        text: "Ese abril los cerezos alrededor del castillo de Osaka florecieron antes que en el resto de Japón, y sus pétalos caían de un rosa tan oscuro que parecía rojo. Sobre la muralla de piedra del castillo aparecieron ocho pantallas colgadas de la nada, con la marca del pulpo, esta vez rubí, y cada tentáculo apuntando a un callejón distinto de la ciudad.",
+      },
+      {
+        title: "IV. Los que llegaron de la isla",
+        text: "Algunos llegaron con la ropa todavía oliendo a la sal de Ibiza; otros eran caras nuevas de Tokio y de Kioto que habían seguido la señal por internet. En un callejón de farolillos rojos, detrás de un puesto de comida que solo abría de noche, estaba la arena: mesas bajas, monitores y un cartel escrito a mano. Los farolillos se encendían solos cada vez que empezaba una partida.",
+      },
+      {
+        title: "V. Nieve en abril",
+        text: "La primera eliminación fue una granada mal medida que rebotó en una pared del callejón y volvió a los pies de quien la tiró. Pero esa noche nadie habló de la ronda: sobre los cerezos del castillo empezó a nevar, en pleno abril, y entre los copos alguien juró oír a lo lejos los compases de un vals. En la nieve de la muralla quedó escrita una frase que no tenía ningún sentido. Debajo, la nota de siempre: el pulpo nunca dice las cosas de frente.",
+      },
+    ],
+    part2: [
+      {
+        title: "VI. El precio del neón",
+        text: "A mitad de la temporada, Osaka cobraba cada ronda. Los equipos comían en los puestos del callejón para ahorrar hasta el último yen y compraban rifles solo cuando alcanzaba para todos. Un force-buy a destiempo costaba tres rondas, y tres rondas en esa frecuencia eran media temporada. Los neones del canal, decían los que cruzaban el puente, se apagaban uno por uno cada vez que un equipo se quedaba sin economía.",
+      },
+      {
+        title: "VII. Retake en el castillo",
+        text: "La final regional se jugó con el castillo de fondo. El equipo atacante plantó la bomba y se escondió entre los cerezos, pero el último defensor vivo hizo el retake solo, entrando por el lado de la muralla que nadie cubría. Ganó la ronda con la vida justa. En ese momento cayeron a la vez todos los pétalos que quedaban en las ramas, como si los árboles también hubieran estado aguantando la respiración.",
+      },
+      {
+        title: "VIII. El color del rubí",
+        text: "Los que ganaron un clutch esa temporada cuentan lo mismo: un instante en que todo el sonido desaparece y la mira se ve teñida de rojo, como mirada a través de un cristal. Dicen que los rubíes del canal brillan más justo ahí. Un reporte interno, sin firma, los había bautizado desde la primera noche: Osaka Rubí.",
+      },
+      {
+        title: "IX. Mil farolillos",
+        text: "La gran final se jugó en el callejón, con mil farolillos encendidos sobre las cabezas de los equipos. El pulpo apareció completo sobre los techos, con los ojos encendidos en rojo, y los farolillos se mecían al ritmo de su respiración. Cuando cayó la última ronda se apagaron todos a la vez, y la señal se cortó, como siempre.",
+      },
+      {
+        title: "X. La próxima gema",
+        text: "Nadie sabe por qué nevó en abril ni quién colgó las pantallas en el castillo. Los que descifraron la frase de la nieve ya saben dónde va a reaparecer la señal. Pero la última transmisión de Osaka guardó algo más: el último día, en la casa de té del fondo del callejón, quedó sobre una mesa un mantel cortado a la mitad, y en la tela que quedaba, bordada con un hilo que ninguna tijera pudo cortar, otra frase tan torcida como la primera. Dicen que esconde el nombre de la próxima gema. La pregunta es si tu equipo va a estar ahí cuando se encienda.",
+      },
+    ],
+  },
+  "Viena Diamante": {
+    tagline: "Una noria que gira sola en la niebla de verano, un baile de máscaras sin invitados y túneles donde brilla el hielo.",
+    part1: [
+      {
+        title: "I. La noria que gira sola",
+        text: "Tres meses después de que se apagaran los farolillos de Osaka, la señal llegó a Viena en pleno verano. A las 3:14 de la madrugada, con el parque cerrado y una niebla rara para julio, la noria gigante del Prater empezó a girar sola. Sus cabinas se encendieron una por una en un blanco helado con destellos cian. El guardia de turno contó ocho vueltas exactas antes de que se detuviera.",
+      },
+      {
+        title: "II. Cristales en las cabinas",
+        text: "Al día siguiente apareció en cada cabina de la noria un cristal transparente, del tamaño de un puño, que cortaba el vidrio de las ventanas como si fuera papel. Un joyero del centro fue a ver uno y salió pálido: no había herramienta en Viena capaz de rayarlo. Pegado al cristal se oía el pitido de siempre: la bomba plantada, acelerando.",
+      },
+      {
+        title: "III. Un baile sin invitados",
+        text: "La marca del pulpo apareció esta vez en un palacio barroco del centro, en un salón de baile cerrado hace años. Ocho espejos mostraban al pulpo, ahora blanco, y el candelabro de cristal colgaba encendido sobre un piso de mármol lleno de máscaras venecianas, como si los invitados se hubieran ido corriendo a mitad del baile. Al fondo, mesas y monitores: la arena estaba lista.",
+      },
+      {
+        title: "IV. Los que llegaron del este",
+        text: "Venían de Osaka con cuentas pendientes de la temporada anterior, y de Praga, Budapest y Múnich, atraídos por el rumor del palacio. La regla del salón quedó clara desde la primera noche: se jugaba con máscara. Nadie sabía con certeza quién estaba del otro lado de la mesa, y en esta frecuencia, decían, eso era lo más honesto que había.",
+      },
+      {
+        title: "V. Una sola nota",
+        text: "La primera eliminación fue un flash tirado al revés que cegó a todo el propio equipo. Pero lo que se recuerda de esa noche es otra cosa: una orquesta que nadie había visto entrar tocó en el salón una sola nota, larga y sostenida, y desde el fondo una voz respondió, como quien levanta la mano y dice presente. En el espejo más grande quedó escrita una frase que no tenía ningún sentido. Debajo, la nota de siempre: el pulpo nunca dice las cosas de frente.",
+      },
+    ],
+    part2: [
+      {
+        title: "VI. El verano cobra",
+        text: "A mitad de la temporada, el calor entraba por las ventanas del palacio y los equipos jugaban con las máscaras empañadas. La economía mandaba: rondas eco con pistola, rifles comprados entre todos, nadie arriesgaba un force-buy a destiempo. Los cristales de la noria, decían los que pasaban por el Prater de noche, perdían brillo cada vez que un equipo se quedaba sin dinero.",
+      },
+      {
+        title: "VII. Por las alcantarillas",
+        text: "La final regional se decidió bajo tierra. El último jugador vivo de su equipo rotó por las viejas alcantarillas abovedadas de Viena para llegar al sitio por donde nadie lo esperaba, siguiendo el brillo de los cristales incrustados en el ladrillo. Llegó con la bomba ya plantada y la desactivó con un segundo de margen. Arriba, en el salón, el candelabro se encendió entero.",
+      },
+      {
+        title: "VIII. El color del diamante",
+        text: "Los que ganaron un clutch esa temporada describen lo mismo: un frío que baja por la espalda en el último segundo y una claridad total, como si todo el salón se volviera transparente. Dicen que los cristales brillan más en ese instante, duros como nada en el mundo. Un reporte interno, sin firma, los había bautizado desde la primera noche: Viena Diamante.",
+      },
+      {
+        title: "IX. La última vuelta",
+        text: "La gran final se jugó en el salón de baile, con todas las máscaras puestas y la noria del Prater visible por la ventana. El pulpo apareció completo detrás de los espejos, con los ojos encendidos en blanco. Cuando cayó la última ronda, la noria dio una última vuelta, se detuvo y la señal se cortó.",
+      },
+      {
+        title: "X. La próxima gema",
+        text: "Nadie sabe quién tocó esa nota ni quién dejó las máscaras en el piso. Los que descifraron la frase del espejo ya saben dónde va a reaparecer la señal. Pero la última transmisión de Viena guardó algo más: en las alcantarillas apareció una caja de contrabando con el sello de un puerto del otro lado del estrecho, en el norte de África, y adentro, sobre un terciopelo color vino, otra frase tan torcida como la primera. Dicen que esconde el nombre de la próxima gema. La pregunta es si tu equipo va a estar ahí cuando se encienda.",
+      },
+    ],
+  },
+  "Miami Granate": {
+    tagline: "Neones de los ochenta en Ocean Drive, una lancha sin piloto en la bahía y un huracán que llega justo a la final.",
+    part1: [
+      {
+        title: "I. Ocean Drive en rojo vino",
+        text: "Tres meses después de que la noria del Prater se detuviera, la señal cruzó el Atlántico. A las 3:14 de la madrugada, los neones de los hoteles art déco de Ocean Drive, en Miami, cambiaron todos al mismo color: un rojo vino profundo, como sacado de los ochenta. En la calle mojada por la lluvia, los que salían de los bares vieron un tentáculo enorme enroscado en una palmera, quieto, mirando.",
+      },
+      {
+        title: "II. Cristales en la arena",
+        text: "Al amanecer, la marea dejó en la playa cristales de granate, oscuros como el vino, que brillaban cuando les daba la luz de los neones. Los turistas se llevaron algunos en los bolsillos. Esa noche, todos los que se habían llevado uno escucharon lo mismo saliendo de su ropa: el pitido de la bomba plantada, acelerando.",
+      },
+      {
+        title: "III. La arena del hotel",
+        text: "La marca del pulpo apareció a la vez en ocho fachadas de Ocean Drive: el pulpo granate, cada tentáculo apuntando a un hotel distinto. Siete estaban cerrados por la temporada de huracanes. En el octavo, en un salón con vista al mar, había mesas, monitores y un cartel escrito a mano: la arena estaba lista.",
+      },
+      {
+        title: "IV. Los que llegaron con la tormenta",
+        text: "Venían de Viena, con la piel blanca de un verano bajo tierra, y de toda América, siguiendo la señal. Miami recibía a los equipos con un calor pegajoso y un aviso en todos los noticieros: se acercaba un huracán. Nadie se fue. En esta frecuencia, decían, lo que viene después de la tormenta siempre es una final.",
+      },
+      {
+        title: "V. Una lancha sin piloto",
+        text: "La primera eliminación fue un jugador que corrió sin pensar hacia un sitio que ya estaba perdido. Pero esa noche se recuerda por otra cosa: una lancha rápida, sin nadie a bordo, cruzó la bahía de Biscayne a toda velocidad dejando una estela de espuma roja. Cuando la encontraron varada, adentro había un póster viejo del Che, una pulsera de las que se compran para el buen karma y, escrita en el casco, una frase que no tenía ningún sentido. Debajo, la nota de siempre: el pulpo nunca dice las cosas de frente.",
+      },
+    ],
+    part2: [
+      {
+        title: "VI. La temporada de huracanes",
+        text: "A mitad de la temporada, el viento ya doblaba las palmeras de Ocean Drive y los equipos jugaban con las ventanas tapadas con tablas. La economía mandaba: rondas eco, rifles compartidos, ningún force-buy a destiempo. Los neones, decían los que pasaban por la calle de noche, parpadeaban cada vez que un equipo se quedaba sin dinero.",
+      },
+      {
+        title: "VII. Persecución en la bahía",
+        text: "La final regional se jugó con la bahía de fondo y los rascacielos de Brickell encendidos en granate. El último jugador vivo de cada equipo se buscó durante cuarenta segundos sin cruzarse, como dos lanchas en la niebla, hasta que uno cometió el error de moverse. La ronda terminó con un solo disparo. Afuera, sobre la estela de la lancha que nadie piloteaba, un tentáculo se levantó del agua formando un arco y volvió a hundirse.",
+      },
+      {
+        title: "VIII. El color del granate",
+        text: "Los que ganaron un clutch esa temporada cuentan lo mismo: un instante en que el ruido del viento desaparece y todo se ve de color vino, como mirado a través de una copa. Dicen que los cristales de la playa brillan más justo ahí. Un reporte interno, sin firma, los había bautizado desde la primera noche: Miami Granate.",
+      },
+      {
+        title: "IX. El ojo del huracán",
+        text: "La gran final se jugó la misma noche en que llegó el huracán. Afuera el mar se levantaba y los relámpagos caían en granate sobre el skyline. Justo en la última ronda, el ojo pasó por encima del hotel: silencio total, cielo despejado y dos tentáculos enormes alzándose desde el mar. Cuando cayó la última ronda, volvió el viento y la señal se cortó.",
+      },
+      {
+        title: "X. La próxima gema",
+        text: "Nadie sabe quién piloteaba esa lancha ni cómo supo el pulpo cuándo pasaría el ojo del huracán. Los que descifraron la frase del casco ya saben dónde va a reaparecer la señal. Pero la última transmisión de Miami guardó algo más: en el silencio del ojo, antes de que volviera el viento, todos los equipos escucharon por los auriculares una risa corta, y el mar se tiñó de verde durante un segundo. Después llegó otra frase, tan torcida como la primera. Dicen que esconde el nombre de la próxima gema. La pregunta es si tu equipo va a estar ahí cuando se encienda.",
+      },
+    ],
+  },
 };
 
 const SEASON_LORE_FALLBACK = {

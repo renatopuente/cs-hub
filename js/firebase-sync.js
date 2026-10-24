@@ -32,6 +32,13 @@ function fbSubscribe(mode, onData) {
   fbDb.ref(`tournaments/${mode}`).on("value", (snapshot) => onData(snapshot.val()));
 }
 
+// Whether this page is connected to Firebase right now (the special
+// .info/connected node): true while the live socket is up, false while it
+// reconnects. Used by js/live-connection.js on the live views.
+function fbSubscribeConnection(onChange) {
+  fbDb.ref(".info/connected").on("value", (snapshot) => onChange(snapshot.val() === true));
+}
+
 // Admin pages call this once on load, to check Firebase (the real source of
 // truth) for an already-in-progress tournament — localStorage is only a
 // per-browser cache and won't know about tournaments started elsewhere.

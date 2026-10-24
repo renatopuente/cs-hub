@@ -46,34 +46,32 @@ function goAfterLogin(user) {
 // sesión primero con ese otro proveedor y vincular ambas cuentas bajo
 // el mismo UID — mismo mecanismo que auth-gate.js del lado de GitHub.
 function handleAccountExists(err) {
-  const pendingCredential = err.credential;
+  // En Firebase v10 err.credential llega vacío: la credencial de Google
+  // pendiente se saca del error con el proveedor.
+  const pendingCredential = firebase.auth.GoogleAuthProvider.credentialFromError(err) || err.credential || null;
   const email = (err.customData && err.customData.email) || err.email;
-  if (!email) {
+  if (!pendingCredential || !email) {
     alert("No se pudo iniciar sesión: " + err.message);
     return;
   }
 
+  // La cuenta que ya existe es de GitHub: es el único otro proveedor del
+  // sitio (el panel de admin). No se le pregunta a Firebase cuál es porque,
+  // con la protección contra la enumeración de correos,
+  // fetchSignInMethodsForEmail devuelve una lista vacía.
+  const proceed = confirm(
+    `Ya existe una cuenta con ${email} usando GitHub. ¿Iniciar sesión con GitHub para vincular tu acceso de Google a esa misma cuenta?`
+  );
+  if (!proceed) return;
+
   firebase
     .auth()
-    .fetchSignInMethodsForEmail(email)
-    .then((methods) => {
-      const providerId = methods[0] || "";
-      const providerLabel = providerId === "github.com" ? "GitHub" : providerId || "otro proveedor";
-      const proceed = confirm(
-        `Ya existe una cuenta con ${email} usando ${providerLabel}. ¿Iniciar sesión con ${providerLabel} para vincular tu acceso de Google a esa misma cuenta?`
-      );
-      if (!proceed) return;
-
-      const otherProvider = providerId === "github.com" ? new firebase.auth.GithubAuthProvider() : new firebase.auth.GoogleAuthProvider();
-      firebase
-        .auth()
-        .signInWithPopup(otherProvider)
-        .then((signInResult) => signInResult.user.linkWithCredential(pendingCredential))
-        .then((linkResult) => goAfterLogin(linkResult.user))
-        .catch((err2) => {
-          console.error(err2);
-          alert("No se pudo vincular la cuenta: " + err2.message);
-        });
+    .signInWithPopup(new firebase.auth.GithubAuthProvider())
+    .then((signInResult) => signInResult.user.linkWithCredential(pendingCredential))
+    .then((linkResult) => goAfterLogin(linkResult.user))
+    .catch((err2) => {
+      console.error(err2);
+      alert("No se pudo vincular la cuenta: " + err2.message);
     });
 }
 

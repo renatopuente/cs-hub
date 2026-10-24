@@ -2759,6 +2759,22 @@ span.lobby-slot-open {
   background: var(--win);
 }
 
+/* Sin conexión con Firebase (js/live-connection.js): lo de la pantalla puede
+   estar viejo, así que "En vivo" se esconde y queda el aviso en ámbar. */
+.live-badge.is-reconnecting {
+  margin: 0 0 0 auto;
+  background: rgb(255 184 77 / 0.14);
+  color: #ffc56b;
+}
+
+.live-badge.is-reconnecting .blip {
+  background: #ffc56b;
+}
+
+.is-offline .live-badge-row {
+  display: none;
+}
+
 /* El pie viejo del panel de administración. */
 footer.credits {
   margin-top: 60px;

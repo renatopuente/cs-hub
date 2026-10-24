@@ -28,7 +28,7 @@ El estado de cada torneo se guarda en Firebase Realtime Database; las páginas `
 
 ## Versionado
 
-El sitio sigue versionado semántico (`vMAJOR.MINOR.PATCH`), mostrado al final de cada página pública. Versión actual: **v3.3.0**.
+El sitio sigue versionado semántico (`vMAJOR.MINOR.PATCH`), mostrado al final de cada página pública. Versión actual: **v3.4.0**.
 
 - **MAJOR**: un sistema o capacidad completamente nueva para la plataforma.
 - **MINOR**: features o secciones nuevas dentro de la versión actual (una página nueva, un flujo nuevo, etc.).
@@ -44,6 +44,7 @@ Al desplegar un cambio que amerite subir de versión, actualiza el número en el
 - **v3.2.1**: las temporadas pasan al español (Manhattan Amatista, Ibiza Topacio, Osaka Rubí…; `SEASON_CITIES` y `SEASON_GEMS` en `js/seasons.js`, y `getSeasonInfo` ahora trae `city` y `gem` aparte), con los crípticos reescritos para las respuestas en español. Los nombres son solo para mostrar: los registros se asignan a una temporada por fecha. Borde de gema en `css/theme.css`: un filo fino en los tonos de la gema de la temporada sobre botones, tarjetas y secciones, que sigue las esquinas cortadas y da una vuelta de brillo al pasar el puntero.
 - **v3.2.2**: Viena pasa a llevar Diamante, una gema más conocida, y Ópalo pasa a Milán (jul–sep 2028). El críptico de la gema del final de Osaka Rubí ahora esconde DIAMANTE.
 - **v3.3.0**: cintas de la temporada en la portada (`js/season-marquee.js`): arriba el nombre y las fechas, abajo el cierre, los días que faltan y cuándo empieza la siguiente (sin nombrarla, porque es la respuesta de los crípticos), en dos tonos de la gema, una con los tonos al revés. Imágenes nuevas de los modos (`img/modos/`, el mismo pulpo operador en las tres, con transparencia), cuya columna acompaña el scroll. En inscripción, el Amistoso dice «Inscribirme ahora» y los torneos pagos «Pagar ahora». Escenas y arte de Osaka Rubí, Viena Diamante y Miami Granate en `SEASON_SCENES` y `SEASON_ART`.
+- **v3.4.0**: aviso «Reconectando…» en las vistas en vivo cuando se corta la conexión con Firebase (`js/live-connection.js`, nodo `.info/connected`). Leyendas de las cuatro temporadas de 2027 en `js/season-lore.js`. Vinculación de cuentas Google ↔ GitHub arreglada (`credentialFromError`; el otro proveedor es fijo porque `fetchSignInMethodsForEmail` devuelve vacío con la protección contra enumeración de correos; el panel no cierra la sesión a mitad de vincular). Las cintas de la portada corren siempre. Preguntas frecuentes, inscripción y términos al día: precio por jugador, Amistoso directo, pago por WhatsApp con QR de Deuna.
 
 ## Desarrollo local
 
