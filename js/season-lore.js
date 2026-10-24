@@ -296,6 +296,194 @@ const SEASON_LORE = {
       },
     ],
   },
+  "Marrakech Jade": {
+    tagline: "Una ciudad roja que amanece verde, un zoco donde nadie encuentra la salida y un minarete que se enciende solo.",
+    part1: [
+      {
+        title: "I. El minarete verde",
+        text: "Tres meses después de que el huracán se llevara la señal de Miami, apareció en Marrakech, la ciudad roja. A las 3:14 de la madrugada, el minarete de la Koutoubia se encendió de arriba abajo en un verde jade que no salía de ninguna lámpara. Los vendedores que dormían en la plaza Jemaa el-Fna se despertaron todos a la vez, como si alguien los hubiera llamado por su nombre.",
+      },
+      {
+        title: "II. Cristales en el zoco",
+        text: "Al amanecer, los puestos del zoco aparecieron con cristales de jade entre las especias y las lámparas de bronce, verdes como el agua de una fuente vieja. Un comerciante quiso venderlos por kilo y, apenas los tocó, se le durmió la mano. Pegado a cada cristal se oía el pitido de siempre: la bomba plantada, acelerando.",
+      },
+      {
+        title: "III. El laberinto",
+        text: "La marca del pulpo apareció pintada en ocho puertas del zoco, cada tentáculo apuntando a un callejón distinto. Siete callejones no llevaban a ninguna parte. El octavo terminaba en un riad con una fuente en el centro, mesas alrededor y monitores colgados de los arcos. La arena estaba lista, pero llegar sin perderse ya era la primera ronda.",
+      },
+      {
+        title: "IV. Los que llegaron tras la tormenta",
+        text: "Llegaron desde Miami con la ropa todavía húmeda del huracán, desde Europa en vuelos de madrugada y desde el sur, cruzando el Atlas nevado en pleno enero. En el riad no había relojes: el llamado a la oración marcaba las pausas entre partidas. Los propios equipos pusieron la regla nueva: el que se perdía en el zoco al llegar jugaba la primera ronda con pistola.",
+      },
+      {
+        title: "V. Una frase en el mosaico",
+        text: "La primera eliminación fue un jugador que se escondió tan bien en un rincón del mapa que su propio equipo no lo encontró para el retake. Esa noche, en el mosaico de la fuente, apareció una frase que no tenía ningún sentido. Un jugador que estaba desde el principio dijo que esas mismas letras ya las había visto una vez, hace dos años, en la primera temporada de todas. Debajo, la nota de siempre: el pulpo nunca dice las cosas de frente.",
+      },
+    ],
+    part2: [
+      {
+        title: "VI. La economía del zoco",
+        text: "A mitad de la temporada, en Marrakech todo se regateaba, hasta las rondas. Los equipos compraban rifles a medias, se prestaban dinero entre partidas y pagaban las deudas en rondas eco. Un force-buy a destiempo costaba tres rondas. Los cristales del zoco, decían los vendedores, se ponían opacos cada vez que un equipo se quedaba sin economía.",
+      },
+      {
+        title: "VII. Retake en el jardín azul",
+        text: "La final regional se jugó en un jardín de paredes azul intenso, entre cactus y estanques. La bomba quedó plantada junto al agua y los atacantes se repartieron detrás de las palmeras. El último defensor vivo entró por la única puerta que nadie miraba y desactivó la bomba con medio segundo de margen. Los estanques del jardín se pusieron verde jade hasta el amanecer.",
+      },
+      {
+        title: "VIII. El color del jade",
+        text: "Los que ganaron un clutch esa temporada cuentan lo mismo: una calma extraña en el último segundo, como si el ruido de la plaza se apagara y quedara solo el agua de la fuente. Dicen que los cristales del zoco brillan más justo ahí. Un reporte interno, sin firma, los había bautizado desde la primera noche: Marrakech Jade.",
+      },
+      {
+        title: "IX. La noche de la plaza",
+        text: "La gran final se jugó en la plaza Jemaa el-Fna, con los puestos de comida encendidos y miles de personas mirando las pantallas. El pulpo apareció completo sobre los techos de la medina, con los ojos encendidos en verde y los tentáculos colgando entre las torres. Cuando cayó la última ronda, el minarete se apagó y la señal se cortó.",
+      },
+      {
+        title: "X. La próxima gema",
+        text: "Nadie sabe quién pintó las puertas del zoco ni quién encendió el minarete. Los que descifraron la frase del mosaico ya saben dónde va a reaparecer la señal. Pero la última transmisión de Marrakech guardó algo más: en el cielo del desierto se vio por un segundo un pájaro de fuego que se apagaba en el aire, y en la arena quedó un anillo negro con otra frase tan torcida como la primera. Dicen que esconde el nombre de la próxima gema. La pregunta es si tu equipo va a estar ahí cuando se encienda.",
+      },
+    ],
+  },
+  "Tokio Ónix": {
+    tagline: "Las pantallas de Shibuya se apagan en negro, la torre de Tokio desaparece en la noche y el metro no termina nunca.",
+    part1: [
+      {
+        title: "I. Shibuya en negro",
+        text: "Tres meses después de que se apagara el minarete de Marrakech, la señal llegó a Tokio. A las 3:14 de la madrugada, todas las pantallas del cruce de Shibuya se pusieron en negro a la vez, un negro tan pulido que reflejaba la lluvia. En medio del cruce, los que esperaban el último tren vieron pasar entre los paraguas algo largo, oscuro y brillante, como un tentáculo de piedra.",
+      },
+      {
+        title: "II. Cristales en el andén",
+        text: "Al día siguiente, en una estación del metro que no figura en ningún mapa, aparecieron cristales de ónix, negros y brillantes como espejos. Los guardias que bajaron a verlos dijeron que en ellos se veía la propia cara un poco distinta, un poco más cansada. Pegado a cada cristal, el pitido de siempre: la bomba plantada, acelerando.",
+      },
+      {
+        title: "III. La torre que desaparece",
+        text: "La torre de Tokio, que siempre brilla en rojo y blanco, se apagó entera una noche y volvió a encenderse en negro, con una sola luz arriba: la marca del pulpo. Desde su punta salían ocho rayos hacia ocho azoteas de la ciudad. En la octava, entre antenas y aires acondicionados, había mesas, monitores y un cartel escrito a mano. La arena estaba lista.",
+      },
+      {
+        title: "IV. Los que llegaron del desierto",
+        text: "Venían de Marrakech con arena todavía en las zapatillas, y de Seúl, Shanghái y Manila, siguiendo la señal. Tokio los recibió con la lluvia de abril y reglas estrictas: en la azotea no se gritaba, se jugaba en silencio y se saludaba con una inclinación antes de cada serie. Algunos rivales de temporadas anteriores, decían, se reconciliaron ahí sin decir una palabra.",
+      },
+      {
+        title: "V. Andén tras andén",
+        text: "La primera eliminación fue un equipo entero que perdió el tren, literal: se quedaron dormidos en el metro y llegaron tarde a su primera serie. Esa noche, uno de ellos contó que el metro de Tokio parecía no terminar nunca, andén tras andén, como si fueran mil. En el último, sobre el afiche de una pasarela de Harajuku, alguien había escrito una frase que no tenía ningún sentido. Debajo, la nota de siempre: el pulpo nunca dice las cosas de frente.",
+      },
+    ],
+    part2: [
+      {
+        title: "VI. La economía de la lluvia",
+        text: "A mitad de la temporada la lluvia no paraba y los equipos jugaban empapados después de correr entre estaciones. Se ahorraba hasta el último yen: rondas eco con pistola, rifles comprados solo cuando alcanzaba para todos. Los cristales del andén, decían los guardias, se opacaban cada vez que un equipo se quedaba sin economía, y una pantalla de Shibuya se apagaba.",
+      },
+      {
+        title: "VII. El cruce",
+        text: "La final regional se definió en el cruce de Shibuya, con las pantallas apagadas y miles de paraguas cruzando al mismo tiempo. El último atacante vivo plantó la bomba en el centro del cruce y esperó quieto entre la gente. El defensor lo encontró por su reflejo en un charco y lo eliminó con un solo tiro. Las pantallas volvieron a encenderse, todas en negro.",
+      },
+      {
+        title: "VIII. El color del ónix",
+        text: "Los que ganaron un clutch esa temporada cuentan lo mismo: en el último segundo todo se vuelve negro alrededor de la mira, como si el mundo se pusiera un espejo enfrente, y solo queda el objetivo. Dicen que los cristales del andén brillan más justo ahí. Un reporte interno, sin firma, los había bautizado desde la primera noche: Tokio Ónix.",
+      },
+      {
+        title: "IX. La azotea de la final",
+        text: "La gran final se jugó en la azotea, con la lluvia golpeando los toldos y la torre de Tokio de fondo. El pulpo apareció completo detrás de la torre, con los ojos encendidos en un brillo negro que no debería existir. Cuando cayó la última ronda, la torre volvió a su rojo y blanco de siempre, y la señal se cortó.",
+      },
+      {
+        title: "X. La próxima gema",
+        text: "Nadie sabe quién apagó la torre ni adónde llevaba ese metro sin fin. Los que descifraron la frase del afiche ya saben dónde va a reaparecer la señal. Pero la última transmisión de Tokio guardó algo más: en un jardín de piedras cerca de la azotea apareció un aro colgado de un palo de bambú, de un blanco lechoso que cambiaba de color con la luz, y debajo, otra frase tan torcida como la primera. Dicen que esconde el nombre de la próxima gema. La pregunta es si tu equipo va a estar ahí cuando se encienda.",
+      },
+    ],
+  },
+  "Milán Ópalo": {
+    tagline: "Un desfile sin modelos, una catedral con agujas que brillan como la leche y un teatro donde suena una sola nota.",
+    part1: [
+      {
+        title: "I. El Duomo encendido",
+        text: "Tres meses después de que la torre de Tokio volviera a su color, la señal llegó a Milán en pleno verano. A las 3:14 de la madrugada, las agujas de mármol del Duomo empezaron a brillar desde adentro con un blanco lechoso que cambiaba según desde dónde se mirara: rosa, verde, celeste. Los que salían de los bares de la plaza juraron que una de las agujas se movió.",
+      },
+      {
+        title: "II. Cristales en la galería",
+        text: "Al día siguiente, en el piso de mosaico de la Galería Vittorio Emanuele, debajo de la gran cúpula de vidrio, aparecieron cristales de ópalo, lechosos y llenos de colores por dentro. La gente se acostaba en el piso para verlos de cerca. Pegado a cada uno se oía el pitido de siempre: la bomba plantada, acelerando.",
+      },
+      {
+        title: "III. El desfile vacío",
+        text: "La marca del pulpo apareció en la pasarela de un palacio donde se hacía la semana de la moda: ocho pantallas mostraban al pulpo, iridiscente, desfilando entre luces, sin modelos y sin público. Al final de la pasarela, donde suelen estar los fotógrafos, había mesas, monitores y un cartel escrito a mano. La arena estaba lista.",
+      },
+      {
+        title: "IV. Los que llegaron de la lluvia",
+        text: "Venían de Tokio con la ropa todavía oliendo a lluvia, y de toda Europa, atraídos por el rumor del desfile. Milán los recibió con el calor de agosto y una ciudad medio vacía por las vacaciones. En la pasarela se jugaba con ropa prestada del palacio, y más de un equipo, decían, ganó una serie solo por cómo entró.",
+      },
+      {
+        title: "V. Nieve en agosto",
+        text: "La primera eliminación fue un equipo que perdió tres rondas seguidas por pelearse en el micrófono. Esa noche, sus penas fueron el tema de toda la arena, hasta que pasó algo más raro: en pleno agosto, sobre los techos del Duomo, cayó una nieve fina, como la de una pista de esquí en la montaña. En la nieve del techo quedó escrita una frase que no tenía ningún sentido. Debajo, la nota de siempre: el pulpo nunca dice las cosas de frente.",
+      },
+    ],
+    part2: [
+      {
+        title: "VI. El verano cobra",
+        text: "A mitad de la temporada, el calor de Milán entraba por las ventanas del palacio y los equipos jugaban con hielo en los bolsillos. Se ahorraba en serio: rondas eco con pistola, rifles comprados entre todos. Los cristales de la galería, decían los que pasaban de noche, perdían colores cada vez que un equipo se quedaba sin economía.",
+      },
+      {
+        title: "VII. Por los techos",
+        text: "La final regional se jugó en los techos del Duomo, entre las agujas y las estatuas de mármol. El último defensor vivo cruzó las terrazas de una punta a la otra de la catedral para llegar al sitio por donde nadie lo esperaba, y desactivó la bomba con un segundo de margen. En ese instante, todas las agujas cambiaron de color a la vez.",
+      },
+      {
+        title: "VIII. El color del ópalo",
+        text: "Los que ganaron un clutch esa temporada describen lo mismo: el último segundo tiene todos los colores a la vez, como mirar por la mira a través de una gota de leche al sol. Dicen que los cristales de la galería brillan más justo ahí. Un reporte interno, sin firma, los había bautizado desde la primera noche: Milán Ópalo.",
+      },
+      {
+        title: "IX. La noche de La Scala",
+        text: "La gran final se jugó en el teatro La Scala, con los palcos vacíos y las pantallas colgadas sobre el escenario. El pulpo apareció completo detrás del telón, con los ojos encendidos en un blanco cambiante. Cuando cayó la última ronda, una orquesta que nadie veía tocó un acorde final, el telón bajó solo y la señal se cortó.",
+      },
+      {
+        title: "X. La próxima gema",
+        text: "Nadie sabe quién hizo nevar sobre el Duomo ni quién montó el desfile sin modelos. Los que descifraron la frase de la nieve ya saben dónde va a reaparecer la señal. Pero la última transmisión de Milán guardó algo más: en el escenario de La Scala quedó una pera de cristal a la que le faltaba un pedazo, y en el atril, una sola nota marcada en rojo. Al lado, otra frase tan torcida como la primera. Dicen que esconde el nombre de la próxima gema. La pregunta es si tu equipo va a estar ahí cuando se encienda.",
+      },
+    ],
+  },
+  "Aspen Perla": {
+    tagline: "Una montaña nevada que brilla como el nácar, telesillas que suben solas y una cabaña donde se juega a la luz de la chimenea.",
+    part1: [
+      {
+        title: "I. La montaña de nácar",
+        text: "Tres meses después de que bajara el telón de La Scala, la señal llegó a Aspen, en las Montañas Rocosas, con la primera nevada del año. A las 3:14 de la madrugada, la pista de esquí entera empezó a brillar con un blanco suave y nacarado, como el interior de una concha. Los telesillas, apagados desde la tarde, empezaron a subir solos, vacíos, uno detrás de otro.",
+      },
+      {
+        title: "II. Perlas en la nieve",
+        text: "Al amanecer, los primeros esquiadores encontraron la pista sembrada de cristales redondos, blancos y lisos como perlas, que no se hundían en la nieve ni se enfriaban al tacto. Un instructor juntó un puñado en el bolsillo de la chaqueta. Esa noche, en la cabaña, todos escucharon salir de su ropa el pitido de siempre: la bomba plantada, acelerando.",
+      },
+      {
+        title: "III. La cabaña de la cumbre",
+        text: "La marca del pulpo apareció dibujada a la vez en la nieve de ocho pistas, visible solo desde la góndola. Cada tentáculo bajaba por una ladera distinta. Siete terminaban en el bosque. La octava llegaba a una cabaña de madera en la cumbre, con chimenea, mesas largas y monitores entre las vigas. La arena estaba lista.",
+      },
+      {
+        title: "IV. Los que llegaron del calor",
+        text: "Venían de Milán con la piel todavía morena del verano, y de todo el continente, siguiendo la señal hasta la montaña. A Aspen se subía en góndola y se bajaba esquiando, o no se bajaba: las tormentas cortaban el camino durante días. Los equipos aprendieron a convivir en la cabaña, compartiendo la chimenea con los mismos rivales a los que acababan de eliminar.",
+      },
+      {
+        title: "V. Un baile en la nieve",
+        text: "La primera eliminación fue una granada que rodó cuesta abajo y explotó lejos de todo. Esa noche, un viajero que había llegado desde la India para ver la final bailó solo en la nieve, frente a la cabaña, hasta que se le congelaron los pies. A la mañana siguiente, donde había bailado, la nieve tenía arena del desierto, y escrita en ella, una frase que no tenía ningún sentido. Debajo, la nota de siempre: el pulpo nunca dice las cosas de frente.",
+      },
+    ],
+    part2: [
+      {
+        title: "VI. El invierno cobra",
+        text: "A mitad de la temporada, la nieve tapaba las ventanas de la cabaña y la economía mandaba más que nunca: rondas eco con pistola, rifles comprados entre todos, nadie se arriesgaba a un force-buy a destiempo. Las perlas de la pista, decían los que bajaban esquiando de noche, se apagaban una por una cada vez que un equipo se quedaba sin dinero.",
+      },
+      {
+        title: "VII. El lago congelado",
+        text: "La final regional se jugó a orillas de un lago congelado, con la bomba plantada sobre el hielo. El último atacante vivo se escondió entre los pinos y el defensor tuvo que cruzar el lago a pie, sobre un hielo que crujía con cada paso. Llegó con dos segundos de margen y cortó el cable. Debajo del hielo, algo grande y blanco pasó nadando.",
+      },
+      {
+        title: "VIII. El color de la perla",
+        text: "Los que ganaron un clutch esa temporada cuentan lo mismo: un silencio blanco en el último segundo, como si la nieve se tragara todos los sonidos y solo quedara la propia respiración. Dicen que las perlas de la pista brillan más justo ahí. Un reporte interno, sin firma, las había bautizado desde la primera noche: Aspen Perla.",
+      },
+      {
+        title: "IX. La tormenta de la final",
+        text: "La gran final se jugó en la cabaña durante la peor tormenta del invierno, con el viento golpeando las ventanas y la chimenea como única luz. El pulpo apareció completo sobre la cumbre, con los ojos encendidos en un blanco nacarado, abrazando la montaña. Cuando cayó la última ronda, la tormenta paró de golpe, los telesillas se detuvieron y la señal se cortó.",
+      },
+      {
+        title: "X. La próxima gema",
+        text: "Nadie sabe quién encendió la montaña ni de dónde salió la arena del desierto. Los que descifraron la frase de la nieve ya saben dónde va a reaparecer la señal. Pero la última transmisión de Aspen guardó algo más: en la orilla del lago apareció una botella de agua con el escudo de una armada, azul como el hielo, y adentro, otra frase tan torcida como la primera. Dicen que esconde el nombre de la próxima gema. La pregunta es si tu equipo va a estar ahí cuando se encienda.",
+      },
+    ],
+  },
 };
 
 const SEASON_LORE_FALLBACK = {
@@ -402,6 +590,66 @@ const CRYPTICS = {
     indicator: "No hay indicador escrito: las partes se pegan en el orden de la frase.",
     materials: "«Una risa» se escribe como suena, en dos letras; «de» se usa tal cual.",
     solution: "JA, una risa, más DE: JADE.",
+  },
+  // Para Marrakech Jade (ene–mar 2028)
+  Tokio: {
+    clue: "Kioto revuelto: la capital japonesa",
+    definition: "la capital japonesa",
+    indicator: "«Revuelto» avisa un anagrama: las mismas letras en otro orden.",
+    materials: "Las cinco letras de «Kioto».",
+    solution: "KIOTO revuelto: TOKIO. Las dos ciudades tienen las mismas letras.",
+  },
+  Ónix: {
+    clue: "Un fénix pierde la fe y gana un aro delante: la piedra negra",
+    definition: "la piedra negra",
+    indicator: "«Pierde» quita las letras que se nombran. «Delante» pone lo que sigue al principio.",
+    materials: "«Un fénix», «la fe» y «un aro», que es una letra con esa forma.",
+    solution: "fé·NIX sin FE = NIX, con un aro (O) delante: ÓNIX.",
+  },
+  // Para Tokio Ónix (abr–jun 2028)
+  Milán: {
+    clue: "Mil andenes esconden la ciudad de la moda",
+    definition: "la ciudad de la moda",
+    indicator: "«Esconden» avisa que la respuesta está escrita, seguida, dentro de otras palabras de la frase.",
+    materials: "Las letras están en «Mil andenes». No cuentan los espacios ni las tildes.",
+    solution: "«esconden» marca una palabra escondida: MIL AN·denes.",
+  },
+  Ópalo: {
+    clue: "Un aro junto a un palo forma la gema lechosa",
+    definition: "la gema lechosa",
+    indicator: "«Junto a» pega una parte al lado de la otra. «Forma» solo une con la definición.",
+    materials: "«Un aro» es una letra con esa forma; «un palo» se usa tal cual.",
+    solution: "un aro = O, más PALO: ÓPALO.",
+  },
+  // Para Milán Ópalo (jul–sep 2028)
+  Aspen: {
+    clue: "Penas revueltas en el pueblo de esquí de Colorado",
+    definition: "el pueblo de esquí de Colorado",
+    indicator: "«Revueltas» avisa un anagrama: las mismas letras en otro orden. «En» solo une con la definición.",
+    materials: "Las cinco letras de «penas».",
+    solution: "PENAS revueltas: ASPEN.",
+  },
+  Perla: {
+    clue: "Una pera sin su a y una nota: la gema de la ostra",
+    definition: "la gema de la ostra",
+    indicator: "«Sin su a» quita esa letra. «Y» pone una parte detrás de la otra.",
+    materials: "«Una pera» y «una nota», que es una nota musical de dos letras.",
+    solution: "PER(A) más LA, la nota: PERLA.",
+  },
+  // Para Aspen Perla (oct–dic 2028)
+  Dubái: {
+    clue: "Un hindú bailó y escondió la ciudad de rascacielos del desierto",
+    definition: "la ciudad de rascacielos del desierto",
+    indicator: "«Escondió» avisa que la respuesta está escrita, seguida, dentro de otras palabras de la frase.",
+    materials: "Las letras están en «hindú bailó». No cuentan los espacios ni las tildes.",
+    solution: "«escondió» marca una palabra escondida: hin·DÚ BAI·ló.",
+  },
+  Aguamarina: {
+    clue: "Lo que bebe la armada es una gema azul",
+    definition: "una gema azul",
+    indicator: "No hay indicador escrito: las dos partes se pegan en el orden de la frase. «Es» solo une con la definición.",
+    materials: "«Lo que bebe» se cambia por un líquido de cuatro letras; «la armada», por un sinónimo de seis.",
+    solution: "AGUA (lo que bebe) más MARINA (la armada): AGUAMARINA.",
   },
 };
 
