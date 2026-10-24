@@ -314,6 +314,8 @@ textarea {
   display: block;
   width: auto;
   height: 36px;
+  object-fit: contain;
+  object-position: left center;
 }
 
 .brand-arena {

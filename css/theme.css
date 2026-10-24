@@ -251,9 +251,12 @@ p {
   margin-right: auto;
 }
 
+/* Si la barra se queda sin lugar, el logo se achica sin deformarse. */
 .bar-brand img {
   width: auto;
   height: 36px;
+  object-fit: contain;
+  object-position: left center;
 }
 
 .main-nav {
