@@ -2,14 +2,15 @@
 // compartido: un pulpo gigante recorre ciudades del mundo escondiendo una
 // gema distinta cada 3 meses — de ahí sale el nombre de cada temporada
 // (ciudad + gema) que ya arma seasonName() en js/seasons.js. Se cuenta a
-// modo de historieta: capítulos cortos, en dos partes separadas por el
-// bannerlite de temporada.
+// modo de historieta: capítulos cortos, en dos partes, con dos crípticos de
+// la temporada siguiente: la ciudad a la mitad y la gema al final. El último
+// capítulo de cada parte prepara su críptico.
 //
 // Agrega una entrada nueva acá al arrancar cada temporada — la clave debe
 // calzar EXACTO con el nombre que produce seasonName(index). heroArt es
-// opcional (arte propio de esa temporada, ver img/seasons/); si falta, se
-// usa bannerlite.webp también arriba. Si una temporada no tiene entrada
-// todavía, se usa SEASON_LORE_FALLBACK.
+// opcional (arte propio de esa temporada, ver img/seasons/). Si una
+// temporada no tiene entrada todavía, se usa SEASON_LORE_FALLBACK. Los
+// crípticos se escriben aparte, en CRYPTICS (más abajo).
 const SEASON_LORE = {
   "Monaco Emerald": {
     heroArt: "img/seasons/monaco.webp",
@@ -59,6 +60,54 @@ const SEASON_LORE = {
       },
     ],
   },
+  "Manhattan Amethyst": {
+    heroArt: "img/seasons/manhattan-arte.webp",
+    tagline: "Un apagón en toda la isla, una sola torre encendida en morado y cristales que crecen donde nadie mira.",
+    part1: [
+      {
+        title: "I. El apagón de las 3:14",
+        text: "Tres meses después de que la señal se cortara en Mónaco, Manhattan se quedó a oscuras. A las 3:14 de la madrugada se apagó la isla entera, de Harlem a Battery Park, menos un edificio: el Empire State, encendido de arriba abajo en un morado que ningún ingeniero de la ciudad había programado. En las pantallas muertas de Times Square apareció, por un segundo, un temporizador del mismo color.",
+      },
+      {
+        title: "II. Cristales en el metro",
+        text: "Los primeros en verlos fueron los trabajadores de una línea de metro cerrada hace décadas. En las paredes del túnel crecían cristales de amatista, grandes como un rifle, y vibraban todos al mismo ritmo. El capataz grabó el sonido con su teléfono y lo subió esa misma noche. Medio internet lo reconoció en segundos: era el pitido de una bomba plantada, acelerando.",
+      },
+      {
+        title: "III. La marca vuelve",
+        text: "Cuando volvió la luz, ocho pantallas de Times Square mostraban la misma imagen: el pulpo de ocho tentáculos, ahora morado, enroscado alrededor de la aguja del Empire State. Cada tentáculo apuntaba a una azotea distinta de Midtown. Siete eran edificios abandonados. La octava tenía mesas, monitores y un cartel escrito a mano: la arena estaba lista.",
+      },
+      {
+        title: "IV. Los que llegaron desde Mónaco",
+        text: "Volvieron caras conocidas de la temporada pasada, ahora con rencores nuevos: dúos que habían ganado juntos llegaron en equipos rivales, y rivales de Mónaco llegaron compartiendo micrófono. Desde el Bronx y Brooklyn aparecieron nombres que nadie había visto competir. Todos coincidían en una sola regla no escrita: en esta frecuencia no se confía en las comunicaciones de nadie.",
+      },
+      {
+        title: "V. Una frase en Times Square",
+        text: "La primera eliminación de la temporada fue culpa de un smoke lanzado un segundo tarde sobre la entrada al sitio A. Pero lo que todos recuerdan de esa noche no es la ronda perdida. Cuando el humo se disipó, las ocho pantallas de Times Square dejaron de mostrar al pulpo y, durante un segundo, mostraron una frase que no tenía ningún sentido. Alguien la copió en el chat del torneo con una sola nota debajo: el pulpo nunca dice las cosas de frente.",
+      },
+    ],
+    part2: [
+      {
+        title: "VI. La ciudad que nunca duerme",
+        text: "A mitad de la temporada, Manhattan ya cobraba cada ronda. Los equipos ahorraban en bodegas de Brooklyn y jugaban rondas eco con lo justo, esperando el momento de comprar rifles para todos. Un force-buy a destiempo podía hundir a un equipo durante tres rondas seguidas. Los cristales del metro, decían los que bajaban a verlos, brillaban un poco más cada vez que alguien perdía su economía.",
+      },
+      {
+        title: "VII. Defuse en el puente",
+        text: "La final regional se jugó con el puente de Brooklyn de fondo. La bomba quedó plantada a cuarenta segundos del final y el último jugador vivo empezó a desactivarla sin kit, con dos rivales buscándolo entre el humo. Le alcanzó con dos décimas. En ese instante todas las luces del puente se volvieron moradas, y se quedaron así hasta el amanecer.",
+      },
+      {
+        title: "VIII. El color de la amatista",
+        text: "Los que llegaron a ganar un clutch esa temporada describen lo mismo: el último segundo antes de que la bomba explote tiene un color, y es morado. Dicen que los cristales se encienden justo ahí, cuando una sola persona decide la ronda. Un reporte interno ya los había bautizado desde el primer apagón, sin que nadie supiera quién lo escribió: Manhattan Amethyst.",
+      },
+      {
+        title: "IX. Ocho torres, un solo feed",
+        text: "Al acercarse el cierre, las ocho azoteas empezaron a transmitir lo mismo: la gran final. El pulpo apareció completo por primera vez, abrazando la ciudad desde el río, con los ojos encendidos en morado sobre el skyline. Cuando cayó la última ronda, la marca se quedó fija en pantalla un segundo de más, y luego la señal se cortó, igual que en Mónaco.",
+      },
+      {
+        title: "X. La próxima gema",
+        text: "Nadie sabe todavía qué pasó con los cristales del metro ni quién encendió el Empire State aquella noche. Los que descifraron la frase de Times Square ya saben dónde va a reaparecer la señal. Pero la última transmisión de Manhattan guardó algo más: entre la estática, justo antes del corte, otra frase, tan torcida como la primera. Dicen que esconde el nombre de la próxima gema. La pregunta es si tu equipo va a estar ahí cuando se encienda.",
+      },
+    ],
+  },
 };
 
 const SEASON_LORE_FALLBACK = {
@@ -68,12 +117,111 @@ const SEASON_LORE_FALLBACK = {
   part2: [],
 };
 
+// Los dos crípticos de cada leyenda: la ciudad (a la mitad) y la gema (al
+// final) de la temporada siguiente, para jugar (js/lore-cipher.js).
+const CIPHERS = {
+  city: {
+    pick: (seasonName) => seasonName.split(" ").slice(0, -1).join(" "),
+    intro: "A mitad de la temporada, la señal soltó una frase torcida. Esconde la ciudad donde el pulpo guardará la próxima gema.",
+    solved: (word) => `Descifrado: el pulpo va a ${word}.`,
+  },
+  gem: {
+    pick: (seasonName) => seasonName.split(" ").pop(),
+    intro: "Antes de cortarse, la señal soltó una última frase. Esconde el nombre de la próxima gema.",
+    solved: (word) => `Descifrado: la próxima gema es ${word}.`,
+  },
+};
+
+// Un críptico por palabra, escrito a mano, con la clave tal como sale de
+// seasonName(). La frase tiene la definición (al principio o al final) y un
+// juego de palabras: indicadores (qué hacer) y materiales (con qué). Las
+// pistas de Significado, Indicador y Materiales muestran definition,
+// indicator y materials; solution se lee al resolver o al rendirse. Una
+// palabra sin críptico acá deja su transmisión oculta: escribir los de la
+// temporada siguiente antes de que empiece.
+const CRYPTICS = {
+  // Para Manhattan Amethyst (oct–dic 2026)
+  Ibiza: {
+    clue: "Un Dalí bizarro esconde la isla de la fiesta",
+    definition: "la isla de la fiesta",
+    indicator: "«Esconde» avisa que la respuesta está escrita, seguida, dentro de otras palabras de la frase.",
+    materials: "Las letras están en «Dalí bizarro». No cuentan los espacios ni las tildes.",
+    solution: "«esconde» marca una palabra escondida: dal·IBIZA·rro.",
+  },
+  Topaz: {
+    clue: "La gema amarilla de los ingleses choca con el final de la paz",
+    definition: "la gema amarilla de los ingleses",
+    indicator: "«El final de» se queda solo con la última letra de lo que sigue. «Con» pega una parte detrás de la otra.",
+    materials: "«Choca» se cambia por un verbo de cuatro letras que significa lo mismo; de «la paz» sale una sola letra.",
+    solution: "choca = TOPA (de topar), más el final de la paz = Z: TOPAZ, el topacio en inglés.",
+  },
+  // Para Ibiza Topaz (ene–mar 2027)
+  Osaka: {
+    clue: "La ciudad japonesa se atreve con una ka",
+    definition: "la ciudad japonesa",
+    indicator: "«Con» pega una parte detrás de la otra.",
+    materials: "«Se atreve» se cambia por un verbo de tres letras que significa lo mismo; «una ka» es el nombre de una letra, escrito tal cual.",
+    solution: "se atreve = OSA (de osar), más KA: OSAKA.",
+  },
+  Ruby: {
+    clue: "La gema roja de los ingleses cambia el final del rubí por una y",
+    definition: "la gema roja de los ingleses",
+    indicator: "«Cambia el final por» quita la última letra y pone otra en su lugar.",
+    materials: "«Rubí» y «una y».",
+    solution: "RUB(Í) con una Y en lugar del final: RUBY, el rubí en inglés.",
+  },
+  // Para Osaka Ruby (abr–jun 2027)
+  Vienna: {
+    clue: "La ciudad del vals, en inglés, viene sin final y trae sodio",
+    definition: "la ciudad del vals, en inglés",
+    indicator: "«Sin final» quita la última letra. «Trae» suma lo que sigue.",
+    materials: "«Viene» y «sodio», que entra con su símbolo químico.",
+    solution: "VIEN(E) más NA, el símbolo del sodio: VIENNA, Viena en inglés.",
+  },
+  Opal: {
+    clue: "Un aro y un palo cortado: la gema lechosa de los ingleses",
+    definition: "la gema lechosa de los ingleses",
+    indicator: "«Cortado» quita la última letra. «Y» pone una parte detrás de la otra.",
+    materials: "«Un aro» es una letra con esa forma; «un palo» es la palabra tal cual.",
+    solution: "un aro = O, más PAL(O): OPAL, el ópalo en inglés.",
+  },
+  // Para Vienna Opal (jul–sep 2027)
+  Miami: {
+    clue: "Una nota y luego a mí: la ciudad de Florida",
+    definition: "la ciudad de Florida",
+    indicator: "«Y luego» pone una parte detrás de la otra.",
+    materials: "«Una nota» es una nota musical de dos letras; «a mí» se usa tal cual, sin la tilde.",
+    solution: "MI, la nota, más A MÍ: MIAMI.",
+  },
+  Garnet: {
+    clue: "La gema rojo vino de los ingleses revuelve Tánger",
+    definition: "la gema rojo vino de los ingleses",
+    indicator: "«Revuelve» avisa un anagrama: las mismas letras en otro orden.",
+    materials: "Las seis letras de «Tánger».",
+    solution: "TÁNGER revuelto: GARNET, el granate en inglés.",
+  },
+  // Para Miami Garnet (oct–dic 2027)
+  Marrakech: {
+    clue: "Ciudad roja de Marruecos: el karma del Che, revuelto con una erre",
+    definition: "ciudad roja de Marruecos",
+    indicator: "«Revuelto» avisa un anagrama: las mismas letras en otro orden. «Con» suma lo que sigue; «del» solo une.",
+    materials: "«Karma», «Che» y «una erre», que es una sola letra.",
+    solution: "KARMA + CHE + R, revueltos: MARRAKECH.",
+  },
+  Jade: {
+    clue: "Una risa de la piedra verde",
+    definition: "la piedra verde",
+    indicator: "No hay indicador escrito: las partes se pegan en el orden de la frase.",
+    materials: "«Una risa» se escribe como suena, en dos letras; «de» se usa tal cual.",
+    solution: "JA, una risa, más DE: JADE.",
+  },
+};
+
 (function () {
   const heroImgEl = document.getElementById("season-lore-hero-img");
   const titleEl = document.getElementById("season-lore-title");
   const taglineEl = document.getElementById("season-lore-tagline");
   const part1El = document.getElementById("season-lore-part1");
-  const dividerEl = document.getElementById("season-lore-divider");
   const part2El = document.getElementById("season-lore-part2");
   if (!titleEl && !taglineEl && !part1El && !part2El) return;
 
@@ -102,5 +250,22 @@ const SEASON_LORE_FALLBACK = {
 
   if (part1El) part1El.innerHTML = renderPanels(lore.part1);
   if (part2El) part2El.innerHTML = renderPanels(lore.part2);
-  if (dividerEl) dividerEl.hidden = !(lore.part2 && lore.part2.length);
+
+  const nextName = getSeasonInfo(info.index + 1).name;
+  document.querySelectorAll(".lore-cipher[data-cipher]").forEach((el) => {
+    const cipher = CIPHERS[el.dataset.cipher];
+    if (!cipher) return;
+    const word = cipher.pick(nextName);
+    const cryptic = CRYPTICS[word];
+    if (!cryptic) return;
+    el.querySelector(".lore-cipher-intro").textContent = cipher.intro;
+    mountCipherGame(el.querySelector(".cipher-game"), {
+      word,
+      cryptic,
+      solvedText: cipher.solved,
+      shareTitle: `${el.querySelector("h2").textContent.trim()} · ${info.name}`,
+      storageKey: `octagono.criptico.${info.name}.${el.dataset.cipher}`,
+    });
+    el.hidden = false;
+  });
 })();

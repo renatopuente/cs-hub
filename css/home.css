@@ -1,435 +1,18 @@
-/* Portada de El Octágono: la ficha del torneo.
-   Una sola forma, el octágono (esquinas cortadas), una sola familia (Switzer)
-   y el morado de la marca solo en las acciones. */
+/* Portada de El Octágono: la ficha del torneo. Va encima de theme.css, que trae
+   los colores, la letra, los botones, la barra y el pie comunes a todo el sitio. */
 
-:root {
-  --ground: #0b0a0f;
-  --paper: #17141d;
-  --paper-2: #211c29;
-  --paper-3: #2a2433;
-  --ink: #f3f1f6;
-  --soft: #b5afbf;
-  --dim: #4a4354;
-  --accent: #8a3df5;
-  --accent-2: #c93d8f;
-  --link: #c4a1ff;
-  --glass-bar: rgb(11 10 15 / 0.62);
-  --glass-menu: rgb(33 28 41 / 0.74);
-  --glass-blur: blur(18px) saturate(1.5);
-
-  --cut: 18px;
-  --cut-small: 10px;
-  --gutter: clamp(16px, 2.2vw, 32px);
-  --section: clamp(72px, 9vw, 136px);
-  --bar-h: 72px;
-
-  --step-small: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
-  --step-body: clamp(1.0625rem, 1.03rem + 0.16vw, 1.1875rem);
-  --step-lead: clamp(1.25rem, 1.13rem + 0.5vw, 1.625rem);
-  --step-head: clamp(2rem, 1.35rem + 2.6vw, 4rem);
-  --step-hero: clamp(2.5rem, 1.6rem + 2.2vw, 3.5rem);
-
-  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-[hidden] {
-  display: none !important;
-}
-
-html {
-  -webkit-text-size-adjust: 100%;
-  scroll-padding-top: calc(var(--bar-h) + 16px);
-}
-
-body {
-  margin: 0;
-  background: var(--ground);
-  color: var(--ink);
-  font-family: "Switzer", system-ui, sans-serif;
-  font-size: var(--step-body);
-  line-height: 1.55;
-  -webkit-font-smoothing: antialiased;
-  -webkit-tap-highlight-color: transparent;
-}
-
-img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
-a {
-  color: var(--link);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.2em;
-}
-
-h1,
-h2,
-h3 {
-  margin: 0;
-  font-weight: 600;
-  letter-spacing: -0.04em;
-  line-height: 0.95;
-  text-wrap: balance;
-}
-
-p {
-  margin: 0;
-}
-
-:focus-visible {
-  outline: 3px solid var(--link);
-  outline-offset: 3px;
-}
-
-/* La forma de la casa: un octágono, las cuatro esquinas cortadas. */
+/* La forma de la casa en las piezas de la portada. */
 .hero-card,
 .menu-sheet,
 .letter,
 .season-plate,
 .ticket,
-.btn,
-.arena-board a,
-.mobile-menu,
-.nav-dropdown-menu {
+.arena-board a {
   clip-path: polygon(var(--c-cut, var(--cut)) 0, calc(100% - var(--c-cut, var(--cut))) 0, 100% var(--c-cut, var(--cut)), 100% calc(100% - var(--c-cut, var(--cut))), calc(100% - var(--c-cut, var(--cut))) 100%, var(--c-cut, var(--cut)) 100%, 0 calc(100% - var(--c-cut, var(--cut))), 0 var(--c-cut, var(--cut)));
 }
 
-.btn,
-.arena-board a,
-.nav-dropdown-menu {
+.arena-board a {
   --c-cut: var(--cut-small);
-}
-
-/* ---------- Botones ---------- */
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  min-height: 48px;
-  padding: 0 24px;
-  border: 0;
-  /* Degradado morado a rosa de la marca, pedido por el dueño; ambos extremos dejan el texto blanco legible. */
-  background: linear-gradient(135deg, var(--accent), var(--accent-2)); /* taste-skill-ignore */
-  background-size: 180% 100%;
-  color: #fff;
-  font: inherit;
-  font-weight: 600;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background-position 300ms ease-out, transform 160ms ease-out;
-}
-
-.btn:active {
-  transform: scale(0.97);
-}
-
-.btn-large {
-  min-height: 56px;
-  padding: 0 32px;
-  font-size: var(--step-lead);
-  letter-spacing: -0.02em;
-}
-
-.btn-block,
-.btn-bar {
-  width: 100%;
-}
-
-.btn-bar {
-  min-height: 56px;
-  font-size: var(--step-lead);
-}
-
-.btn-text {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  padding: 0 4px;
-  border: 0;
-  background: none;
-  color: var(--ink);
-  font: inherit;
-  cursor: pointer;
-  transition: color 160ms ease-out, transform 160ms ease-out;
-}
-
-.btn-text:active {
-  transform: scale(0.97);
-}
-
-@media (hover: hover) {
-  .btn:hover {
-    background-position: 100% 0;
-  }
-
-  .btn-text:hover {
-    color: var(--link);
-  }
-}
-
-/* ---------- Barra ---------- */
-
-.bar {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-}
-
-/* Vidrio: la barra deja ver, borroso, lo que pasa por debajo. El desenfoque
-   va en un pseudo-elemento para que la barra no corte el vidrio de sus menús. */
-.bar::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--glass-bar);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
-}
-
-.bar-inner {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  height: var(--bar-h);
-  padding: 0 var(--gutter);
-}
-
-.bar-brand {
-  margin-right: auto;
-}
-
-.bar-brand img {
-  width: 124px;
-}
-
-.main-nav {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-}
-
-.main-nav > a:not(.btn) {
-  color: var(--ink);
-  text-decoration: none;
-  transition: color 160ms ease-out;
-}
-
-.nav-dropdown {
-  position: relative;
-}
-
-.nav-dropdown-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--ink);
-  font: inherit;
-  cursor: pointer;
-  transition: color 160ms ease-out;
-}
-
-.nav-dropdown-caret {
-  font-size: 0.75em;
-  transition: transform 200ms var(--ease-out);
-}
-
-.nav-dropdown.open .nav-dropdown-caret {
-  transform: rotate(180deg);
-}
-
-.nav-dropdown-menu {
-  position: absolute;
-  top: calc(100% + 8px);
-  left: -16px;
-  display: grid;
-  min-width: 232px;
-  padding: 8px;
-  background: var(--glass-menu);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
-  transform-origin: top left;
-}
-
-.nav-dropdown:not(.open) .nav-dropdown-menu {
-  display: none;
-}
-
-.nav-dropdown-menu a {
-  padding: 12px 16px;
-  color: var(--ink);
-  text-decoration: none;
-  transition: background-color 160ms ease-out;
-}
-
-.player-profile {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.player-account-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--ink);
-  text-decoration: none;
-}
-
-.player-avatar {
-  width: 28px;
-  height: 28px;
-  object-fit: cover;
-  clip-path: polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%);
-  background: var(--paper-3);
-}
-
-@media (hover: hover) {
-  .main-nav > a:not(.btn):hover,
-  .nav-dropdown-toggle:hover,
-  .player-account-link:hover {
-    color: var(--link);
-  }
-
-  .nav-dropdown-menu a:hover {
-    background: rgb(255 255 255 / 0.07);
-  }
-}
-
-.install-chip,
-.hamburger-btn {
-  display: none;
-}
-
-.hamburger-btn {
-  width: 48px;
-  height: 48px;
-  align-items: center;
-  justify-content: center;
-  border: 0;
-  background: rgb(255 255 255 / 0.08);
-  color: var(--ink);
-  font-size: 1.25rem;
-  cursor: pointer;
-  transition: transform 160ms ease-out;
-}
-
-.hamburger-btn:active {
-  transform: scale(0.97);
-}
-
-.mobile-menu {
-  display: none;
-}
-
-.mobile-menu-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 40;
-  background: rgb(0 0 0 / 0.6);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 200ms ease-out, visibility 0s linear 200ms;
-}
-
-.mobile-menu-overlay.open {
-  opacity: 1;
-  visibility: visible;
-  transition: opacity 200ms ease-out, visibility 0s;
-}
-
-@media (max-width: 960px) {
-  .main-nav {
-    display: none;
-  }
-
-  .hamburger-btn {
-    display: inline-flex;
-  }
-
-  .install-chip {
-    display: inline-flex;
-  }
-
-  .mobile-menu.open {
-    position: absolute;
-    top: calc(var(--bar-h) - 4px);
-    left: var(--gutter);
-    right: var(--gutter);
-    display: grid;
-    gap: 4px;
-    max-height: calc(100svh - var(--bar-h) - 16px);
-    overflow-y: auto;
-    padding: 16px;
-    background: var(--glass-menu);
-    -webkit-backdrop-filter: var(--glass-blur);
-    backdrop-filter: var(--glass-blur);
-  }
-
-  .mobile-menu > a:not(.btn),
-  .mobile-menu-group-toggle,
-  .mobile-menu-sub {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    min-height: 48px;
-    padding: 0 12px;
-    border: 0;
-    background: none;
-    color: var(--ink);
-    font: inherit;
-    font-size: var(--step-lead);
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    text-align: left;
-    text-decoration: none;
-    cursor: pointer;
-  }
-
-  .mobile-menu-sub {
-    padding-left: 28px;
-    font-size: var(--step-body);
-    color: var(--soft);
-  }
-
-  .mobile-menu-group-toggle .toggle-icon {
-    font-size: 0.7em;
-    transition: transform 200ms var(--ease-out);
-  }
-
-  .mobile-menu-group-toggle[aria-expanded="true"] .toggle-icon {
-    transform: rotate(180deg);
-  }
-
-  .mobile-menu .btn {
-    margin-top: 12px;
-  }
-
-  .mobile-menu .player-login-btn {
-    justify-content: center;
-  }
-
-  .mobile-menu .player-profile {
-    justify-content: space-between;
-    padding: 0 12px;
-  }
 }
 
 /* ---------- Hero: la ficha junto a la sala ---------- */
@@ -443,23 +26,10 @@ p {
 }
 
 .hero-card {
+  --stripe-h: 56px;
   display: flex;
   flex-direction: column;
   background: var(--paper);
-}
-
-.season-stripe {
-  display: flex;
-  height: 56px;
-  flex: none;
-}
-
-.season-stripe span {
-  flex: 1;
-  /* Cada barra pisa 1px a la siguiente para que no quede una línea entre tonos. */
-  margin-right: -1px;
-  background: var(--c);
-  transform-origin: top;
 }
 
 .hero-body {
@@ -470,9 +40,10 @@ p {
   padding: clamp(28px, 3vw, 44px);
 }
 
-.hero-wordmark {
-  width: clamp(168px, 14vw, 208px);
-  margin-bottom: clamp(24px, 2.6vw, 36px);
+/* El símbolo del pulpo octogonal, grande, como emblema de la ficha. */
+.hero-mark {
+  width: clamp(84px, 7.5vw, 112px);
+  margin-bottom: clamp(20px, 2.4vw, 32px);
 }
 
 .hero h1 {
@@ -564,6 +135,10 @@ p {
   background: var(--c);
 }
 
+.arena-board a:focus-visible {
+  outline-offset: -3px;
+}
+
 @media (hover: hover) {
   .arena-board a:hover {
     background: var(--paper-3);
@@ -594,19 +169,9 @@ p {
   opacity: 1;
 }
 
-/* Del banner vertical solo se ve la parte de arriba: el pulpo, sin el texto. */
-.room-octopus {
-  top: -7%;
-  height: 230%;
-  object-position: 50% 0;
-}
-
-.room-frame {
-  object-position: 62% 50%;
-}
-
-.room-city {
-  object-position: 100% 50%;
+/* Las escenas de la leyenda de la temporada (js/season-tone.js). */
+.room-scene {
+  object-position: 50% 45%;
 }
 
 /* ---------- Modos: el menú impreso ---------- */
@@ -748,8 +313,7 @@ p {
   background: var(--paper);
 }
 
-.letter-portrait,
-.stamp {
+.letter-portrait {
   clip-path: polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%);
 }
 
@@ -777,10 +341,16 @@ p {
   margin: 32px 0;
 }
 
-.letter-plate img {
+/* El clip de Dust2 es 4:3 con el marcador arriba y una marca de agua abajo:
+   la banda 2:1 del centro deja las dos afuera. */
+.letter-plate video {
+  display: block;
   width: 100%;
-  aspect-ratio: 728 / 280;
+  height: auto;
+  aspect-ratio: 2 / 1;
   object-fit: cover;
+  object-position: 50% 50%;
+  background: var(--paper-2);
 }
 
 .letter-plate figcaption {
@@ -1002,60 +572,6 @@ p {
   font-weight: 600;
 }
 
-/* ---------- El reverso de la ficha ---------- */
-
-.card-back {
-  margin-top: var(--section);
-  background: var(--paper);
-}
-
-.scallops {
-  display: block;
-  width: 100%;
-  height: 24px;
-  margin-top: -23px;
-  fill: var(--paper);
-}
-
-.card-back-body {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: clamp(32px, 6vw, 96px);
-  padding: clamp(40px, 5vw, 72px) var(--gutter) 0;
-}
-
-.card-back-note h2 {
-  font-size: var(--step-head);
-}
-
-.card-back-note p {
-  max-width: 44ch;
-  margin-top: 20px;
-  color: var(--soft);
-}
-
-.card-back-address {
-  display: grid;
-  align-content: start;
-  gap: 6px;
-}
-
-.card-back-address a {
-  padding: 4px 0;
-}
-
-.stamp {
-  width: 88px;
-  height: 88px;
-  margin-bottom: 16px;
-}
-
-.imprint {
-  padding: clamp(40px, 5vw, 64px) var(--gutter) var(--gutter);
-  color: var(--soft);
-  font-size: var(--step-small);
-}
-
 /* ---------- Teléfono y tableta ---------- */
 
 @media (max-width: 960px) {
@@ -1102,10 +618,6 @@ p {
     border-left: 0;
     border-top: 6px dotted var(--ground);
   }
-
-  .card-back-body {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 @media (max-width: 520px) {
@@ -1124,30 +636,6 @@ p {
 /* ---------- Movimiento ---------- */
 
 @media (prefers-reduced-motion: no-preference) {
-  /* La franja de la temporada se despliega al cargar. */
-  .season-stripe span {
-    animation: stripe-drop 700ms var(--ease-out) both;
-    animation-delay: calc(var(--n, 0) * 40ms + 120ms);
-  }
-
-  .season-stripe span:nth-child(1) { --n: 0; }
-  .season-stripe span:nth-child(2) { --n: 1; }
-  .season-stripe span:nth-child(3) { --n: 2; }
-  .season-stripe span:nth-child(4) { --n: 3; }
-  .season-stripe span:nth-child(5) { --n: 4; }
-  .season-stripe span:nth-child(6) { --n: 5; }
-  .season-stripe span:nth-child(7) { --n: 6; }
-  .season-stripe span:nth-child(8) { --n: 7; }
-  .season-stripe span:nth-child(9) { --n: 8; }
-  .season-stripe span:nth-child(10) { --n: 9; }
-  .season-stripe span:nth-child(11) { --n: 10; }
-
-  @keyframes stripe-drop {
-    from {
-      transform: scaleY(0);
-    }
-  }
-
   /* Cada parte de cada sección entra por su cuenta (solo con JS). */
   .has-js [data-reveal] {
     opacity: 0;
@@ -1158,29 +646,6 @@ p {
   .has-js [data-reveal].is-in {
     opacity: 1;
     transform: none;
-  }
-
-  /* Los menús se abren desde su botón. */
-  .nav-dropdown.open .nav-dropdown-menu {
-    animation: pop-in 200ms var(--ease-out);
-  }
-
-  .mobile-menu.open {
-    animation: drop-in 220ms var(--ease-out);
-  }
-
-  @keyframes pop-in {
-    from {
-      opacity: 0;
-      transform: scale(0.95);
-    }
-  }
-
-  @keyframes drop-in {
-    from {
-      opacity: 0;
-      transform: translateY(-8px);
-    }
   }
 
   /* El punto de "en curso" respira. */
@@ -1198,32 +663,5 @@ p {
 @media (prefers-reduced-motion: reduce) {
   .room-img {
     transition: none;
-  }
-}
-
-/* Sin desenfoque disponible, o si el sistema pide menos transparencia: superficies sólidas. */
-@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-  .bar::before {
-    background: var(--ground);
-  }
-
-  .nav-dropdown-menu,
-  .mobile-menu.open {
-    background: var(--paper-2);
-  }
-}
-
-@media (prefers-reduced-transparency: reduce) {
-  .bar::before {
-    background: var(--ground);
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-  }
-
-  .nav-dropdown-menu,
-  .mobile-menu.open {
-    background: var(--paper-2);
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
   }
 }

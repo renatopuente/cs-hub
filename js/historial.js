@@ -201,6 +201,8 @@ async function shareHistoryCard(cardEl) {
       backgroundColor: "#0b0910",
       scale: 2,
       ignoreElements: (el) => el.classList && el.classList.contains("share-btn"),
+      // La copia que se fotografía usa estilos de captura (ver .is-capture en style.css).
+      onclone: (doc) => doc.documentElement.classList.add("is-capture"),
     });
   } catch (err) {
     console.error("No se pudo generar la captura", err);

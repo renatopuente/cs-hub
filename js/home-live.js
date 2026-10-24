@@ -88,27 +88,6 @@
     }, 30000);
   }
 
-  // --- Franja del hero en los tonos de la gema de la temporada --------------
-
-  // Tono y saturación de cada gema de SEASON_GEMS (seasons.js); la franja va
-  // de la sombra más oscura a la más clara de ese tono.
-  const GEM_HUES = {
-    Sapphire: [224, 82], Emerald: [152, 72], Amethyst: [266, 100], Topaz: [37, 92],
-    Ruby: [337, 86], Opal: [190, 60], Garnet: [350, 64], Jade: [158, 100],
-    Onyx: [240, 8], Diamond: [192, 85], Pearl: [42, 45], Aquamarine: [174, 70],
-    Citrine: [50, 80], Peridot: [74, 55], Moonstone: [220, 35], Turquoise: [175, 68],
-  };
-
-  const stripeBars = document.querySelectorAll(".season-stripe span");
-  if (stripeBars.length && typeof getSeasonInfo === "function") {
-    const gem = getSeasonInfo(currentSeasonIndex()).name.split(" ").pop();
-    const hue = GEM_HUES[gem];
-    if (hue) {
-      const step = 56 / (stripeBars.length - 1);
-      stripeBars.forEach((bar, i) => bar.style.setProperty("--c", `hsl(${hue[0]} ${hue[1]}% ${22 + i * step}%)`));
-    }
-  }
-
   // --- Placa de la temporada -----------------------------------------------
 
   const seasonNameEl = document.getElementById("season-name");
@@ -119,10 +98,11 @@
     seasonNameEl.textContent = `Temporada ${current.name}`;
     if (seasonDatesEl) seasonDatesEl.textContent = `Del ${fmt(current.start)} al ${fmt(current.end)}. Al cerrar, el ranking vuelve a cero.`;
 
+    // El arte sin texto de la temporada (js/season-tone.js); el nombre va escrito debajo.
     const plateImg = document.querySelector(".season-plate img");
-    const art = typeof SEASON_BANNERS !== "undefined" ? SEASON_BANNERS[current.name] : null;
+    const art = typeof SEASON_ART !== "undefined" ? SEASON_ART[current.name] : null;
     if (plateImg) {
-      plateImg.src = art ? `img/${art}` : "img/banners/octobanner.webp";
+      plateImg.src = art || "img/banners/octobanner.webp";
       plateImg.alt = `Arte de la temporada ${current.name}`;
     }
   }
@@ -150,6 +130,20 @@
 
     document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));
     start();
+  }
+
+  // --- El clip de Dust2 de la carta ----------------------------------------
+
+  // Se reproduce solo mientras está en pantalla; con menos movimiento pedido
+  // se queda en su imagen fija.
+  const clip = document.querySelector(".letter-clip");
+  if (clip && !reducedMotion && "IntersectionObserver" in window) {
+    new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) clip.play().catch(() => {});
+        else clip.pause();
+      });
+    }).observe(clip);
   }
 
   // --- Entradas al hacer scroll --------------------------------------------

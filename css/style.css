@@ -1,921 +1,467 @@
-/* El Octágono — dark / glassmorphism / neomorphism / bento design system */
+/* Páginas internas de El Octágono (todas menos la portada). Va encima de
+   theme.css: usa sus colores, su letra, sus botones, la barra y el pie, y lleva
+   al mismo lenguaje cada pieza de los torneos, el ranking, el perfil y la
+   inscripción. Los nombres de clase son los que arma el JavaScript de cada
+   página: se pueden cambiar sus estilos, no sus nombres. */
 
 :root {
-  --bg: #0b0910;
-  --bg-grid: #0e0c15;
-  --surface: #171420;
-  --surface-2: #1d1828;
-  --glass-bg: rgba(255, 255, 255, 0.045);
-  --glass-bg-hover: rgba(255, 255, 255, 0.075);
-  --glass-border: rgba(255, 255, 255, 0.09);
-  --shadow-dark: rgba(0, 0, 0, 0.65);
-  --shadow-light: rgba(255, 255, 255, 0.035);
-
-  --text: #eceef2;
-  --text-dim: #9096a3;
-  --text-faint: #5c6272;
-
-  --accent: #9b4dff;
-  --accent-2: #ff6ec7;
-  --accent-glow: rgba(155, 77, 255, 0.35);
-
+  /* Los nombres viejos de los colores, apuntando a la paleta nueva. */
+  --bg: var(--ground);
+  --bg-grid: var(--ground);
+  --surface: var(--paper);
+  --surface-2: var(--paper-2);
+  --glass-bg: var(--paper);
+  --glass-bg-hover: var(--paper-2);
+  --glass-border: transparent;
+  --shadow-dark: transparent;
+  --shadow-light: transparent;
+  --text: var(--ink);
+  --text-dim: var(--soft);
+  --text-faint: #9a93a6;
+  --accent-glow: transparent;
   --win: #35e0b0;
-  --win-glow: rgba(53, 224, 176, 0.3);
+  --win-glow: transparent;
   --lose: #565c6b;
-  --danger: #ff5c5c;
+  --danger: #ff6b6b;
+  --radius-lg: 0;
+  --radius-md: 0;
+  --radius-sm: 0;
+  --font-heading: inherit;
+  --font-subheading: inherit;
+  --font-body: inherit;
 
-  --radius-lg: 24px;
-  --radius-md: 16px;
-  --radius-sm: 10px;
-
-  --font-heading: "Montserrat", system-ui, sans-serif;
-  --font-subheading: "Inter", system-ui, sans-serif;
-  --font-body: "Prompt", system-ui, sans-serif;
+  /* El tono de la gema de la temporada para textos (js/season-tone.js). */
+  --tone: hsl(var(--season-h, 266) var(--season-s, 100%) 76%);
+  /* Vidrio sobre los escenarios con arte: panel translúcido y desenfoque. */
+  --glass-panel: rgb(23 20 29 / 0.5);
+  /* Velo neutro sobre el arte de la temporada para que el texto se lea. */
+  --stage-scrim: linear-gradient(rgb(11 10 15 / 0.6), rgb(11 10 15 / 0.6)); /* taste-skill-ignore: velo neutro sobre foto */
+  --pad: clamp(20px, 2.6vw, 32px);
 }
 
-* { box-sizing: border-box; }
+::selection {
+  background: rgb(138 61 245 / 0.45);
+}
 
-/* Custom scrollbars: lilac thumb, translucent lilac track, rounded ends.
-   Firefox uses scrollbar-width/scrollbar-color; Chrome/Safari/Edge (and
-   most Chromium-based mobile browsers) use the ::-webkit-scrollbar set. */
 html {
-  scrollbar-width: thin;
-  scrollbar-color: var(--accent) rgba(155, 77, 255, 0.32);
+  scrollbar-color: var(--dim) var(--ground);
 }
 
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-::-webkit-scrollbar-track {
-  background: rgba(155, 77, 255, 0.32);
-  border-radius: 999px;
-}
-::-webkit-scrollbar-thumb {
-  background: var(--accent);
-  border-radius: 999px;
-  border: 2px solid transparent;
-  background-clip: padding-box;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-2);
-  background-clip: padding-box;
+/* ---------- La forma de la casa ----------
+   Superficies con las cuatro esquinas cortadas; cada familia con su corte. */
+
+.glass-card,
+.page-head,
+.neo-surface,
+.neo-bracket-screen,
+.champion-banner,
+.series-score,
+.series-team,
+.match,
+.team-chip,
+.game-row,
+.back-link,
+.history-accordion-toggle,
+.lore-panel,
+.season-banner-img,
+.season-chip,
+.fee-login-prompt,
+.fee-radio,
+.manual-team-group,
+.profile-tab-btn,
+.pill-tab-btn,
+.lobby-slot,
+.community-row,
+.tournament-meta,
+.fee-chip,
+.season-status-chip,
+.live-badge,
+.profile-wins-chip,
+.podium-rank,
+.vs-badge,
+.tab-badge,
+.podium-claim-btn,
+.podium-participate-cta,
+.fee-nickname-input,
+.podium-season-badge,
+.standings-table tr,
+.podium-card.flip-card .flip-card-front,
+.podium-card.flip-card .flip-card-back,
+#podium-grid,
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="search"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="time"],
+select,
+textarea {
+  clip-path: polygon(var(--c-cut, var(--cut)) 0, calc(100% - var(--c-cut, var(--cut))) 0, 100% var(--c-cut, var(--cut)), 100% calc(100% - var(--c-cut, var(--cut))), calc(100% - var(--c-cut, var(--cut))) 100%, var(--c-cut, var(--cut)) 100%, 0 calc(100% - var(--c-cut, var(--cut))), 0 var(--c-cut, var(--cut)));
 }
 
-html, body {
-  margin: 0;
-  min-height: 100%;
+.neo-surface,
+.series-score,
+.series-team,
+.lore-panel,
+.fee-login-prompt,
+.manual-team-group {
+  --c-cut: 12px;
 }
 
-body {
-  background:
-    radial-gradient(circle at 15% 0%, rgba(155, 77, 255, 0.10), transparent 40%),
-    radial-gradient(circle at 85% 20%, rgba(255, 110, 199, 0.08), transparent 45%),
-    var(--bg);
-  color: var(--text);
-  font-family: var(--font-body);
-  padding: 32px 20px 80px;
-  line-height: 1.4;
+.match,
+.team-chip,
+.game-row,
+.back-link,
+.season-chip,
+.fee-radio,
+.profile-tab-btn,
+.pill-tab-btn,
+.lobby-slot,
+.community-row,
+.standings-table tr,
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="search"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="time"],
+select,
+textarea {
+  --c-cut: var(--cut-small);
 }
 
-h1, h2, h3, h4, .section-title {
-  font-family: var(--font-heading);
+.tournament-meta,
+.fee-chip,
+.season-status-chip,
+.live-badge,
+.profile-wins-chip,
+.podium-rank,
+.vs-badge,
+.tab-badge,
+.podium-claim-btn,
+.podium-participate-cta,
+.fee-nickname-input,
+.podium-season-badge {
+  --c-cut: 6px;
 }
 
-.subtitle, .section-sub {
-  font-family: var(--font-subheading);
+/* Lo redondo de antes ahora es un octágono: avatares, botones de ícono y puntos. */
+.player-avatar,
+.community-avatar,
+.ranking-player-avatar,
+.podium-avatar,
+.share-btn,
+.ranking-page-btn,
+.podium-flip-btn,
+.profile-avatar-edit-btn,
+.profile-nickname-edit-btn,
+.team-color-dot,
+.live-badge .blip,
+.neo-node {
+  clip-path: polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%);
 }
 
-a { color: inherit; }
+/* El foco del teclado va por dentro, porque el borde exterior queda recortado. */
+:is(.back-link, .history-accordion-toggle, .profile-tab-btn, .pill-tab-btn, .share-btn, .ranking-page-btn, .podium-flip-btn, .profile-avatar-edit-btn, .profile-nickname-edit-btn, .glass-card.interactive, .season-chip, input, select, textarea):focus-visible {
+  outline-offset: -3px;
+}
 
-::selection { background: var(--accent-glow); }
-
-/* ---------- Layout shell ---------- */
+/* ---------- Contenedor y ficha de cada página ---------- */
 
 .page {
-  max-width: 1100px;
+  width: 100%;
+  max-width: 1240px;
   margin: 0 auto;
+  padding: clamp(8px, 1.2vw, 16px) var(--gutter) 0;
+}
+
+/* La ficha: la misma tarjeta de la portada, en chico, con la franja de la temporada. */
+.page-head {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: clamp(24px, 3vw, 40px);
+  background: var(--paper);
+}
+
+.page-head-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px 40px;
+  padding: clamp(24px, 3.2vw, 44px);
+}
+
+.page-head h1 {
+  max-width: 18ch;
+  font-size: clamp(2.125rem, 1.5rem + 2vw, 3rem);
+}
+
+.page-head h1 i {
+  font-size: 0.6em;
+  vertical-align: 0.18em;
+  margin-right: 0.3em;
+  color: var(--tone);
+}
+
+.page-lead {
+  max-width: 60ch;
+  margin-top: 14px;
+  color: var(--soft);
+}
+
+.page-head-side {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+/* La temporada en curso, enlazada a su leyenda. */
+.season-chip {
+  display: grid;
+  gap: 2px;
+  padding: 12px 18px;
+  background: var(--paper-2);
+  color: var(--ink);
+  text-decoration: none;
+  transition: background-color 160ms ease-out;
+}
+
+.season-chip-name {
+  color: var(--tone);
+  font-weight: 600;
+}
+
+.season-chip-dates {
+  color: var(--soft);
+  font-size: var(--step-small);
+}
+
+@media (hover: hover) {
+  .season-chip:hover {
+    background: var(--paper-3);
+  }
 }
 
 .top-bar {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 36px;
+  gap: 16px;
+  margin-bottom: 32px;
 }
 
 .live-badge-row {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 4px;
-}
-@media (max-width: 768px) {
-  .live-badge-row { margin-bottom: 2px; }
-}
-
-.navbar-fixed {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  margin-bottom: 0;
-  background: rgba(11, 9, 16, 0.55);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 0.5px solid var(--accent);
-}
-
-/* Same max-width/centering as .page, so the logo lines up with the
-   banner/content below it instead of hugging the raw viewport edge. */
-.navbar-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  min-height: 64px;
-  padding: 16px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.navbar-brand-center { text-align: center; }
-.navbar-brand-center .brand { display: inline-flex; }
-
-.main-nav {
-  display: flex;
-  align-items: center;
-  gap: 26px;
-}
-.main-nav a {
-  color: var(--text-dim);
-  text-decoration: none;
-  font-size: 0.92rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  transition: color 0.15s ease;
-}
-.main-nav a:hover { color: var(--text); }
-.main-nav a[href="index.html"] { display: none; }
-.main-nav a.btn {
-  color: #1a1000;
-  padding: 9px 18px;
-}
-
-.nav-dropdown { position: relative; }
-.nav-dropdown-toggle {
-  background: transparent;
-  border: none;
-  color: var(--text-dim);
-  font-family: inherit;
-  font-size: 0.92rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  cursor: pointer;
-  padding: 0;
-  transition: color 0.15s ease;
-}
-.nav-dropdown-toggle:hover { color: var(--text); }
-.nav-dropdown-caret {
-  font-size: 0.68rem;
-  transition: transform 0.15s ease;
-}
-.nav-dropdown-toggle[aria-expanded="true"] .nav-dropdown-caret { transform: rotate(180deg); }
-
-.nav-dropdown-menu {
-  display: none;
-  flex-direction: column;
-  gap: 2px;
-  position: absolute;
-  top: calc(100% + 14px);
-  left: 50%;
-  transform: translateX(-50%);
-  min-width: 210px;
-  background: var(--surface);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-md);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
-  padding: 8px;
-  z-index: 110;
-}
-.nav-dropdown.open .nav-dropdown-menu { display: flex; }
-.nav-dropdown-menu a {
-  color: var(--text-dim);
-  text-decoration: none;
-  font-size: 0.88rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 9px 12px;
-  border-radius: var(--radius-sm);
-  white-space: nowrap;
-  transition: background 0.15s ease, color 0.15s ease;
-}
-.nav-dropdown-menu a:hover { background: var(--glass-bg-hover); color: var(--text); }
-
-.hamburger-btn {
-  display: none;
-  background: transparent;
-  border: 1px solid var(--glass-border);
-  color: var(--text);
-  font-size: 1.1rem;
-  line-height: 1;
-  padding: 9px 12px;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-}
-
-/* PWA install chip: mobile only, and only ever shown by JS once the
-   browser confirms the site is installable (beforeinstallprompt) and
-   we're not already running as the installed app. */
-.install-chip {
-  display: none;
-}
-@media (max-width: 768px) {
-  .install-chip:not([hidden]) {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(155, 77, 255, 0.12);
-    border: 1px solid rgba(155, 77, 255, 0.35);
-    color: var(--accent-2);
-    font-family: inherit;
-    font-weight: 700;
-    font-size: 0.78rem;
-    padding: 8px 14px;
-    border-radius: 999px;
-    cursor: pointer;
-    flex-shrink: 0;
-  }
-}
-
-/* Login de jugadores (Google) — visible en navbar desktop y en el menú
-   móvil. El botón y el perfil nunca se muestran los dos a la vez: player-
-   auth.js alterna [hidden] entre ambos según haya sesión o no. */
-.player-login-btn { white-space: nowrap; }
-.player-login-btn[hidden] { display: none; }
-
-.player-profile {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.player-profile[hidden] { display: none; }
-
-.player-avatar {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1px solid rgba(155, 77, 255, 0.35);
-  flex-shrink: 0;
-}
-
-/* Perfil de jugador: avatar grande con botón de cámara para subir foto,
-   y el Nickname como texto de solo lectura + botón de lápiz para editar. */
-
-/* Chip de victorias (por temporada) en la esquina de la card. */
-.profile-wins-chip {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--accent-2);
-  border: 1px solid rgba(255, 110, 199, 0.35);
-  background: rgba(155, 77, 255, 0.12);
-  padding: 5px 12px;
-  border-radius: 999px;
-  margin-bottom: 4px;
-}
-.profile-wins-chip i { color: #ffd54a; }
-
-.profile-avatar-wrap {
-  position: relative;
-  width: 72px;
-  margin: 0 auto;
-}
-.profile-avatar-wrap .player-avatar { width: 72px; height: 72px; }
-
-.profile-avatar-edit-btn {
-  position: absolute;
-  bottom: -2px;
-  right: -2px;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: var(--accent);
-  color: #1a1000;
-  border: 2px solid var(--surface);
-  font-size: 0.7rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.15s ease;
-}
-.profile-avatar-edit-btn:hover { background: var(--accent-2); }
-
-/* Perfil: pestañas Inicio / Mis torneos. */
-.profile-tabs {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin: 0 0 24px;
-}
-/* .pill-tab-btn es solo el estilo visual (pastilla), reusado por
-   selectores que NO deben disparar el cambio de pestaña del perfil —
-   ese JS busca específicamente .profile-tab-btn, así que cualquier otro
-   selector de este mismo look (modo de lobby, etc.) usa .pill-tab-btn
-   en vez de compartir la clase con las pestañas reales. */
-.profile-tab-btn, .pill-tab-btn {
-  padding: 8px 20px;
-  border-radius: 999px;
-  border: 1px solid var(--glass-border);
-  background: var(--glass-bg);
-  color: var(--text-dim);
-  font-weight: 600;
-  font-size: 0.88rem;
-  cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
-}
-.profile-tab-btn:hover, .pill-tab-btn:hover { background: var(--glass-bg-hover); color: var(--text); }
-.profile-tab-btn.is-active, .pill-tab-btn.is-active {
-  background: rgba(155, 77, 255, 0.16);
-  border-color: rgba(155, 77, 255, 0.45);
-  color: var(--accent-2);
-}
-
-/* Contador de notificaciones (solicitudes de amistad + lobbies listos
-   para pedirle inicio al admin) en la esquina de la pestaña Comunidad. */
-.tab-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 18px;
-  height: 18px;
-  padding: 0 5px;
-  border-radius: 999px;
-  background: var(--accent-2);
-  color: #1a1000;
-  font-size: 0.68rem;
-  font-weight: 800;
-  line-height: 1;
-  margin-left: 4px;
-}
-
-/* Pestaña Comunidad: filas de búsqueda / solicitudes / amigos. */
-.community-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--glass-border);
-  text-align: left;
-}
-.community-row:last-child { border-bottom: none; }
-
-.community-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1px solid rgba(155, 77, 255, 0.35);
-  flex-shrink: 0;
-}
-
-.community-row-name {
-  flex: 1;
-  font-weight: 600;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.community-row-actions {
-  display: flex;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-.community-state-chip {
-  font-size: 0.78rem;
-  color: var(--text-faint);
-  flex-shrink: 0;
-  white-space: nowrap;
-}
-
-/* Cards de torneos entre jugadores (lobbies). */
-.lobby-card { margin-bottom: 16px; }
-.lobby-card:last-child { margin-bottom: 0; }
-
-.lobby-card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.lobby-card-title {
-  font-weight: 700;
-  color: var(--text);
-}
-
-.lobby-teams-row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.lobby-request-admin-btn { margin-top: 14px; }
-
-.lobby-card .lobby-share-btn {
-  display: flex;
-  width: 100%;
-  margin-top: 10px;
-  color: #25d366;
-  border-color: #25d366;
-}
-.lobby-card .lobby-share-btn:hover { background: rgba(37, 211, 102, 0.1); }
-
-.lobby-status-note {
-  margin: 14px 0 0;
-  font-size: 0.82rem;
-  color: var(--text-dim);
-  text-align: center;
-}
-
-.lobby-team { flex: 1; min-width: 0; }
-
-.lobby-team-name {
-  font-weight: 700;
-  font-size: 0.85rem;
-  margin-bottom: 8px;
-}
-
-.lobby-team-slots {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.lobby-slot {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
-  border-radius: var(--radius-sm);
-  font-size: 0.85rem;
-}
-
-.lobby-slot-filled {
-  background: rgba(155, 77, 255, 0.1);
-  border: 1px solid rgba(155, 77, 255, 0.3);
-  color: var(--text);
-}
-
-button.lobby-slot-open {
-  background: none;
-  border: 1px dashed var(--glass-border);
-  color: var(--text-dim);
-  cursor: pointer;
-  font-family: inherit;
-  transition: color 0.15s ease, border-color 0.15s ease;
-}
-button.lobby-slot-open:hover { color: var(--accent-2); border-color: rgba(255, 110, 199, 0.45); }
-span.lobby-slot-open {
-  border: 1px dashed var(--glass-border);
-  color: var(--text-faint);
-}
-
-.lobby-vs {
-  font-weight: 800;
-  color: var(--text-faint);
-  font-size: 0.8rem;
-  flex-shrink: 0;
-}
-
-.profile-nickname-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.profile-nickname-row input { flex: 1; }
-
-.profile-nickname-edit-btn {
-  background: transparent;
-  border: 1px solid var(--glass-border);
-  color: var(--text-dim);
-  width: 42px;
-  height: 42px;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: color 0.15s ease, border-color 0.15s ease;
-}
-.profile-nickname-edit-btn:hover { color: var(--accent-2); border-color: var(--accent-2); }
-.profile-nickname-edit-btn[hidden] { display: none; }
-
-/* Desktop: la foto de Google sola hace de ícono/link hacia el perfil,
-   sin el texto "Mi cuenta" (ver .player-account-text más abajo). */
-.player-account-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.player-account-text { display: none; }
-
-.main-nav .player-account-link {
-  border-radius: 50%;
-  transition: box-shadow 0.15s ease;
-}
-.main-nav .player-account-link:hover { box-shadow: 0 0 0 2px var(--accent-2); }
-
-/* Mobile: junto al avatar sí se muestra el texto "Mi cuenta". */
-.mobile-menu .player-account-text {
-  display: inline;
-  color: var(--accent);
-  font-size: 0.9rem;
-}
-.mobile-menu .player-account-link:hover .player-account-text { color: var(--accent-2); }
-
-.player-logout-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.82rem;
-  white-space: nowrap;
-  background: transparent;
-  border: none;
-  color: var(--text-faint);
-  cursor: pointer;
-  padding: 0;
-  transition: color 0.15s ease;
-}
-.player-logout-btn:hover { color: var(--accent-2); }
-
-/* Desktop: avatar, luego "Cerrar sesión" en su propia columna,
-   separada por un divisor en vez de quedar pegados. */
-.main-nav .player-profile { gap: 14px; }
-.main-nav .player-logout-btn {
-  padding-left: 14px;
-  border-left: 1px solid rgba(155, 77, 255, 0.25);
-}
-
-/* Mobile: avatar arriba, "Cerrar sesión" debajo en su propia fila. */
-.mobile-menu .player-login-btn { margin-top: 10px; }
-.mobile-menu .player-profile {
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 16px 0;
-  margin-top: 10px;
-  border-top: 1px solid rgba(155, 77, 255, 0.25);
-}
-.mobile-menu .player-logout-btn { font-size: 0.9rem; }
-
-.mobile-menu {
-  display: none;
-  flex-direction: column;
-  gap: 0;
-  padding: 6px 20px 22px;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-.mobile-menu.open {
-  display: flex;
-  background: var(--bg);
-}
-
-/* Cuando el menú móvil está abierto, oscurece el contenido de la página
-   para que el foco quede en el menú — navbar (100) y footer (90) se
-   mantienen por encima, sin oscurecer. */
-.mobile-menu-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 80;
-}
-.mobile-menu-overlay.open { display: block; }
-.mobile-menu a {
-  color: var(--text-dim);
-  text-decoration: none;
-  font-size: 1rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 16px 0;
-  border-bottom: 1px solid rgba(155, 77, 255, 0.25);
-}
-.mobile-menu a:last-child { border-bottom: none; }
-.mobile-menu a:not(.btn) i { color: var(--accent); }
-.mobile-menu a.btn { justify-content: center; color: #1a1000; margin-top: 10px; }
-.mobile-menu-group { border-bottom: 1px solid rgba(155, 77, 255, 0.25); }
-.mobile-menu-group-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  background: transparent;
-  border: none;
-  color: var(--text-dim);
-  font-family: inherit;
-  font-size: 1rem;
-  padding: 16px 0;
-  cursor: pointer;
-}
-.mobile-menu-group-toggle span { display: flex; align-items: center; gap: 10px; }
-.mobile-menu-group-toggle span i { color: var(--accent); }
-.mobile-menu-group-toggle .toggle-icon {
-  color: var(--text-dim);
-  font-size: 0.8rem;
-  transition: transform 0.2s ease;
-}
-.mobile-menu-group-toggle[aria-expanded="true"] .toggle-icon { transform: rotate(180deg); }
-
-.mobile-menu-submenu {
-  display: flex;
-  flex-direction: column;
-  padding: 0 0 10px;
-}
-.mobile-menu-submenu[hidden] { display: none; }
-.mobile-menu a.mobile-menu-sub {
-  padding: 12px 0 12px 16px;
-  border-bottom: none;
-  font-size: 0.92rem;
-}
-
-@media (max-width: 768px) {
-  .main-nav { display: none; }
-  .hamburger-btn { display: inline-flex; align-items: center; justify-content: center; }
-  .brand-logo { height: 34px; }
-}
-
-/* Pages without a hero banner need clearance so the fixed navbar
-   doesn't sit on top of their content. */
-.page-offset-navbar { padding-top: 100px; }
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-weight: 800;
-  font-size: 1.4rem;
-  letter-spacing: 0.5px;
-  text-decoration: none;
-  color: var(--text);
-}
-
-.brand-icon {
-  width: 30px;
-  height: 30px;
-  flex-shrink: 0;
-}
-
-.brand-logo {
-  height: 64px;
-  width: auto;
-  display: block;
-}
-
-.footer-logo {
-  height: 30px;
-  width: auto;
-  display: block;
-  filter: brightness(0) invert(1);
-  justify-self: end;
-}
-
-/* Grid (not flex) so the vertical divider always lands on the true
-   horizontal center of the footer, regardless of the logo/icons widths —
-   .footer-legal-row mirrors this so both rows share that same center axis. */
-.footer-top {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 20px;
-}
-
-.footer-divider {
-  width: 1px;
-  height: 26px;
-  background: var(--accent);
-  flex-shrink: 0;
-}
-
-.brand-arena {
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.subtitle {
-  color: var(--text-dim);
-  font-size: 0.95rem;
-  margin-top: 3px;
 }
 
 .back-link {
-  color: var(--text-dim);
-  text-decoration: none;
-  font-size: 0.9rem;
-  padding: 8px 14px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--glass-border);
-  background: var(--glass-bg);
-  transition: all 0.15s ease;
-}
-.back-link:hover { background: var(--glass-bg-hover); color: var(--text); }
-
-/* Ranking (mobile y desktop por igual): "Tabla de posiciones" y el
-   Volver comparten la primera fila (título en la 1ra columna, Volver en
-   la 2da, alineado a la derecha dentro del padding del contenedor), la
-   descripción ocupa la fila de abajo completa. Volver muestra solo el
-   icono, sin texto. */
-.ranking-top-bar-inner {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-areas:
-    "title back"
-    "desc desc";
+  display: inline-flex;
   align-items: center;
-  column-gap: 12px;
-  width: 100%;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  background: var(--paper-2);
+  color: var(--ink);
+  text-decoration: none;
+  transition: background-color 160ms ease-out;
 }
-.ranking-top-bar-inner h1 { grid-area: title; }
-.ranking-top-bar-inner p { grid-area: desc; }
 
-.ranking-back-link {
-  grid-area: back;
+@media (hover: hover) {
+  .back-link:hover {
+    background: var(--paper-3);
+  }
+}
+
+.page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin: clamp(40px, 5vw, 64px) 0 0;
+}
+
+.page .page-actions .btn-block {
+  width: auto;
+  max-width: none;
+  margin: 0;
+}
+
+/* Logo y nombre del panel de administración. */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  font-size: var(--step-lead);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+.brand-icon {
+  width: 32px;
+  height: 32px;
+  flex: none;
+}
+
+.brand-logo {
   display: block;
   width: auto;
-  justify-self: end;
-  text-align: center;
+  height: 36px;
 }
-.ranking-back-link-text { display: none; }
 
-/* ---------- Bento grid ---------- */
+.brand-arena {
+  color: var(--link);
+}
+
+.subtitle {
+  margin-top: 4px;
+  color: var(--soft);
+}
+
+/* ---------- Títulos de sección ---------- */
+
+.section-heading {
+  margin: clamp(48px, 6vw, 80px) 0 20px;
+}
+
+.section-heading h2 {
+  font-size: clamp(1.75rem, 1.35rem + 1.6vw, 2.75rem);
+}
+
+.section-heading p {
+  max-width: 60ch;
+  margin-top: 12px;
+  color: var(--soft);
+}
+
+.section-title {
+  margin: 0 0 8px;
+  font-size: var(--step-lead);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+/* Título como texto (no flex), así se centra en las tarjetas centradas. */
+.section-title i {
+  margin-right: 10px;
+  font-size: 0.8em;
+  color: var(--tone);
+}
+
+.section-sub {
+  max-width: 64ch;
+  margin: 0 0 20px;
+  color: var(--soft);
+}
+
+/* El título viejo de las páginas sin ficha (administración). */
+.hero {
+  margin: 0 0 clamp(24px, 3vw, 40px);
+}
+
+.hero h1 {
+  font-size: clamp(2.25rem, 1.5rem + 2.6vw, 3.75rem);
+}
+
+.hero p {
+  max-width: 60ch;
+  margin-top: 14px;
+  color: var(--soft);
+}
+
+/* ---------- Superficies ---------- */
 
 .bento-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
+  gap: var(--gutter);
 }
 
 .bento-grid.two-col {
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 @media (max-width: 720px) {
-  .bento-grid.two-col { grid-template-columns: 1fr; }
+  .bento-grid.two-col {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
-/* Fee cards, desktop only: a bento layout where each card's width scales
-   with its price tier (Amistoso $0 smallest → Élite $10 largest). Below
-   this breakpoint .fee-grid falls back to the plain .bento-grid auto-fit
-   behavior, unchanged. */
+/* Valores de inscripción, en escritorio: el ancho crece con el precio. */
 @media (min-width: 769px) {
   .fee-grid {
-    grid-template-columns: repeat(12, 1fr);
+    grid-template-columns: repeat(12, minmax(0, 1fr));
   }
-  .fee-grid .fee-card:nth-child(1) { grid-column: span 4; } /* Amistoso $0 */
-  .fee-grid .fee-card:nth-child(2) { grid-column: span 4; } /* Casual $1 */
-  .fee-grid .fee-card:nth-child(3) { grid-column: span 4; } /* Competitivo $2 */
-  .fee-grid .fee-card:nth-child(4) { grid-column: span 5; } /* Premier $5 */
-  .fee-grid .fee-card:nth-child(5) { grid-column: span 7; } /* Élite $10 */
 
-  /* Panel de admin: Duelos/Duos/Pug en una fila pareja, Historial +
-     Inscripciones en la fila siguiente, mas anchas. */
-  .admin-bento { grid-template-columns: repeat(12, 1fr); }
+  .fee-grid .fee-card:nth-child(1),
+  .fee-grid .fee-card:nth-child(2),
+  .fee-grid .fee-card:nth-child(3) {
+    grid-column: span 4;
+  }
+
+  .fee-grid .fee-card:nth-child(4) {
+    grid-column: span 5;
+  }
+
+  .fee-grid .fee-card:nth-child(5) {
+    grid-column: span 7;
+  }
+
+  /* Panel de administración: los tres modos en una fila, el resto debajo. */
+  .admin-bento {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
   .admin-bento .mode-card:nth-child(1),
   .admin-bento .mode-card:nth-child(2),
-  .admin-bento .mode-card:nth-child(3) { grid-column: span 4; }
+  .admin-bento .mode-card:nth-child(3) {
+    grid-column: span 4;
+  }
+
   .admin-bento .mode-card:nth-child(4),
-  .admin-bento .mode-card:nth-child(5) { grid-column: span 6; }
+  .admin-bento .mode-card:nth-child(5) {
+    grid-column: span 6;
+  }
 }
 
-/* ---------- Glass + neomorphic cards ---------- */
-
 .glass-card {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  box-shadow:
-    10px 10px 24px var(--shadow-dark),
-    -6px -6px 18px var(--shadow-light);
-  padding: 28px;
-  transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+  position: relative;
+  padding: var(--pad);
+  background: var(--paper);
 }
 
 .glass-card.interactive {
-  cursor: pointer;
-  text-decoration: none;
-  color: inherit;
   display: block;
-}
-.glass-card.interactive:hover {
-  transform: translateY(-4px);
-  background: var(--glass-bg-hover);
-}
-
-.mode-card, .fee-card, .podium-card, .about-card {
-  border: 1px solid rgba(155, 77, 255, 0.4);
-  box-shadow:
-    10px 10px 24px var(--shadow-dark),
-    -6px -6px 18px var(--shadow-light),
-    0 0 0 1px rgba(155, 77, 255, 0.12),
-    0 0 24px rgba(155, 77, 255, 0.15);
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 160ms ease-out;
 }
 
-.mode-card {
-  min-height: 220px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: relative;
-  overflow: hidden;
+@media (hover: hover) {
+  .glass-card.interactive:hover {
+    background: var(--paper-2);
+  }
 }
 
-/* Chip de estado en la esquina de cada mode-card del home — respeta el
-   padding de la card (mismo inset que .profile-wins-chip). Solo una a
-   la vez: en curso tiene prioridad sobre programado.
-   Selector de 2 clases (.mode-card .mode-card-status-chip) porque
-   .mode-card > * (más abajo) también vale 1 clase de especificidad y,
-   al aparecer después en el archivo, le ganaría a position:absolute con
-   un selector de una sola clase — dejando el chip estirado a lo ancho
-   como cualquier otro flex item de .mode-card (display:flex column). */
-.mode-card .mode-card-status-chip {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  z-index: 2;
-  display: inline-flex;
-  align-self: flex-start;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.3px;
-  text-transform: uppercase;
-  padding: 4px 10px;
-  border-radius: 999px;
-}
-.mode-card-status-chip.status-live {
-  color: var(--win);
-  background: rgba(53, 224, 176, 0.14);
-  border: 1px solid var(--win-glow);
-}
-.mode-card-status-chip.status-scheduled {
-  color: var(--accent-2);
-  background: rgba(255, 110, 199, 0.14);
-  border: 1px solid rgba(255, 110, 199, 0.4);
-}
-
-/* .glass-card.interactive sets display:block (2 classes), which otherwise
-   beats .mode-card's display:flex (1 class) on specificity alone and
-   silently kills the flex layout — leaving the "Ver en vivo" button
-   flowing right after the paragraph instead of pinned to the card's
-   bottom edge whenever a sibling card's longer text stretches the row. */
-.glass-card.interactive.mode-card {
-  display: flex;
-}
-
-.mode-card > * {
-  position: relative;
-  z-index: 1;
-}
-
-/* Subtle lilac dot texture in the corner — only mode cards get it, so
-   this section reads visually distinct from the plain fee cards below. */
-.mode-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 100px;
-  height: 100px;
-  background-image: radial-gradient(rgba(155, 77, 255, 0.5) 1.4px, transparent 1.4px);
-  background-size: 13px 13px;
-  -webkit-mask-image: radial-gradient(circle at top right, black, transparent 72%);
-  mask-image: radial-gradient(circle at top right, black, transparent 72%);
-  pointer-events: none;
+/* Superficie interior: marcadores, tablas y formularios dentro de una tarjeta. */
+.neo-surface {
+  padding: 20px;
+  background: var(--paper-2);
 }
 
 .icon {
-  font-size: 2.4rem;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+  color: var(--tone);
+  font-size: 2rem;
+  line-height: 1;
 }
 
 .icon-gold { color: #ffd54a; }
@@ -923,206 +469,192 @@ span.lobby-slot-open {
 .icon-bronze { color: #cd7f32; }
 .icon-platinum { color: #b9f2ff; }
 
-.mode-card .icon-img {
-  height: 48px;
-  width: auto;
-  margin-bottom: 12px;
-  display: block;
+/* Tarjetas de modo del panel de administración. */
+.mode-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 220px;
+}
+
+.glass-card.interactive.mode-card {
+  display: flex;
 }
 
 .mode-card h2 {
-  margin: 0 0 8px;
-  font-size: 1.5rem;
+  margin: 0 0 10px;
+  font-size: var(--step-lead);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
 .mode-card p {
-  color: var(--text-dim);
-  margin: 0;
-  font-size: 0.95rem;
+  color: var(--soft);
 }
 
 .mode-card .btn {
-  align-self: stretch;
-  width: 100%;
+  align-self: flex-start;
   margin-top: 24px;
-  animation: live-blink 1s ease-in-out infinite; /* half speed of the original 120 BPM cycle */
-}
-
-/* Home mode-cards (Duelos/Duos/Pug): the whole card is a plain div now
-   (not an <a>, so it can hold two real links — "Ver en vivo" + the
-   secondary "Inscribirme" — instead of an invalid nested anchor). */
-.mode-card:hover {
-  transform: translateY(-4px);
-  background: var(--glass-bg-hover);
-}
-
-.mode-card-link {
-  display: block;
-  color: inherit;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.mode-card-ctas {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 24px;
-}
-
-.mode-card-ctas .btn {
-  width: 100%;
-  margin-top: 0;
-}
-
-.mode-card-ctas .btn-outline {
-  animation: none;
-}
-
-@keyframes live-blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.55; }
 }
 
 .mode-card .tag {
   align-self: flex-start;
   margin-top: 18px;
-  font-size: 0.78rem;
-  color: var(--accent-2);
-  border: 1px solid rgba(255, 110, 199, 0.35);
-  background: rgba(155, 77, 255, 0.1);
-  padding: 4px 10px;
-  border-radius: 999px;
+  color: var(--tone);
+  font-size: var(--step-small);
 }
 
-/* neomorphic solid surface (used for score displays, inputs container) */
-.neo-surface {
-  background: var(--surface);
-  border-radius: var(--radius-md);
-  box-shadow:
-    inset 4px 4px 10px rgba(0, 0, 0, 0.45),
-    inset -4px -4px 10px rgba(255, 255, 255, 0.02);
-  padding: 20px;
-}
-
-/* ---------- Forms ---------- */
+/* ---------- Formularios ---------- */
 
 label {
   display: block;
-  font-size: 0.85rem;
-  color: var(--text-dim);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+  color: var(--soft);
+  font-size: var(--step-small);
+  font-weight: 500;
 }
 
-input[type="text"], select {
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="search"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="time"],
+select,
+textarea {
   width: 100%;
-  background: var(--surface-2);
-  border: 1px solid var(--glass-border);
-  color: var(--text);
-  padding: 11px 14px;
-  border-radius: var(--radius-sm);
-  font-size: 0.95rem;
+  min-height: 48px;
+  padding: 0 16px;
+  border: 0;
+  background: var(--paper-2);
+  color: var(--ink);
+  font: inherit;
   outline: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-input[type="text"]:focus, select:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-glow);
+  color-scheme: dark;
+  transition: background-color 160ms ease-out;
 }
 
-.field { margin-bottom: 14px; }
+textarea {
+  padding: 12px 16px;
+}
+
+:is(input, select, textarea):focus-visible {
+  outline: 2px solid var(--link);
+  background: var(--paper-3);
+}
+
+input::placeholder {
+  color: var(--text-faint);
+}
+
+input[readonly] {
+  color: var(--soft);
+}
+
+.field {
+  margin-bottom: 16px;
+}
 
 .player-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 14px;
-  margin: 18px 0 24px;
+  gap: 16px;
+  margin: 20px 0 24px;
 }
 
 .manual-groups {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 16px;
-  margin: 18px 0 24px;
+  margin: 20px 0 24px;
 }
 
 .manual-team-group {
-  background: var(--surface);
-  border-radius: var(--radius-md);
-  padding: 16px;
-  box-shadow:
-    6px 6px 14px var(--shadow-dark),
-    -4px -4px 12px var(--shadow-light);
+  padding: 18px;
+  background: var(--paper-2);
+}
+
+.manual-team-group input,
+.manual-team-group select {
+  background: var(--paper-3);
 }
 
 .manual-team-group h3 {
-  margin: 0 0 12px;
-  font-size: 0.85rem;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.manual-team-group .field:last-child { margin-bottom: 0; }
-
-.guest-tag-input { margin-top: 8px; }
-
-/* ---------- Buttons ---------- */
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border: none;
-  border-radius: var(--radius-sm);
-  padding: 12px 22px;
-  font-family: inherit;
-  font-size: 0.95rem;
+  margin: 0 0 14px;
+  color: var(--soft);
+  font-size: var(--step-body);
   font-weight: 600;
-  line-height: normal;
-  text-decoration: none;
-  cursor: pointer;
-  transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
 }
-.btn:active { transform: scale(0.97); }
 
-.btn-primary {
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  color: #1a1000;
-  box-shadow: 0 6px 18px var(--accent-glow);
+.manual-team-group .field:last-child {
+  margin-bottom: 0;
 }
-.btn-primary:hover { box-shadow: 0 8px 24px var(--accent-glow); }
+
+.guest-tag-input {
+  margin-top: 8px;
+}
+
+/* ---------- Botones de las páginas internas ----------
+   .btn y .btn-primary son el botón con el degradado de la marca (theme.css). */
+
+.btn-ghost,
+.btn-outline,
+.btn-danger {
+  transition: background-color 160ms ease-out, transform 160ms ease-out;
+}
 
 .btn-ghost {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  color: var(--text);
-}
-.btn-ghost:hover { background: var(--glass-bg-hover); }
-
-.btn-danger {
-  background: rgba(255, 90, 90, 0.12);
-  border: 1px solid rgba(255, 90, 90, 0.35);
-  color: #ff9c9c;
+  background: var(--paper-2);
+  color: var(--ink);
 }
 
 .btn-outline {
-  background: transparent;
-  border: 1px solid var(--accent);
-  color: var(--accent-2);
-}
-.btn-outline:hover {
-  background: rgba(155, 77, 255, 0.08);
+  background: rgb(138 61 245 / 0.18);
+  color: var(--link);
 }
 
-.btn-sm { padding: 8px 14px; font-size: 0.85rem; }
-.btn-block { width: 100%; }
+.btn-danger {
+  background: rgb(255 107 107 / 0.14);
+  color: #ffa3a3;
+}
 
-/* Full-width CTAs are a mobile pattern — on desktop, cap and center them. */
+@media (hover: hover) {
+  .btn-ghost:hover {
+    background: var(--paper-3);
+  }
+
+  .btn-outline:hover {
+    background: rgb(138 61 245 / 0.28);
+  }
+
+  .btn-danger:hover {
+    background: rgb(255 107 107 / 0.22);
+  }
+}
+
+.btn-sm {
+  min-height: 40px;
+  padding: 0 16px;
+  font-size: var(--step-small);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* En escritorio los botones a todo lo ancho se acotan y se centran;
+   dentro del menú del celular y de las tarjetas siguen a todo lo ancho. */
+.btn-block {
+  display: flex;
+}
+
 @media (min-width: 641px) {
-  .btn-block {
-    max-width: 320px;
+  .page .btn-block {
+    max-width: 360px;
     margin-left: auto;
     margin-right: auto;
   }
@@ -1130,85 +662,90 @@ input[type="text"]:focus, select:focus {
 
 .actions-row {
   display: flex;
-  gap: 12px;
   flex-wrap: wrap;
-  margin-top: 18px;
+  gap: 12px;
+  margin-top: 20px;
 }
 
-/* ---------- Team chips ---------- */
+/* ---------- Equipos ---------- */
 
 .team-chip {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   padding: 14px 16px;
-  border-radius: var(--radius-md);
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
+  background: var(--paper-2);
+}
+
+.team-chip > div > div:first-child {
+  font-weight: 600;
 }
 
 .team-color-dot {
   width: 14px;
   height: 14px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  box-shadow: 0 0 10px currentColor;
+  flex: none;
 }
 
 .team-name-input {
-  background: transparent;
-  border: none;
-  color: var(--text);
-  font-weight: 700;
-  font-size: 1rem;
-  padding: 4px 0;
   width: 100%;
+  min-height: 0;
+  padding: 4px 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 600;
+  clip-path: none;
 }
-.team-name-input:focus { outline: none; border-bottom: 1px solid var(--accent); }
+
+.team-name-input:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+  background: transparent;
+}
 
 .team-players {
-  color: var(--text-dim);
-  font-size: 0.82rem;
   margin-top: 2px;
+  color: var(--soft);
+  font-size: 0.9375rem;
 }
 
-/* ---------- Bracket ---------- */
+/* ---------- Llaves (panel y vista pública de Duos) ---------- */
 
 .bracket {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
   align-items: center;
 }
 
 @media (max-width: 860px) {
-  .bracket { grid-template-columns: 1fr; }
+  .bracket {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .bracket-col {
   display: flex;
   flex-direction: column;
-  gap: 20px;
   justify-content: center;
+  gap: 20px;
   height: 100%;
 }
 
 .bracket-col-label {
+  color: var(--soft);
+  font-size: var(--step-small);
+  font-weight: 500;
   text-align: center;
-  color: var(--text-faint);
-  font-size: 0.75rem;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  margin-bottom: -6px;
 }
 
 .match {
-  background: var(--surface);
-  border-radius: var(--radius-md);
+  display: grid;
+  gap: 4px;
   padding: 6px;
-  box-shadow:
-    6px 6px 14px var(--shadow-dark),
-    -4px -4px 12px var(--shadow-light);
+  background: var(--paper-2);
 }
 
 .match-slot {
@@ -1217,171 +754,125 @@ input[type="text"]:focus, select:focus {
   justify-content: space-between;
   gap: 10px;
   padding: 12px 14px;
-  border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: background-color 160ms ease-out, opacity 160ms ease-out;
 }
-.match-slot:hover { background: rgba(255, 255, 255, 0.04); }
+
 .match-slot.winner {
-  background: rgba(53, 224, 176, 0.1);
-  box-shadow: inset 0 0 0 1px rgba(53, 224, 176, 0.4);
+  background: rgb(53 224 176 / 0.14);
 }
-.match-slot.loser { opacity: 0.45; }
-.match-slot.disabled { cursor: not-allowed; opacity: 0.35; }
+
+.match-slot.loser {
+  opacity: 0.45;
+}
+
+.match-slot.disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+@media (hover: hover) {
+  .match-slot:hover {
+    background: rgb(255 255 255 / 0.05);
+  }
+
+  .match-slot.winner:hover {
+    background: rgb(53 224 176 / 0.2);
+  }
+}
 
 .match-slot .name {
   font-weight: 600;
-  font-size: 0.92rem;
 }
 
-.match-slot .win-star { color: var(--accent-2); font-size: 0.85rem; }
+.match-slot .win-star {
+  color: var(--win);
+}
 
+/* El separador entre los dos lados de un cruce ahora es el espacio. */
 .match-divider {
-  height: 1px;
-  background: var(--glass-border);
-  margin: 0 8px;
+  display: none;
 }
 
 .match-title {
-  text-align: center;
-  font-size: 0.72rem;
-  color: var(--text-faint);
-  text-transform: uppercase;
-  letter-spacing: 1px;
   padding: 8px 0 2px;
-}
-
-/* champion / result banners */
-
-.champion-banner {
+  color: var(--soft);
+  font-size: var(--step-small);
   text-align: center;
-  padding: 32px;
-  border-radius: var(--radius-lg);
-  background: linear-gradient(135deg, rgba(155, 77, 255, 0.18), rgba(255, 110, 199, 0.1));
-  border: 1px solid rgba(255, 110, 199, 0.3);
-  margin-bottom: 26px;
-}
-.champion-banner .label {
-  color: var(--accent-2);
-  text-transform: uppercase;
-  font-size: 0.8rem;
-  letter-spacing: 2px;
-}
-.champion-banner .name {
-  font-size: 2rem;
-  font-weight: 800;
-  margin: 6px 0;
-}
-.champion-banner .sub {
-  color: var(--text-dim);
-  font-size: 0.9rem;
 }
 
-/* ---------- Series (4v4) ---------- */
-
-.series-score {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 28px;
-  padding: 24px;
+.readonly .match-slot {
+  cursor: default;
 }
 
-.series-team {
-  text-align: center;
-  min-width: 140px;
-}
-.series-team .score {
-  font-size: 3rem;
-  font-weight: 800;
-  line-height: 1;
-}
-.series-team .name {
-  margin-top: 6px;
-  font-weight: 600;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 100%;
+.readonly .match-slot:hover {
+  background: none;
 }
 
-@media (max-width: 480px) {
-  .series-score { gap: 12px; padding: 20px 12px; }
-  .series-team { min-width: 0; flex: 1; }
+.readonly .match-slot.winner:hover {
+  background: rgb(53 224 176 / 0.14);
 }
 
-.series-vs {
-  color: var(--text-faint);
-  font-weight: 700;
-  font-size: 1.1rem;
-}
-
-/* ---------- Neon bracket screen (torneo en vivo) ---------- */
+/* ---------- El escenario de la llave en vivo ----------
+   El arte de la temporada, con un velo para leer encima; el campeón y el
+   marcador van en vidrio sobre ese arte. */
 
 .neo-bracket-screen {
-  background: #0b0910;
-  border: 1px solid rgba(155, 77, 255, 0.25);
-  border-radius: var(--radius-md);
-  padding: 28px 20px;
-  margin-bottom: 20px;
+  position: relative;
+  margin-bottom: 24px;
+  padding: clamp(32px, 4.5vw, 64px) 20px;
   overflow-x: auto;
+  background: var(--stage-scrim), var(--season-art, url("../img/banners/octoframe.webp")) center / cover, var(--ground);
+}
+
+/* Con campeón, el escenario deja lugar abajo para el cartel que se le monta encima. */
+.neo-bracket-screen:has(+ #champion-banner .champion-banner) {
+  padding-bottom: clamp(96px, 10vw, 128px);
 }
 
 .neo-bracket-title {
+  margin: 0 0 clamp(20px, 3vw, 32px);
+  color: var(--ink);
+  font-size: var(--step-lead);
+  font-weight: 600;
+  letter-spacing: -0.02em;
   text-align: center;
-  font-size: 0.78rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  margin: 0 0 20px;
 }
 
 .neo-node-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
+/* Cada equipo, una ficha del color de su equipo con la inicial. */
 .neo-node {
   --glow: var(--node-color, var(--accent));
-  width: 44px;
-  height: 40px;
-  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 800;
-  font-size: 1.15rem;
-  color: var(--glow);
-  background: rgba(255, 255, 255, 0.03);
-  border: 2px solid var(--glow);
-  box-shadow: 0 0 8px var(--glow), 0 0 18px var(--glow), inset 0 0 8px var(--glow);
-  text-shadow: 0 0 6px var(--glow);
-  transition: opacity 0.3s ease, box-shadow 0.3s ease;
-  flex-shrink: 0;
+  width: clamp(52px, 5vw, 64px);
+  height: clamp(52px, 5vw, 64px);
+  flex: none;
+  background: var(--glow);
+  color: #0b0a0f;
+  font-size: clamp(1.375rem, 1.1rem + 0.8vw, 1.75rem);
+  font-weight: 600;
+  transition: opacity 300ms ease-out;
 }
 
 .neo-node.neo-dim {
-  opacity: 0.25;
-  box-shadow: 0 0 4px var(--glow);
-  text-shadow: none;
-}
-
-.neo-node.neo-blink { animation: neo-blink 0.9s ease-in-out infinite; }
-
-@keyframes neo-blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
+  opacity: 0.28;
 }
 
 .neo-node-label {
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  text-align: center;
-  max-width: 76px;
+  max-width: 120px;
   overflow: hidden;
+  color: var(--ink);
+  font-size: var(--step-small);
+  font-weight: 500;
+  text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -1390,18 +881,14 @@ input[type="text"]:focus, select:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: clamp(12px, 2vw, 24px);
 }
 
 .neo-connector {
-  width: 40px;
+  width: clamp(24px, 6vw, 64px);
   height: 2px;
-  background: linear-gradient(90deg, rgba(155, 77, 255, 0.6), rgba(255, 110, 199, 0.6));
-  flex-shrink: 0;
-}
-
-@media (max-width: 480px) {
-  .neo-connector { width: 20px; }
+  flex: none;
+  background: rgb(255 255 255 / 0.4);
 }
 
 .neo-bracket-canvas {
@@ -1417,12 +904,13 @@ input[type="text"]:focus, select:focus {
 
 .neo-bracket-side {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: 36px;
 }
 
-.neo-bracket-side { align-items: stretch; }
-.neo-bracket-side.neo-side-right { flex-direction: row-reverse; }
+.neo-bracket-side.neo-side-right {
+  flex-direction: row-reverse;
+}
 
 .neo-bracket-col {
   display: flex;
@@ -1432,8 +920,8 @@ input[type="text"]:focus, select:focus {
 }
 
 .neo-bracket-column {
-  flex: 1;
   display: flex;
+  flex: 1;
   flex-direction: column;
   justify-content: space-around;
   gap: 20px;
@@ -1449,17 +937,16 @@ input[type="text"]:focus, select:focus {
 .neo-bracket-final-column {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   gap: 18px;
 }
 
 .neo-bracket-round-label {
+  color: var(--soft);
+  font-size: var(--step-small);
+  font-weight: 500;
   text-align: center;
-  font-size: 0.68rem;
-  color: var(--text-faint);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
 }
 
 .neo-bracket-lines {
@@ -1467,66 +954,149 @@ input[type="text"]:focus, select:focus {
   inset: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none;
   overflow: visible;
+  pointer-events: none;
 }
 
 .neo-bracket-lines path {
   fill: none;
-  stroke: rgba(155, 77, 255, 0.45);
+  stroke: rgb(255 255 255 / 0.35);
   stroke-width: 2;
 }
 
 .neo-roundrobin-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
   justify-content: center;
+  gap: 20px;
 }
 
-/* ---------- Countdown (torneo agendado) ---------- */
+/* El cartel del campeón: vidrio montado sobre el pie del escenario. */
+.champion-banner {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 24px;
+  padding: clamp(24px, 3.2vw, 40px);
+  background: var(--glass-panel);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  text-align: center;
+}
 
-.countdown-screen { text-align: center; }
+.neo-bracket-screen + #champion-banner .champion-banner {
+  margin: calc(-1 * clamp(72px, 8vw, 96px)) clamp(12px, 5vw, 64px) 24px;
+}
+
+.champion-banner .label {
+  color: var(--tone);
+  font-weight: 600;
+}
+
+.champion-banner .name {
+  margin: 10px 0 8px;
+  font-size: clamp(2rem, 1.3rem + 2.6vw, 3.5rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.champion-banner .name i {
+  color: #ffd54a;
+  font-size: 0.75em;
+}
+
+.champion-banner .sub {
+  color: var(--soft);
+}
+
+/* ---------- El marcador de la serie ----------
+   Dos placas de vidrio sobre el arte de la temporada. */
+
+.series-score {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: clamp(12px, 2vw, 24px);
+  padding: clamp(20px, 3vw, 36px);
+  background: var(--stage-scrim), var(--season-art, url("../img/banners/octoframe.webp")) center / cover, var(--ground);
+}
+
+.series-team {
+  flex: 1;
+  min-width: 0;
+  max-width: 280px;
+  padding: clamp(18px, 2.4vw, 28px) 16px;
+  background: var(--glass-panel);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  text-align: center;
+}
+
+.series-team .score {
+  font-size: clamp(3rem, 2rem + 4vw, 5rem);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.series-team .name {
+  max-width: 100%;
+  margin-top: 10px;
+  overflow: hidden;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.series-vs {
+  align-self: center;
+  color: var(--soft);
+  font-weight: 600;
+}
+
+/* ---------- Torneo agendado: cuenta regresiva ---------- */
+
+.countdown-screen {
+  padding: clamp(32px, 5vw, 64px) var(--pad);
+  text-align: center;
+}
 
 .countdown-label {
-  color: var(--text-dim);
-  font-size: 0.9rem;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  color: var(--soft);
 }
 
 .countdown-clock {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 800;
-  font-size: 2.2rem;
-  color: var(--accent-2);
-  text-shadow: 0 0 12px var(--accent-glow);
-  letter-spacing: 0.03em;
-}
-
-@media (min-width: 769px) {
-  .countdown-clock { font-size: 3.2rem; }
+  color: var(--tone);
+  font-size: clamp(2.75rem, 1.5rem + 5vw, 5.5rem);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  line-height: 1;
 }
 
 .countdown-date {
-  color: var(--text);
+  margin-bottom: 10px;
+  color: var(--ink);
   font-weight: 600;
-  font-size: 1rem;
-  margin-bottom: 6px;
 }
 
 .countdown-teams {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 24px;
-  margin-top: 28px;
+  gap: 28px;
+  margin-top: 32px;
 }
 
-.countdown-team { min-width: 130px; }
+.countdown-team {
+  min-width: 140px;
+}
 
 .countdown-team-name {
-  font-weight: 700;
   margin-bottom: 8px;
+  font-weight: 600;
 }
 
 .countdown-team-players {
@@ -1536,203 +1106,227 @@ input[type="text"]:focus, select:focus {
 }
 
 .countdown-player {
-  font-size: 0.85rem;
-  color: var(--text-dim);
+  color: var(--soft);
 }
+
+/* ---------- Resultados de cada juego ---------- */
 
 .game-log {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: 8px;
+  gap: 8px;
+  margin-top: 12px;
 }
 
 .game-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 16px;
-  border-radius: var(--radius-sm);
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  font-size: 0.88rem;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--paper-2);
+  font-weight: 600;
 }
 
-.game-row .game-label { color: var(--text-dim); }
+.game-row .game-label {
+  color: var(--soft);
+  font-weight: 400;
+}
 
 .game-delete-btn {
-  border: none;
+  padding: 6px 8px;
+  border: 0;
   background: transparent;
   color: var(--text-faint);
+  font: inherit;
   cursor: pointer;
-  font-size: 0.85rem;
-  padding: 4px 6px;
-  border-radius: var(--radius-sm);
-  transition: color 0.15s ease, background 0.15s ease;
-}
-.game-delete-btn:hover {
-  color: #ff9c9c;
-  background: rgba(255, 90, 90, 0.12);
+  transition: color 160ms ease-out;
 }
 
+@media (hover: hover) {
+  .game-delete-btn:hover {
+    color: #ffa3a3;
+  }
+}
+
+/* Botón de compartir (y de borrar) en la esquina de las tarjetas. */
 .share-btn {
   position: absolute;
-  top: 58px; /* clears the history-card-banner strip */
+  top: 64px;
   right: 20px;
-  border: 1px solid var(--glass-border);
-  background: var(--glass-bg);
-  color: var(--text-dim);
-  cursor: pointer;
-  font-size: 0.9rem;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: color 0.15s ease, background 0.15s ease;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: rgb(255 255 255 / 0.1);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background-color 160ms ease-out, transform 160ms ease-out;
 }
+
+.share-btn:active {
+  transform: scale(0.97);
+}
+
 .share-btn.delete-btn {
-  right: 62px;
-}
-.share-btn.delete-btn:hover {
-  color: #ff5a5a;
-  border-color: rgba(255, 90, 90, 0.4);
-}
-.share-btn:hover {
-  color: var(--accent-2);
-  background: var(--glass-bg-hover);
+  right: 72px;
 }
 
-.pill-buttons {
-  display: flex;
-  gap: 8px;
+@media (hover: hover) {
+  .share-btn:hover {
+    background: rgb(255 255 255 / 0.18);
+  }
+
+  .share-btn.delete-btn:hover {
+    background: rgb(255 107 107 / 0.24);
+  }
 }
 
-.section-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin: 0 0 4px;
-}
-
-.section-sub {
-  color: var(--text-dim);
-  font-size: 0.88rem;
-  margin: 0 0 18px;
-}
-
-/* ID corto del torneo + admin que lo creó — visible tanto en el panel de
-   admin (duelos/duos/pug) como en historial.html, para poder retomar un
-   torneo agendado y saber a quién corresponde. */
+/* ID del torneo y admin que lo creó. */
 .tournament-meta {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--text-faint);
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: 999px;
-  padding: 4px 12px;
+  gap: 8px;
   margin: 0 0 16px;
+  padding: 6px 12px;
+  background: var(--paper-2);
+  color: var(--soft);
+  font-size: var(--step-small);
+  font-weight: 500;
 }
+
+.tournament-meta:empty {
+  display: none;
+}
+
 .tournament-meta-sep {
-  color: var(--glass-border);
+  color: var(--dim);
 }
+
+/* ---------- Tablas ---------- */
 
 .table-scroll {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
 
+/* Cada fila es una banda propia, separada de la siguiente por aire. */
 .standings-table {
   width: 100%;
   min-width: 560px;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0 6px;
+  margin-top: -6px;
 }
-.standings-table th, .standings-table td {
+
+.standings-table th,
+.standings-table td {
+  padding: 14px 16px;
   text-align: left;
-  padding: 10px 12px;
-  font-size: 0.9rem;
 }
+
 .standings-table thead th {
-  color: var(--text-faint);
-  text-transform: uppercase;
-  font-size: 0.72rem;
-  letter-spacing: 1px;
-  border-bottom: 1px solid var(--glass-border);
+  padding-top: 6px;
+  padding-bottom: 4px;
+  color: var(--soft);
+  font-size: var(--step-small);
+  font-weight: 500;
+  white-space: nowrap;
 }
-.standings-table tbody tr { border-bottom: 1px solid rgba(255, 255, 255, 0.04); }
+
+.standings-table thead th i {
+  margin-right: 4px;
+  color: var(--tone);
+}
+
+.standings-table tbody td {
+  background: var(--paper-3);
+}
+
+.standings-table .rank {
+  color: var(--tone);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Puestos 4 y 5: un peldaño debajo del podio. */
+.standings-table tbody tr.rank-honorable td {
+  background: rgb(138 61 245 / 0.2);
+}
 
 .ranking-player {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  font-weight: 600;
 }
 
 .ranking-player-avatar {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  flex: none;
   object-fit: cover;
-  border: 1px solid rgba(155, 77, 255, 0.35);
-  flex-shrink: 0;
-}
-.standings-table .rank { font-weight: 700; color: var(--accent-2); }
-
-/* 4to y 5to lugar: mención honorífica — apenas un tinte de fondo,
-   bastante más discreto que el podio (que tiene su propia card con
-   foto, banner y flip de premio). */
-.standings-table tbody tr.rank-honorable {
-  background: rgba(155, 77, 255, 0.07);
+  background: var(--paper);
 }
 
-/* Tendencia de puesto (tabla general y podio): compara el puesto actual
-   contra el que tenía antes de la última tanda de resultados. Siempre se
-   muestra una de las tres — sube, baja o sin cambio. */
-.rank-trend-up {
-  color: var(--win);
-  margin-right: 4px;
-  font-size: 0.8em;
-}
-.rank-trend-down {
-  color: var(--danger);
-  margin-right: 4px;
-  font-size: 0.8em;
-}
+/* Tendencia de puesto: sube, baja o igual. */
+.rank-trend-up,
+.rank-trend-down,
 .rank-trend-flat {
-  color: #ffb020;
-  margin-right: 4px;
+  margin-right: 6px;
   font-size: 0.8em;
 }
 
-.ranking-pagination {
+.rank-trend-up { color: var(--win); }
+.rank-trend-down { color: var(--danger); }
+.rank-trend-flat { color: #ffb020; }
+
+.ranking-pagination,
+.history-pagination {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 16px;
-  margin-top: 16px;
+  margin: 20px 0 8px;
 }
+
 .ranking-page-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1px solid var(--glass-border);
-  background: var(--glass-bg);
-  color: var(--text);
-  cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.15s ease, color 0.15s ease;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: var(--paper-2);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background-color 160ms ease-out, transform 160ms ease-out;
 }
-.ranking-page-btn:hover:not(:disabled) { background: var(--glass-bg-hover); color: var(--accent-2); }
-.ranking-page-btn:disabled { opacity: 0.35; cursor: default; }
-.ranking-page-label {
-  font-size: 0.85rem;
-  color: var(--text-dim);
-  min-width: 90px;
+
+.ranking-page-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.ranking-page-btn:disabled,
+.history-pagination .btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+@media (hover: hover) {
+  .ranking-page-btn:hover:not(:disabled) {
+    background: var(--paper-3);
+  }
+}
+
+.ranking-page-label,
+.history-pagination-label {
+  min-width: 100px;
+  color: var(--soft);
+  font-size: var(--step-small);
   text-align: center;
 }
 
@@ -1741,182 +1335,207 @@ input[type="text"]:focus, select:focus {
   align-items: center;
   gap: 6px;
   margin-left: 10px;
-  font-size: 0.72rem;
-  color: var(--accent-2);
-  border: 1px solid rgba(255, 110, 199, 0.35);
-  background: rgba(155, 77, 255, 0.1);
-  padding: 3px 10px;
-  border-radius: 999px;
+  padding: 4px 10px;
+  background: rgb(138 61 245 / 0.22);
+  color: var(--link);
+  font-size: var(--step-small);
+  font-weight: 600;
+  vertical-align: 0.1em;
 }
 
-/* Historial tables only: a real row (not a positioned pseudo-element —
-   that broke out of the table's box) with a pink "VS" badge between
-   each pair of team rows. */
+/* Historial: el "VS" entre cada par de equipos y la fila del ganador. */
 .history-table .vs-row td {
+  padding: 0;
+  background: none;
   text-align: center;
-  padding: 4px 0;
-  border-bottom: none;
-}
-.history-card { overflow: hidden; }
-.history-card-banner {
-  height: 44px;
-  margin: -28px -28px 18px -28px;
-  background:
-    linear-gradient(120deg, rgba(155, 77, 255, 0.15), rgba(255, 110, 199, 0.15)),
-    url("../img/banners/octoframe.webp");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
 }
 
 .vs-badge {
   display: inline-block;
-  color: var(--accent-2);
-  font-weight: 800;
-  font-size: 0.65rem;
-  letter-spacing: 1px;
   padding: 2px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 110, 199, 0.4);
-  background: var(--surface);
+  background: var(--paper);
+  color: var(--soft);
+  font-size: var(--step-small);
+  font-weight: 600;
 }
 
-/* Winning team's row: one pink outline around the whole row, no fill (not
-   per cell — outline draws as a single rectangle regardless of table
-   border-collapse; a background tint here read as a muddy inset shadow
-   along the row's edges, so it's just a stroke now). */
-.history-table tr.winner-row {
-  outline: 2px solid var(--accent-2);
-  outline-offset: -1px;
-}
-.history-table .winner-row td {
-  border-bottom: none;
+.history-table tr.winner-row td {
+  background: rgb(53 224 176 / 0.14);
+  font-weight: 600;
 }
 
-/* Below this width, tables stack as labeled cards instead of scrolling
-   sideways — each cell becomes its own row with its column header
-   as a prefix label (via data-label). */
+.history-card {
+  overflow: hidden;
+}
+
+/* La franja de tentáculos arriba de cada tarjeta del historial. */
+.history-card-banner {
+  height: 48px;
+  margin: calc(-1 * var(--pad)) calc(-1 * var(--pad)) 20px;
+  background: var(--stage-scrim), url("../img/banners/octoframe.webp") center / cover;
+}
+
+/* Debajo de 640 px las tablas se apilan como tarjetas con su etiqueta. */
 @media (max-width: 640px) {
-  .table-scroll { overflow-x: visible; }
+  .table-scroll {
+    overflow-x: visible;
+  }
 
-  .standings-table { min-width: 0; }
-  .standings-table thead { display: none; }
-  .standings-table, .standings-table tbody, .standings-table tr, .standings-table td {
+  .standings-table {
+    min-width: 0;
+    margin-top: 0;
+    border-spacing: 0;
+  }
+
+  .standings-table thead {
+    display: none;
+  }
+
+  .standings-table,
+  .standings-table tbody,
+  .standings-table tr,
+  .standings-table td {
     display: block;
     width: 100%;
   }
+
   .standings-table tr {
-    margin-bottom: 12px;
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius-sm);
-    padding: 4px 12px;
+    margin-bottom: 8px;
+    padding: 6px 14px;
+    background: var(--paper-3);
   }
-  .standings-table tr:last-child { margin-bottom: 0; }
-  .standings-table td {
+
+  .standings-table tr:last-child {
+    margin-bottom: 0;
+  }
+
+  .standings-table tbody td,
+  .standings-table tbody tr.rank-honorable td {
     display: flex;
-    justify-content: space-between;
     align-items: baseline;
+    justify-content: space-between;
     gap: 12px;
     padding: 8px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: none;
     text-align: right;
   }
-  .standings-table td:last-child { border-bottom: none; }
-  .standings-table td[data-label="Efectividad"] {
-    justify-content: flex-end;
-    text-align: right;
+
+  .standings-table tbody tr.rank-honorable {
+    background: rgb(138 61 245 / 0.2);
   }
+
   .standings-table td::before {
     content: attr(data-label);
-    font-weight: 700;
-    color: var(--text-faint);
-    text-transform: uppercase;
-    font-size: 0.68rem;
-    letter-spacing: 0.5px;
+    color: var(--soft);
+    font-size: var(--step-small);
+    font-weight: 500;
     text-align: left;
   }
 
   .history-table .vs-row {
-    border: none;
     margin: 2px 0;
     padding: 0;
+    background: none;
+    clip-path: none;
   }
+
   .history-table .vs-row td {
     display: block;
-    text-align: center;
-    border-bottom: none;
     padding: 0;
+    text-align: center;
   }
-  .history-table .vs-row td::before { content: none; }
+
+  .history-table .vs-row td::before {
+    content: none;
+  }
 
   .history-table tr.winner-row {
-    border-color: transparent;
-    outline: 2px solid var(--accent-2);
-    outline-offset: -1px;
+    background: rgb(53 224 176 / 0.14);
   }
+
   .history-table tr.winner-row td {
-    border-bottom: none;
+    background: none;
   }
 }
+
+/* ---------- Vacío y acordeones ---------- */
 
 .empty-hint {
-  color: var(--text-faint);
-  font-size: 0.85rem;
+  padding: 40px 16px;
+  color: var(--soft);
   text-align: center;
-  padding: 30px 10px;
 }
-
-#empty-state.empty-hint { font-size: 0.91rem; }
 
 .empty-hint-icon {
   display: inline-block;
-  margin-left: 16px;
-  animation: empty-hint-icon-spin 2s ease-in-out infinite;
+  margin-left: 12px;
+  color: var(--tone);
 }
 
-@keyframes empty-hint-icon-spin {
-  0% { transform: rotate(0deg); opacity: 0; }
-  50% { opacity: 1; }
-  100% { transform: rotate(360deg); opacity: 0; }
-}
-
-.empty-hint-text {
-  display: inline-block;
-  animation: empty-hint-text-pulse 2s ease-in-out infinite;
-}
-
-@keyframes empty-hint-text-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-.history-pagination {
+.history-accordion-toggle {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 18px;
-  margin: 8px 0 32px;
-}
-.history-pagination-label {
-  color: var(--text-dim);
-  font-size: 0.85rem;
-}
-.history-pagination .btn:disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 72px;
+  margin: 12px 0 0;
+  padding: 0 24px;
+  border: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--step-lead);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  cursor: pointer;
+  transition: background-color 160ms ease-out;
 }
 
-/* ---------- Landing: hero + plans ---------- */
-
-.hero {
-  text-align: center;
-  padding: 20px 10px 8px;
-  margin-bottom: 8px;
+.history-accordion-toggle:first-child {
+  margin-top: 0;
 }
+
+.history-accordion-toggle span {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.history-accordion-toggle span i {
+  color: var(--tone);
+  font-size: 0.8em;
+}
+
+.history-accordion-toggle .toggle-icon {
+  color: var(--soft);
+  font-size: 0.75em;
+  transition: transform 200ms var(--ease-out);
+}
+
+.history-accordion-toggle[aria-expanded="true"] .toggle-icon {
+  transform: rotate(180deg);
+}
+
+@media (hover: hover) {
+  .history-accordion-toggle:hover {
+    background: var(--paper-2);
+  }
+}
+
+.history-accordion-panel {
+  margin-top: 12px;
+}
+
+.history-accordion-panel > .glass-card + .glass-card {
+  margin-top: 12px;
+}
+
+/* ---------- Imágenes de temporada y leyenda ---------- */
 
 .season-banner-wrap {
-  margin: 0 0 12px;
+  margin: 0 0 clamp(24px, 3vw, 40px);
 }
+
 .season-banner-wrap a {
   display: block;
 }
@@ -1925,740 +1544,606 @@ input[type="text"]:focus, select:focus {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: var(--radius-lg);
-  box-shadow: 10px 10px 24px var(--shadow-dark), -6px -6px 18px var(--shadow-light);
 }
 
-@media (max-width: 768px) {
-  .season-banner-wrap {
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-  }
-  .season-banner-img {
-    border-radius: 0;
-    box-shadow: none;
-  }
+/* La portada de la leyenda: el arte sin texto y el nombre encima, en la zona oscura. */
+.lore-hero {
+  position: relative;
+  display: grid;
+  align-content: end;
+  min-height: clamp(320px, 42vw, 560px);
+  margin-bottom: clamp(32px, 4vw, 56px);
+  padding: clamp(24px, 4vw, 56px);
+  background: linear-gradient(rgb(11 10 15 / 0.25), rgb(11 10 15 / 0.25)), var(--season-art, url("../img/banners/octoframe.webp")) 70% 50% / cover, var(--ground); /* taste-skill-ignore: velo neutro sobre foto */
+  clip-path: polygon(var(--cut) 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, var(--cut) 100%, 0 calc(100% - var(--cut)), 0 var(--cut));
 }
 
-.season-heading-block {
-  text-align: center;
-  margin: 0 0 28px;
-}
-
-/* Temporada Actual: leyenda a modo de historieta — paneles tipo cómic,
-   tono oscuro/noir, con un bannerlite de temporada como viñeta divisora
-   entre las dos partes de la historia. */
-.lore-eyebrow {
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-size: 0.7rem !important;
-  color: var(--text-faint) !important;
+.lore-hero h1 {
+  max-width: 12ch;
+  font-size: clamp(2.75rem, 1.6rem + 4.4vw, 5.5rem);
 }
 
 .lore-tagline {
-  font-style: italic;
+  max-width: 44ch;
+  margin-top: 16px;
+  color: var(--ink);
+  font-size: var(--step-lead);
+  line-height: 1.35;
+}
+
+.lore-dates {
+  margin-top: 16px;
+  color: var(--soft);
 }
 
 .lore-comic {
-  max-width: 720px;
-  margin: 0 auto 32px;
+  max-width: 760px;
+  margin: 0 auto;
 }
 
 .lore-issue-tag {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 8px;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-size: 0.8rem;
-  color: var(--accent);
-  margin: 0 0 16px;
+  gap: 12px;
+  margin: 0 0 20px;
+  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.lore-issue-tag i {
+  color: var(--tone);
+  font-size: 0.75em;
 }
 
 .lore-panels {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 12px;
+}
+
+/* Sin segunda parte escrita, no se anuncia una. */
+.lore-issue-tag:has(+ #season-lore-part2:empty),
+#season-lore-part2:empty {
+  display: none;
 }
 
 .lore-panel {
-  position: relative;
-  background: #0c0c10;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-left: 3px solid var(--accent);
-  border-radius: 4px;
-  padding: 18px 20px;
-  box-shadow: 8px 8px 20px var(--shadow-dark), -4px -4px 14px rgba(255, 255, 255, 0.02);
+  padding: 24px 26px;
+  background: var(--paper);
 }
 
 .lore-panel-title {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 700;
-  font-size: 0.95rem;
-  letter-spacing: 0.02em;
-  color: #ffffff;
-  margin: 0 0 8px;
+  margin: 0 0 10px;
+  color: var(--ink);
+  font-size: var(--step-lead);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
 .lore-panel-text {
-  color: var(--text-dim);
-  font-size: 0.92rem;
+  margin: 0;
+  color: var(--soft);
   line-height: 1.65;
-  margin: 0;
 }
 
-.lore-divider {
-  position: relative;
-  margin: 28px 0;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: 10px 10px 24px var(--shadow-dark), -6px -6px 18px var(--shadow-light);
-}
 
-.lore-divider img {
-  display: block;
-  width: 100%;
-  height: auto;
-  filter: brightness(0.55) saturate(0.85);
-}
-
-.lore-divider-label {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Los crípticos de cada leyenda (la ciudad a la mitad, la gema al final), sobre el arte. */
+.lore-cipher {
+  margin: clamp(32px, 4vw, 56px) 0;
+  padding: clamp(28px, 4vw, 48px) clamp(20px, 4vw, 48px);
+  background: var(--stage-scrim), var(--season-art, url("../img/banners/octoframe.webp")) 50% 30% / cover, var(--ground);
   text-align: center;
-  padding: 0 20px;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.85rem;
-  color: #ffffff;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+  clip-path: polygon(var(--cut) 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, var(--cut) 100%, 0 calc(100% - var(--cut)), 0 var(--cut));
 }
 
-@media (max-width: 768px) {
-  .lore-divider {
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    border-radius: 0;
-    box-shadow: none;
-  }
+.lore-cipher .lore-issue-tag {
+  justify-content: center;
 }
 
-/* Torneos en vivo (Duelos/Duos/Pug view): en móvil el botón Volver ocupa
-   la mitad del ancho de pantalla disponible en vez de ajustarse al
-   contenido. */
-@media (max-width: 768px) {
-  .live-view-back-btn {
-    width: 50%;
-  }
-}
-
-.season-heading-name {
-  font-size: 2.1rem;
-  margin: 0;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.season-heading-dates {
-  color: var(--text-faint);
-  font-size: 0.75rem;
-  margin: 4px 0 0;
-}
-
-.hero h1 {
-  font-size: 2.1rem;
-  margin: 0 0 10px;
-}
-
-.hero p {
-  color: var(--text-dim);
-  max-width: 560px;
+.lore-cipher-intro {
+  max-width: 44ch;
   margin: 0 auto;
-  font-size: 1rem;
+  color: var(--soft);
 }
 
-/* Solid black strip flush against the fixed navbar (cancels body's 32px
-   top padding) — the hero banner now sits right below it with no gap. */
-.pre-home-banner {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  margin-top: -32px;
-  height: 32px;
-  background: #000000;
+/* El juego (js/lore-cipher.js): la frase del críptico y una casilla por letra. */
+.cipher-clue {
+  max-width: 30ch;
+  margin: clamp(20px, 3vw, 32px) auto 0;
+  color: var(--ink);
+  font-size: clamp(1.375rem, 1.1rem + 1.3vw, 2.125rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  text-wrap: balance;
 }
 
-.hero-banner {
-  margin: 0 0 24px;
-}
-
-.hero-banner img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: var(--radius-lg);
-  box-shadow: 10px 10px 24px var(--shadow-dark), -6px -6px 18px var(--shadow-light);
-}
-
-/* Mobile only: banner goes full-bleed edge-to-edge. */
-@media (max-width: 768px) {
-  .hero-banner {
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-  }
-  .hero-banner img {
-    border-radius: 0;
-    box-shadow: none;
-  }
-}
-
-/* Season marquee: full-bleed lilac ticker right below the hero banner,
-   announcing the current/next season. */
-.season-marquee {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  margin-top: 0;
-  margin-bottom: 24px;
-  overflow: hidden;
-  background: var(--accent);
-  padding: 9px 0;
+.cipher-length {
+  color: var(--tone);
   white-space: nowrap;
 }
 
-.season-marquee-track {
-  display: inline-flex;
-  animation: season-marquee-scroll 26s linear infinite;
+.cipher-grid {
+  display: flex;
+  justify-content: center;
+  gap: clamp(4px, 1.2vw, 12px);
+  margin: clamp(24px, 3.4vw, 40px) auto clamp(8px, 1.4vw, 16px);
 }
 
-.season-marquee-content {
-  display: inline-block;
-  padding-right: 60px;
-  color: #150a26;
+.cipher-box,
+.cipher-box[readonly] {
+  flex: 0 1 60px;
+  min-width: 0;
+  min-height: 44px;
+  aspect-ratio: 4 / 5;
+  padding: 0;
+  border: 0;
+  border-bottom: 3px solid var(--dim);
+  background: rgb(11 10 15 / 0.62);
+  color: var(--ink);
+  font: inherit;
+  font-size: clamp(1rem, 0.7rem + 1.8vw, 2rem);
   font-weight: 600;
-  font-size: 0.9125rem;
-  letter-spacing: 0.3px;
-  text-transform: uppercase;
-}
-
-.season-marquee-content i {
-  color: #fff;
-}
-
-.season-marquee-content strong {
-  font-weight: 800;
-  color: #fff0fb;
-}
-
-.season-marquee-next-name {
-  animation: season-next-blink 0.864s ease-in-out infinite;
-}
-
-@keyframes season-next-blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
-}
-
-@keyframes season-marquee-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .season-marquee-track { animation: none; }
-  .season-marquee-next-name { animation: none; }
-}
-
-.section-heading {
   text-align: center;
-  margin: 48px 0 22px;
+  text-transform: uppercase;
+  caret-color: var(--tone);
+  outline: none;
+  clip-path: polygon(6px 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 0 100%, 0 6px);
+  transition: background-color 160ms ease-out, border-color 160ms ease-out;
 }
 
-.section-heading h2 {
-  font-size: 1.4rem;
-  margin: 0 0 6px;
+.cipher-box:focus-visible {
+  border-bottom-color: var(--tone);
+  background: rgb(33 28 41 / 0.86);
 }
 
-.section-heading p {
-  color: var(--text-dim);
-  font-size: 0.9rem;
+.cipher-box.is-given {
+  color: var(--tone);
+}
+
+.lore-cipher.is-solved .cipher-box {
+  border-bottom-color: var(--tone);
+  background: hsl(var(--season-h, 266) var(--season-s, 100%) 50% / 0.22);
+  color: var(--ink);
+}
+
+.lore-cipher.is-gaveup .cipher-box {
+  color: var(--soft);
+}
+
+.cipher-hints {
+  max-width: 48ch;
+  margin: 16px auto 0;
+  padding: 0;
+  list-style: none;
+  color: var(--soft);
+  font-size: var(--step-small);
+}
+
+.cipher-hints li + li {
+  margin-top: 8px;
+}
+
+.cipher-hints strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.cipher-status {
+  min-height: 1.55em;
+  margin: 16px 0;
+  color: var(--soft);
+}
+
+.cipher-status[data-kind="win"] {
+  color: var(--tone);
+  font-weight: 600;
+}
+
+.cipher-status[data-kind="error"] {
+  color: #ffa3a3;
+}
+
+.cipher-tools,
+.cipher-hint-btns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.cipher-hints-title {
+  margin: 24px 0 0;
+  color: var(--soft);
+  font-size: var(--step-small);
+  font-weight: 600;
+}
+
+.cipher-hint-btns {
+  margin-top: 8px;
+}
+
+.cipher-giveup {
+  margin-top: 16px;
+}
+
+.cipher-giveup .btn-text {
+  color: var(--soft);
+  font-size: var(--step-small);
+}
+
+@media (hover: hover) {
+  .cipher-giveup .btn-text:hover {
+    color: var(--ink);
+  }
+}
+
+.cipher-howto {
+  max-width: 52ch;
+  margin: 24px auto 0;
+  color: var(--soft);
+  font-size: var(--step-small);
+}
+
+.cipher-howto summary {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  color: var(--link);
+  cursor: pointer;
+}
+
+.cipher-howto p {
+  margin: 4px 0 0;
+}
+
+.cipher-howto strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.cipher-confirm p {
   margin: 0;
+  color: var(--ink);
 }
 
-.history-accordion-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-md);
-  color: var(--text);
-  font-family: var(--font-heading);
-  font-size: 1.1rem;
-  font-weight: 700;
-  padding: 16px 20px;
-  margin: 20px 0 0;
-  cursor: pointer;
-  transition: background 0.15s ease;
-}
-.history-accordion-toggle:hover { background: var(--glass-bg-hover); }
-.history-accordion-toggle span { display: flex; align-items: center; gap: 10px; }
-.history-accordion-toggle .toggle-icon {
-  transition: transform 0.2s ease;
-  color: var(--text-dim);
-}
-.history-accordion-toggle[aria-expanded="true"] .toggle-icon { transform: rotate(180deg); }
-
-.history-accordion-panel { margin-top: 16px; }
-
-.faq-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-md);
-  color: var(--text);
-  font-family: var(--font-heading);
-  font-size: 1rem;
-  font-weight: 700;
-  text-align: left;
-  padding: 16px 20px;
-  margin: 12px 0 0;
-  cursor: pointer;
-  transition: background 0.15s ease;
-}
-.faq-toggle:hover { background: var(--glass-bg-hover); }
-.faq-toggle .toggle-icon {
-  transition: transform 0.2s ease;
-  color: var(--text-dim);
-  flex-shrink: 0;
-  margin-left: 12px;
-}
-.faq-toggle[aria-expanded="true"] .toggle-icon { transform: rotate(180deg); }
-.faq-toggle[aria-expanded="true"] span { color: var(--accent); }
-
-.faq-answer {
-  color: var(--text-dim);
-  font-size: 0.92rem;
-  line-height: 1.5;
-  padding: 14px 20px 4px;
+.cipher-breakdown {
+  max-width: 52ch;
+  margin: 0 auto 20px;
+  color: var(--soft);
+  font-size: var(--step-small);
 }
 
-.faq-item:first-child .faq-toggle { margin-top: 0; }
+.cipher-breakdown span {
+  display: block;
+}
+
+.cipher-breakdown span + span {
+  margin-top: 6px;
+}
+
+.cipher-breakdown strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cipher-grid.is-wrong {
+    animation: cipher-shake 320ms var(--ease-out);
+  }
+
+  @keyframes cipher-shake {
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
+  }
+}
+
+/* ---------- Términos y privacidad: una hoja de lectura ---------- */
+
+.legal {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: clamp(24px, 4vw, 56px);
+  background: var(--paper);
+  clip-path: polygon(var(--cut) 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, var(--cut) 100%, 0 calc(100% - var(--cut)), 0 var(--cut));
+}
+
+.legal-section + .legal-section {
+  margin-top: clamp(32px, 4vw, 48px);
+}
+
+.legal-section .section-title {
+  margin-bottom: 12px;
+}
+
+.legal-section p,
+.legal-section li {
+  max-width: 68ch;
+  color: var(--soft);
+}
+
+.legal-section p + p,
+.legal-section p + ul,
+.legal-section ul + p {
+  margin-top: 12px;
+}
+
+.legal-section ul {
+  margin: 0;
+  padding-left: 22px;
+}
+
+.legal-section li + li {
+  margin-top: 6px;
+}
+
+.legal-section strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ---------- Inscripción: los cinco valores ---------- */
 
 .fee-card {
   display: flex;
   flex-direction: column;
-  position: relative;
-  overflow: hidden;
-}
-
-.fee-card > * {
-  position: relative;
-  z-index: 1;
-}
-
-/* Flip cards (home fee-cards): 3D flip triggered by the rotate icon or the
-   "Leer más" / "Volver" links. Selectors below use 2+ classes so they
-   reliably beat the single-class rules above regardless of source order
-   (the same cascade trap that broke .mode-card's display earlier).
-
-   The outer .fee-card.flip-card is just a transparent, perspective-bearing
-   scene — all the visible "card" chrome (background, border, shadow,
-   texture) lives on .flip-card-front/.flip-card-back themselves, so the
-   whole card appears to flip, not just the text inside a static frame. */
-.fee-card.flip-card {
-  min-height: 330px;
-  background: none;
-  border: none;
-  box-shadow: none;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  padding: 0;
-  overflow: visible;
-  perspective: 1200px;
-}
-
-.fee-card.flip-card::before {
-  content: none;
-}
-
-.fee-card.flip-card .flip-card-inner {
-  position: absolute;
-  inset: 0;
-  transition: transform 0.6s ease;
-  transform-style: preserve-3d;
-}
-
-.fee-card.flip-card.is-flipped .flip-card-inner {
-  transform: rotateY(180deg);
-}
-
-.fee-card.flip-card .flip-card-front,
-.fee-card.flip-card .flip-card-back {
-  position: absolute;
-  inset: 0;
-  padding: 28px;
-  display: flex;
-  flex-direction: column;
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(155, 77, 255, 0.4);
-  overflow: hidden;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-.fee-card.flip-card .flip-card-front > *,
-.fee-card.flip-card .flip-card-back > * {
-  position: relative;
-  z-index: 1;
-}
-
-.fee-card.flip-card .flip-card-front {
-  background: var(--glass-bg);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  box-shadow:
-    10px 10px 24px var(--shadow-dark),
-    -6px -6px 18px var(--shadow-light),
-    0 0 0 1px rgba(155, 77, 255, 0.12),
-    0 0 24px rgba(155, 77, 255, 0.15);
-}
-
-/* Front-only corner texture — the back face is a plain dark surface with
-   no texture, per how it should read once flipped. */
-.fee-card.flip-card .flip-card-front::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 100px;
-  height: 100px;
-  background-image:
-    linear-gradient(rgba(155, 77, 255, 0.5) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(155, 77, 255, 0.5) 1px, transparent 1px);
-  background-size: 13px 13px;
-  -webkit-mask-image: radial-gradient(circle at top right, black, transparent 72%);
-  mask-image: radial-gradient(circle at top right, black, transparent 72%);
-  pointer-events: none;
-}
-
-.fee-card.flip-card .flip-card-back {
-  background: var(--surface);
-  box-shadow: 10px 10px 24px var(--shadow-dark), -6px -6px 18px var(--shadow-light);
-  transform: rotateY(180deg);
-}
-
-.fee-card.flip-card .flip-card-back p {
-  color: var(--text-dim);
-  font-size: 0.9rem;
-}
-
-.fee-card-terms-link {
-  display: inline-block;
-  margin-top: 12px;
-  font-size: 0.76rem;
-  color: var(--text-faint);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-.fee-card-terms-link:hover { color: var(--accent-2); }
-
-.fee-card-top-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-}
-.fee-card-top-row .icon {
-  margin-bottom: 0;
-}
-
-.fee-card-readmore-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  flex-shrink: 0;
-  background: none;
-  border: none;
-  color: var(--accent);
-  font-family: inherit;
-  font-weight: 600;
-  font-size: 0.8rem;
-  padding: 0;
-  cursor: pointer;
-  transition: gap 0.15s ease;
-}
-.fee-card-readmore-btn:hover { gap: 10px; }
-.fee-card-readmore-btn i {
-  transition: transform 0.3s ease;
-}
-.fee-card-readmore-btn:hover i {
-  transform: rotate(180deg);
-}
-
-/* Subtle lilac grid texture in the corner — mirrors the mode-card dot
-   texture above so this section reads as a distinct family of cards. */
-.fee-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 100px;
-  height: 100px;
-  background-image:
-    linear-gradient(rgba(155, 77, 255, 0.5) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(155, 77, 255, 0.5) 1px, transparent 1px);
-  background-size: 13px 13px;
-  -webkit-mask-image: radial-gradient(circle at top right, black, transparent 72%);
-  mask-image: radial-gradient(circle at top right, black, transparent 72%);
-  pointer-events: none;
 }
 
 .fee-card h2 {
-  margin: 4px 0 2px;
-  font-size: 1.3rem;
-  color: var(--accent-2);
+  margin: 0;
+  font-size: var(--step-lead);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
-.fee-card-name-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
+.fee-price {
+  margin: 12px 0 4px;
+  font-size: clamp(2.5rem, 1.8rem + 2.4vw, 3.5rem);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  line-height: 1;
 }
-.fee-card-name-row h2 { margin: 4px 0 2px; }
 
-/* Etiqueta sutil en el plan Casual — mismo lenguaje visual que los demás
-   chips en pastilla del sitio (season-status-chip, fee-chip). */
-.fee-badge-recommended {
-  display: inline-flex;
-  align-items: center;
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.3px;
-  text-transform: uppercase;
-  color: var(--accent-2);
-  background: rgba(255, 110, 199, 0.12);
-  border: 1px solid rgba(255, 110, 199, 0.35);
-  border-radius: 999px;
-  padding: 3px 10px;
+.fee-price .unit {
+  color: var(--soft);
+  font-size: var(--step-body);
+  font-weight: 400;
+  letter-spacing: 0;
 }
 
 .fee-card p {
-  color: var(--text-dim);
-  font-size: 0.9rem;
-  margin: 10px 0 0;
+  margin: 8px 0 0;
+  color: var(--soft);
 }
+
+.fee-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  color: var(--link);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+button.fee-card-cta {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* La modalidad: un selector de tres opciones. */
+.fee-modalidad {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.fee-modalidad-icon {
+  display: none;
+}
+
+.fee-modalidad-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.fee-radio {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin: 0;
+  padding: 0 16px;
+  background: var(--paper-2);
+  color: var(--ink);
+  font-size: var(--step-body);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 160ms ease-out;
+}
+
+.fee-radio input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.fee-radio:has(input:checked) {
+  background: var(--accent);
+  color: #fff;
+}
+
+.fee-radio:has(input:focus-visible) {
+  outline: 2px solid var(--link);
+  outline-offset: -3px;
+}
+
+@media (hover: hover) {
+  .fee-radio:not(:has(input:checked)):hover {
+    background: var(--paper-3);
+  }
+}
+
+.fee-login-prompt {
+  margin: 4px 0 16px;
+  padding: 16px;
+  background: rgb(138 61 245 / 0.14);
+  text-align: center;
+}
+
+.fee-login-prompt p {
+  margin: 0 0 10px;
+}
+
+.fee-login-prompt .fee-login-btn {
+  width: 100%;
+}
+
+.fee-nickname-field {
+  margin: 4px 0 16px;
+}
+
+.fee-nickname-field .fee-nickname-input {
+  display: inline-block;
+  max-width: 100%;
+  padding: 8px 14px;
+  background: rgb(138 61 245 / 0.22);
+  color: var(--link);
+  font-weight: 600;
+}
+
+.fee-confirm-btn,
+.page .fee-card .btn-block {
+  width: 100%;
+  max-width: none;
+  margin: auto 0 0;
+}
+
+.fee-card-inactive {
+  opacity: 0.45;
+  transition: opacity 160ms ease-out;
+}
+
+/* ---------- Ranking: el podio ---------- */
 
 .podium-title-display {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
-  text-align: center;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 800;
-  font-size: 1.5rem;
-  color: var(--text);
-  margin: 0 0 12px;
-  letter-spacing: 0.01em;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 16px;
+  font-size: clamp(1.75rem, 1.35rem + 1.6vw, 2.75rem);
 }
 
-.podium-title-display #podium-ranking-title { flex-shrink: 0; }
-
+/* El texto que se descifra a los lados del título era ruido: se oculta. */
 .podium-title-ascii {
-  flex: 1;
-  overflow: hidden;
-  white-space: nowrap;
-  font-family: "Courier New", monospace;
-  font-weight: 400;
-  font-size: 0.7em;
-  letter-spacing: 2px;
-  color: var(--accent);
-  opacity: 0.5;
-}
-
-@media (min-width: 769px) {
-  .podium-title-display { font-size: 2.1rem; }
+  display: none;
 }
 
 .podium-season-row {
   display: flex;
-  justify-content: center;
-  margin: 0 0 40px;
+  margin: 0 0 20px;
 }
 
 .podium-season-badge {
   display: inline-block;
-  padding: 6px 20px;
-  border-radius: 999px;
-  font-weight: 700;
-  font-size: 1.05rem;
-  animation: podium-season-blink 1.8s ease-in-out infinite;
+  padding: 8px 16px;
+  background: var(--paper-2);
+  color: var(--tone);
+  font-weight: 600;
 }
 
-@keyframes podium-season-blink {
-  0%, 100% {
-    color: var(--accent-2);
-    background: rgba(255, 110, 199, 0.14);
-    box-shadow: 0 0 14px rgba(255, 110, 199, 0.55);
-  }
-  50% {
-    color: var(--accent);
-    background: rgba(155, 77, 255, 0.14);
-    box-shadow: 0 0 14px rgba(155, 77, 255, 0.55);
-  }
+/* El escenario del podio: el arte de la temporada, y encima tres tarjetas de vidrio. */
+#podium-grid {
+  padding: clamp(16px, 3vw, 40px);
+  background: var(--stage-scrim), var(--season-art, url("../img/banners/octoframe.webp")) center / cover, var(--ground);
+}
+
+#podium-grid:empty,
+.podium-title-display:has(~ #podium-grid:empty),
+.podium-season-row:has(~ #podium-grid:empty) {
+  display: none;
+}
+
+/* Sin jugadores todavía: el aviso va en su propia tarjeta. */
+#ranking-empty {
+  background: var(--paper);
+  clip-path: polygon(var(--cut) 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, var(--cut) 100%, 0 calc(100% - var(--cut)), 0 var(--cut));
 }
 
 .podium-card {
   position: relative;
-  overflow: hidden;
 }
 
-/* Desktop: arrange the podium like a real one — 1st place in the middle,
-   raised above 2nd (left) and 3rd (right), all bottom-aligned. Mobile
-   keeps the plain stacked/grid layout. */
+/* En escritorio el podio se arma como uno de verdad: 1.º al centro y más alto. */
 @media (min-width: 769px) {
   #podium-grid {
     display: flex;
     align-items: flex-end;
-    gap: 20px;
+    gap: clamp(12px, 2vw, 24px);
   }
+
   #podium-grid .podium-card {
     flex: 1 1 0;
     min-width: 0;
   }
-  /* #3 se mantiene en los 460px base; #1 un 16% más alta y #2 un 8% más
-     alta que esa base — solo en desktop. */
+
   #podium-grid .podium-card[data-podium-id="0"] {
     order: 2;
-    padding-bottom: 68px;
     min-height: 534px;
   }
+
   #podium-grid .podium-card[data-podium-id="1"] {
     order: 1;
     min-height: 497px;
   }
+
   #podium-grid .podium-card[data-podium-id="2"] {
     order: 3;
   }
 }
 
 .podium-card h2 {
-  margin: 4px 0 2px;
-  font-size: 1.3rem;
+  margin: 0;
+  font-size: var(--step-lead);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
 .podium-card p {
-  color: var(--text-dim);
-  font-size: 0.9rem;
-  margin: 10px 0 0;
+  margin: 8px 0 0;
+  color: var(--soft);
 }
 
-/* Same octoframe banner strip used on history cards, so the podium
-   reads as part of the same visual family as the results pages. */
-.podium-card-banner {
-  height: 64px;
-  margin: -28px -28px 18px -28px;
-  background:
-    linear-gradient(120deg, rgba(155, 77, 255, 0.15), rgba(255, 110, 199, 0.15)),
-    url("../img/banners/bannerlite.webp");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-}
-
-/* Taller banner means the share button needs to clear it a bit further
-   down than the default .share-btn position (tuned for history-card's
-   44px banner). */
-.podium-card .share-btn {
-  top: 78px;
-}
-
-.podium-avatar {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid rgba(155, 77, 255, 0.4);
-  margin-bottom: 10px;
-}
-
-/* Premio de temporada: la card del podio se voltea (mismo patron que las
-   flip-cards del home — el chroma visual vive en front/back, el wrapper
-   exterior queda transparente, asi la card entera gira, no solo el
-   contenido). El icono junto al de compartir dispara el flip. */
-/* Fila del frente con el trigger de flip: el link de texto vive a la
-   izquierda del icono, ambos disparan el mismo flip. */
-.podium-flip-trigger-row {
-  position: absolute;
-  top: 78px;
-  right: 64px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.podium-flip-label {
-  color: var(--accent-2);
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-decoration: none;
-  cursor: pointer;
-  white-space: nowrap;
-}
-.podium-flip-label:hover { color: var(--accent); }
-
-.podium-flip-btn {
-  border: 1px solid var(--glass-border);
-  background: var(--glass-bg);
-  color: var(--text-dim);
-  cursor: pointer;
-  font-size: 0.9rem;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.15s ease, background 0.15s ease;
-}
-.podium-flip-trigger-row .podium-flip-btn { position: static; }
-.podium-flip-btn:hover { color: var(--accent-2); background: var(--glass-bg-hover); }
-
+/* Cada tarjeta del podio gira: el premio vive atrás. */
 .glass-card.podium-card.flip-card {
   min-height: 460px;
-  background: none;
-  border: none;
-  box-shadow: none;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
   padding: 0;
+  background: none;
   perspective: 1200px;
 }
 
 .podium-card.flip-card .flip-card-inner {
   position: absolute;
   inset: 0;
-  transition: transform 0.6s;
   transform-style: preserve-3d;
+  transition: transform 600ms var(--ease-in-out);
 }
+
 .podium-card.flip-card.is-flipped .flip-card-inner {
   transform: rotateY(180deg);
 }
@@ -2667,564 +2152,694 @@ input[type="text"]:focus, select:focus {
 .podium-card.flip-card .flip-card-back {
   position: absolute;
   inset: 0;
-  padding: 28px;
-  border-radius: var(--radius-lg);
+  padding: var(--pad);
   overflow: hidden;
-  backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .podium-card.flip-card .flip-card-front {
-  border: 1px solid rgba(155, 77, 255, 0.4);
-  background: var(--glass-bg);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  box-shadow:
-    10px 10px 24px var(--shadow-dark),
-    -6px -6px 18px var(--shadow-light),
-    0 0 0 1px rgba(155, 77, 255, 0.12),
-    0 0 24px rgba(155, 77, 255, 0.15);
+  background: var(--glass-panel);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
 }
 
 .podium-card.flip-card .flip-card-back {
-  background: var(--surface);
-  border: 1px solid rgba(255, 110, 199, 0.5);
-  box-shadow: 10px 10px 24px var(--shadow-dark), -6px -6px 18px var(--shadow-light);
-  transform: rotateY(180deg);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 10px;
+  background: var(--paper);
   text-align: center;
+  transform: rotateY(180deg);
+}
+
+/* La franja de arriba de cada tarjeta: el arte de la temporada. */
+.podium-card-banner {
+  height: 72px;
+  margin: calc(-1 * var(--pad)) calc(-1 * var(--pad)) 20px;
+  background: var(--season-art, url("../img/banners/octoframe.webp")) center / cover;
+}
+
+.podium-card .share-btn {
+  top: 88px;
+}
+
+.podium-avatar {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 12px;
+  object-fit: cover;
+  background: var(--paper-2);
+}
+
+.podium-card .icon {
+  margin-bottom: 10px;
+  font-size: 1.75rem;
+}
+
+.podium-flip-trigger-row {
+  position: absolute;
+  top: 88px;
+  right: 72px;
+  display: flex;
+  align-items: center;
   gap: 8px;
 }
 
-/* Textura de esquina en el reverso, en tono rosa/pink para que combine
-   con el stroke — misma trama que el frente pero teñida distinto. */
-.podium-card.flip-card .flip-card-back::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 100px;
-  height: 100px;
-  background-image:
-    linear-gradient(rgba(255, 110, 199, 0.5) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 110, 199, 0.5) 1px, transparent 1px);
-  background-size: 13px 13px;
-  -webkit-mask-image: radial-gradient(circle at top right, black, transparent 72%);
-  mask-image: radial-gradient(circle at top right, black, transparent 72%);
-  pointer-events: none;
+.podium-flip-label {
+  color: var(--link);
+  font-size: var(--step-small);
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.podium-flip-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: rgb(255 255 255 / 0.1);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background-color 160ms ease-out, transform 160ms ease-out;
+}
+
+.podium-flip-btn:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) {
+  .podium-flip-btn:hover {
+    background: rgb(255 255 255 / 0.18);
+  }
+
+  .podium-flip-label:hover {
+    color: var(--ink);
+  }
+}
+
+.podium-flip-trigger-row .podium-flip-btn {
+  position: static;
+}
+
+/* Atrás, "Volver" es un enlace de texto, no un botón redondo. */
+.podium-flip-back-btn {
+  width: auto;
+  height: auto;
+  margin-top: 8px;
+  padding: 8px;
+  background: none;
+  color: var(--link);
+  font: inherit;
+  font-weight: 600;
+  gap: 8px;
+  clip-path: none;
+}
+
+@media (hover: hover) {
+  .podium-flip-back-btn:hover {
+    background: none;
+    color: var(--ink);
+  }
 }
 
 .podium-prize-amount {
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 2.4rem;
-  color: var(--accent-2);
-  text-shadow: 0 0 16px var(--accent-glow);
-  animation: podium-prize-neon 1.8s ease-in-out infinite;
+  color: var(--tone);
+  font-size: clamp(2.5rem, 1.8rem + 2.4vw, 3.5rem);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  line-height: 1;
 }
 
-@keyframes podium-prize-neon {
-  0%, 100% {
-    text-shadow: 0 0 16px var(--accent-glow), 0 0 34px rgba(255, 110, 199, 0.55);
-    opacity: 1;
-  }
-  50% {
-    text-shadow: 0 0 6px var(--accent-glow);
-    opacity: 0.7;
-  }
+.podium-prize-amount .unit {
+  color: var(--soft);
+  font-size: var(--step-body);
+  font-weight: 400;
+  letter-spacing: 0;
 }
 
-.podium-claim-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 4px;
-  padding: 10px 20px;
-  border-radius: 999px;
-  border: 1px solid var(--glass-border);
-  background: var(--glass-bg);
-  color: var(--text-faint);
-  font-weight: 700;
-  font-size: 0.85rem;
-  cursor: not-allowed;
-  opacity: 0.6;
-  transition: opacity 0.15s ease;
+.podium-prize-label {
+  margin: 0;
+  color: var(--ink);
+  font-weight: 600;
 }
-.podium-claim-btn:hover { opacity: 0.85; }
 
-/* CTA para quien visita el podio sin ser el dueño de esa card (sin
-   sesión, o logueado con otro Nickname) — invita a inscribirse en vez
-   de mostrar el botón de reclamar premio de otra persona. */
+.podium-prize-note {
+  max-width: 26ch;
+  margin: 0;
+  color: var(--soft);
+  font-size: var(--step-small);
+}
+
+.podium-claim-btn,
 .podium-participate-cta {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-top: 4px;
-  padding: 10px 20px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 110, 199, 0.45);
-  background: rgba(255, 110, 199, 0.14);
-  color: var(--accent-2);
-  font-weight: 700;
-  font-size: 0.85rem;
+  min-height: 44px;
+  margin-top: 6px;
+  padding: 0 18px;
+  border: 0;
+  font: inherit;
+  font-weight: 600;
   text-decoration: none;
-  transition: background 0.15s ease;
 }
-.podium-participate-cta:hover { background: rgba(255, 110, 199, 0.24); }
+
+.podium-claim-btn {
+  background: var(--paper-2);
+  color: var(--soft);
+  cursor: not-allowed;
+}
+
+.podium-participate-cta {
+  background: var(--accent);
+  color: #fff;
+  transition: transform 160ms ease-out;
+}
+
+.podium-participate-cta:active {
+  transform: scale(0.97);
+}
 
 .podium-terms-link {
-  font-size: 0.72rem;
-  color: var(--text-faint);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-.podium-terms-link:hover { color: var(--accent-2); }
-
-.podium-prize-label {
-  font-weight: 700;
-  color: var(--text);
-  margin: 0;
+  color: var(--soft);
+  font-size: var(--step-small);
 }
 
-.podium-prize-note {
-  color: var(--text-dim);
-  font-size: 0.8rem;
-  margin: 0;
-  max-width: 220px;
-}
-
-/* Back face: undo the front-trigger's circular/absolute button chrome
-   (inherited from .podium-flip-btn) so "Volver" reads as a normal
-   inline text+icon control, centered in the flow with the rest of the
-   back face content, in accent lilac. */
-.podium-flip-back-btn {
-  position: static;
-  width: auto;
-  height: auto;
-  margin-top: 8px;
-  padding: 0;
-  border: none;
-  border-radius: 0;
-  background: none;
-  gap: 6px;
-  color: var(--accent);
-  font-weight: 600;
-  font-size: 0.85rem;
-}
-.podium-flip-back-btn:hover {
-  color: var(--accent-2);
-  background: none;
-}
-
-/* The ranking table card has no banner strip to clear, so its share button
-   sits closer to the top edge, with extra top padding reserved for it. */
 #ranking-table-card {
-  padding-top: 64px;
+  padding-top: 72px;
 }
+
 #ranking-table-card .share-btn {
   top: 16px;
+  right: 16px;
 }
 
-/* Quiénes somos: lilac-and-pink theming shared with the other card
-   families on the site (mode-card, fee-card, podium-card). */
-.about-card .icon {
-  color: var(--accent-2);
-}
-
-.about-card h2 {
-  color: var(--accent);
-}
-
-/* Fila del rank: el chip #N y el icono de tendencia por fuera de él, a
-   la derecha, con margen de respeto (no dentro del chip). */
 .podium-rank-row {
   display: inline-flex;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
+
 .podium-rank-row .rank-trend-up,
 .podium-rank-row .rank-trend-down,
 .podium-rank-row .rank-trend-flat {
-  margin-right: 0;
-  margin-left: 10px;
+  margin: 0 0 0 12px;
 }
 
 .podium-rank {
   display: inline-block;
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 24px;
-  letter-spacing: 0.5px;
-  color: var(--accent-2);
-  background: rgba(255, 110, 199, 0.12);
-  border: 1px solid rgba(255, 110, 199, 0.35);
-  border-radius: 999px;
-  padding: 2px 10px;
-}
-
-/* #podium-grid .podium-rank (2 selectors) reliably beats the plain
-   .podium-rank rule above regardless of source order — same class of
-   cascade issue as the mode-card display:flex fix. */
-@media (min-width: 769px) {
-  #podium-grid .podium-rank {
-    font-size: 24px;
-  }
+  padding: 2px 12px;
+  background: var(--paper-2);
+  color: var(--tone);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
 .podium-name-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 10px;
 }
 
 .podium-name-row h2 {
   min-width: 0;
   overflow: hidden;
+  line-height: 1.35;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
+/* Interlineado explícito en las piezas del podio: html2canvas (compartir como
+   imagen) desplaza el texto de Switzer cuando el interlineado es justo. */
+.podium-rank,
+.season-status-chip,
+.podium-stats-row,
+.podium-flip-label {
+  line-height: 1.35;
+}
+
 .season-status-chip {
-  flex-shrink: 0;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.3px;
-  text-transform: uppercase;
-  padding: 3px 10px;
-  border-radius: 999px;
+  flex: none;
+  padding: 4px 10px;
+  font-size: var(--step-small);
+  font-weight: 600;
 }
 
 .season-status-chip.season-status-active {
+  background: rgb(53 224 176 / 0.16);
   color: var(--win);
-  background: rgba(53, 224, 176, 0.12);
-  border: 1px solid var(--win-glow);
 }
 
 .season-status-chip.season-status-ended {
-  color: var(--text-faint);
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--glass-border);
+  background: var(--paper-2);
+  color: var(--soft);
 }
 
 .podium-stats-row {
   display: flex;
-  justify-content: space-between;
   align-items: baseline;
+  justify-content: space-between;
   gap: 12px;
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 .podium-stats-row .podium-season {
   margin: 0;
-  font-size: 0.8rem;
+  color: var(--soft);
+  font-size: var(--step-small);
 }
-.podium-season i { margin-right: 4px; }
+
+.podium-season i {
+  margin-right: 4px;
+}
 
 .podium-stats-row .fee-price {
   margin: 0;
-  color: var(--accent);
-  font-size: 1.35rem;
+  color: var(--ink);
+  font-size: var(--step-lead);
 }
 
 .podium-stat-num {
-  color: var(--accent);
-  font-weight: 700;
+  color: var(--ink);
+  font-weight: 600;
 }
 
-.fee-price {
-  font-size: 1.7rem;
-  font-weight: 800;
-  margin: 6px 0 0;
-}
-.fee-price .unit {
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--text-dim);
+/* ---------- Quiénes somos ---------- */
+
+.about-card .icon {
+  color: var(--tone);
 }
 
-.fee-card-cta {
+.about-card p {
+  color: var(--soft);
+}
+
+.about-card strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.about-card h2 {
+  margin: 0 0 6px;
+  font-size: var(--step-lead);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+/* ---------- Perfil ---------- */
+
+.profile-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin: 0 0 24px;
+}
+
+.profile-tab-btn,
+.pill-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 20px;
+  border: 0;
+  background: var(--paper);
+  color: var(--soft);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 160ms ease-out, color 160ms ease-out;
+}
+
+.profile-tab-btn.is-active,
+.pill-tab-btn.is-active {
+  background: var(--accent);
+  color: #fff;
+}
+
+@media (hover: hover) {
+  .profile-tab-btn:not(.is-active):hover,
+  .pill-tab-btn:not(.is-active):hover {
+    background: var(--paper-2);
+    color: var(--ink);
+  }
+}
+
+.tab-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  margin-left: 8px;
+  padding: 0 6px;
+  background: var(--accent-2);
+  color: #fff;
+  font-size: var(--step-small);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.profile-wins-chip {
+  position: absolute;
+  top: 16px;
+  right: 16px;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-top: 12px;
-  color: var(--accent);
+  padding: 6px 12px;
+  background: var(--paper-2);
+  color: var(--ink);
+  font-size: var(--step-small);
   font-weight: 600;
-  font-size: 0.88rem;
-  text-decoration: none;
-  transition: gap 0.15s ease;
-}
-.fee-card-cta:hover { gap: 10px; }
-
-/* Some fee-card-cta triggers are <button> elements (Leer más / Volver on
-   flip cards) rather than links — strip the native button chrome so they
-   read identically to the anchor version. */
-button.fee-card-cta {
-  background: none;
-  border: none;
-  padding: 0;
-  font-family: inherit;
-  text-align: left;
-  cursor: pointer;
 }
 
-/* Pin the CTA/confirm button to the bottom of the card regardless of how
-   many lines the description or modality radios wrap to (matters once the
-   desktop bento layout gives cards different widths in the same row). */
-.fee-card .fee-card-cta {
-  margin-top: 24px;
-  font-size: 1.1rem;
+.profile-wins-chip i {
+  color: #ffd54a;
 }
 
-@media (max-width: 768px) {
-  .fee-card-cta {
-    font-size: 1.005rem;
-  }
-
-  .fee-card .fee-card-cta {
-    font-size: 1.25rem;
-  }
+.profile-avatar-wrap {
+  position: relative;
+  width: 88px;
+  margin: 8px auto 0;
 }
 
-/* Desktop bento rows can pair cards of very different widths (and thus
-   different wrap heights), so pin the CTA to the bottom for a level row.
-   Mobile keeps the fixed 8px gap right under the description. */
-@media (min-width: 769px) {
-  .fee-grid a.fee-card-cta {
-    margin-top: auto;
-  }
+.profile-avatar-wrap .player-avatar {
+  width: 88px;
+  height: 88px;
 }
 
-.fee-modalidad {
+.profile-avatar-edit-btn {
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: transform 160ms ease-out;
+}
+
+.profile-avatar-edit-btn:active {
+  transform: scale(0.97);
+}
+
+.profile-nickname-row {
+  display: flex;
+  align-items: center;
   gap: 8px;
-  margin: 16px 0 16px;
 }
 
-.fee-modalidad-icon {
-  color: var(--text-dim);
-  font-size: 0.9rem;
-  flex-shrink: 0;
+.profile-nickname-row input {
+  flex: 1;
 }
 
-.fee-modalidad-options {
+.profile-nickname-edit-btn {
+  width: 48px;
+  height: 48px;
+  flex: none;
+  border: 0;
+  background: var(--paper-2);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background-color 160ms ease-out;
+}
+
+@media (hover: hover) {
+  .profile-nickname-edit-btn:hover {
+    background: var(--paper-3);
+  }
+}
+
+/* Comunidad: búsqueda, solicitudes y amigos. */
+.community-row {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 6px 14px;
-}
-
-.fee-radio {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.85rem;
-  color: var(--text-dim);
-  cursor: pointer;
-}
-
-@media (max-width: 768px) {
-  .fee-radio { font-size: 0.975rem; }
-}
-
-.fee-radio input {
-  accent-color: var(--accent);
-  cursor: pointer;
-}
-
-.fee-radio input:checked + span { color: var(--accent); }
-
-.fee-login-prompt {
-  margin: 14px 0 4px;
-  text-align: center;
-  background: rgba(155, 77, 255, 0.08);
-  border: 1px solid rgba(155, 77, 255, 0.3);
-  border-radius: var(--radius-sm);
-  padding: 12px;
-}
-
-.fee-login-prompt p {
-  margin: 0 0 8px;
-  font-size: 0.85rem;
-}
-
-.fee-login-prompt .fee-login-btn { width: 100%; }
-
-.fee-nickname-field {
-  margin: 16px 0 16px;
+  gap: 12px;
+  margin-bottom: 6px;
+  padding: 10px 14px;
+  background: var(--paper-2);
   text-align: left;
 }
 
-.fee-nickname-field .fee-nickname-input {
-  display: inline-block;
-  width: auto;
-  max-width: 100%;
-  background: rgba(155, 77, 255, 0.16);
-  border: 1px solid rgba(155, 77, 255, 0.45);
-  color: var(--accent);
-  font-weight: 700;
-  text-align: center;
-  padding: 8px 8px;
-  border-radius: 999px;
-  cursor: default;
-  animation: fee-nickname-blink 2.27s ease-in-out infinite;
+.community-row:last-child {
+  margin-bottom: 0;
 }
 
-@keyframes fee-nickname-blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
+.community-avatar {
+  width: 40px;
+  height: 40px;
+  flex: none;
+  object-fit: cover;
+  background: var(--paper-3);
 }
 
-.fee-confirm-btn {
-  margin-top: auto;
+.community-row-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.community-row-actions {
+  display: flex;
+  flex: none;
+  gap: 8px;
+}
+
+.community-state-chip {
+  flex: none;
+  color: var(--soft);
+  font-size: var(--step-small);
+  white-space: nowrap;
+}
+
+/* Torneos armados entre jugadores (lobbies). */
+.lobby-card {
+  margin-bottom: 16px;
+}
+
+.lobby-card:last-child {
+  margin-bottom: 0;
+}
+
+.lobby-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.lobby-card-title {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.lobby-teams-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.lobby-team {
+  flex: 1;
+  min-width: 0;
+}
+
+.lobby-team-name {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.lobby-team-slots {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lobby-slot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 12px;
+}
+
+.lobby-slot-filled {
+  background: rgb(138 61 245 / 0.18);
+  color: var(--ink);
+}
+
+button.lobby-slot-open {
   width: 100%;
-  max-width: none;
+  border: 0;
+  background: var(--paper-2);
+  color: var(--link);
+  font: inherit;
+  cursor: pointer;
+  transition: background-color 160ms ease-out;
 }
 
-.fee-confirm-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  box-shadow: none;
+@media (hover: hover) {
+  button.lobby-slot-open:hover {
+    background: var(--paper-3);
+  }
 }
 
-/* Only one fee-signup-card can be "armed" at a time — picking a modality
-   in one dims the rest, so it's clear where the WhatsApp confirmation
-   will actually go. */
-.fee-card-inactive {
-  opacity: 0.45;
-  transition: opacity 0.15s ease;
+span.lobby-slot-open {
+  background: var(--paper-2);
+  color: var(--text-faint);
 }
 
-.readonly .match-slot { cursor: default; }
-.readonly .match-slot:hover { background: none; }
+.lobby-vs {
+  flex: none;
+  color: var(--soft);
+  font-weight: 600;
+}
+
+.lobby-request-admin-btn {
+  margin-top: 14px;
+}
+
+.lobby-card .lobby-share-btn {
+  display: flex;
+  width: 100%;
+  margin-top: 10px;
+  background: rgb(37 211 102 / 0.14);
+  color: #4be08a;
+}
+
+@media (hover: hover) {
+  .lobby-card .lobby-share-btn:hover {
+    background: rgb(37 211 102 / 0.22);
+  }
+}
+
+.lobby-status-note {
+  margin: 14px 0 0;
+  color: var(--soft);
+  font-size: var(--step-small);
+  text-align: center;
+}
+
+/* ---------- Estado en vivo ---------- */
 
 .live-badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.78rem;
+  gap: 8px;
+  padding: 6px 12px;
+  background: rgb(53 224 176 / 0.14);
   color: var(--win);
-  border: 1px solid rgba(53, 224, 176, 0.35);
-  background: rgba(53, 224, 176, 0.08);
-  padding: 4px 10px;
-  border-radius: 999px;
+  font-size: var(--step-small);
+  font-weight: 600;
 }
+
 .live-badge .blip {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
+  width: 9px;
+  height: 9px;
   background: var(--win);
-  box-shadow: 0 0 8px var(--win-glow);
-  animation: blip-pulse 1.6s ease-in-out infinite;
-}
-@keyframes blip-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
 }
 
+/* El pie viejo del panel de administración. */
 footer.credits {
-  text-align: center;
-  color: var(--text-faint);
-  font-size: 0.6525rem;
   margin-top: 60px;
-}
-
-.footer-top .social-icons {
-  justify-self: start;
-}
-
-.social-icons {
-  display: flex;
-  justify-content: center;
-  gap: 21px;
-}
-.social-icons a {
-  color: var(--text-dim);
-  font-size: 1.12rem;
-  transition: color 0.15s ease;
-}
-.social-icons a:hover { color: var(--accent-2); }
-
-.made-with-love {
+  color: var(--text-faint);
+  font-size: var(--step-small);
   text-align: center;
-  color: var(--text-faint);
-  font-size: 0.7875rem;
-  margin: 8px 0 4px;
 }
 
-/* Fixed footer bar (mirrors the fixed navbar, pinned to the bottom
-   of the viewport on every public page). */
-.site-footer-fixed {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 90;
-  background: rgba(11, 9, 16, 0.75);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-top: 1px solid var(--glass-border);
-}
-.site-footer-fixed .footer-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 14px 20px;
-}
-.site-footer-fixed .footer-top { margin-bottom: 6px; }
-.site-footer-fixed .made-with-love { margin: 7px 0 3px; }
-.site-footer-fixed footer.credits { margin-top: 12px; }
+/* ---------- Captura para compartir ----------
+   html2canvas dibuja el texto de Switzer unos píxeles más abajo que el
+   navegador: en la copia que se fotografía nada recorta texto, los chips van
+   sin fondo y el botón de girar no sale. */
 
-/* Desktop: taller footer, slightly larger footer type (+2px across the
-   board). Mobile keeps the original compact sizing. */
-@media (min-width: 769px) {
-  .site-footer-fixed .footer-inner {
-    padding: 16px 20px;
+.is-capture .podium-name-row h2 {
+  overflow: visible;
+}
+
+.is-capture :is(.podium-rank, .season-status-chip, .fee-chip, .tournament-meta, .vs-badge) {
+  padding-left: 0;
+  padding-right: 0;
+  background: none;
+}
+
+.is-capture .podium-flip-trigger-row {
+  display: none;
+}
+
+/* ---------- Movimiento ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Lo que está en juego respira: el punto de "en vivo" y las fichas de la final. */
+  .live-badge .blip,
+  .neo-node.neo-blink {
+    animation: live-breathe 1.8s ease-in-out infinite;
   }
-  .site-footer-fixed .social-icons a {
-    font-size: 1.245rem;
+
+  @keyframes live-breathe {
+    50% {
+      opacity: 0.45;
+    }
   }
-  .site-footer-fixed .made-with-love {
-    font-size: 0.9125rem;
+
+  /* El reloj de arena de la espera gira despacio. */
+  .empty-hint-icon {
+    animation: hourglass-turn 4s var(--ease-in-out) infinite;
   }
-  .site-footer-fixed .footer-legal-link {
-    font-size: 0.7775rem;
-  }
-  .site-footer-fixed footer.credits {
-    font-size: 0.7775rem;
+
+  @keyframes hourglass-turn {
+    0%,
+    40% {
+      transform: rotate(0);
+    }
+
+    60%,
+    100% {
+      transform: rotate(180deg);
+    }
   }
 }
 
-.footer-legal-row {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 10px;
-  margin: 0 0 4px;
+@media (prefers-reduced-motion: reduce) {
+  .podium-card.flip-card .flip-card-inner {
+    transition: none;
+  }
 }
 
-.footer-legal-link {
-  color: var(--text-faint);
-  font-size: 0.6525rem;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-.footer-legal-link:hover { color: var(--accent-2); }
-.footer-legal-row .footer-legal-link:first-child { justify-self: end; }
-.footer-legal-row .footer-legal-link:last-child { justify-self: start; }
-
-/* Same row, different columns, on every screen size. */
-.footer-legal-divider {
-  display: block;
-  width: 1px;
-  height: 10px;
-  background: var(--glass-border);
-  flex-shrink: 0;
+/* Sin desenfoque disponible, o con menos transparencia pedida: paneles sólidos. */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .champion-banner,
+  .series-team,
+  .podium-card.flip-card .flip-card-front {
+    background: rgb(23 20 29 / 0.92);
+  }
 }
 
-/* Reserve room above the fixed footer so page content never sits behind it. */
-.page-offset-footer { padding-bottom: 150px; }
+@media (prefers-reduced-transparency: reduce) {
+  .champion-banner,
+  .series-team,
+  .podium-card.flip-card .flip-card-front {
+    background: rgb(23 20 29 / 0.96);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}

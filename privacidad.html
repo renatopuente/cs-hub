@@ -6,136 +6,112 @@
 <title>Política de Privacidad · El Octágono</title>
 <meta name="description" content="Política de privacidad y tratamiento de datos de El Octágono: qué datos recopilamos, para qué los usamos y cómo ejercer tus derechos." />
 <link rel="canonical" href="https://eloctagono.online/privacidad.html" />
-<link rel="icon" href="img/icons/favicon.ico" sizes="32x32" />
-<link rel="apple-touch-icon" href="img/icons/icono_app-192.png" />
+<link rel="icon" href="img/icons/favicon.ico" sizes="16x16 32x32 48x48" />
+<link rel="icon" href="img/logos/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="img/icons/apple-touch-icon.png" />
 <link rel="manifest" href="manifest.json" />
-<meta name="theme-color" content="#9b4dff" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" />
+<meta name="theme-color" content="#0b0a0f" />
+<link rel="preconnect" href="https://api.fontshare.com" />
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600&display=swap" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+<link rel="stylesheet" href="css/theme.css" />
 <link rel="stylesheet" href="css/style.css" />
 </head>
 <body class="readonly">
-  <div class="navbar-fixed">
-    <div class="navbar-inner">
-      <div class="navbar-brand-center">
-        <a class="brand" href="index.html"><img class="brand-logo" src="img/logos/octologo.svg" alt="El Octágono · Torneos Online" /></a>
-      </div>
+  <header class="bar">
+    <div class="bar-inner">
+      <a class="bar-brand" href="index.html"><img src="img/logos/logo-horizontal.svg" alt="El Octágono" width="239" height="40" /></a>
 
-      <nav class="main-nav">
-        <a href="index.html"><i class="fa-solid fa-house"></i> Inicio</a>
-
+      <nav class="main-nav" aria-label="Principal">
         <div class="nav-dropdown">
-          <button class="nav-dropdown-toggle" aria-expanded="false">
-            <i class="fa-solid fa-gamepad"></i> Torneos <i class="fa-solid fa-chevron-down nav-dropdown-caret"></i>
-          </button>
+          <button class="nav-dropdown-toggle" aria-expanded="false">Torneos <i class="fa-solid fa-chevron-down nav-dropdown-caret" aria-hidden="true"></i></button>
           <div class="nav-dropdown-menu">
-            <a href="duelos-view.html"><i class="fa-solid fa-hand-fist"></i> Duelos</a>
-            <a href="duos-view.html"><i class="fa-solid fa-people-group"></i> Duos</a>
-            <a href="pug-view.html"><i class="fa-solid fa-users-rectangle"></i> Pug</a>
+            <a href="duelos-view.html">Duelos</a>
+            <a href="duos-view.html">Duos</a>
+            <a href="pug-view.html">Pug</a>
           </div>
         </div>
-
         <div class="nav-dropdown">
-          <button class="nav-dropdown-toggle" aria-expanded="false">
-            <i class="fa-solid fa-ranking-star"></i> Ranking <i class="fa-solid fa-chevron-down nav-dropdown-caret"></i>
-          </button>
+          <button class="nav-dropdown-toggle" aria-expanded="false">Ranking <i class="fa-solid fa-chevron-down nav-dropdown-caret" aria-hidden="true"></i></button>
           <div class="nav-dropdown-menu">
-            <a href="ranking.html"><i class="fa-solid fa-ranking-star"></i> Tabla de posiciones</a>
-            <a href="historial.html"><i class="fa-solid fa-clock-rotate-left"></i> Historial de torneos</a>
+            <a href="ranking.html">Tabla de posiciones</a>
+            <a href="historial.html">Historial de torneos</a>
           </div>
         </div>
-
-        <a href="quienes-somos.html"><i class="fa-solid fa-circle-info"></i> Quiénes somos</a>
-
-        <a href="inscripcion.html" class="btn btn-primary"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
-
-        <button type="button" class="player-login-btn btn btn-ghost btn-sm">
-          <i class="fa-brands fa-google"></i> Continuar con Google
-        </button>
+        <a href="quienes-somos.html">Quiénes somos</a>
+        <button type="button" class="player-login-btn btn-text"><i class="fa-brands fa-google" aria-hidden="true"></i> Continuar con Google</button>
         <div class="player-profile" hidden>
           <a href="perfil.html" class="player-account-link" aria-label="Mi cuenta">
-            <img class="player-avatar" alt="Mi cuenta" />
+            <img class="player-avatar" alt="" width="28" height="28" />
             <span class="player-account-text">Mi cuenta</span>
           </a>
-          <button type="button" class="player-logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
+          <button type="button" class="player-logout-btn btn-text">Cerrar sesión</button>
         </div>
+        <a href="inscripcion.html" class="btn">Inscribirme</a>
       </nav>
 
-      <button type="button" id="install-chip" class="install-chip" hidden>
-        <i class="fa-solid fa-download"></i> Instalar
-      </button>
-      <button class="hamburger-btn" id="hamburger-btn" aria-label="Abrir menú" aria-expanded="false">
-        <i class="fa-solid fa-bars"></i>
-      </button>
+      <button type="button" id="install-chip" class="install-chip btn-text" hidden><i class="fa-solid fa-download" aria-hidden="true"></i> Instalar</button>
+      <button class="hamburger-btn" id="hamburger-btn" aria-label="Abrir menú" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
     </div>
 
     <div class="mobile-menu" id="mobile-menu">
-      <a href="index.html"><i class="fa-solid fa-house"></i> Inicio</a>
-
       <div class="mobile-menu-group">
-        <button class="mobile-menu-group-toggle" aria-expanded="false">
-          <span><i class="fa-solid fa-gamepad"></i> Torneos</span>
-          <i class="fa-solid fa-chevron-down toggle-icon"></i>
-        </button>
+        <button class="mobile-menu-group-toggle" aria-expanded="false"><span>Torneos</span> <i class="fa-solid fa-chevron-down toggle-icon" aria-hidden="true"></i></button>
         <div class="mobile-menu-submenu" hidden>
-          <a href="duelos-view.html" class="mobile-menu-sub"><i class="fa-solid fa-hand-fist"></i> Duelos</a>
-          <a href="duos-view.html" class="mobile-menu-sub"><i class="fa-solid fa-people-group"></i> Duos</a>
-          <a href="pug-view.html" class="mobile-menu-sub"><i class="fa-solid fa-users-rectangle"></i> Pug</a>
+          <a href="duelos-view.html" class="mobile-menu-sub">Duelos</a>
+          <a href="duos-view.html" class="mobile-menu-sub">Duos</a>
+          <a href="pug-view.html" class="mobile-menu-sub">Pug</a>
         </div>
       </div>
-
       <div class="mobile-menu-group">
-        <button class="mobile-menu-group-toggle" aria-expanded="false">
-          <span><i class="fa-solid fa-ranking-star"></i> Ranking</span>
-          <i class="fa-solid fa-chevron-down toggle-icon"></i>
-        </button>
+        <button class="mobile-menu-group-toggle" aria-expanded="false"><span>Ranking</span> <i class="fa-solid fa-chevron-down toggle-icon" aria-hidden="true"></i></button>
         <div class="mobile-menu-submenu" hidden>
-          <a href="ranking.html" class="mobile-menu-sub"><i class="fa-solid fa-ranking-star"></i> Tabla de posiciones</a>
-          <a href="historial.html" class="mobile-menu-sub"><i class="fa-solid fa-clock-rotate-left"></i> Historial de torneos</a>
+          <a href="ranking.html" class="mobile-menu-sub">Tabla de posiciones</a>
+          <a href="historial.html" class="mobile-menu-sub">Historial de torneos</a>
         </div>
       </div>
-
-      <a href="quienes-somos.html"><i class="fa-solid fa-circle-info"></i> Quiénes somos</a>
-
-      <a href="inscripcion.html" class="btn btn-primary btn-block"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
-      <button type="button" class="player-login-btn btn btn-outline btn-block">
-        <i class="fa-brands fa-google"></i> Continuar con Google
-      </button>
+      <a href="quienes-somos.html">Quiénes somos</a>
+      <a href="inscripcion.html" class="btn btn-block">Inscribirme</a>
+      <button type="button" class="player-login-btn btn-text"><i class="fa-brands fa-google" aria-hidden="true"></i> Continuar con Google</button>
       <div class="player-profile" hidden>
         <a href="perfil.html" class="player-account-link" aria-label="Mi cuenta">
-          <img class="player-avatar" alt="Mi cuenta" />
+          <img class="player-avatar" alt="" width="28" height="28" />
           <span class="player-account-text">Mi cuenta</span>
         </a>
-        <button type="button" class="player-logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
+        <button type="button" class="player-logout-btn btn-text">Cerrar sesión</button>
       </div>
     </div>
-  </div>
-
+  </header>
   <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div>
 
-  <div class="page page-offset-navbar page-offset-footer">
-    <div class="hero">
-      <h1>Política de Privacidad</h1>
-      <p>Qué datos recopilamos, para qué los usamos y cómo pedir que los borremos. Última actualización: 2 de agosto de 2026.</p>
-    </div>
+  <main class="page">
+    <section class="page-head" aria-labelledby="page-title">
+      <div class="season-stripe" aria-hidden="true"><span style="--c:hsl(266 100% 22%)"></span><span style="--c:hsl(266 100% 27.6%)"></span><span style="--c:hsl(266 100% 33.2%)"></span><span style="--c:hsl(266 100% 38.8%)"></span><span style="--c:hsl(266 100% 44.4%)"></span><span style="--c:hsl(266 100% 50%)"></span><span style="--c:hsl(266 100% 55.6%)"></span><span style="--c:hsl(266 100% 61.2%)"></span><span style="--c:hsl(266 100% 66.8%)"></span><span style="--c:hsl(266 100% 72.4%)"></span><span style="--c:hsl(266 100% 78%)"></span></div>
+      <div class="page-head-body">
+        <div>
+          <h1 id="page-title">Política de Privacidad</h1>
+          <p class="page-lead">Qué datos recopilamos, para qué los usamos y cómo pedir que los borremos. Última actualización: 2 de agosto de 2026.</p>
+        </div>
+      </div>
+    </section>
 
-    <div class="glass-card" style="max-width: 820px; margin: 0 auto 24px;">
+    <article class="legal">
+      <section class="legal-section">
       <h2 class="section-title">1. Qué datos recopilamos</h2>
-      <ul style="color: var(--text-dim); font-size: 0.92rem; padding-left: 20px; margin: 0;">
-        <li><strong style="color: var(--text);">Cuenta de Google</strong>: al iniciar sesión con Google, recibimos tu nombre, correo electrónico y foto de perfil (a través de Firebase Authentication).</li>
-        <li><strong style="color: var(--text);">Nickname y foto de perfil</strong>: el nombre público que defines en tu <a href="perfil.html">perfil de jugador</a>, y opcionalmente una foto propia (JPG o PNG, máx. 1 MB) que puedes subir ahí mismo.</li>
-        <li><strong style="color: var(--text);">Solicitudes de inscripción</strong>: tu Nickname, el torneo, la modalidad y el precio elegidos al confirmar en <a href="inscripcion.html">Inscribirme</a>.</li>
-        <li><strong style="color: var(--text);">Historial de torneos</strong>: tu Nickname (o el de tu equipo) y los resultados de las partidas que juegas.</li>
-        <li><strong style="color: var(--text);">Amigos y solicitudes de amistad</strong>: si usas la sección Comunidad de tu perfil, guardamos tu lista de amigos y las solicitudes que envías o recibes.</li>
-        <li><strong style="color: var(--text);">Torneos entre jugadores</strong>: los torneos de Duelos/Duos/Pug que organizas o a los que te unes con otros jugadores desde la sección Comunidad.</li>
+      <ul>
+        <li><strong>Cuenta de Google</strong>: al iniciar sesión con Google, recibimos tu nombre, correo electrónico y foto de perfil (a través de Firebase Authentication).</li>
+        <li><strong>Nickname y foto de perfil</strong>: el nombre público que defines en tu <a href="perfil.html">perfil de jugador</a>, y opcionalmente una foto propia (JPG o PNG, máx. 1 MB) que puedes subir ahí mismo.</li>
+        <li><strong>Solicitudes de inscripción</strong>: tu Nickname, el torneo, la modalidad y el precio elegidos al confirmar en <a href="inscripcion.html">Inscribirme</a>.</li>
+        <li><strong>Historial de torneos</strong>: tu Nickname (o el de tu equipo) y los resultados de las partidas que juegas.</li>
+        <li><strong>Amigos y solicitudes de amistad</strong>: si usas la sección Comunidad de tu perfil, guardamos tu lista de amigos y las solicitudes que envías o recibes.</li>
+        <li><strong>Torneos entre jugadores</strong>: los torneos de Duelos/Duos/Pug que organizas o a los que te unes con otros jugadores desde la sección Comunidad.</li>
       </ul>
-    </div>
+    </section>
 
-    <div class="glass-card" style="max-width: 820px; margin: 0 auto 24px;">
+      <section class="legal-section">
       <h2 class="section-title">2. Para qué usamos tus datos</h2>
-      <p style="color: var(--text-dim); font-size: 0.92rem;">
+      <p>
         Usamos esta información únicamente para identificarte como jugador dentro de la plataforma,
         gestionar tu inscripción a los torneos, coordinar el pago por WhatsApp, mostrar el historial y
         la tabla de posiciones públicos, revelar progresivamente en el countdown de cada torneo qué
@@ -143,41 +119,41 @@
         otros jugadores en la sección Comunidad. No usamos tus datos con fines publicitarios ni los
         vendemos ni compartimos con terceros.
       </p>
-    </div>
+    </section>
 
-    <div class="glass-card" style="max-width: 820px; margin: 0 auto 24px;">
+      <section class="legal-section">
       <h2 class="section-title">3. Dónde se almacenan tus datos</h2>
-      <p style="color: var(--text-dim); font-size: 0.92rem;">
+      <p>
         Tus datos se guardan en Firebase (infraestructura de Google Cloud): Firebase Authentication
         para el login con Google, Firebase Realtime Database para tu Nickname, tus solicitudes de
         inscripción, el historial de torneos, tu lista de amigos y los torneos entre jugadores, y
         Firebase Storage si subes una foto de perfil propia. Firebase es nuestro único proveedor
         externo de almacenamiento; no usamos ningún otro servicio de terceros para procesar tus datos.
       </p>
-    </div>
+    </section>
 
-    <div class="glass-card" style="max-width: 820px; margin: 0 auto 24px;">
+      <section class="legal-section">
       <h2 class="section-title">4. Qué es público y qué es privado</h2>
-      <p style="color: var(--text-dim); font-size: 0.92rem; margin-bottom: 10px;">
-        <strong style="color: var(--text);">Público</strong> (visible para cualquier visitante del
+      <p>
+        <strong>Público</strong> (visible para cualquier visitante del
         sitio, o para cualquier jugador con sesión iniciada en el caso del buscador de Comunidad):
         tu Nickname, tu foto de perfil, los resultados de tus partidas, tu posición en el ranking, si
         ya confirmaste tu inscripción a un torneo agendado, y los torneos entre jugadores que
         organizas o en los que te unes mientras sean públicos.
       </p>
-      <p style="color: var(--text-dim); font-size: 0.92rem; margin-bottom: 10px;">
-        <strong style="color: var(--text);">Solo entre las partes involucradas</strong>: tu lista de
+      <p>
+        <strong>Solo entre las partes involucradas</strong>: tu lista de
         amigos y las solicitudes de amistad son visibles únicamente para ti y la otra persona.
       </p>
-      <p style="color: var(--text-dim); font-size: 0.92rem;">
-        <strong style="color: var(--text);">Privado</strong> (solo accesible por el equipo organizador
+      <p>
+        <strong>Privado</strong> (solo accesible por el equipo organizador
         autorizado): tu nombre completo de Google y tu correo electrónico.
       </p>
-    </div>
+    </section>
 
-    <div class="glass-card" style="max-width: 820px; margin: 0 auto 24px;">
+      <section class="legal-section">
       <h2 class="section-title">5. Tus derechos</h2>
-      <p style="color: var(--text-dim); font-size: 0.92rem;">
+      <p>
         Puedes acceder, corregir o pedir la eliminación de tus datos en cualquier momento escribiéndonos
         por <a href="https://wa.me/593998880675" target="_blank" rel="noopener">WhatsApp</a> o al correo
         <a href="mailto:pulpos@eloctagono.online">pulpos@eloctagono.online</a>. Desde la sección
@@ -186,79 +162,67 @@
         perfil en cualquier momento; para revocar el acceso de El Octágono a tu cuenta de Google por
         completo, hazlo desde la configuración de seguridad de tu cuenta de Google.
       </p>
-    </div>
+    </section>
 
-    <div class="glass-card" style="max-width: 820px; margin: 0 auto 24px;">
+      <section class="legal-section">
       <h2 class="section-title">6. Almacenamiento local del navegador</h2>
-      <p style="color: var(--text-dim); font-size: 0.92rem;">
+      <p>
         El sitio usa el almacenamiento local de tu navegador para mantener tu sesión iniciada y, en las
         páginas de administración, para guardar temporalmente el estado del torneo en curso. No usamos
         cookies de rastreo publicitario ni de terceros.
       </p>
-    </div>
+    </section>
 
-    <div class="glass-card" style="max-width: 820px; margin: 0 auto 24px;">
+      <section class="legal-section">
       <h2 class="section-title">7. Menores de edad</h2>
-      <p style="color: var(--text-dim); font-size: 0.92rem;">
+      <p>
         El Octágono no está dirigido específicamente a menores de 13 años. Si eres menor de edad,
         participa con la supervisión de un adulto responsable.
       </p>
-    </div>
+    </section>
 
-    <div class="glass-card" style="max-width: 820px; margin: 0 auto 24px;">
+      <section class="legal-section">
       <h2 class="section-title">8. Cambios a esta política</h2>
-      <p style="color: var(--text-dim); font-size: 0.92rem;">
+      <p>
         Podemos actualizar esta Política de Privacidad para reflejar cambios en la plataforma. La fecha
         de la última actualización siempre estará visible al inicio de esta página.
       </p>
-    </div>
+    </section>
 
-    <div class="glass-card" style="max-width: 820px; margin: 0 auto 24px;">
+      <section class="legal-section">
       <h2 class="section-title">9. Ley aplicable y contacto</h2>
-      <p style="color: var(--text-dim); font-size: 0.92rem;">
+      <p>
         Esta política se rige por las leyes de Ecuador. Si tienes alguna pregunta sobre el tratamiento
         de tus datos, escríbenos por
         <a href="https://wa.me/593998880675" target="_blank" rel="noopener">WhatsApp</a>. Consulta también
         nuestros <a href="terminos.html">Términos y Condiciones</a>.
       </p>
-    </div>
+    </section>
+    </article>
 
-    <div style="display:flex; flex-direction:column; align-items:center; gap: 16px; margin: 40px 0 0;">
+    <div class="page-actions">
       <a href="inscripcion.html" class="btn btn-primary btn-block"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
       <a href="index.html" class="btn btn-outline btn-block"><i class="fa-solid fa-house"></i> Ir al inicio</a>
     </div>
+  </main>
 
-    <div style="display:flex; flex-direction:column; align-items:center; gap: 6px; margin-top: 24px;">
-      <a
-        href="https://wa.me/593998880675?text=Hola%20Pulpos%2C%20tengo%20una%20pregunta%20sobre%20El%20Oct%C3%A1gono."
-        target="_blank"
-        rel="noopener"
-        style="color: var(--accent); text-decoration: underline; text-underline-offset: 2px; font-size: 0.9rem;"
-      >Ayuda</a>
-      <a href="mailto:pulpos@eloctagono.online" style="color: var(--text-faint); text-decoration: none; font-size: 0.72rem;">pulpos@eloctagono.online</a>
-      <p style="color: var(--text-faint); font-size: 0.72rem; margin: 0;">v3.1.0</p>
-    </div>
-  </div>
-
-  <footer class="site-footer-fixed">
-    <div class="footer-inner">
-      <div class="footer-top">
-        <img class="footer-logo" src="img/logos/octologo.svg" alt="El Octágono" />
-        <div class="footer-divider"></div>
-        <div class="social-icons">
-          <a href="#" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-          <a href="#" aria-label="Twitch"><i class="fa-brands fa-twitch"></i></a>
-          <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-        </div>
+  <!-- El reverso de la ficha. -->
+  <footer class="card-back">
+    <svg class="scallops" viewBox="0 0 1200 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40 V20 Q50 -10 100 20 Q150 -10 200 20 Q250 -10 300 20 Q350 -10 400 20 Q450 -10 500 20 Q550 -10 600 20 Q650 -10 700 20 Q750 -10 800 20 Q850 -10 900 20 Q950 -10 1000 20 Q1050 -10 1100 20 Q1150 -10 1200 20 V40 Z" /></svg>
+    <div class="card-back-body">
+      <div class="card-back-note">
+        <h2>Nos vemos en la arena</h2>
+        <p>El Octágono es un proyecto de los Pulpos, un grupo de amigos de Ecuador que arma torneos de Counter-Strike desde el 1.6.</p>
       </div>
-      <div class="footer-legal-row">
-        <a href="terminos.html" class="footer-legal-link">Términos y Condiciones</a>
-        <span class="footer-legal-divider"></span>
-        <a href="privacidad.html" class="footer-legal-link">Política de Privacidad</a>
+      <div class="card-back-address">
+        <img class="stamp" src="img/icons/icono_app-192.png" alt="" width="88" height="88" loading="lazy" />
+        <a href="mailto:pulpos@eloctagono.online">pulpos@eloctagono.online</a>
+        <a href="https://wa.me/593998880675?text=Hola%20Pulpos%2C%20tengo%20una%20pregunta%20sobre%20El%20Oct%C3%A1gono." target="_blank" rel="noopener">WhatsApp de ayuda</a>
+        <a href="terminos.html">Términos y Condiciones</a>
+        <a href="privacidad.html">Política de Privacidad</a>
       </div>
-      <p class="made-with-love">Diseñado por un equipo de <span style="color: var(--accent);">Pulpos</span> de 🇪🇨 con 💜</p>
-      <footer class="credits">© <span id="copyright-year"></span> El Octágono</footer>
     </div>
+    <p class="imprint">© <span id="copyright-year"></span> El Octágono · v3.2.0 · Diseñado por los Pulpos de Ecuador</p>
   </footer>
 
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -266,6 +230,8 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
   <script src="js/firebase-sync.js"></script>
   <script src="js/admin-config.js"></script>
+  <script src="js/seasons.js"></script>
+  <script src="js/season-tone.js"></script>
   <script src="js/player-auth.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/copyright.js"></script>

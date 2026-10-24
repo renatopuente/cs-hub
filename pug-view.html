@@ -6,145 +6,99 @@
 <title>Pug (en vivo) · El Octágono</title>
 <meta name="description" content="Sigue en vivo la llave y el marcador del torneo de Pug, el clásico 5 contra 5, en El Octágono, la plataforma de torneos de Counter-Strike 2 en Ecuador." />
 <link rel="canonical" href="https://eloctagono.online/pug-view.html" />
-<link rel="icon" href="img/icons/favicon.ico" sizes="32x32" />
-<link rel="apple-touch-icon" href="img/icons/icono_app-192.png" />
+<link rel="icon" href="img/icons/favicon.ico" sizes="16x16 32x32 48x48" />
+<link rel="icon" href="img/logos/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="img/icons/apple-touch-icon.png" />
 <link rel="manifest" href="manifest.json" />
-<meta name="theme-color" content="#9b4dff" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" />
+<meta name="theme-color" content="#0b0a0f" />
+<link rel="preconnect" href="https://api.fontshare.com" />
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600&display=swap" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+<link rel="stylesheet" href="css/theme.css" />
 <link rel="stylesheet" href="css/style.css" />
 </head>
 <body class="readonly">
-  <div class="navbar-fixed">
-    <div class="navbar-inner">
-      <div class="navbar-brand-center">
-        <a class="brand" href="index.html"><img class="brand-logo" src="img/logos/octologo.svg" alt="El Octágono · Torneos Online" /></a>
-      </div>
+  <header class="bar">
+    <div class="bar-inner">
+      <a class="bar-brand" href="index.html"><img src="img/logos/logo-horizontal.svg" alt="El Octágono" width="239" height="40" /></a>
 
-      <nav class="main-nav">
-        <a href="index.html"><i class="fa-solid fa-house"></i> Inicio</a>
-
+      <nav class="main-nav" aria-label="Principal">
         <div class="nav-dropdown">
-          <button class="nav-dropdown-toggle" aria-expanded="false">
-            <i class="fa-solid fa-gamepad"></i> Torneos <i class="fa-solid fa-chevron-down nav-dropdown-caret"></i>
-          </button>
+          <button class="nav-dropdown-toggle" aria-expanded="false">Torneos <i class="fa-solid fa-chevron-down nav-dropdown-caret" aria-hidden="true"></i></button>
           <div class="nav-dropdown-menu">
-            <a href="duelos-view.html"><i class="fa-solid fa-hand-fist"></i> Duelos</a>
-            <a href="duos-view.html"><i class="fa-solid fa-people-group"></i> Duos</a>
-            <a href="pug-view.html"><i class="fa-solid fa-users-rectangle"></i> Pug</a>
+            <a href="duelos-view.html">Duelos</a>
+            <a href="duos-view.html">Duos</a>
+            <a href="pug-view.html" aria-current="page">Pug</a>
           </div>
         </div>
-
         <div class="nav-dropdown">
-          <button class="nav-dropdown-toggle" aria-expanded="false">
-            <i class="fa-solid fa-ranking-star"></i> Ranking <i class="fa-solid fa-chevron-down nav-dropdown-caret"></i>
-          </button>
+          <button class="nav-dropdown-toggle" aria-expanded="false">Ranking <i class="fa-solid fa-chevron-down nav-dropdown-caret" aria-hidden="true"></i></button>
           <div class="nav-dropdown-menu">
-            <a href="ranking.html"><i class="fa-solid fa-ranking-star"></i> Tabla de posiciones</a>
-            <a href="historial.html"><i class="fa-solid fa-clock-rotate-left"></i> Historial de torneos</a>
+            <a href="ranking.html">Tabla de posiciones</a>
+            <a href="historial.html">Historial de torneos</a>
           </div>
         </div>
-
-        <a href="quienes-somos.html"><i class="fa-solid fa-circle-info"></i> Quiénes somos</a>
-
-        <a href="inscripcion.html" class="btn btn-primary"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
-
-        <button type="button" class="player-login-btn btn btn-ghost btn-sm">
-          <i class="fa-brands fa-google"></i> Continuar con Google
-        </button>
+        <a href="quienes-somos.html">Quiénes somos</a>
+        <button type="button" class="player-login-btn btn-text"><i class="fa-brands fa-google" aria-hidden="true"></i> Continuar con Google</button>
         <div class="player-profile" hidden>
           <a href="perfil.html" class="player-account-link" aria-label="Mi cuenta">
-            <img class="player-avatar" alt="Mi cuenta" />
+            <img class="player-avatar" alt="" width="28" height="28" />
             <span class="player-account-text">Mi cuenta</span>
           </a>
-          <button type="button" class="player-logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
+          <button type="button" class="player-logout-btn btn-text">Cerrar sesión</button>
         </div>
+        <a href="inscripcion.html" class="btn">Inscribirme</a>
       </nav>
 
-      <button type="button" id="install-chip" class="install-chip" hidden>
-        <i class="fa-solid fa-download"></i> Instalar
-      </button>
-      <button class="hamburger-btn" id="hamburger-btn" aria-label="Abrir menú" aria-expanded="false">
-        <i class="fa-solid fa-bars"></i>
-      </button>
+      <button type="button" id="install-chip" class="install-chip btn-text" hidden><i class="fa-solid fa-download" aria-hidden="true"></i> Instalar</button>
+      <button class="hamburger-btn" id="hamburger-btn" aria-label="Abrir menú" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
     </div>
 
     <div class="mobile-menu" id="mobile-menu">
-      <a href="index.html"><i class="fa-solid fa-house"></i> Inicio</a>
-
       <div class="mobile-menu-group">
-        <button class="mobile-menu-group-toggle" aria-expanded="false">
-          <span><i class="fa-solid fa-gamepad"></i> Torneos</span>
-          <i class="fa-solid fa-chevron-down toggle-icon"></i>
-        </button>
+        <button class="mobile-menu-group-toggle" aria-expanded="false"><span>Torneos</span> <i class="fa-solid fa-chevron-down toggle-icon" aria-hidden="true"></i></button>
         <div class="mobile-menu-submenu" hidden>
-          <a href="duelos-view.html" class="mobile-menu-sub"><i class="fa-solid fa-hand-fist"></i> Duelos</a>
-          <a href="duos-view.html" class="mobile-menu-sub"><i class="fa-solid fa-people-group"></i> Duos</a>
-          <a href="pug-view.html" class="mobile-menu-sub"><i class="fa-solid fa-users-rectangle"></i> Pug</a>
+          <a href="duelos-view.html" class="mobile-menu-sub">Duelos</a>
+          <a href="duos-view.html" class="mobile-menu-sub">Duos</a>
+          <a href="pug-view.html" aria-current="page" class="mobile-menu-sub">Pug</a>
         </div>
       </div>
-
       <div class="mobile-menu-group">
-        <button class="mobile-menu-group-toggle" aria-expanded="false">
-          <span><i class="fa-solid fa-ranking-star"></i> Ranking</span>
-          <i class="fa-solid fa-chevron-down toggle-icon"></i>
-        </button>
+        <button class="mobile-menu-group-toggle" aria-expanded="false"><span>Ranking</span> <i class="fa-solid fa-chevron-down toggle-icon" aria-hidden="true"></i></button>
         <div class="mobile-menu-submenu" hidden>
-          <a href="ranking.html" class="mobile-menu-sub"><i class="fa-solid fa-ranking-star"></i> Tabla de posiciones</a>
-          <a href="historial.html" class="mobile-menu-sub"><i class="fa-solid fa-clock-rotate-left"></i> Historial de torneos</a>
+          <a href="ranking.html" class="mobile-menu-sub">Tabla de posiciones</a>
+          <a href="historial.html" class="mobile-menu-sub">Historial de torneos</a>
         </div>
       </div>
-
-      <a href="quienes-somos.html"><i class="fa-solid fa-circle-info"></i> Quiénes somos</a>
-
-      <a href="inscripcion.html" class="btn btn-primary btn-block"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
-      <button type="button" class="player-login-btn btn btn-outline btn-block">
-        <i class="fa-brands fa-google"></i> Continuar con Google
-      </button>
+      <a href="quienes-somos.html">Quiénes somos</a>
+      <a href="inscripcion.html" class="btn btn-block">Inscribirme</a>
+      <button type="button" class="player-login-btn btn-text"><i class="fa-brands fa-google" aria-hidden="true"></i> Continuar con Google</button>
       <div class="player-profile" hidden>
         <a href="perfil.html" class="player-account-link" aria-label="Mi cuenta">
-          <img class="player-avatar" alt="Mi cuenta" />
+          <img class="player-avatar" alt="" width="28" height="28" />
           <span class="player-account-text">Mi cuenta</span>
         </a>
-        <button type="button" class="player-logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
+        <button type="button" class="player-logout-btn btn-text">Cerrar sesión</button>
       </div>
     </div>
-  </div>
-
+  </header>
   <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div>
 
-  <div class="page page-offset-navbar page-offset-footer">
-    <div class="live-badge-row" id="live-badge-row" hidden>
-      <span class="live-badge"><span class="blip"></span>EN VIVO</span>
-    </div>
-
-    <div class="top-bar">
-      <div>
-        <h1 class="section-title" style="margin:0;"><i class="fa-solid fa-users-rectangle"></i> Pug</h1>
-        <p class="section-sub" style="margin:6px 0 0;">El clásico 5 vs 5. Serie al mejor de X partidas.</p>
+  <main class="page">
+    <section class="page-head" aria-labelledby="page-title">
+      <div class="season-stripe" aria-hidden="true"><span style="--c:hsl(266 100% 22%)"></span><span style="--c:hsl(266 100% 27.6%)"></span><span style="--c:hsl(266 100% 33.2%)"></span><span style="--c:hsl(266 100% 38.8%)"></span><span style="--c:hsl(266 100% 44.4%)"></span><span style="--c:hsl(266 100% 50%)"></span><span style="--c:hsl(266 100% 55.6%)"></span><span style="--c:hsl(266 100% 61.2%)"></span><span style="--c:hsl(266 100% 66.8%)"></span><span style="--c:hsl(266 100% 72.4%)"></span><span style="--c:hsl(266 100% 78%)"></span></div>
+      <div class="page-head-body">
+        <div>
+          <h1 id="page-title"><i class="fa-solid fa-users-rectangle" aria-hidden="true"></i>Pug</h1>
+          <p class="page-lead">El clásico de escuadras, en serie al mejor de 1, 3, 5 o 7 partidas.</p>
+        </div>
+        <div class="page-head-side">
+          <div class="live-badge-row" id="live-badge-row" hidden><span class="live-badge"><span class="blip"></span>En vivo</span></div>
+          <a class="season-chip" href="temporada-actual.html"><span class="season-chip-name" data-season="name">Temporada actual</span><span class="season-chip-dates" data-season="dates">Ver la leyenda</span></a>
+        </div>
       </div>
-    </div>
-
-    <div class="season-banner-wrap">
-      <a href="temporada-actual.html" aria-label="Ver la leyenda de la temporada actual"><img class="season-banner-img" id="season-banner-img" alt="" hidden /></a>
-    </div>
-
-    <div class="season-marquee" id="season-marquee">
-      <div class="season-marquee-track" id="season-marquee-track">
-        <span class="season-marquee-content"></span>
-        <span class="season-marquee-content" aria-hidden="true"></span>
-      </div>
-    </div>
-
-    <div class="season-heading-block">
-      <h2 class="season-heading-name" id="season-heading-name" hidden></h2>
-    </div>
-
-    <div style="display:flex; justify-content:flex-end; margin-bottom: 20px;">
-      <a class="btn btn-ghost live-view-back-btn" href="index.html"><i class="fa-solid fa-arrow-left"></i> Volver</a>
-    </div>
+    </section>
 
     <div id="empty-state" class="glass-card empty-hint"><span class="empty-hint-text">Esperando a que se cree un torneo</span><i class="fa-solid fa-hourglass-half empty-hint-icon"></i></div>
 
@@ -184,42 +138,30 @@
       </button>
     </section>
 
-    <div style="display:flex; flex-direction:column; align-items:center; gap: 16px; margin: 40px 0 0;">
+    <div class="page-actions">
       <a href="inscripcion.html" class="btn btn-primary btn-block"><i class="fa-solid fa-ticket"></i> Inscribirme</a>
       <a href="historial.html" class="btn btn-outline btn-block"><i class="fa-solid fa-clock-rotate-left"></i> Ver historial de torneos</a>
     </div>
   
-    <div style="display:flex; flex-direction:column; align-items:center; gap: 6px; margin-top: 24px;">
-      <a
-        href="https://wa.me/593998880675?text=Hola%20Pulpos%2C%20tengo%20una%20pregunta%20sobre%20El%20Oct%C3%A1gono."
-        target="_blank"
-        rel="noopener"
-        style="color: var(--accent); text-decoration: underline; text-underline-offset: 2px; font-size: 0.9rem;"
-      >Ayuda</a>
-      <a href="mailto:pulpos@eloctagono.online" style="color: var(--text-faint); text-decoration: none; font-size: 0.72rem;">pulpos@eloctagono.online</a>
-      <p style="color: var(--text-faint); font-size: 0.72rem; margin: 0;">v3.1.0</p>
-    </div>
-  </div>
+  </main>
 
-  <footer class="site-footer-fixed">
-    <div class="footer-inner">
-      <div class="footer-top">
-        <img class="footer-logo" src="img/logos/octologo.svg" alt="El Octágono" />
-        <div class="footer-divider"></div>
-        <div class="social-icons">
-          <a href="#" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-          <a href="#" aria-label="Twitch"><i class="fa-brands fa-twitch"></i></a>
-          <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-        </div>
+  <!-- El reverso de la ficha. -->
+  <footer class="card-back">
+    <svg class="scallops" viewBox="0 0 1200 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40 V20 Q50 -10 100 20 Q150 -10 200 20 Q250 -10 300 20 Q350 -10 400 20 Q450 -10 500 20 Q550 -10 600 20 Q650 -10 700 20 Q750 -10 800 20 Q850 -10 900 20 Q950 -10 1000 20 Q1050 -10 1100 20 Q1150 -10 1200 20 V40 Z" /></svg>
+    <div class="card-back-body">
+      <div class="card-back-note">
+        <h2>Nos vemos en la arena</h2>
+        <p>El Octágono es un proyecto de los Pulpos, un grupo de amigos de Ecuador que arma torneos de Counter-Strike desde el 1.6.</p>
       </div>
-      <div class="footer-legal-row">
-        <a href="terminos.html" class="footer-legal-link">Términos y Condiciones</a>
-        <span class="footer-legal-divider"></span>
-        <a href="privacidad.html" class="footer-legal-link">Política de Privacidad</a>
+      <div class="card-back-address">
+        <img class="stamp" src="img/icons/icono_app-192.png" alt="" width="88" height="88" loading="lazy" />
+        <a href="mailto:pulpos@eloctagono.online">pulpos@eloctagono.online</a>
+        <a href="https://wa.me/593998880675?text=Hola%20Pulpos%2C%20tengo%20una%20pregunta%20sobre%20El%20Oct%C3%A1gono." target="_blank" rel="noopener">WhatsApp de ayuda</a>
+        <a href="terminos.html">Términos y Condiciones</a>
+        <a href="privacidad.html">Política de Privacidad</a>
       </div>
-      <p class="made-with-love">Diseñado por un equipo de <span style="color: var(--accent);">Pulpos</span> de 🇪🇨 con 💜</p>
-      <footer class="credits">© <span id="copyright-year"></span> El Octágono</footer>
     </div>
+    <p class="imprint">© <span id="copyright-year"></span> El Octágono · v3.2.0 · Diseñado por los Pulpos de Ecuador</p>
   </footer>
 
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -228,8 +170,7 @@
   <script src="js/firebase-sync.js"></script>
   <script src="js/admin-config.js"></script>
   <script src="js/seasons.js"></script>
-  <script src="js/season-heading.js"></script>
-  <script src="js/season-marquee.js"></script>
+  <script src="js/season-tone.js"></script>
   <script>const MODE = "pug";</script>
   <script src="js/series-view.js"></script>
   <script src="js/player-auth.js"></script>
