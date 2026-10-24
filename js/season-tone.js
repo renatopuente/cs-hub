@@ -16,6 +16,9 @@ const GEM_HUES = {
 const SEASON_ART = {
   "Manhattan Amatista": "/img/seasons/manhattan-arte.webp",
   "Ibiza Topacio": "/img/seasons/ibiza.webp",
+  "Osaka Rubí": "/img/seasons/osaka-arte.webp",
+  "Viena Diamante": "/img/seasons/viena-arte.webp",
+  "Miami Granate": "/img/seasons/miami-arte.webp",
 };
 const SEASON_ART_FALLBACK = "/img/banners/octoframe.webp";
 
@@ -24,6 +27,9 @@ const SEASON_ART_FALLBACK = "/img/banners/octoframe.webp";
 const SEASON_SCENES = {
   "Manhattan Amatista": ["/img/seasons/manhattan-apagon.webp", "/img/seasons/manhattan-metro.webp", "/img/seasons/manhattan-puente.webp"],
   "Ibiza Topacio": ["/img/seasons/ibiza-muralla.webp", "/img/seasons/ibiza-cueva.webp", "/img/seasons/ibiza-vedra.webp"],
+  "Osaka Rubí": ["/img/seasons/osaka-dotonbori.webp", "/img/seasons/osaka-castillo.webp", "/img/seasons/osaka-callejon.webp"],
+  "Viena Diamante": ["/img/seasons/viena-noria.webp", "/img/seasons/viena-baile.webp", "/img/seasons/viena-alcantarillas.webp"],
+  "Miami Granate": ["/img/seasons/miami-ocean.webp", "/img/seasons/miami-bahia.webp", "/img/seasons/miami-huracan.webp"],
 };
 
 (function () {

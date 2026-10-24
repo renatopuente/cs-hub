@@ -259,7 +259,11 @@
   }
 }
 
+/* Los pulpos acompañan el scroll de la carta de modos, como la tarjeta de la temporada. */
 .mode-plates {
+  position: sticky;
+  top: calc(var(--bar-h) + var(--gutter));
+  align-self: start;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--gutter);
@@ -297,6 +301,78 @@
   color: var(--soft);
   font-size: var(--step-body);
   font-weight: 500;
+}
+
+/* ---------- Las cintas de la temporada (js/season-marquee.js) ----------
+   Dos tonos de la gema: oscuro con letra clara y, en la de cierre, al revés.
+   Entre los dos hay al menos 7:1 de contraste con cualquier gema. */
+.season-ribbon {
+  --ribbon-dark: hsl(var(--season-h, 266) var(--season-s, 100%) 18%);
+  --ribbon-light: hsl(var(--season-h, 266) var(--season-s, 100%) 84%);
+  display: block;
+  overflow: hidden;
+  margin-top: clamp(48px, 6vw, 88px);
+  background: var(--ribbon-dark);
+  color: var(--ribbon-light);
+  font-size: var(--step-small);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.season-ribbon.is-alt {
+  margin-top: var(--section);
+  background: var(--ribbon-light);
+  color: var(--ribbon-dark);
+}
+
+.season-ribbon:focus-visible {
+  outline: 3px solid var(--link);
+  outline-offset: -3px;
+}
+
+.ribbon-track {
+  display: flex;
+  width: max-content;
+}
+
+.ribbon-run {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 18px 14px;
+}
+
+.ribbon-gem {
+  width: 9px;
+  height: 9px;
+  background: currentColor;
+  opacity: 0.7;
+  clip-path: polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ribbon-track {
+    animation: ribbon-run 60s linear infinite;
+  }
+
+  .season-ribbon.is-alt .ribbon-track {
+    animation-direction: reverse;
+  }
+
+  /* La de cierre es un enlace: se detiene para poder leerla antes de tocarla. */
+  .season-ribbon.is-alt:is(:hover, :focus-visible) .ribbon-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes ribbon-run {
+    to {
+      transform: translateX(-50%);
+    }
+  }
 }
 
 /* ---------- La carta y la temporada ---------- */
@@ -600,7 +676,8 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .season-plate {
+  .season-plate,
+  .mode-plates {
     position: relative;
     top: 0;
   }

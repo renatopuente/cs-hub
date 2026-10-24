@@ -16,7 +16,7 @@ const signupCards = document.querySelectorAll(".fee-signup-card");
 
 // Solo un jugador logueado puede inscribirse: sin sesión, elegir una
 // modalidad muestra un aviso para iniciar sesión en vez del campo Nickname,
-// y Confirmar se mantiene deshabilitado. Con sesión, el Nickname no se
+// y el botón de inscribirse o pagar se mantiene deshabilitado. Con sesión, el Nickname no se
 // escribe a mano — viene por defecto del que guardó en su perfil (o su
 // nombre de Google si todavía no lo configuró) y el campo es de solo lectura.
 let isPlayerLoggedIn = false;
@@ -59,7 +59,7 @@ function updateConfirmState(card) {
   confirmBtn.disabled = !(selected && isPlayerLoggedIn && hasNickname);
 }
 
-// Only one card can be "active" (a modality picked, Confirmar enabled) at a
+// Only one card can be "active" (a modality picked, its button enabled) at a
 // time across the whole bento — picking a radio in any card resets and dims
 // every other card, instead of letting several cards be armed at once.
 function activateCard(activeCard) {

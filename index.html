@@ -130,6 +130,9 @@
     </section>
 
     <!-- Los modos como menú impreso: nombre, formato y la regla de cada uno. -->
+    <!-- Cinta de la temporada: el nombre y las fechas, en dos tonos de la gema (js/season-marquee.js). -->
+    <div class="season-ribbon" data-ribbon="inicio" role="note"></div>
+
     <section class="modes" aria-labelledby="modes-title">
       <div class="menu-sheet">
         <h2 id="modes-title" data-reveal>Elige tu modo</h2>
@@ -170,9 +173,9 @@
       </div>
 
       <div class="mode-plates">
-        <figure data-reveal><img src="img/icons/duelos.png" alt="Un pulpo de vóxeles con dos rifles: Duelos, uno contra uno" width="801" height="377" loading="lazy" /><figcaption>Duelos, 1 vs 1</figcaption></figure>
-        <figure data-reveal><img src="img/icons/duos.png" alt="Dos pulpos de vóxeles armados: Duos, en pareja" width="814" height="519" loading="lazy" /><figcaption>Duos, 2 vs 2</figcaption></figure>
-        <figure class="plate-wide" data-reveal><img src="img/icons/pug.png" alt="Cinco pulpos de vóxeles en formación: Pug, la escuadra de cinco" width="949" height="799" loading="lazy" /><figcaption>Pug, 5 vs 5</figcaption></figure>
+        <figure data-reveal><img src="img/modos/duelos.webp" alt="Un pulpo operador con casco, chaleco y rifle: Duelos, uno contra uno" width="1200" height="1111" loading="lazy" /><figcaption>Duelos, 1 vs 1</figcaption></figure>
+        <figure data-reveal><img src="img/modos/duos.webp" alt="Dos pulpos operadores espalda con espalda: Duos, en pareja" width="1200" height="783" loading="lazy" /><figcaption>Duos, 2 vs 2</figcaption></figure>
+        <figure class="plate-wide" data-reveal><img src="img/modos/pug.webp" alt="Cinco pulpos operadores en formación: Pug, la escuadra de cinco" width="1200" height="711" loading="lazy" /><figcaption>Pug, 5 vs 5</figcaption></figure>
       </div>
     </section>
 
@@ -230,7 +233,7 @@
       <h2 id="faq-title" data-reveal>Preguntas frecuentes</h2>
       <div class="faq-text" data-reveal>
         <p><strong>¿Qué es El Octágono?</strong> Una plataforma para organizar torneos de Counter-Strike 2 entre amigos: arma los equipos, sigue la llave en vivo y guarda los resultados, todo en un solo lugar.</p>
-        <p><strong>¿Cómo me inscribo a un torneo?</strong> Entra a Inscribirme, elige el valor de tu torneo (Amistoso, Casual, Competitivo, Premier o Élite) y la modalidad (Duelos, Duos o Pug), y presiona Confirmar. Te escribimos por WhatsApp para coordinar todo.</p>
+        <p><strong>¿Cómo me inscribo a un torneo?</strong> Entra a Inscribirme, elige el valor de tu torneo (Amistoso, Casual, Competitivo, Premier o Élite) y la modalidad (Duelos, Duos o Pug). En el Amistoso presionas Inscribirme ahora y quedas inscrito directo, sin costo; en los demás presionas Pagar ahora y te escribimos por WhatsApp para coordinar el pago.</p>
         <p><strong>¿Cuánto cuesta participar?</strong> Depende del torneo: Amistoso es gratis, Casual $1, Competitivo $2, Premier $5 y Élite $10, todos por dúo o equipo.</p>
         <p><strong>¿Cómo pago la inscripción?</strong> Por transferencia vía QR a Deuna. Apenas confirmas tu inscripción por WhatsApp, te enviamos el código para pagar.</p>
         <p><strong>¿Qué diferencia hay entre Duelos, Duos y Pug?</strong> Duelos es 1 contra 1, Duos son equipos de 2 jugadores (de 2 a 8 equipos), y Pug es el clásico 5 contra 5.</p>
@@ -239,6 +242,9 @@
         <p><strong>¿Quiénes organizan El Octágono?</strong> Un grupo de amigos que juega Counter-Strike desde el 1.6. Puedes conocernos mejor en <a href="quienes-somos.html">Quiénes somos</a>.</p>
       </div>
     </section>
+
+    <!-- Cinta del cierre, con los mismos tonos al revés: lleva a la leyenda, donde está la siguiente en clave. -->
+    <a class="season-ribbon is-alt" data-ribbon="cierre" href="temporada-actual.html"></a>
   </main>
 
   <!-- El reverso de la ficha. -->
@@ -257,11 +263,12 @@
         <a href="privacidad.html">Política de Privacidad</a>
       </div>
     </div>
-    <p class="imprint">© <span id="copyright-year"></span> El Octágono · v3.2.2 · Diseñado por los Pulpos de Ecuador</p>
+    <p class="imprint">© <span id="copyright-year"></span> El Octágono · v3.3.0 · Diseñado por los Pulpos de Ecuador</p>
   </footer>
 
   <script src="js/seasons.js"></script>
   <script src="js/season-tone.js"></script>
+  <script src="js/season-marquee.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
