@@ -23,8 +23,8 @@ const SEASON_CITIES = [
 
 const SEASON_GEMS = [
   "Zafiro", "Esmeralda", "Amatista", "Topacio",
-  "Rubí", "Ópalo", "Granate", "Jade",
-  "Ónix", "Diamante", "Perla", "Aguamarina",
+  "Rubí", "Diamante", "Granate", "Jade",
+  "Ónix", "Ópalo", "Perla", "Aguamarina",
   "Citrino", "Peridoto", "Selenita", "Turquesa",
 ];
 

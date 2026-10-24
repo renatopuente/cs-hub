@@ -28,7 +28,7 @@ El estado de cada torneo se guarda en Firebase Realtime Database; las páginas `
 
 ## Versionado
 
-El sitio sigue versionado semántico (`vMAJOR.MINOR.PATCH`), mostrado al final de cada página pública. Versión actual: **v3.2.1**.
+El sitio sigue versionado semántico (`vMAJOR.MINOR.PATCH`), mostrado al final de cada página pública. Versión actual: **v3.2.2**.
 
 - **MAJOR**: un sistema o capacidad completamente nueva para la plataforma.
 - **MINOR**: features o secciones nuevas dentro de la versión actual (una página nueva, un flujo nuevo, etc.).
@@ -42,6 +42,7 @@ Al desplegar un cambio que amerite subir de versión, actualiza el número en el
 - **v3.1.0**: rediseño de la portada (`index.html`, con su propio `css/home.css` y `js/home-live.js`): ficha del torneo con la franja en los tonos de la gema de la temporada, tablero en vivo "La arena ahora" con el estado de Duelos/Duos/Pug desde Firebase (en curso, programado con cuenta regresiva o último campeón), modos como menú, carta de los fundadores, valores de inscripción como ticket, preguntas frecuentes a la vista y barra con efecto vidrio. Las demás páginas siguen con `css/style.css` hasta su rediseño.
 - **v3.2.0**: rediseño del resto del sitio con el lenguaje de la portada: `css/theme.css` común (colores, Switzer, botones, barra y menús con vidrio, pie, franja de la temporada) y `css/style.css` reescrita para las páginas internas y de administración, con vidrio en el campeón, el marcador y el podio sobre el arte de la temporada. `js/season-tone.js` reparte por temporada los tonos de la gema, el arte sin texto (`SEASON_ART`) y las escenas del hero de la portada (`SEASON_SCENES`, en `img/seasons/`). Logo nuevo (la cabeza del pulpo es el octágono) en `img/logos/` e íconos de la app en `img/icons/`. Leyenda de Manhattan Amethyst con dos crípticos jugables (`js/lore-cipher.js`): la ciudad y la gema de la temporada siguiente, con casillas, pistas de significado, indicador, materiales y letras, rendirse y resultado para compartir; las frases se escriben en `CRYPTICS` (`js/season-lore.js`), ya listas hasta Marrakech Jade. Clip de Dust2 1.6 en "Hecho por jugadores".
 - **v3.2.1**: las temporadas pasan al español (Manhattan Amatista, Ibiza Topacio, Osaka Rubí…; `SEASON_CITIES` y `SEASON_GEMS` en `js/seasons.js`, y `getSeasonInfo` ahora trae `city` y `gem` aparte), con los crípticos reescritos para las respuestas en español. Los nombres son solo para mostrar: los registros se asignan a una temporada por fecha. Borde de gema en `css/theme.css`: un filo fino en los tonos de la gema de la temporada sobre botones, tarjetas y secciones, que sigue las esquinas cortadas y da una vuelta de brillo al pasar el puntero.
+- **v3.2.2**: Viena pasa a llevar Diamante, una gema más conocida, y Ópalo pasa a Milán (jul–sep 2028). El críptico de la gema del final de Osaka Rubí ahora esconde DIAMANTE.
 
 ## Desarrollo local
 

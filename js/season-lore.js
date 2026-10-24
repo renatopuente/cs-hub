@@ -178,14 +178,14 @@ const CRYPTICS = {
     materials: "Las cinco letras de «nieva».",
     solution: "NIEVA revuelto: VIENA.",
   },
-  Ópalo: {
-    clue: "Un aro junto a un palo forma la gema lechosa",
-    definition: "la gema lechosa",
-    indicator: "«Junto a» pega una parte al lado de la otra. «Forma» solo une con la definición.",
-    materials: "«Un aro» es una letra con esa forma; «un palo» se usa tal cual.",
-    solution: "un aro = O, más PALO: ÓPALO.",
+  Diamante: {
+    clue: "Un día con el mantel cortado: la piedra más dura",
+    definition: "la piedra más dura",
+    indicator: "«Cortado» quita la última letra. «Con» pega una parte detrás de la otra.",
+    materials: "«Un día», tal cual, y «el mantel».",
+    solution: "DÍA más MANTE(L): DIAMANTE.",
   },
-  // Para Viena Ópalo (jul–sep 2027)
+  // Para Viena Diamante (jul–sep 2027)
   Miami: {
     clue: "Una nota y luego a mí: la ciudad de Florida",
     definition: "la ciudad de Florida",
